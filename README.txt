@@ -1,5 +1,8 @@
 Terror from the Void is an overhaul mod for Phoenix Point. If you think "Long War" you are right.
 
+That Fork version is for the French Translation. All credits for the mod are for de Phoenix Rising Team, and the original mod
+can be found on Github at Volanc163/TFTV
+
 REQUIRES ALL DLC
 
 This is an Open Beta/Early Access. Expect bugs and balance issues. More below.
