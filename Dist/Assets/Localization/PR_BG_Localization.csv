@@ -158,8 +158,7 @@ PROG_KE1_TEXT_OUTCOME_0,Text,,"As you step inside the crypt, alien thoughts are 
 
 <i>“Soon you will be contacted by string Subject integer twenty four. Accept proposal. Share data. Satisfactory outcome will lead to much preferred customer status. Beware of your Amygdala, it reeks of betrayal.”</i>
 
-There is no Drop-Ka stone to be found, but you suspect that's not why you were sent here anyway.
-",,"Lorsque vous entrez dans la crypte, des pensées extraterrestres sont projetées dans votre esprit. Vous *écoutez* une *voix* que vous ne pouvez pas *entendre*.
+There is no Drop-Ka stone to be found, but you suspect that's not why you were sent here anyway.",,"Lorsque vous entrez dans la crypte, des pensées extraterrestres sont projetées dans votre esprit. Vous *écoutez* une *voix* que vous ne pouvez pas *entendre*.
 
 <i>“Bientôt, vous serez contacté par Sujet numéro vingt-quatre. Accepter la proposition. Partager les données. Un résultat satisfaisant mènera à un statut de client privilégié. Méfiez-vous de votre Amygdale, elle sent la trahison.”</i>
 
@@ -284,8 +283,7 @@ West est naturellement bouleversé, mais nous avons obtenu un certain succès au
 PROG_PU4_WIN_CHOICE_1_TEXT,Text,,"An exercise in civic duty, with some unfortunate casualties",,"Un exercice de devoir civique, avec quelques malheureuses victimes",,,,,,
 PROG_PU4_WIN_CHOICE_2_OUTCOME_GENERAL,Text,,"We are not entirely in the clear, but New Jericho doesn't want to draw attention to its secret research and therefore avoids making an issue of the raid.
 
-At the same time, our strenuous denials result in West suspecting the involvement of other factions.
-",,"Nous ne sommes pas tout à fait dans la transparence, mais la Nouvelle Jéricho ne veut pas attirer l’attention sur sa recherche secrète et évite donc de faire un problème de la descente.
+At the same time, our strenuous denials result in West suspecting the involvement of other factions.",,"Nous ne sommes pas tout à fait dans la transparence, mais la Nouvelle Jéricho ne veut pas attirer l’attention sur sa recherche secrète et évite donc de faire un problème de la descente.
 
 En même temps, nos dénégations acharnées font que West soupçonne l’implication d’autres factions.
 ",,,,,,
@@ -338,7 +336,7 @@ KEY_FS_SYN_HYBERNATION_PODS_MODULE_RESEARCHDEF_COMPLETE,Text,,"The First Assault
 KEY_FS_SYN_HYBERNATION_PODS_MODULE_RESEARCHDEF_NAME,Text,,First Assault Recon (FAR) Module,,Module Reco 1er Assaut(RPA),,,,,,
 KEY_FS_SYN_HYBERNATION_PODS_MODULE_RESEARCHDEF_UNLOCK,Text,,"Among the Phoenix Archives we have found the original designs for the First Assault Recon (FAR) Module, to carry up to four additional operatives in any aircraft. The FAR module also allows soldiers to effectively rest and recuperate mid-air.",,"Parmi les archives de Phoenix Point, nous avons trouvé les conceptions originales du module 'Reconnaissance de Premier Assaut' (RPA), pour transporter jusqu’à quatre agents supplémentaires dans n’importe quel aéronef. Le module RPA, aussi appelé Module d’Équipage Supplémentaire et de Récupération, car il permet également aux soldats de se reposer et de récupérer efficacement en vol.",,,,,,
 KEY_DLC3_GEOBONUS_STAMINA,Text,,Onboard personnel recovers Stamina and increases carrying capacity by four,,Capacité de transport augmentée de quatre places. Le personnel à bord récupère de l’endurance,,,,,,
-KEY_FS_SYN_HYBERNATION_PODS_MODULE_DESCRIPTION,Text,,Extra Crew and Recuperation Module,,Module d’Équipage Supplémentaire et de Récupération,,,,,,
+KEY_FS_SYN_HYBERNATION_PODS_MODULE_DESCRIPTION,Text,,Extra Crew and Recuperation Module,,"Module M-RPA 'Reconnaissance de Premier Assaut', Version Équipage Supplémentaire et de Récupération",,,,,,
 KEY_FS_SYN_HYBERNATION_PODS_MODULE_NAME,Text,,FAR-M,,M-RPA,,,,,,
 ANU_PISSED_BIONICS_TEXT_GENERAL_0,Text,,"Your clumsy experiments with bionics have not gone unnoticed. We are sorely disappointed. You are shredding the Imperfect Double Helix to replace it with mean metal. An evolutionary deadend, beyond the Salvation of the Evermutable. O! But how do you try Our patience, yes...",,"Vos expériences maladroites avec la bionique ne sont pas passées inaperçues. Nous sommes très déçus. Vous êtes en train de déchiqueter la Double Hélice Imparfaite pour la remplacer par du métal moyen. Une mort évolutionnaire, au-delà du Salut de Sans-Mutation. Oh ! Mais comment testez-vous notre patience, oui…",,,,,,
 ANU_PISSED_BIONICS_TITLE,Text,,Genes and Metals,,Gènes et Mlétaux,,,,,,
@@ -397,12 +395,12 @@ VOID_OMEN_DESCRIPTION_TEXT_6,Text,,"<i>“What did you expect? They too are capa
 VOID_OMEN_DESCRIPTION_TEXT_7,Text,,"<i>“It has nothing to do with meteorology. We know nothing about the Mist: why it moves, where to, why there is so much more of it all of a sudden. Yes, as a “Mist Expert” I admit I'm a fraud.”</i>",,"<i>“Cela n'a rien à voir avec la météorologie. Nous ne savons rien de la brume : pourquoi elle se déplace, où elle va, pourquoi il y en a tellement plus tout d'un coup. Oui, en tant qu'”expert en brouillard”, j'admets que je suis un imposteur.”</i>",,,,,,
 VOID_OMEN_DESCRIPTION_TEXT_8,Text,,"<i>“Them and us, we can't help but see the world that way. Odd how sometimes that peaks and we forget that we are all part of the same species. A species that is currently facing extinction.”</i>",,"<i>“Eux et nous, on ne peut s'empêcher de voir le monde de cette façon. C'est étrange comme parfois cela culmine et nous oublions que nous faisons tous partie de la même espèce. Une espèce qui est actuellement en voie d'extinction.”</i>",,,,,,
 VOID_OMEN_DESCRIPTION_TEXT_9,Text,,"<i>“I would say they are off the leash now, but, if so, who was holding it?”</i>",,"<i>“C'est un cauchemar éveillé. Peut-on s'habituer aux cauchemars ?”</i>",,,,,,
-VOID_OMEN_DESCRIPTION_TEXT_10,Text,,"<i>I can't wake up I can't wake up I can't wake up <b> I CAN'T WAKE UP</b></i>",,"<i>Je ne peux pas me réveiller Je ne peux pas me réveiller Je ne peux pas me réveiller <b>JE NE PEUX PAS ME REVEILLER</b></i>",,,,,,
-VOID_OMEN_DESCRIPTION_TEXT_11,Text,,"<i>It just won't quit</i>",,"<i>Il ne veut pas s'arrêter</i>",,,,,,
+VOID_OMEN_DESCRIPTION_TEXT_10,Text,,"<i>I can't wake up I can't wake up I can't wake up <b> I CAN'T WAKE UP</b></i>",,"<i>Je ne peux pas me réveiller - Je ne peux pas me réveiller - Je ne peux pas me réveiller <b>JE NE PEUX PAS ME REVEILLER</b></i>",,,,,,
+VOID_OMEN_DESCRIPTION_TEXT_11,Text,,"<i>It just won't quit</i>",,"<i>ça ne va dont pas s'arrêter</i>",,,,,,
 VOID_OMEN_DESCRIPTION_TEXT_12,Text,,"<i>They are throwing everything they have at us</i>",,"<i>Ils nous envoient tout ce qu'ils ont</i>",,,,,,
 VOID_OMEN_DESCRIPTION_TEXT_13,Text,,"<i>“Look, the Pandron Colonies don't just happen… They follow some pattern; I can't tell you what it is because we don't understand it… yet. But I can tell you that something has changed. </i>",,"<i>“Ecoutez, les Colonies Pandoriennes ne se créent pas par hasard... Elles suivent un certain modèle ; je ne peux pas vous dire lequel car nous ne le comprenons pas... pour le moment. Mais je peux vous dire que quelque chose a changé.”</i>",,,,,,
 VOID_OMEN_DESCRIPTION_TEXT_14,Text,,"<i>Have you noticed how things look less substantial these days? Like they were covered in fog, or made of cotton candy. Maybe it's just me.</i>",,"<i>Avez-vous remarqué que les choses ont l'air moins importantes de nos jours ? Comme si elles étaient couvertes de brouillard ou faites de barbe à papa. Peut-être que c'est juste moi.</i>",,,,,,
-VOID_OMEN_DESCRIPTION_TEXT_15,Text,,"<i>“Our people are seeing <b>more</b> oil monsters in the field. I look forward to the strict adherents of the scientific method explaining this away as our operatives going <b>more</b> crazy.”</i>",,"<i>“Nos hommes voient de <b>plus en plus</b> de monstres pétroliers sur le terrain. J'ai hâte que les adeptes de la méthode scientifique expliquent cela par le fait que nos agents deviennent de <b>plus en plus</b> fous.”</i>",,,,,,
+VOID_OMEN_DESCRIPTION_TEXT_15,Text,,"<i>“Our people are seeing <b>more</b> oil monsters in the field. I look forward to the strict adherents of the scientific method explaining this away as our operatives going <b>more</b> crazy.”</i>",,"<i>“Nos hommes voient de <b>plus en plus</b> de monstres de pétrole sur le terrain. J'ai hâte que les adeptes de la méthode scientifique expliquent cela par le fait que nos agents deviennent de <b>plus en plus</b> fous.”</i>",,,,,,
 VOID_OMEN_DESCRIPTION_TEXT_16,Text,,<i>It just isn't fair! Demons are supposed to follow rules too!</i>,,<i>Ce n'est pas juste ! Les démons sont censés suivre des règles aussi !</i>,,,,,,
 VOID_OMEN_DESCRIPTION_TEXT_17,Text,,<i>What if this is their end game? To turn us all into the puppets of an alien intelligence?</i>,,<i>Et si c'était leur but ultime ? Faire de nous tous les marionnettes d'une intelligence extraterrestre ?</i>,,,,,,
 VOID_OMEN_DESCRIPTION_TEXT_18,Text,,"<i>“To keep the Synedrion dream alive, we must keep our people alive. Join the volunteer militia today! Service guarantees basic alimentary allocation.”</i>
@@ -629,7 +627,7 @@ Vastly improved from the first New Jericho attempts, the technology no longer le
 
 - Dr. Abongameli Smith, Nouvelle Jéricho
 
-Largement améliorée par rapport aux premières tentatives de la Nouvelle Jéricho, la technologie bionique ne laisse plus les sujets morts ou estropiés. Une nouvelle série de bio-implants a été développée avec succès grâce à des avancées dans les coprocesseurs neuronaux et le développement d'alliages de métaux légers. Ces nouveaux implants permettent au personnel de résister à des dommages importants, d'atterrir en toute sécurité depuis de grandes hauteurs et même de traverser les murs si nécessaire.",,,,,,
+Largement améliorée par rapport aux premières tentatives de la Nouvelle Jéricho, la technologie bionique ne laisse plus les sujets morts ou estropiés. Une nouvelle série de bio-implants a été développée avec succès grâce à des avancées dans les coprocesseurs neuronaux et le développement d'alliages de métaux légers. Ces nouveaux implants permettent au personnel de résister à des dégâts importants, d'atterrir en toute sécurité depuis de grandes hauteurs et même de traverser les murs si nécessaire.",,,,,,
 TFTV_MUTATIONTECH_RESEARCHDEF_COMPLETE,Text,,"<i>“Those that partake of the Waters of Life say that, as their dreams become more vivid, their waking life becomes more dreamlike, till they know not when they are asleep and when they are awake. And always they feel most capable of incredible feats of arms and of vanquishing their enemies. I'm exhilarated by their confidence, yet I also fear their brutality.”</i>
 
 - Neophyte Ryodik, Disciples of Anu 
@@ -664,8 +662,7 @@ KEY_GEO_HINT_PANDORAN_BASE_DIPLOMACY_EFFECTS_DESCRIPTION,Text,,"In TFTV, Faction
 
 Each Pandoran colony contributes to Pandoran evolution: the more active Pandoran colonies there are, the faster the enemy will field more advanced units and the faster the Oneiric Delirium will grow. 
 
-In addition, destroying a more advanced Pandoran colony (a Lair or a Citadel) removes the earliest <b>Void Omen</b> currently in play. (On Rookie difficulty, destroying Nests also removes Void Omens). 
-",,"Dans TFTV, les factions ne réagiront <b>pas négativement</b> aux colonies pandoriennes révélées si vous ne parvenez pas à les détruire. Cependant, vous subirez une petite pénalité auprès des dirigeants des refuges proches.
+In addition, destroying a more advanced Pandoran colony (a Lair or a Citadel) removes the earliest <b>Void Omen</b> currently in play. (On Rookie difficulty, destroying Nests also removes Void Omens). ",,"Dans TFTV, les factions ne réagiront <b>pas négativement</b> aux colonies pandoriennes révélées si vous ne parvenez pas à les détruire. Cependant, vous subirez une petite pénalité auprès des dirigeants des refuges proches.
 
 Chaque colonie pandorienne contribue à l'évolution des Pandoriens : plus il y a de colonies pandoriennes actives, plus vite l'ennemi déploie des unités plus avancées et plus vite le délire onirique se développe.
 
@@ -950,12 +947,10 @@ HINT_ANCIENTS_HOPLITS_TITLE,Text,,"<i>“Frag me, what is that thing? Is that a�
 HINT_ANCIENTS_HOPLITS_TEXT,Text,,"This Ancient Automata is reactivating! While we have no intel on their capabilities, it seems like they are dormant while buried in the ground, but once they emerge they become alerted and gradually reactivate their systems, becoming stronger. The Automata also seem to be in varying states of disrepair.",,"Cet Automate antique se réactive ! Bien que nous n'ayons aucune information sur leurs capacités, il semble qu'ils soient dormants lorsqu'ils sont enterrés dans le sol, mais une fois qu'ils émergent, ils sont alertés et réactivent progressivement leurs systèmes, devenant plus forts. Les Automates semblent aussi être dans des états de délabrement variables.",,,,,,
 HINT_ANCIENTS_HOPLITSREPAIR_TITLE,Text,,<i>“The broken remains floated towards the damaged Automata”</i>,,"<i>“Les restes brisés ont flotté vers l'automate endommagé.”</i>",,,,,,
 HINT_ANCIENTS_HOPLITSREPAIR_TEXT,Text,,This Ancient Automata is trying to repair itself using the remains of the destroyed robot in its vicinity! It has also drained some of its power.,,"Cet Automate antique essaie de se réparer en utilisant les restes du robot détruit à proximité ! Il a également drainé une partie de son énergie.",,,,,,
-HINT_ANCIENTS_HOPLITSMAXPOWER_TITLE,Text,,"<i>“Whirl whirl whirl Vroom!”</i>
-",,"<i>“Tourne tourne tourne Vroom!”</i>
+HINT_ANCIENTS_HOPLITSMAXPOWER_TITLE,Text,,"<i>“Whirl whirl whirl Vroom!”</i>",,"<i>“Tourne tourne tourne Vroom!”</i>
 ",,,,,,
 HINT_ANCIENTS_HOPLITSMAXPOWER_TEXT,Text,,The Ancient Automata is now fully charged; damage increased significantly and damage resistance gained.,,"L'Automate antique est maintenant complètement chargé ; les dégâts ont augmenté de manière significative et la résistance aux dégâts a été renforcée",,,,,,
-HELENA_ECHOES_TITLE,Text,,"The Echoes of the Ancients
-",,"Les échos des Anciens
+HELENA_ECHOES_TITLE,Text,,"The Echoes of the Ancients",,"Les échos des Anciens
 ",,,,,,
 HELENA_ECHOES_TEXT,Text,,"This is something neither West nor Symes understood, or wanted to understand, although I tried explaining it to them many times. History is about making sense of the present by understanding the past. Cause and effect, reverberation and resonance. But when it comes to the Ancients, their echoes are getting stronger, and they started getting stronger with the First Mist. 
 
@@ -1013,88 +1008,101 @@ Le Cristal Vivant résout le paradoxe. Nous n'avons jamais rencontré les Ancien
 OLENA_ONEIROMANCY_TITLE,Text,,Reversed Oneiromancy,,Oniromancie inversée,,,,,,
 OLENA_ONEIROMANCY_TEXT,Text,,"Yes, the Living Crystal must be the “memory module” that we have been looking for… And I believe I know how we can access it: we need to reactivate one of the Cyclops. 
 
-Data never really disappears unless the storage medium is destroyed or it is overwritten. In this case, the medium is beyond our understanding. I can’t explain how something like the Oneiric Delirium exists, or what the Living Crystals are, but they are related; our dreams can’t be a coincidence. I think they are part of, or use the same pathways, or “network “... What we need is a more direct interface, and one that we can use while awake.",,"Yes, the Living Crystal must be the “memory module” that we have been looking for… And I believe I know how we can access it: we need to reactivate one of the Cyclops. 
+Data never really disappears unless the storage medium is destroyed or it is overwritten. In this case, the medium is beyond our understanding. I can’t explain how something like the Oneiric Delirium exists, or what the Living Crystals are, but they are related; our dreams can’t be a coincidence. I think they are part of, or use the same pathways, or “network”... What we need is a more direct interface, and one that we can use while awake.",,"Yes, the Living Crystal must be the “memory module” that we have been looking for… And I believe I know how we can access it: we need to reactivate one of the Cyclops. 
 
 Data never really disappears unless the storage medium is destroyed or it is overwritten. In this case, the medium is beyond our understanding. I can’t explain how something like the Oneiric Delirium exists, or what the Living Crystals are, but they are related; our dreams can’t be a coincidence. I think they are part of, or use the same pathways, or “network”... What we need is a more direct interface, and one that we can use while awake.",,,,,,
 OLENA_ONEIROMANCY_CHOICE,Text,,So you want to repair and reactivate an ancient killer robot so that you can poke about in its memory banks? What could possibly go wrong.,,"Vous voulez donc réparer et réactiver un ancien robot tueur pour pouvoir fouiller dans ses banques de données ? Qu'est-ce qui pourrait mal tourner.",,,,,,
 OLENA_ONEIROMANCY_OUTCOME,Text,,It's going to be OK.,,"Tout va bien se passer.",,,,,,
-CYCLOP_DREAMS_TITLE,Text,,"Digitize my Dreams, the Cyclops Said
-",,"“Numérisez mes rêves”, dit le cyclope.
+CYCLOP_DREAMS_TITLE,Text,,"Digitize my Dreams, the Cyclops Said",,"“Numérisez mes rêves”, dit le cyclope.
 ",,,,,,
 CYCLOP_DREAMS_TEXT,Text,,"The plan worked, but we can only understand a tiny fraction of the information contained in the data dump. It is enough. Enough to overturn much of what we thought we knew and, critical to our current existential threat, of what we thought we knew about the Pandoravirus. 
 
-It is ancient, yes; we suspected as much since the infection of our ecosystem began with the melting of the permafrost. But, thanks to the meticulous charts of our Solar system drawn up by the Ancients, we now know that the Pandoravirus didn’t originate on our planet: it arrived 1.8 million years ago on an asteroid that intersected the orbit of a “ninth planet” before it crashed into Earth.",,,,,,,,
+It is ancient, yes; we suspected as much since the infection of our ecosystem began with the melting of the permafrost. But, thanks to the meticulous charts of our Solar system drawn up by the Ancients, we now know that the Pandoravirus didn’t originate on our planet: it arrived 1.8 million years ago on an asteroid that intersected the orbit of a “ninth planet” before it crashed into Earth.",,"Le plan a fonctionné, mais nous ne pouvons comprendre qu'une infime partie des informations contenues dans la décharge de données. C'est suffisant. Assez pour renverser une grande partie de ce que nous pensions savoir et, ce qui est crucial pour notre menace existentielle actuelle, de ce que nous pensions savoir sur le Pandoravirus. 
+
+Il est ancien, oui ; nous nous en doutions depuis que l'infection de notre écosystème a commencé avec la fonte du permafrost. Mais, grâce aux cartes méticuleuses de notre système solaire établies par les Anciens, nous savons maintenant que le Pandoravirus n'est pas né sur notre planète : il est arrivé il y a 1,8 million d'années sur un astéroïde qui a croisé l'orbite d'une “neuvième planète” avant de s'écraser sur la Terre.",,,,,,
 ALISTAIR_PROGRESS_TITLE,Text,,Survival and Progress,,"Survie et progrès",,,,,,
 ALISTAIR_PROGRESS_TEXT,Text,,"Back in the day I would have gone on a rant about how crazy it is to use the few magic beans humanity ever found to make a few cool looking weapons. The things we could build with this stuff! But survival comes before progress, and maybe survival is all we can afford for now. 
 
-However, there must be a lot more of these exotic materials on our planet and we can search for them properly if we win the war.",,,,,,,,
+However, there must be a lot more of these exotic materials on our planet and we can search for them properly if we win the war.",,"À l'époque, je me serais lancé dans une diatribe sur la folie d'utiliser les quelques haricots magiques que l'humanité a trouvés pour fabriquer quelques armes sympas. Les choses que nous pourrions construire avec ces trucs ! Mais la survie passe avant le progrès, et peut-être que la survie est tout ce que nous pouvons nous permettre pour le moment. 
+
+Cependant, il doit y avoir beaucoup plus de ces matériaux exotiques sur notre planète et nous pouvons les rechercher correctement si nous gagnons la guerre.",,,,,,
 HELENA_BEAST_TITLE,Text,,Protect the Beast,,"Protéger la bête",,,,,,
-HELENA_BEAST_TEXT,Text,,Director! We have detected a Pandoran force approaching the site with the reactivated Cyclops. We must defend it at all costs! ,,,,,,,,
+HELENA_BEAST_TEXT,Text,,"Director! We have detected a Pandoran force approaching the site with the reactivated Cyclops. We must defend it at all costs!",,"Directeur ! Nous avons détecté une force pandorienne qui s'approche du site avec le Cyclope réactivé. Nous devons le défendre à tout prix !",,,,,,
 HELENA_VIROPHAGE_TITLE,Text,,Builder of Worlds,,"Bâtisseur de mondes",,,,,,
 HELENA_VIROPHAGE_TEXT,Text,,"Director, I believe that with all the information we have gathered, we have a much greater advantage than the Ancients ever had to use the Virophage to defeat the Pandoravirus while minimizing our own losses.
 
 We have a tested solution at our disposal, and once it is done, we will be the ones guiding Humanity forward, recovering the wonders of the Ancients and putting them to the proper use.
 
-You may be tempted to align the Phoenix Project with one of the factions and their vision for the future of our species, but remember that they only want us to help them win. After that, they will disregard us even as they pretend to honor our sacrifices. We will plead with them to listen to us and they will ignore us, as they always have until it is too late.",,,,,,,,
-PROTECT_THE_CYCLOPS,Text,,PROTECT THE CYCLOPS,,,,,,,,
-KEY_BASE_FACILITY_ARCHEOLOGY_LAB_DESCRIPTION,Text,,The Archaeology Lab allows the construction of Archaeology Probes. You only need one Archaelogy Lab and there are no benefits to having more than that. Note that it does not generate regular research.,,,,,,,,
-KEY_DEPLOYGUARDIAN_POPUP_BUTTON,Text,,REACTIVATE BROKEN CYCLOPS,,,,,,,,
-KEY_DEPLOYGUARDIAN_POPUP_DESCRIPTION,Text,,Reactivate a broken cyclops to access its memory and learn what really happened to the Ancients,,,,,,,,
-KEY_DEPLOYGUARDIAN_POPUP_LISTCOSTS,Text,,COST OF REPAIRS,,,,,,,,
-KEY_DEPLOYGUARDIAN_POPUP_NAME,Text,,REACTIVATE BROKEN CYCLOPS,,,,,,,,
-KEY_GEO_ANCIENT_GUARDIAN_GUARD_DESCRIPTION,Text,,Reactivate a broken cyclops to access its memory and learn what really happened to the Ancients,,,,,,,,
-KEY_GEO_ANCIENT_GUARDIAN_GUARD_NAME,Text,,REACTIVATE BROKEN CYCLOPS,,,,,,,,
-KEY_MESSAGE_MISSING_REFINERY,Text,,YOU HAVE NOT RESEARCHED ALL THE REQUIRED TECHNOLOGIES,,,,,,,,
-KEY_TUTORIAL_DLC2_ANCIENT_SITE_DESCRIPTION,Text,,"Send an aircraft to set up an Exploration operation at the site. Once Exploration starts, the presence of aircraft is no longer needed.",,,,,,,,
-KEY_TUTORIAL_DLC2_EXCAVATION_DONE_NAME,Text,,We've completed our first ancient site Exploration!,,,,,,,,
-KEY_TUTORIAL_DLC2_HARVESITNG_DESCRIPTION,Text,,"In TFTV, you immediately gain some amount of an exotic resource when you take control of an ancient site from the Automata. The amount of resources depends on type of resource and difficulty level, or alternatively the manual setting used in the Mod config.",,,,,,,,
-KEY_TUTORIAL_DLC2_HARVESITNG_NAME,Text,,ANCIENT SITE,,,,,,,,
-KEY_TUTORIAL_DLC2_REFINERY_DESCRIPTIOY,Text,,"In TFTV, you immediately gain some amount of an exotic resource when you take control of an ancient site from the Automata. The amount of resources depends on type of resource and difficulty level, or alternatively the manual setting used in the Mod config.",,,,,,,,
-KEY_TUTORIAL_DLC2_REFINERY_NAME,Text,,ANCIENT SITE,,,,,,,,
-KEY_AC_PROTEAN_HARVEST_AFTER_REVEAL,Text,,PROTEAN MUTANE SITE,,,,,,,,
-KEY_AC_PROTEAN_REFINERY_AFTER_REVEAL,Text,,PROTEAN MUTANE SITE,,,,,,,,
-KEY_AC_ORICHALCUM_HARVEST_AFTER_REVEAL,Text,,ORICHALCUM SITE,,,,,,,,
-KEY_AC_ORICHALCUM_REFINERY_AFTER_REVEAL,Text,,ORICHALCUM SITE,,,,,,,,
-KEY_AC_CRYSTAL_HARVEST_AFTER_REVEAL,Text,,LIVING CRYSTAL SITE,,,,,,,,
-KEY_AC_CRYSTAL_REFINERY_AFTER_REVEAL,Text,,LIVING CRYSTAL SITE,,,,,,,,
-CYCLOPS_DEFENSE_NAME,Text,,CYCLOPS DEFENSE,,,,,,,,
-CYCLOPS_DEFENSE_DESCRIPTION,Text,,"Before any Hoplites are destroyed, the Cyclops has a 50% resistance to all damage. Destroying Hoplites reduces this resistance.",,,,,,,,
-HOPLITES_SELF_REPAIR_NAME,Text,,HOPLITES SELF-REPAIR,,,,,,,,
-HOPLITES_SELF_REPAIR_DESCRIPTION,Text,,"Any Automata destroyed within 7 tiles of another one will allow it to recover a missing body part or 50 HP, and 5 WP",,,,,,,,
-POWERED_UP_NAME,Text,,ALL POWERED UP,,,,,,,,
-POWERED_UP_DESCRIPTION,Text,,"From the moment it is alerted, an Automata gains 5 WP per turn. Its speed is determined by its current WP. Once it reaches maximum WP, it gains the this status, receving +50% damage to all attacks and 25% damage resistance",,,,,,,,
+You may be tempted to align the Phoenix Project with one of the factions and their vision for the future of our species, but remember that they only want us to help them win. After that, they will disregard us even as they pretend to honor our sacrifices. We will plead with them to listen to us and they will ignore us, as they always have until it is too late.",,"Directeur, je crois qu'avec toutes les informations que nous avons recueillies, nous avons un avantage bien plus grand que les Anciens n'ont jamais eu pour utiliser le Virophage afin de vaincre le Pandoravirus tout en minimisant nos propres pertes.
+
+Nous disposons d'une solution testée, et une fois que ce sera fait, nous serons ceux qui guideront l'humanité vers l'avant, en récupérant les merveilles des Anciens et en les utilisant à bon escient.
+
+Vous pouvez être tenté d'aligner le Projet Phoenix sur l'une des factions et leur vision de l'avenir de notre espèce, mais rappelez-vous qu'ils veulent seulement que nous les aidions à gagner. Après cela, ils nous ignoreront même s'ils prétendent honorer nos sacrifices. Nous les supplierons de nous écouter et ils nous ignoreront, comme ils l'ont toujours fait jusqu'à ce qu'il soit trop tard.",,,,,,
+PROTECT_THE_CYCLOPS,Text,,PROTECT THE CYCLOPS,,PROTÉGER LES CYCLOPES,,,,,,
+KEY_BASE_FACILITY_ARCHEOLOGY_LAB_DESCRIPTION,Text,,The Archaeology Lab allows the construction of Archaeology Probes. You only need one Archaelogy Lab and there are no benefits to having more than that. Note that it does not generate regular research.,,"Le laboratoire d'archéologie permet de construire des sondes archéologiques. Vous n'avez besoin que d'un seul laboratoire d'archéologie et il n'y a aucun avantage à en avoir plus. Notez qu'il ne génère pas de recherche régulière.",,,,,,
+KEY_DEPLOYGUARDIAN_POPUP_BUTTON,Text,,REACTIVATE BROKEN CYCLOPS,,RÉACTIVER LES CYCLOPES DÉTRUITS,,,,,,
+KEY_DEPLOYGUARDIAN_POPUP_DESCRIPTION,Text,,Reactivate a broken cyclops to access its memory and learn what really happened to the Ancients,,"Réactivez un cyclope cassé pour accéder à sa mémoire et apprendre ce qui est réellement arrivé aux Anciens.",,,,,,
+KEY_DEPLOYGUARDIAN_POPUP_LISTCOSTS,Text,,COST OF REPAIRS,,COÛT DES RÉPARATIONS,,,,,,
+KEY_DEPLOYGUARDIAN_POPUP_NAME,Text,,REACTIVATE BROKEN CYCLOPS,,RÉACTIVER LES CYCLOPES DÉTRUITS,,,,,,
+KEY_GEO_ANCIENT_GUARDIAN_GUARD_DESCRIPTION,Text,,Reactivate a broken cyclops to access its memory and learn what really happened to the Ancients,,"Réactivez un cyclope cassé pour accéder à sa mémoire et apprendre ce qui est réellement arrivé aux Anciens.",,,,,,
+KEY_GEO_ANCIENT_GUARDIAN_GUARD_NAME,Text,,REACTIVATE BROKEN CYCLOPS,,RÉACTIVER LES CYCLOPES DÉTRUITS,,,,,,
+KEY_MESSAGE_MISSING_REFINERY,Text,,YOU HAVE NOT RESEARCHED ALL THE REQUIRED TECHNOLOGIES,,VOUS N'AVEZ PAS FAIT DE RECHERCHES SUR TOUTES LES TECHNOLOGIES REQUISES,,,,,,
+KEY_TUTORIAL_DLC2_ANCIENT_SITE_DESCRIPTION,Text,,"Send an aircraft to set up an Exploration operation at the site. Once Exploration starts, the presence of aircraft is no longer needed.",,"Envoyez un avion pour mettre en place une opération d'Exploration sur le site. Une fois l'Exploration commencée, la présence des avions n'est plus nécessaire.",,,,,,
+KEY_TUTORIAL_DLC2_EXCAVATION_DONE_NAME,Text,,We've completed our first ancient site Exploration!,,"Nous avons terminé notre première exploration de site antique !",,,,,,
+KEY_TUTORIAL_DLC2_HARVESITNG_DESCRIPTION,Text,,"In TFTV, you immediately gain some amount of an exotic resource when you take control of an ancient site from the Automata. The amount of resources depends on type of resource and difficulty level, or alternatively the manual setting used in the Mod config.",,"Dans TFTV, vous gagnez immédiatement une certaine quantité de ressources exotiques lorsque vous prenez le contrôle d'un site ancien des Automates. La quantité de ressources dépend du type de ressource et du niveau de difficulté, ou encore du réglage manuel utilisé dans la configuration du Mod.",,,,,,
+KEY_TUTORIAL_DLC2_HARVESITNG_NAME,Text,,ANCIENT SITE,,SITE ANTIQUE,,,,,,
+KEY_TUTORIAL_DLC2_REFINERY_DESCRIPTIOY,Text,,"In TFTV, you immediately gain some amount of an exotic resource when you take control of an ancient site from the Automata. The amount of resources depends on type of resource and difficulty level, or alternatively the manual setting used in the Mod config.",,"Dans TFTV, vous gagnez immédiatement une certaine quantité de ressources exotiques lorsque vous prenez le contrôle d'un site ancien des Automates. La quantité de ressources dépend du type de ressource et du niveau de difficulté, ou encore du réglage manuel utilisé dans la configuration du Mod.",,,,,,
+KEY_TUTORIAL_DLC2_REFINERY_NAME,Text,,ANCIENT SITE,,SITE ANTIQUE,,,,,,
+KEY_AC_PROTEAN_HARVEST_AFTER_REVEAL,Text,,PROTEAN MUTANE SITE,,SITE DE MUTANE PROTÉIFORME,,,,,,
+KEY_AC_PROTEAN_REFINERY_AFTER_REVEAL,Text,,PROTEAN MUTANE SITE,,SITE DE MUTANE PROTÉIFORME,,,,,,
+KEY_AC_ORICHALCUM_HARVEST_AFTER_REVEAL,Text,,ORICHALCUM SITE,,SITE D'ORICHALQUE,,,,,,
+KEY_AC_ORICHALCUM_REFINERY_AFTER_REVEAL,Text,,ORICHALCUM SITE,,SITE D'ORICHALQUE,,,,,,
+KEY_AC_CRYSTAL_HARVEST_AFTER_REVEAL,Text,,LIVING CRYSTAL SITE,,SITE DE CRISTAL VIVANT,,,,,,
+KEY_AC_CRYSTAL_REFINERY_AFTER_REVEAL,Text,,LIVING CRYSTAL SITE,,SITE DE CRISTAL VIVANT,,,,,,
+CYCLOPS_DEFENSE_NAME,Text,,CYCLOPS DEFENSE,,DÉFENSE DU CYCLOPE,,,,,,
+CYCLOPS_DEFENSE_DESCRIPTION,Text,,"Before any Hoplites are destroyed, the Cyclops has a 50% resistance to all damage. Destroying Hoplites reduces this resistance.",,"Avant que les Hoplites ne soient détruits, le Cyclope a une résistance de 50% à tous les dégâts. Détruire des Hoplites réduit cette résistance.",,,,,,
+HOPLITES_SELF_REPAIR_NAME,Text,,HOPLITES SELF-REPAIR,,"AUTO-RÉPARATION DES HOPLITES",,,,,,
+HOPLITES_SELF_REPAIR_DESCRIPTION,Text,,"Any Automata destroyed within 7 tiles of another one will allow it to recover a missing body part or 50 HP, and 5 WP",,"Tout Automate détruit à moins de 7 cases d'un autre Automate permettra à ce dernier de récupérer une partie manquante de son corps, ou 50 PV, et 5 Volonté",,,,,,
+POWERED_UP_NAME,Text,,ALL POWERED UP,,TOUT EST SOUS TENSION,,,,,,
+POWERED_UP_DESCRIPTION,Text,,"From the moment it is alerted, an Automata gains 5 WP per turn. Its speed is determined by its current WP. Once it reaches maximum WP, it gains the this status, receving +50% damage to all attacks and 25% damage resistance",,"A partir du moment où il est alerté, un Automate gagne 5 Volonté par tour. Sa vitesse est déterminée par sa Volonté actuelle. Une fois qu'il a atteint la Volonté maximum, il gagne ce statut, recevant +50% de dégâts à toutes les attaques et 25% de résistance aux dégâts",,,,,,
 UNKNOWN_STATUS_NAME,Text,,?,,,,,,,,
-UNKNOWN_STATUS_DESCRIPTION,Text,,Research the entity to learn what it is capable of,,,,,,,,
-KEY_EMP_RESISTANCE_NAME,Text,,IMMUNE TO EMP,,,,,,,,
-KEY_EMP_RESISTANCE_DESCRIPTION,Text,,Immune to EMP attacks,,,,,,,,
-IMMUNITY_TO_PARALYSIS_NAME,Text,,IMMUNE TO PARALYZE WEAPONS,,,,,,,,
-IMMUNITY_TO_PARALYSIS_DESCRIPTION,Text,,Immune to Paralyze weapons,,,,,,,,
-KEY_TUTORIAL_DLC2_ARCHEOLOGY_NAME,Text,,We've completed our Archaeology Lab!,,,,,,,,
-CAN_BUILD_CYCLOPS_TITLE,Text,,Necroneuromant,,,,,,,,
-CAN_BUILD_CYCLOPS_TEXT,Text,,"Now that we have analyzed samples of both the Living Crystal and of the Protean Mutane, our scientists and engineers are confident that they can reactivate a Cyclops to access its memories and discover what happened to the Ancients. Olena has warned me that she will need some time to interface with the entity.",,,,,,,,
-BUILD_CYCLOPS_OBJECTIVE,Text,,Reactivate a Cyclops at one of the Ancient Sites under your control,,,,,,,,
-OBTAIN_LC_OBJECTIVE,Text,,Obtain a Living Crystal sample,,,,,,,,
-OBTAIN_PM_OBJECTIVE,Text,,Obtain a Protean Mutane sample,,,,,,,,
-PROTECT_THE_CYCLOPS_OBJECTIVE_GEO_TITLE,Text,,Protect the Cyclops from the Pandoran attack,,,,,,,,
-REVENANT_STATUS_TITLE_ASSAULT,Text,,FORMER ASSAULT,,,,,,,,
+UNKNOWN_STATUS_DESCRIPTION,Text,,Research the entity to learn what it is capable of,,"Faites des recherches sur l'entité pour savoir ce dont elle est capable.",,,,,,
+KEY_EMP_RESISTANCE_NAME,Text,,IMMUNE TO EMP,,IMMUNISÉ A L'EMP,,,,,,
+KEY_EMP_RESISTANCE_DESCRIPTION,Text,,Immune to EMP attacks,,"Immunisé contre les attaques utilisant des EMP",,,,,,
+IMMUNITY_TO_PARALYSIS_NAME,Text,,IMMUNE TO PARALYZE WEAPONS,,IMMUNISÉ CONTRE LA PARALYSIE,,,,,,
+IMMUNITY_TO_PARALYSIS_DESCRIPTION,Text,,Immune to Paralyze weapons,,"Immunisé contre les attaques paralysantes",,,,,,
+KEY_TUTORIAL_DLC2_ARCHEOLOGY_NAME,Text,,We've completed our Archaeology Lab!,,"Nous avons terminé notre laboratoire d'archéologie !",,,,,,
+CAN_BUILD_CYCLOPS_TITLE,Text,,Necroneuromant,,"Nécroneuromancien",,,,,,
+CAN_BUILD_CYCLOPS_TEXT,Text,,"Now that we have analyzed samples of both the Living Crystal and of the Protean Mutane, our scientists and engineers are confident that they can reactivate a Cyclops to access its memories and discover what happened to the Ancients. Olena has warned me that she will need some time to interface with the entity.",,"Maintenant que nous avons analysé des échantillons du Cristal Vivant et du Mutane protéiforme, nos scientifiques et ingénieurs sont confiants dans leur capacité à réactiver un Cyclope pour accéder à ses souvenirs et découvrir ce qui est arrivé aux Anciens. Olena m'a prévenu qu'elle aura besoin de temps pour s'interfacer avec l'entité.",,,,,,
+BUILD_CYCLOPS_OBJECTIVE,Text,,Reactivate a Cyclops at one of the Ancient Sites under your control,,"Réactivez un cyclope sur l'un des sites antiques sous votre contrôle.",,,,,,
+OBTAIN_LC_OBJECTIVE,Text,,Obtain a Living Crystal sample,,"Obtenez un échantillon de cristal vivant",,,,,,
+OBTAIN_PM_OBJECTIVE,Text,,Obtain a Protean Mutane sample,,"Obtenez un échantillon de mutane protéiforme",,,,,,
+PROTECT_THE_CYCLOPS_OBJECTIVE_GEO_TITLE,Text,,Protect the Cyclops from the Pandoran attack,,"Protéger le cyclope de l'attaque des Pandoriens",,,,,,
+REVENANT_STATUS_TITLE_ASSAULT,Text,,FORMER ASSAULT,,ANCIEN ASSAUT,,,,,,
 REVENANT_STATUS_DESCRIPTION_ASSAULT,Text,,,,,,,,,,
-REVENANT_STATUS_TITLE_BERSERKER,Text,,FORMER BERSERKER,,,,,,,,
+REVENANT_STATUS_TITLE_BERSERKER,Text,,FORMER BERSERKER,,ANCIEN BERSERKER,,,,,,
 REVENANT_STATUS_DESCRIPTION_BERSERKER,Text,,,,,,,,,,
-REVENANT_STATUS_TITLE_HEAVY,Text,,FORMER HEAVY,,,,,,,,
+REVENANT_STATUS_TITLE_HEAVY,Text,,FORMER HEAVY,,ANCIEN MASTODONTE,,,,,,
 REVENANT_STATUS_DESCRIPTION_HEAVY,Text,,,,,,,,,,
-REVENANT_STATUS_TITLE_INFILTRATOR,Text,,FORMER INFILTRATOR,,,,,,,,
+REVENANT_STATUS_TITLE_INFILTRATOR,Text,,FORMER INFILTRATOR,,ANCIEN INFILTRE,,,,,,
 REVENANT_STATUS_DESCRIPTION_INFILTRATOR,Text,,,,,,,,,,
-REVENANT_STATUS_TITLE_PRIEST,Text,,FORMER PRIEST,,,,,,,,
+REVENANT_STATUS_TITLE_PRIEST,Text,,FORMER PRIEST,,ANCIEN PRETRE,,,,,,
 REVENANT_STATUS_DESCRIPTION_PRIEST,Text,,,,,,,,,,
-REVENANT_STATUS_TITLE_SNIPER,Text,,FORMER SNIPER,,,,,,,,
+REVENANT_STATUS_TITLE_SNIPER,Text,,FORMER SNIPER,,ANCIEN SNIPER,,,,,,
 REVENANT_STATUS_DESCRIPTION_SNIPER,Text,,,,,,,,,,
-REVENANT_STATUS_TITLE_TECHNICIAN,Text,,FORMER TECHNICIAN,,,,,,,,
+REVENANT_STATUS_TITLE_TECHNICIAN,Text,,FORMER TECHNICIAN,,ANCIEN TECHNICIEN,,,,,,
 REVENANT_STATUS_DESCRIPTION_TECHNICIAN,Text,,,,,,,,,,
-HINT_HOSTILE_DEFENDERS_TITLE,Text,,Hostile haven defenders,,,,,,,,
+HINT_HOSTILE_DEFENDERS_TITLE,Text,,Hostile haven defenders,,Défenseurs hostiles du Refuge,,,,,,
 HINT_HOSTILE_DEFENDERS_TEXT,Text,,"<i>“Come to rescue us, have they? They are the ones who brought the damn critters on us in the first place! Fragging nerds…”</i>
 
 While this Void Omen is in effect, haven defenders will be hostile to you and attack your operatives on sight, but <b>killing them is not required to win the mission</b>.
 
 Gain XP by protecting structures or civilians as usual.
 
-You can loot crates with faction weapons, but only the equipment in your operatives or vehicles inventory will be recovered.",,,,,,,,
+You can loot crates with faction weapons, but only the equipment in your operatives or vehicles inventory will be recovered.",,"<i>“Ils sont venus nous sauver, n'est-ce pas ? Ce sont eux qui ont amené ces satanées bestioles sur nous en premier lieu ! Fragging nerds…”</i>
+
+Tant que ce présage du néant est en vigueur, les défenseurs du havre vous seront hostiles et attaqueront vos agents à vue, mais <b>les tuer n'est pas nécessaire pour gagner la mission</b>.
+
+Gagnez de l'XP en protégeant les structures ou les civils comme d'habitude.
+
+Vous pouvez piller les caisses avec des armes de faction, mais seul l'équipement dans l'inventaire de vos agents ou de vos véhicules sera récupéré.",,,,,,

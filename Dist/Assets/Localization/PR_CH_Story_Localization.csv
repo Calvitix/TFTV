@@ -9,7 +9,7 @@ Une espèce améliorée d'Achéron qui a évolué pour libérer des produits chi
 KEY_CH_ALN_ACHERON_ACHLYS_RESEARCHDEF_NAME,Text,,ACHERON ACHLYS,,ACHERON ACHLYS,,,,,,
 KEY_CH_ALN_ACHERON_ASCLEPIUS_CHAMPION_RESEARCHDEF_COMPLETE,Text,,"Species classification AC-Alpha-2
 Considered a superior version of the Acheron Asclepius the specimen is of superior strength as well as capable of shooting goo at enemies to immobilise them. The creature retains the ability to recover the health and armor of other Pandorans, as well as grant them the ability to inflict corruption in combat. The Acheron is also capable of mutating living Pandorans out of dead bodies.",,"Classification de l'espèce AC-Alpha-2
-Considéré comme une version supérieure de l'Acheron Asclepius, le spécimen est d'une force supérieure et est capable de lancer du goo sur ses ennemis pour les immobiliser. La créature conserve la capacité de restaurer la santé et l'armure des autres Pandoriens, ainsi que de leur accorder la capacité d'infliger la corruption en combat. L'Achéron est également capable de faire muter des Pandoriens vivants à partir de cadavres.",,,,,,
+Considéré comme une version supérieure de l'Acheron Asclepius, le spécimen est d'une force supérieure et est capable de lancer de la gelée sur ses ennemis pour les immobiliser. La créature conserve la capacité de restaurer la santé et l'armure des autres Pandoriens, ainsi que de leur accorder la capacité d'infliger la corruption en combat. L'Achéron est également capable de faire muter des Pandoriens vivants à partir de cadavres.",,,,,,
 KEY_CH_ALN_ACHERON_ASCLEPIUS_CHAMPION_RESEARCHDEF_NAME,Text,,ACHERON ASCLEPIUS CHAMPION,,ACHERON ASCLEPIUS CHAMPION,,,,,,
 KEY_CH_ALN_ACHERON_ASCLEPIUS_RESEARCHDEF_COMPLETE,Text,,"Species classification AC-Alpha-1
 An advanced form of Acheron, this specimen has mutated to use regenerative spray to remove negative status effects from enemies as well as restore their armor. The greatest threat of the entity is its ability to mutate and transform corpses into Tritons and Arthrons. While on the battlefield, the creature releases organic chemicals, allowing all Pandorans to spread Oneiric Delirium.",,"Classification de l'espèce AC-Alpha-1
@@ -348,7 +348,7 @@ Augmented body parts are IMMUNE TO BLEEDING and RESISTANT TO VIRAL DAMAGE, POISO
 
 Une fois l'augmentation installée, le soldat ne pourra pas revenir à ses membres naturels. Cependant, les parties du corps augmentées peuvent être échangées avec d'autres parties cybernétiques.
 
-Les parties du corps augmentées sont immunisées contre les saignements et résistent aux dommages causés par les virus, les poisons et la paralysie. Les parties cybernétiques endommagées PEUVENT ÊTRE REMPLACÉES après la bataille au prix de la technologie et des matériaux. ",,,,,,
+Les parties du corps augmentées sont immunisées contre les saignements et résistent aux dégâts causés par les virus, les poisons et la paralysie. Les parties cybernétiques endommagées PEUVENT ÊTRE REMPLACÉES après la bataille au prix de la technologie et des matériaux. ",,,,,,
 KEY_GEO_HINT_AUGMENTATION_SCREEN_NAME,Text,,AUGMENTING A SOLDIER,,AUGMENTER UN SOLDAT,,,,,,
 KEY_GEO_HINT_CYBERNETICS_LAB_BUILT_DESCRIPTION,Text,,"The construction of your Cybernetics Lab is complete. You will now be able to AUGMENT SOLDIERS, replacing their natural limbs with powerful cybernetics.
 

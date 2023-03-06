@@ -80,10 +80,10 @@ Suite au prosélytisme occasionnel de Sartorius sur les droits des personnes art
 
 Eileen fait apparaitre un affichage holo de [HavenName]. ""C’est là qu’ils entreposent l’œuf que j’ai apporté. Rejoins-moi là-bas dans 15 minutes, je trouverai comment éloigner Pete de la zone. Il n’est pas très bon comme garde, et c'est un terrible poète. Rappelez-vous : personne ne meurt, l’œuf est détruit. Entre-temps, mes amis finiront de remettre à neuf l’Aurora.""",,,,,,
 PROG_FS1_MISS_TITLE,Text,,The Hatching,,L’éclosion,,,,,,
-PROG_FS1_OUTCOME,Text,,"<i>""This is Citizen Eileen. If you are getting this, I know that you saw what I saw: there were thousands of those… eggs. And I brought one of them here, and those fools are still ""working to achieve a consensus on a reasonable course of action"" instead of burning it. If... When it hatches it's going to get bad. Help me destroy it before whatever inside comes out, and I’ll give you use of this Manticore.""</i>
+PROG_FS1_OUTCOME,Text,,"<i>""This is Citizen Eileen. If you are getting this, I know that you saw what I saw: there were thousands of those... eggs. And I brought one of them here, and those fools are still ""working to achieve a consensus on a reasonable course of action"" instead of burning it. If... When it hatches it's going to get bad. Help me destroy it before whatever inside comes out, and I’ll give you use of this Manticore.""</i>
 
 We should investigate this egg and collect samples of it if possible.
-",,"<i>""Voici la citoyenne Eileen. Si vous obtenez ceci, je sais que vous avez vu ce que j’ai vu : il y avait des milliers de ces… œufs. Et j’en ai amené un ici, et ces imbéciles sont encore en train de ""travailler à un consensus sur un plan d’action raisonnable"" au lieu de le brûler. Si... Quand il va éclore, ça va devenir mauvais. Aidez-moi à le détruire avant que ce qui est à l’intérieur ne sorte, et je vous donnerai accès à ce Manticore.""</i>
+",,"<i>""Voici la citoyenne Eileen. Si vous obtenez ceci, je sais que vous avez vu ce que j’ai vu : il y avait des milliers de ces... œufs. Et j’en ai amené un ici, et ces imbéciles sont encore en train de ""travailler à un consensus sur un plan d’action raisonnable"" au lieu de le brûler. Si... Quand il va éclore, ça va devenir mauvais. Aidez-moi à le détruire avant que ce qui est à l’intérieur ne sorte, et je vous donnerai accès à ce Manticore.""</i>
 
 Nous devrions étudier cet œuf et prélever des échantillons si possible.",,,,,,
 PROG_FS1_TEXT_GENERAL_0,Text,,"From the findings of the Synedrion expedition, a hypothesis arises: Hammerfall has precipitated profound changes in the Pandoran ecology. Furthermore, the object extracted by Citizen Eileen appears to be an egg that will hatch a very large flying creature. An intense public debate follows across Synedrion public feeds, but the citizens can't agree on how to proceed; they settle on continuing to monitor the situation.
@@ -212,14 +212,13 @@ OLENA_ON_FIRST_FLYER_TEXT,Text,,One of the flyers is detaching itself from the s
 OLENA_ON_FIRST_HAVEN_TARGET_TITLE,Text,,Moving!,,En mouvement !,,,,,,
 OLENA_ON_FIRST_HAVEN_TARGET_TEXT,Text,,The Behemoth is on the move! It's targeting a haven previously visited by one of the stray flyers that returned to the Festering Skies.,,Le Béhémoth est en mouvement! Il vise un refuge déjà visité par l’une des créatures errantes qui sont retournés dans le ciel fétide.,,,,,,
 FIRST_HAVEN_ATTACK_TITLE,Text,,Grim Harvest,,Sinistre récolte,,,,,,
-FIRST_HAVEN_ATTACK_TEXT,Text,,"<i>""It was hard to tell the Kaiju apart from the winged creatures that surrounded it… Together they were one, and the horror they wrought was complete. A machine fueled by life. It devoured without mercy or pleasure.""</i>
+FIRST_HAVEN_ATTACK_TEXT,Text,,"<i>""It was hard to tell the Kaiju apart from the winged creatures that surrounded it... Together they were one, and the horror they wrought was complete. A machine fueled by life. It devoured without mercy or pleasure.""</i>
 
 Akari Ito, excerpt from ""Interviews with survivors of Incident #ZGB12/68""
 
 <i>""It's a fragging gargantuan biomass harvester, what's so hard to understand about it?! How should I know why it destroyed only half of the frigging haven!""</i>
 
-Dr. Philemon Stavropoulos, Non-Executive Chairman of the Extraordinary Advisory Committee on Suspected Pandoravirus Related Aerial Phenomena Commonly Known as Festering Skies
-",,"<i>""Il était difficile de distinguer le Kaiju des créatures ailées qui l’entouraient… Ensemble, ils étaient un, et l’horreur qu’ils produisaient était complète. Une machine alimentée par la vie. Elle dévore sans pitié ni plaisir.""</i>
+Dr. Philemon Stavropoulos, Non-Executive Chairman of the Extraordinary Advisory Committee on Suspected Pandoravirus Related Aerial Phenomena Commonly Known as Festering Skies",,"<i>""Il était difficile de distinguer le Kaiju des créatures ailées qui l’entouraient... Ensemble, ils étaient un, et l’horreur qu’ils produisaient était complète. Une machine alimentée par la vie. Elle dévore sans pitié ni plaisir.""</i>
 
 Akari Ito, extrait de ""Entretiens avec les survivants de l’incident #ZGB12/68""
 
@@ -229,22 +228,21 @@ Philemon Stavropoulos, Ph. D., président non exécutif du Comité consultatif e
 ",,,,,,
 FIRST_HAVEN_ATTACK_OUTCOME,Text,,"We have to think of the Behemoth as a highly resilient colony of pathogens, or a self-propelled ecosystem of extremophiles, rather than as a <i>Kaiju</i>.
 
-If we want to destroy it we need the right antibodies... or more like the right biological WMD... and a method of delivering it. We will come up with something, as we always do. But in the meantime you must keep shooting down the… airborne cephalopods? If they reach a haven and return to the Behemoth, that haven will be targeted for “harvesting”.
+If we want to destroy it we need the right antibodies... or more like the right biological WMD... and a method of delivering it. We will come up with something, as we always do. But in the meantime you must keep shooting down the... airborne cephalopods? If they reach a haven and return to the Behemoth, that haven will be targeted for “harvesting”.
 ",,"Nous devons considérer le Béhémoth comme une colonie d'agents pathogènes très résistante, ou un écosystème d'extrêmophiles autopropulsé, plutôt que comme un <i>Kaiju</i>.
 
 Si nous voulons le détruire, nous avons besoin des bons anticorps... ou plutôt de la bonne arme biologique de destruction massive... et d'une méthode pour la délivrer. Nous trouverons quelque chose, comme toujours. Mais en attendant, vous devez continuer à abattre les... céphalopodes aériens ? S'ils atteignent un refuge et retournent au Behemoth, ce refuge sera ciblé pour la ""récolte"".
 ",,,,,,
 AFTER_YE_SIGNAL_TITLE,Text,,Messages from the Void,,Messages du Néant,,,,,,
-AFTER_YE_SIGNAL_TEXT,Text,,"Director, the Oneiric Delirium is a signal, a signal that has to cross at least 90 billion kilometers to reach us. That would take days traveling at the speed of light. The energy cost of delivering this signal to every infected human on the planet is… It's impossible.",,"Directeur, le délire onirique est un signal, un signal qui doit traverser au moins 90 milliards de kilomètres pour nous atteindre. Cela prendrait des jours à voyager à la vitesse de la lumière. Le coût énergétique de la transmission de ce signal à chaque humain infecté sur la planète est… C’est impossible.",,,,,,
-AFTER_YE_SIGNAL_OUTCOME,Text,,"There must be infrastructure here, on Earth. Something to receive the signal, transform it, augment it… A network of relays that is powered locally, using our planet's resources.",,"Il doit y avoir une infrastructure ici, sur Terre. Quelque chose pour recevoir le signal, le transformer, l’augmenter… Un réseau de relais alimentés localement en utilisant les ressources de notre planète.",,,,,,
+AFTER_YE_SIGNAL_TEXT,Text,,"Director, the Oneiric Delirium is a signal, a signal that has to cross at least 90 billion kilometers to reach us. That would take days traveling at the speed of light. The energy cost of delivering this signal to every infected human on the planet is... It's impossible.",,"Directeur, le délire onirique est un signal, un signal qui doit traverser au moins 90 milliards de kilomètres pour nous atteindre. Cela prendrait des jours à voyager à la vitesse de la lumière. Le coût énergétique de la transmission de ce signal à chaque humain infecté sur la planète est... C’est impossible.",,,,,,
+AFTER_YE_SIGNAL_OUTCOME,Text,,"There must be infrastructure here, on Earth. Something to receive the signal, transform it, augment it... A network of relays that is powered locally, using our planet's resources.",,"Il doit y avoir une infrastructure ici, sur Terre. Quelque chose pour recevoir le signal, le transformer, l’augmenter... Un réseau de relais alimentés localement en utilisant les ressources de notre planète.",,,,,,
 AFTER_YE_SIGNAL_CHOICE,Text,,How do you explain it then?,,Comment l’expliquez-vous alors ?,,,,,,
 BEHEMOTH_PATTERN_TITLE,Text,,A Method to the Carnage,,Une méthode pour le carnage,,,,,,
 BEHEMOTH_PATTERN_TEXT,Text,,"There is a pattern.. I didn’t see it at first, but then it occurred to me to check the old marine surveys from the times of the First Mist. The Behemoth <i>always</i> submerges and emerges near a <i>different</i> cluster of the undersea colonies, the first recorded manifestations of the Pandoravirus over 20 years ago. It’s delivering the harvested biomass to them. 
 
 And we know what they need it for: to amplify the Oneiric Delirium signal from Yuggoth. 
 
-If we take out the Behemoth, we will weaken its grip on us, maybe even neutralize it completely. 
-",,"Il y a une tendance.. Je ne l’ai pas vue au début, mais ensuite il m’est venu à l’esprit de vérifier les anciens relevés maritimes de l’époque de la Première Brume. Le Béhémoth plonge dans l'océan et émerge <i>toujours</i> près d’un groupe <i>différent</i> de colonies sous-marines, les premières manifestations enregistrées du pandoravirus il y a plus de 20 ans. Il leur livre la biomasse récoltée.
+If we take out the Behemoth, we will weaken its grip on us, maybe even neutralize it completely. ",,"Il y a une tendance.. Je ne l’ai pas vue au début, mais ensuite il m’est venu à l’esprit de vérifier les anciens relevés maritimes de l’époque de la Première Brume. Le Béhémoth plonge dans l'océan et émerge <i>toujours</i> près d’un groupe <i>différent</i> de colonies sous-marines, les premières manifestations enregistrées du pandoravirus il y a plus de 20 ans. Il leur livre la biomasse récoltée.
 
 Et nous savons pourquoi ils en ont besoin : pour amplifier le signal du Délire Onirique de Yuggoth.
 
@@ -254,17 +252,16 @@ PROG_FS2_WIN_TEXT_GENERAL_0,Text,,"Today we were finally able to deal a serious 
 
 This victory has galvanized the factions into setting aside their differences until the survival of humanity can be ensured and has cemented Phoenix Project as the only actor capable of dealing with the threat of the Yuggothian Entity. ",,"Aujourd’hui, nous avons finalement pu porter un sérieux coup à notre ennemi. Le Délire Onirique a disparu. Nos rêves et nos cauchemars nous appartiennent à nouveau. L’humanité peut encore périr, mais elle ne sera pas asservie.",,,,,,
 PROG_FS2_WIN_TITLE,Text,,Will Not Go Gentle Into That Night,,N’entre pas doucement dans cette nuit,,,,,,
-MASKED_MANTICORE_RESEARCHDEF_TFTV,Text,,"""See, I think the Manti was designed in different times, when aircraft needed to be certified for flight and such… Long story short, it has many in-built redundancies to satisfy safety inspectors who have long turned to crab. We can get rid of <i>that</i> stuff and then we will have space to put in <i>other</i> stuff, know what I'm saying? Beats me why you want to cover it in slime, but you're the boss… or the Director… or whatever"".
+MASKED_MANTICORE_RESEARCHDEF_TFTV,Text,,"""See, I think the Manti was designed in different times, when aircraft needed to be certified for flight and such... Long story short, it has many in-built redundancies to satisfy safety inspectors who have long turned to crab. We can get rid of <i>that</i> stuff and then we will have space to put in <i>other</i> stuff, know what I'm saying? Beats me why you want to cover it in slime, but you're the boss... or the Director... or whatever"".
 
 Ralph ""Wrench"" Mulligan, Phoenix Project
-",,"""Voyez-vous, je pense que le Manticore a été conçu à différentes époques, alors que les aéronefs devaient être certifiés pour le vol, etc. Bref, il y a de nombreuses redondances pour satisfaire les inspecteurs de la sécurité qui se sont depuis longtemps transformé en crabes. On peut se débarrasser de <i>ça</i> et on aura de la place pour mettre d’<i>autres</i> trucs, tu vois ce que je veux dire ? Ça m’étonne que vous vouliez le couvrir de <i>bave</i>, mais c'est vous le patron… ou le directeur… ou peu importe.""
+",,"""Voyez-vous, je pense que le Manticore a été conçu à différentes époques, alors que les aéronefs devaient être certifiés pour le vol, etc. Bref, il y a de nombreuses redondances pour satisfaire les inspecteurs de la sécurité qui se sont depuis longtemps transformé en crabes. On peut se débarrasser de <i>ça</i> et on aura de la place pour mettre d’<i>autres</i> trucs, tu vois ce que je veux dire ? Ça m’étonne que vous vouliez le couvrir de <i>bave</i>, mais c'est vous le patron... ou le directeur... ou peu importe.""
 
 Ralph Wrench Mulligan, Projet Phoenix
 ",,,,,,
 KEY_FS_ALN_SMALL_FLYER_RESEARCHDEF_COMPLETE,Text,,"<i>""A flying stingray bigger than our haven? And did you guys see that before or after you scavenged the marijuana dispensary?""</i>
 
-We are getting unconfirmed reports of dorsoventrally flattened flying creatures, some claiming them to be of improbable size. We will continue to monitor the situation until we can confirm or discard these rumors.
-",,"<i>""Une raie volante plus grande que notre refuge ? Et vous avez vu ça avant ou après avoir récupéré le dispensaire de marijuana ?""</i>
+We are getting unconfirmed reports of dorsoventrally flattened flying creatures, some claiming them to be of improbable size. We will continue to monitor the situation until we can confirm or discard these rumors.",,"<i>""Une raie volante plus grande que notre refuge ? Et vous avez vu ça avant ou après avoir récupéré le dispensaire de marijuana ?""</i>
 
 Nous recevons des rapports non confirmés de créatures volantes aplaties dorso-ventralement, certains affirmant qu'elles sont de taille improbable. Nous continuerons à surveiller la situation jusqu'à ce que nous puissions confirmer ou infirmer ces rumeurs.
 ",,,,,,

@@ -27,10 +27,10 @@ PR_BC_RAPID_CLEARANCE,Text,,RAPID CLEARANCE,,NETTOYAGE RAPIDE,,,,БЫСТРАЯ 
 PR_BC_RAPID_CLEARANCE_DESC,Text,,"Until end of turn, after killing an enemy next attack cost -2 AP",,"Jusqu'à la fin du tour, après avoir tué un ennemi, la prochaine attaque coûte -2 PA.",,,,Эффект до конца хода: после убийства соперника следующая атака стоит на 2 ОД меньше.,,
 PR_BC_AIMED_BURST,Text,,AIMED BURST,,RAFALE VISÉE,,,,ПРИЦЕЛЬНАЯ ОЧЕРЕДЬ,,
 PR_BC_AIMED_BURST_DESC,Text,,Next shot with Assault Rifle uses double burst and gains +30% accuracy,,Le prochain tir avec le fusil d'assaut utilise une double rafale et gagne +30% de précision.,,,,Двойной выстрел из штурмовой винтовки с бонусом точности +30%,,
-PR_BC_EXTREME_FOCUS,Text,,EXTREME FOCUS,,CONCENTRATION EXTRÊME,,,,ПРЕДЕЛЬНАЯ КОНЦЕНТРАЦИЯ,,
+PR_BC_EXTREME_FOCUS,Text,,EXTREME FOCUS,,VIGILANCE EXTRÊME,,,,ПРЕДЕЛЬНАЯ КОНЦЕНТРАЦИЯ,,
 PR_BC_EXTREME_FOCUS_DESC,Text,,Overwatch cost is set to 1 Action Point for all weapons,,Le coût de la vigilance est fixé à 1 point d'action pour toutes les armes.,,,,Режим наблюдения стоит 1 ОД для любого оружия,,
 PR_BC_ARMOR_BREAK,Text,,ARMOR BREAK,,BRISE-ARMURE,,,,РАЗЛОМ БРОНИ,,
-PR_BC_ARMOR_BREAK_DESC,Text,,Next shot has 15 Shred but -25% Damage,,Le prochain tir inflige 15 points de dégâts à l'armure mais -25% de dommages.,,,,"Следующий выстрел наносит на -25% меньше урона, но получает 15 очков разрыва брони",,
+PR_BC_ARMOR_BREAK_DESC,Text,,Next shot has 15 Shred but -25% Damage,,Le prochain tir inflige 15 points de dégâts à l'armure mais -25% de dégâts.,,,,"Следующий выстрел наносит на -25% меньше урона, но получает 15 очков разрыва брони",,
 PR_BC_GUNSLINGER,Text,,GUNSLINGER,,BANDIT ARMÉ,,,,СТРЕЛОК,,
 PR_BC_GUNSLINGER_DESC,Text,,Shoot handgun 3 times at -50% accuracy. Uses AP cost of the weapon.,,Tirez 3 fois avec votre arme de poing avec une précision de -50%. Utilise le coût en PA de l'arme.,,,,Три выстрела из пистолета со штрафом точности -50%. Использует ОД оружия.,,
 PR_BC_KILL_ZONE,Text,,KILL ZONE,,ZONE DE MORT,,,,СМЕРТЕЛЬНАЯ ЗОНА,,
@@ -48,7 +48,7 @@ PR_BC_JETPACK_CONTROL_DESC,Text,,Jump to a location within 12 tiles,,Propulsez-v
 PR_BC_BOOM_BLAST,Text,,BOOM BLAST,,EXPLOSION,,,,БОЛЬШОЙ БАБАХ,,
 PR_BC_BOOM_BLAST_DESC,Text,,"Until end of turn your Explosives gain +50% range. Uses AP cost of the weapon, Grenade and Rocket Launcher AP cost is reduced by 1.",,"Jusqu'à la fin du tour, vos explosifs gagnent +50% de portée. Le coût en PA de l'arme, de la grenade et du lance-roquettes est réduit de 1.",,,,До конца хода дальность ваших атак взрывным оружие повышена на +50%. Использует ОД оружия. ОД ракетных установок и гранатометов снижены на 1.,,
 PR_BC_ADRENALINE,Text,,ADRENALINE,,ADRENALINE,,,,АДРЕНАЛИН,,
-PR_BC_ADRENALINE_DESC,Text,,"Until end of turn one-handed weapons and all non-weapon skills cost 1AP, except Recover",,"Jusqu'à la fin du tour, les armes à une main et toutes les compétences sans arme coûtent 1AP, sauf Récupération.",,,,"Одноручное вооружение и не стрелковые навыки стоят 1 ОД. Не действует на ""восстановление""",,
+PR_BC_ADRENALINE_DESC,Text,,"Until end of turn one-handed weapons and all non-weapon skills cost 1AP, except Recover",,"Jusqu'à la fin du tour, les armes à une main et toutes les compétences sans arme coûtent 1AP, sauf Récupération.",,,,"Одноручное вооружение и не стрелковые навыки стоят 1 ОД. Не действует на ”восстановление”",,
 PR_BC_BLOODLUST_DESC,Text,,Gain up to 25% Speed and Damage based on lost Health.,,Gagnez jusqu'à 25% de vitesse et de dégâts en fonction des points de vie perdus.,,,,,,
 PR_BC_GUN_KATA,Text,,GUN KATA,,KATA D’ARME,,,,ПИСТОЛЕТНЫЙ БОЙ,,
 PR_BC_GUN_KATA_DESC,Text,,Shoot with your handgun for free. Limited to 2 uses per turn.,,Tirez avec votre arme de poing gratuitement. Limité à 2 utilisations par tour.,,,,Выстрелите из пистолета за 0 ОД. 2 раза в ход.,,
@@ -61,7 +61,7 @@ PR_BC_SA_LOCATED_DESC,Text,,LOCATED: Deal +25% damage,,LOCALISÉ : inflige +25% 
 PR_BC_HOMING_DRONE,Text,,HOMING DRONE,,DRONE AUTOGUIDÉ,,,,,,
 PR_BC_HOMING_DRONE_DESC,Text,,Shoot your Spider Drone at the target. Next time the target takes damage the drone will explode causing blast damage in the area,,"Tirez sur la cible avec votre drone araignée. La prochaine fois que la cible subira des dégâts, le drone explosera, causant des dégâts d'explosion dans la zone.",,,,,,
 PR_BC_CAUTIOUS,Text,,CAUTIOUS,,PRUDENT,,,,,,
-PR_BC_CAUTIOUS_DESC,Text,,Gain +20% accuracy and +10% stealth,,"""Gagnez +20% de précision et +10% de furtivité""",,,,,,
+PR_BC_CAUTIOUS_DESC,Text,,Gain +20% accuracy and +10% stealth,,"”Gagnez +20% de précision et +10% de furtivité”",,,,,,
 PR_BC_ELECTRIC_REINFORCEMENT,Text,,ELECTRIC REINFORCEMENT,,RENFORCEMENT ÉLECTRIQUE,,,,ЭЛЕКТРО-УКРЕПЛЕНИЕ,,
 PR_BC_ELECTRIC_REINFORCEMENT_DESC,Text,,Give yourself and allies within 10 tiles a bonus of 10 armor for 1 turn. This effect does not stack,,Accordez à vous-même et à vos alliés dans un rayon de 10 cases un bonus de 10 d'armure pendant 1 tour. Cet effet ne s'accumule pas,,,,Техник и союзники в радиусе 10 клеток получают 10 брони до начала следующего хода. Использование более одного раза не увеличивает броню.,,
 PR_BC_STABILITY,Text,,STABILITY,,STABILITÉ,,,,УСТОЙЧИВОСТЬ,,
@@ -89,7 +89,7 @@ PR_BC_AR_TARGETTING_DESC,Text,,Target ally within 10 tiles gains +20% accuracy,,
 PR_BC_PHANTOM_PROTOCOL,Text,,PHANTOM PROTOCOL,,PROTOCOLE FANTOME,,,,ФАНТОМ,,
 PR_BC_PHANTOM_PROTOCOL_DESC,Text,,"Gain +15% stealth and accuracy, provides immunity to Sentinels surveillance ability",,"Gagne +15% de furtivité et de précision, procure une immunité à la capacité de surveillance des Sentinelles.",,,,Получите +15% точности и скрытности. Также Стражи не реагируют при вашем приближении.,,
 PR_BC_SOWER_OF_CHANGE,Text,,SOWER OF CHANGE,,SEMEUR DE CHANGEMENT,,,,СЕЯТЕЛЬ ПЕРЕМЕН,,
-PR_BC_SOWER_OF_CHANGE_DESC,Text,,Returns 25% of damage as Viral to the attacker,,Renvoie 25% des dommages sous forme de dégât viral à l'attaquant.,,,,Возвращает атакующему 25% урона в виде вируса,,
+PR_BC_SOWER_OF_CHANGE_DESC,Text,,Returns 25% of damage as Viral to the attacker,,Renvoie 25% des dégâts sous forme de dégâts viraux à l'attaquant.,,,,Возвращает атакующему 25% урона в виде вируса,,
 PR_BC_SURVIVOR,Text,,SURVIVOR,,SURVIVANT,,,,ВЫЖИВШИЙ,,
 PR_BC_SURVIVOR_DESC,Text,,"<b>WP +4, but -2 STR</b>
 <i>You have had it tougher than most, and that's saying a lot. Your body took a toll, but your mind grew stronger</i>",,"<b>Volonté +4, mais Force -2</b>
@@ -167,12 +167,12 @@ PR_BC_DAREDEVIL_DESC,Text,,"<b>Damage +10%, Accuracy -10%</b>
 <i>В мире, где вы родились, приходится всегда ходить по краю. Бей первым, бей сильно. Не думай</i>",,
 PR_BC_DAMAGED_AMYGDALA,Text,,DAMAGED AMYGDALA,,AMYGDALE ENDOMMAGÉE,,,,ТРАВМИРОВАННЫЙ,,
 PR_BC_DAMAGED_AMYGDALA_DESC,Text,,"<b>Gain 'Psychic Scream Immunity'</b>
-<i>All brains are different, and yours couldn't take seeing your family return as sea monsters</i>",,"<b>Gagnez une ""immunité aux cris psychiques"".</b>
+<i>All brains are different, and yours couldn't take seeing your family return as sea monsters</i>",,"<b>Gagnez une ”immunité aux cris psychiques”.</b>
 <i>Tous les cerveaux sont différents, et le vôtre n'a pas supporté de voir sa famille revenir sous forme de monstres marins.</i>",,,,"<b>Иммунитет к психическому крику</b>
 <i>Все мозги устроены по разному и ваши просто не справились с видом родных вернувшихся с того света в виде монстров</i>",,
 PR_BC_SANITATION_EXPERT,Text,,SANITATION EXPERT,,EXPERT EN ASSAINISSEMENT,,,,ДЕЗИНФЕКТОР,,
 PR_BC_SANITATION_EXPERT_DESC,Text,,"<b>Immune to goo</b>
-<i>Robots can't do everything. Grime, dirt, slime, ooze, yuck, sludge: you have been through it all and come on the other side</i>",,"<b>Immunisé contre le goo</b>
+<i>Robots can't do everything. Grime, dirt, slime, ooze, yuck, sludge: you have been through it all and come on the other side</i>",,"<b>Immunisé contre la gelée</b>
 <i>Les robots ne peuvent pas tout faire. La crasse, la saleté, la bave, le suintement, le dégoût, la boue : vous avez tout traversé et vous êtes revenu de l'autre côté.</i>",,,,"<b>Иммунитет к слизи</b>
 <i>Роботы не могут делать все. Грязь, слизь, сажа: вы знаете как удалить любой засор!</i>",,
 PR_BC_LAB_ASSISTANT,Text,,LAB ASSISTANT,,LABORANTIN,,,,ЛАБОРАНТ,,
