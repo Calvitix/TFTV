@@ -545,7 +545,8 @@ namespace TFTV
         {
             try
             {
-                string shouldNotAppear = "Should Not Appear";
+                //string shouldNotAppear = "Should Not Appear";
+                string shouldNotAppear = "Ne devrait pas apparaître";  //Calvitix Trad
                 ResearchViewElementDef sourceResearchViewDef = DefCache.GetDef<ResearchViewElementDef>("PX_Alien_CorruptionNode_ViewElementDef");
                 ResearchViewElementDef researchViewDef = Helper.CreateDefFromClone(sourceResearchViewDef, gUID, def);
                 researchViewDef.DisplayName1.LocalizationKey = shouldNotAppear;
@@ -640,7 +641,8 @@ namespace TFTV
 
                     GeoscapeLogEntry entry = new GeoscapeLogEntry
                     {
-                        Text = new LocalizedTextBind(__instance.Owner + " " + __instance.LocalizedSiteName + " is broadcasting an SOS, they are under attack!", true)
+                        //Text = new LocalizedTextBind(__instance.Owner + " " + __instance.LocalizedSiteName + " is broadcasting an SOS, they are under attack!", true)
+                        Text = new LocalizedTextBind(__instance.Owner + " " + __instance.LocalizedSiteName + " diffuse un SOS, ils sont attaqués !", true) 
                     };
                     typeof(GeoscapeLog).GetMethod("AddEntry", BindingFlags.NonPublic | BindingFlags.Instance).Invoke(__instance.GeoLevel.Log, new object[] { entry, null });
 

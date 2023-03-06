@@ -182,8 +182,8 @@ namespace TFTV
                 int adjectivesNumber = UnityEngine.Random.Range(0, TFTVHumanEnemiesNames.adjectives.Count());
                 UnityEngine.Random.InitState((int)Stopwatch.GetTimestamp());
                 int nounsNumber = UnityEngine.Random.Range(0, TFTVHumanEnemiesNames.nouns.Count());
-                string name = TFTVHumanEnemiesNames.adjectives[adjectivesNumber] + " " + TFTVHumanEnemiesNames.nouns[nounsNumber];
-                TFTVLogger.Always("The gang names is" + name);
+                string name = TFTVHumanEnemiesNames.nouns[nounsNumber] + " " + TFTVHumanEnemiesNames.adjectives[adjectivesNumber];  //Calvitix Trad, Name/Adj change
+                TFTVLogger.Always("Nom du Gang : " + name);
                 return name;
             }
 
@@ -199,14 +199,14 @@ namespace TFTV
             try
             {
                 string nameOfGang = "";
-
-                if (nameOfLeader != "Subject 24")
+				//Calvitix : Warning : Faction Names has to match other file
+                if (nameOfLeader != "Sujet 24")
                 {
                     nameOfGang = GenerateGangName();
                 }
                 else
                 {
-                    nameOfGang = "Subject 24";
+                    nameOfGang = "Sujet 24";
 
                 }
                 string unitType = "";
@@ -215,48 +215,48 @@ namespace TFTV
                 string description = "";
                 if (roll == 1)
                 {
-                    description = "Enemies who can see the character lose 1 WP";
-                    tactic = "Fearsome";
+                    description = "Les ennemis qui peuvent voir le personnage perdent 1 de volonté.";
+                    tactic = "Redoutable";
                 }
                 else if (roll == 2)
                 {
-                    description = "Allies first attack with firearms costs 1 AP less";
-                    tactic = "Starting volley";
+                    description = "La première attaque des alliés avec des armes à feu coûte 1 PA de moins.";
+                    tactic = "Volée initiale";
                 }
                 else if (roll == 3)
                 {
-                    description = "All lowest tier friendlies gain 10 regeneration";
-                    tactic = "Experimental drugs";
+                    description = "Tous les alliés de niveau inférieur gagnent 10 régénération";
+                    tactic = "Drogues expérimentales";
                 }
                 else if (roll == 4)
                 {
-                    description = "Character and allies within 12 tiles get +100% stealth";
-                    tactic = "Active camo";
+                    description = "Le personnage et ses alliés dans un rayon de 12 cases bénéficient de +100% de furtivité.";
+                    tactic = "Camouflage Actif";
                 }
                 else if (roll == 5)
                 {
-                    description = "Allies within 20 tiles have return fire ability";
-                    tactic = "Fire discipline";
+                    description = "Les alliés dans un rayon de 20 cases ont la capacité de riposter";
+                    tactic = "Retour de flamme";
                 }
                 else if (roll == 6)
                 {
-                    description = "When any high ranking character dies, allies gain frenzy status";
-                    tactic = "Blood frenzy";
+                    description = "Quand un personnage de haut rang meurt, ses alliés gagnent le statut de frénésie.";
+                    tactic = "Frénésie sanguinaire";
                 }
                 else if (roll == 7)
                 {
-                    description = "Enemy that attacks character becomes Marked for Death";
-                    tactic = "Retribution";
+                    description = "L'ennemi qui attaque le personnage devient 'marqué à mort'.";
+                    tactic = "Châtiment";
                 }
                 else if (roll == 8)
                 {
-                    description = "Each ally does +10% damage while leader is alive if there are no enemies in sight within 10 tiles at the start of its turn";
-                    tactic = "Ambush";
+                    description = "Chaque allié inflige +10% de dégâts tant que le leader est en vie s'il n'y a pas d'ennemi en vue dans un rayon de 10 tuiles au début de son tour.";
+                    tactic = "Embuscade";
                 }
                 else if (roll == 9)
                 {
-                    description = "While leader is alive each ally gains +15% accuracy per ally within 12 tiles, up to +60%";
-                    tactic = "Assisted targeting";
+                    description = "Tant que le leader est en vie, chaque allié gagne +15% de précision par allié dans un rayon de 12 cases, jusqu'à +60%.";
+                    tactic = "Ciblage assisté";
                 }
 
                 string nameOfTactic = tactic;
@@ -265,7 +265,7 @@ namespace TFTV
 
                 if (enemyHumanFaction.TacticalFactionDef.ShortName.Equals("ban"))
                 {
-                    unitType = "a gang";
+                    unitType = "un gang";
                     //  factionTag= "NEU_Bandits_TacticalFactionDef";
                     //  FileNameSquadPic = "ban_squad.png";
                 }
@@ -274,34 +274,34 @@ namespace TFTV
                     string factionName = "";
                     if (enemyHumanFaction.TacticalFactionDef.ShortName.Equals("nj"))
                     {
-                        factionName = "New Jericho";
+                        factionName = "Nouvelle-Jéricho";
                         //  factionTag = "NewJericho_TacticalFactionDef";
                         // FileNameSquadPic = "nj_squad.jpg";
                     }
                     else if (enemyHumanFaction.TacticalFactionDef.ShortName.Equals("anu"))
                     {
-                        factionName = "Disciples of Anu";
+                        factionName = "les Disciples d'Anu";
                         //  factionTag = "Anu_TacticalFactionDef";
                         //  FileNameSquadPic = "anu_squad.jpg";
                     }
                     else
                     {
-                        factionName = "Synedrion";
+                        factionName = "le Synédrion";
                         //  factionTag = "Synedrion_TacticalFactionDef";                        
                         //  FileNameSquadPic = "syn_squad.jpg";
                     }
 
-                    unitType = "a " + factionName + " squad";
+                    unitType = "une escouade" + factionName;
                 }
                 else if (enemyHumanFaction.TacticalFactionDef.ShortName.Equals("FallenOnes"))
                 {
-                    unitType = "a pack of Forsaken";
+                    unitType = "un groupe de Rejetés";
                     // factionTag = "AN_FallenOnes_TacticalFactionDef";
                     //  FileNameSquadPic = "fo_squad.png";
                 }
                 else if (enemyHumanFaction.TacticalFactionDef.ShortName.Equals("Purists"))
                 {
-                    unitType = "an array of the Pure";
+                    unitType = "une brigade de Purs";
                     // factionTag = "NJ_Purists_TacticalFactionDef";
 
                     //  FileNameSquadPic = "pu_squad.jpg";
@@ -311,13 +311,13 @@ namespace TFTV
 
                 if (nameOfLeader != "Subject 24")
                 {
-                    descriptionHint = "You are facing " + unitType + ", called the " + nameOfGang +
-                        ". Their leader is " + nameOfLeader + ", using the tactic " + nameOfTactic + ": " + descriptionOfTactic;
+                    descriptionHint = "Vous vous retrouvez contre " + unitType + ", appelé '" + nameOfGang +
+                        "'. Leur Chef est " + nameOfLeader + ", qui utilisera la compétence '" + nameOfTactic + "' : " + descriptionOfTactic;
                 }
                 else
                 {
-                    descriptionHint = "You are finally facing Subject 24, protected by an array of the Pure, " +
-                        "using the tactic " + nameOfTactic + ": " + descriptionOfTactic;
+                    descriptionHint = "Vous rencontrez enfin Sujet 24, protégé par une série de Purs, " +
+                        "utilisant la compétence " + nameOfTactic + ": " + descriptionOfTactic;
                 }
 
                 TFTVTutorialAndStory.CreateNewTacticalHintForHumanEnemies(nameOfGang, HintTrigger.ActorSeen, "HumanEnemyFaction_" + enemyHumanFaction.TacticalFactionDef.ShortName + "_GameTagDef", nameOfGang, descriptionHint);
@@ -387,7 +387,7 @@ namespace TFTV
                             {
                                 leader = tacticalActor;
                                 TFTVLogger.Always("Found Subject24");
-                                leader.name = "Subject 24";
+                                leader.name = "Sujet 24";
                             }
                             else
                             {

@@ -531,6 +531,13 @@ namespace PRMBetterClasses.VariousAdjustments
             bool hasArmor = true;
             bool hasWeapon = true;
 
+			if (TFTVMain.Main.Settings.ApplyCalvitixChanges)
+            {
+                hasArmor = false; //Calvitix added
+                hasWeapon = false; //Calvitix added
+	       	}
+
+
             GameDifficultyLevelDef easy = DefCache.GetDef<GameDifficultyLevelDef>("Easy_GameDifficultyLevelDef");
             GameDifficultyLevelDef standard = DefCache.GetDef<GameDifficultyLevelDef>("Standard_GameDifficultyLevelDef");
             GameDifficultyLevelDef hard = DefCache.GetDef<GameDifficultyLevelDef>("Hard_GameDifficultyLevelDef");

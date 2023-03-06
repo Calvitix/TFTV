@@ -22,6 +22,7 @@ using System.Collections.Generic;
 using System.Linq;
 using TFTV;
 using UnityEngine;
+using TFTV.Patches; //Calvitix Using needed ?
 
 namespace PRMBetterClasses.SkillModifications
 {
@@ -78,6 +79,12 @@ namespace PRMBetterClasses.SkillModifications
 
                 // Set SP for all skills according to where they are set
                 Set_SPcost();
+
+                //Calvitix Mission number addition
+                if (TFTVMain.Main.Config.ApplyCalvitixChanges)
+                {
+                    FacilityAdjustments.Apply();
+                }
             }
             catch (Exception e)
             {

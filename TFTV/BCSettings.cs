@@ -327,11 +327,20 @@ namespace PRMBetterClasses
         public int BaseCrossbow_Ammo = 6;
         public int VenomCrossbow_Ammo = 4;
 
+		// Détermine si les Modifs doivent être appliquées ou non
+        public bool ApplyCalvitixChanges = true;
+
+
         // Flag if UI texts should be changed to default (Enlish) text or set by localization
         public bool DoNotLocalizeChangedTexts = true;
         // Create new ability dictionary as json file in mod directory
         internal bool CreateNewJsonFiles = false;
         // DebugLevel (0: nothing, 1: error, 2: debug, 3: info)
-        public int Debug = 1;
+        public int Debug = 1; //Calvitix
+
+        //[Annotation("Adds to the maximum squad size for tactical missions. With a current vanilla default of 8, a value of 2 means you can bring up to 10 soldiers.", "2")]
+        public int MaxPlayerUnitsAdd = 2;
+
+
     }
 }

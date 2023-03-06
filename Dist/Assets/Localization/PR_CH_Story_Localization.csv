@@ -337,31 +337,48 @@ DELIRIUM_PERK_INNER_SIGHT_NAME,Text,,INNER SIGHT,,VUE INTERIEURE,,,,,,
 DELIRIUM_PERK_INNER_SIGHT_DESCRIPTION,Text,,"-10 Perception, +10 Hearing Range
 <i>The subject is often observed with eyes closed; claims to see with an 'inner eye'; possible schizophrenia, but heightened extrasensorial perception confirmed</i>",,"-10 Perception, +10 Portée auditive
 <i>Le sujet est souvent observé les yeux fermés ; il prétend voir avec un ""œil intérieur"" ; peut-être schizophrénie, mais une perception extrasensorielle accrue est confirmée.</i>",,,,,,
-TFTV_KEY_UMBRA_TARGET_DISPLAY_NAME,Text,,UMBRA,,,,,,,,
-TFTV_KEY_UMBRA_TARGET_DISPLAY_DESCRIPTION,Text,,It's not real it's not real it's not real it's not real,,,,,,,,
+TFTV_KEY_UMBRA_TARGET_DISPLAY_NAME,Text,,UMBRA,,OMBRE,,,,,,
+TFTV_KEY_UMBRA_TARGET_DISPLAY_DESCRIPTION,Text,,It's not real it's not real it's not real it's not real,,Ce n'est pas réel, ce n'est pas réel, ce n'est pas réel, ce n'est pas réel.,,,,,,
 ,,,,,,,,,,,
 KEY_GEO_HINT_AUGMENTATION_SCREEN_DESCRIPTION,Text,,"You are about to augment your first soldier. A character can only have UP TO 2 BODY PARTS replaced this way.
 
 Once an augmentation is installed, the soldier will not be able to revert back to their natural limbs. However, augmented body parts CAN BE SWAPPED with different cybernetic parts.
 
-Augmented body parts are IMMUNE TO BLEEDING and RESISTANT TO VIRAL DAMAGE, POISON, AND PARALYSIS. Damaged cybernetics CAN BE REPAIRED after battle at the expense of Tech and Materials. ",,,,,,,,
-KEY_GEO_HINT_AUGMENTATION_SCREEN_NAME,Text,,AUGMENTING A SOLDIER,,,,,,,,
+Augmented body parts are IMMUNE TO BLEEDING and RESISTANT TO VIRAL DAMAGE, POISON, AND PARALYSIS. Damaged cybernetics CAN BE REPAIRED after battle at the expense of Tech and Materials. ",,"Vous êtes sur le point d'augmenter votre premier soldat. Un personnage ne peut avoir que jusqu'à 2 parties du corps remplacées de cette façon.
+
+Une fois l'augmentation installée, le soldat ne pourra pas revenir à ses membres naturels. Cependant, les parties du corps augmentées peuvent être échangées avec d'autres parties cybernétiques.
+
+Les parties du corps augmentées sont immunisées contre les saignements et résistent aux dommages causés par les virus, les poisons et la paralysie. Les parties cybernétiques endommagées PEUVENT ÊTRE REMPLACÉES après la bataille au prix de la technologie et des matériaux. ",,,,,,
+KEY_GEO_HINT_AUGMENTATION_SCREEN_NAME,Text,,AUGMENTING A SOLDIER,,AUGMENTER UN SOLDAT,,,,,,
 KEY_GEO_HINT_CYBERNETICS_LAB_BUILT_DESCRIPTION,Text,,"The construction of your Cybernetics Lab is complete. You will now be able to AUGMENT SOLDIERS, replacing their natural limbs with powerful cybernetics.
 
 Each augmentation reduces the maximum Delirium a character may have by 1/3 and also immediately removes that much Delirium from the character.  
 
-To Augment a soldier, navigate to the PERSONNEL tab, select EDIT UNIT and then select AUGMENT.",,,,,,,,
-KEY_GEO_HINT_CYBERNETICS_LAB_BUILT_NAME,Text,,AUGMENTATION NOW AVAILABLE,,,,,,,,
+To Augment a soldier, navigate to the PERSONNEL tab, select EDIT UNIT and then select AUGMENT.",,"La construction de votre laboratoire de cybernétique est terminée. Vous pourrez désormais augmenter les soldats, en remplaçant leurs membres naturels par de puissantes cybernétiques.
+
+Chaque augmentation réduit d'un tiers le délire maximum qu'un personnage peut avoir et supprime immédiatement cette quantité de délire du personnage.  
+
+Pour augmenter un soldat, naviguez jusqu'à l'onglet PERSONNEL, sélectionnez MODIFIER UNITÉ, puis sélectionnez AUGMENTER".,,,,,,
+KEY_GEO_HINT_CYBERNETICS_LAB_BUILT_NAME,Text,,AUGMENTATION NOW AVAILABLE,,AUGMENTATION DISPONIBLE,,,,,,
 KEY_GEO_HINT_MUTATION_LAB_BUILT_DESCRIPTION,Text,,"The construction of your Mutation Lab is complete. You will now be able to MUTATE SOLDIERS, replacing their natural limbs with ones enhanced by Pandoravirus mutation.
 
 
-To Mutate a soldier, navigate to the PERSONNEL tab, select EDIT UNIT and then select MUTATE.",,,,,,,,
-KEY_GEO_HINT_MUTATION_LAB_BUILT_NAME,Text,,MUTATION NOW AVAILABLE,,,,,,,,
+To Mutate a soldier, navigate to the PERSONNEL tab, select EDIT UNIT and then select MUTATE.",,"La construction de votre laboratoire de mutation est terminée. Vous allez maintenant pouvoir MUTER DES SOLDATS, en remplaçant leurs membres naturels par des membres améliorés par la mutation du Pandoravirus.
+
+
+Pour muter un soldat, naviguez jusqu'à l'onglet PERSONNEL, sélectionnez MODIFIER UNE UNITÉ, puis sélectionnez MUTER.",,,,,,
+KEY_GEO_HINT_MUTATION_LAB_BUILT_NAME,Text,,MUTATION NOW AVAILABLE,,MUTATION DISPONIBLE,,,,,,
 KEY_GEO_HINT_MUTATION_SCREEN_DESCRIPTION,Text,,"You are about to mutate your first soldier. A character can only have UP TO 2 BODY PARTS altered this way.
 
 Each mutated body part increases damage dealt by character by 2% per each Delirium point that the character has.
 
 Once a mutation is applied, the operative won't be able to revert back to their natural limbs. However, mutated body parts CAN BE SWAPPED with different mutation variants.
 
-The :PRIEST: PRIEST soldier class has access to UNIQUE HEAD MUTATIONS greatly enhancing their powers.",,,,,,,,
-KEY_GEO_HINT_MUTATION_SCREEN_NAME,Text,,MUTATING A SOLDIER,,,,,,,,
+The :PRIEST: PRIEST soldier class has access to UNIQUE HEAD MUTATIONS greatly enhancing their powers.",,"Vous êtes sur le point de faire muter votre premier soldat. Un personnage ne peut avoir que jusqu'à 2 PARTIES DU CORPS modifiées de cette façon.
+
+Chaque partie du corps mutée augmente les dégâts infligés par le personnage de 2% pour chaque point de délire que possède le personnage.
+
+Une fois qu'une mutation est appliquée, l'agent ne pourra pas revenir à ses membres naturels. Cependant, les parties du corps mutées PEUVENT ÊTRE ÉCHANGÉES avec différentes variantes de mutation.
+
+La classe de soldat :PRIEST : PRIEST a accès à des MUTATIONS DE TÊTE UNIQUES améliorant considérablement leurs pouvoirs.",,,,,,
+KEY_GEO_HINT_MUTATION_SCREEN_NAME,Text,,MUTATING A SOLDIER,,MUTER UN SOLDAT,,,,,,

@@ -23,10 +23,16 @@ namespace TFTV
             {
                 GeoscapeEventDef intro =DefCache.GetDef<GeoscapeEventDef>("IntroBetterGeo_0");
 
-                intro.GeoscapeEventData.Description[0].General = new LocalizedTextBind("After all these years, you finally got the call. It meant that Symes and his deputies were dead or unreachable. Phoenix Project had gone dark. " +
-                            "You had spent many years waiting, dreading that this would happen, living a discrete and simple life at " + FindNearestHaven(geoFaction, site) + ", a " + geoFaction.Name.LocalizeEnglish()
-                            + " haven.\n\nThe trek to Phoenix Point was long and dangerous, and you wouldn't have made it without " + geoFaction.GeoLevel.PhoenixFaction.Vehicles.First().Soldiers.Last().DisplayName + ", a " + geoFaction.Name.LocalizeEnglish()
-                            + " " + geoFaction.GeoLevel.PhoenixFaction.Vehicles.First().Soldiers.Last().ClassTag.className + ".\n\nWhen you reached Phoenix Point, somebody was already home...", true);
+                //intro.GeoscapeEventData.Description[0].General = new LocalizedTextBind("After all these years, you finally got the call. It meant that Symes and his deputies were dead or unreachable. Phoenix Project had gone dark. " +
+                //            "You had spent many years waiting, dreading that this would happen, living a discrete and simple life at " + FindNearestHaven(geoFaction, site) + ", a " + geoFaction.Name.LocalizeEnglish()
+                //            + " haven.\n\nThe trek to Phoenix Point was long and dangerous, and you wouldn't have made it without " + geoFaction.GeoLevel.PhoenixFaction.Vehicles.First().Soldiers.Last().DisplayName + ", a " + geoFaction.Name.LocalizeEnglish()
+                //            + " " + geoFaction.GeoLevel.PhoenixFaction.Vehicles.First().Soldiers.Last().ClassTag.className + ".\n\nWhen you reached Phoenix Point, somebody was already home...", true);
+
+                //Calvitix Trad
+                intro.GeoscapeEventData.Description[0].General = new LocalizedTextBind("Après toutes ces années, vous avez finalement reçu l'appel. Çela signifie que Symes et ses adjoints sont morts ou injoignables. Le projet Phoenix a disparu. " +
+                            "Vous avez passé de nombreuses années à attendre, à redouter que cela n'arrive, à vivre une vie discrète et simple à " + FindNearestHaven(geoFaction, site) + ", un refuge " + geoFaction.Name.Localize()
+                            + ".\n\nLe voyage jusqu'à Phoenix Point a été long et dangereux, et vous n'y seriez pas arrivé sans " + geoFaction.GeoLevel.PhoenixFaction.Vehicles.First().Soldiers.Last().DisplayName + ", un " + geoFaction.GeoLevel.PhoenixFaction.Vehicles.First().Soldiers.Last().ClassTag.className + " " + geoFaction.Name.Localize()
+                            + ".\n\nQuand vous avez atteint Phoenix Point, quelqu'un était déjà arrivé....", true);
 
             }
 
@@ -44,8 +50,13 @@ namespace TFTV
             {
                 GeoscapeEventDef intro =DefCache.GetDef<GeoscapeEventDef>("IntroBetterGeo_0");
 
-                intro.GeoscapeEventData.Description[0].General = new LocalizedTextBind("After all these years, you finally got the call. It meant that Symes and his deputies were dead or unreachable. " +
-                    "Phoenix Project had gone dark. \n\nThe trek to Phoenix Point was long and dangerous, and when you finally reached it, somebody was already home…", true);
+                //intro.GeoscapeEventData.Description[0].General = new LocalizedTextBind("After all these years, you finally got the call. It meant that Symes and his deputies were dead or unreachable. " +
+                //    "Phoenix Project had gone dark. \n\nThe trek to Phoenix Point was long and dangerous, and when you finally reached it, somebody was already home…", true);
+
+                //Calvitix Trad
+                intro.GeoscapeEventData.Description[0].General = new LocalizedTextBind("Après toutes ces années, vous avez finalement reçu l'appel. Çela signifie que Symes et ses adjoints sont morts ou injoignables. Le projet Phoenix a disparu. " +
+                            "\n\nLe voyage jusqu'à Phoenix Point a été long et dangereux, et quand vous avez enfin atteint Phoenix Point, quelqu'un était déjà arrivé....", true);
+
 
             }
 

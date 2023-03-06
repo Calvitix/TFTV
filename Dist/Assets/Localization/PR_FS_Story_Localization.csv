@@ -6,15 +6,15 @@ Synedrion, trapped in the complex web of its inner politics, fails to agree on a
 
 New Jericho mobilizes its armed forces. ""Caught between the foolish and the mad, we must act!"", proclaims West.",,"Les refuges d’Anu se joignent à un rituel pour accueillir les épreuves et les malheurs prophétisés, leur chant incompréhensible résonnant sur les ondes.
 
-Synedrion, piégé dans le réseau complexe de sa politique intérieure, ne parvient pas à s’entendre sur une ligne de conduite, mais l’un de ses refuge décide d’envoyer une mission pour enquêter sur la zone d’impact.
+Synedrion, piégé dans le réseau complexe de sa politique intérieure, ne parvient pas à s’entendre sur une ligne de conduite, mais l’un de ses refuges décide d’envoyer une mission pour enquêter sur la zone d’impact.
 
-New Jericho mobilise ses forces armées. ""Pris entre le ridicule et la folie, nous devons agir!"" , proclame West.",,,,,,
+New Jericho mobilise ses forces armées. ""Pris entre l'idiot et le fou, nous devons agir!"" , proclame West.",,,,,,
 PROG_FS9_TEXT_GENERAL_0,Text,,"Earlier today, an asteroid crashed into Earth. The release of kinetic energy was roughly equivalent to the limited nuclear exchange between India and Iran during WW3. The impact event has been dubbed ""Hammerfall"", the largest in Earth's recorded history.
 
-The asteroid hit deep inside a quarantine zone, where the Pandoravirus has aggressively mutated the surrounding ecology. However, traces of seismic activity have been detected in faraway coastal regions, coinciding with rumors of Pandoran hordes emerging from the mist.",,"Plus tôt dans la journée, un astéroïde s’est écrasé sur Terre. La libération d’énergie cinétique était à peu près équivalente aux échanges nucléaires entre l’Inde et l’Iran durant la troisième guerre mondiale. L'impact a été surnommé ""Hammerfall"", le plus important dans l’histoire connue de la Terre.
+The asteroid hit deep inside a quarantine zone, where the Pandoravirus has aggressively mutated the surrounding ecology. However, traces of seismic activity have been detected in faraway coastal regions, coinciding with rumors of Pandoran hordes emerging from the mist.",,"Plus tôt dans la journée, un astéroïde s’est écrasé sur Terre. La libération d’énergie cinétique était à peu près équivalente aux échanges nucléaires entre l’Inde et l’Iran durant la troisième guerre mondiale. L'objet a été surnommé ""Marteau du Ciel"", générant un des cratères les plus important dans l’histoire connue de la Terre.
 
 L’astéroïde a frappé au coeur d’une zone de quarantaine, où le pandoravirus a muté de manière agressive l’écologie environnante. Cependant, des traces d’activité sismique ont été détectées dans des régions côtières lointaines, coïncidant avec des rumeurs de hordes pandoriennes émergeant de la brume.",,,,,,
-PROG_FS9_TITLE,Text,,Hammerfall,,Hammerfall,,,,,,
+PROG_FS9_TITLE,Text,,Hammerfall,,"'Marteau du Ciel'",,,,,,
 PROG_FS0_CHOICE_0_TEXT,Text,,Watch the recording,,Regarder l'enregistrement,,,,,,
 PROG_FS0_TEXT_OUTCOME_0,Text,,"You see a lush, but alien landscape, a basin covered in marine blue trees and twisting red, pulsating vines. The ground is sprinkled with thousands of egg shaped objects of various sizes.
 
@@ -32,7 +32,7 @@ Vous entendez des communications radio à travers l'électricité statique:
 
 <i>""Ici le citoyen Eileen. Paquet sécurisé, maintenant en approche de la source du signal précédemment signalé... Je vais être damné, c’est un... Manticore?! Eh bien, les charognards qui l’utilisaient dernièrement, n’en auront plus besoin. Pauvres bâtards... Hé, l’IA Core est de retour en ligne et... elle nous dit bonjour... Oui belle au bois dormant, vous êtes la bienvenue""</i>
 
-Ce doit être l’expédition Synedrion envoyée pour enquêter sur le cratère Hammerfall... Mais ce n'est pas possible, d’où vient toute cette végétation ?",,,,,,
+Ce doit être l’expédition Synedrion envoyée pour enquêter sur le cratère 'Marteau du Ciel'... Mais ce n'est pas possible, d’où vient toute cette végétation ?",,,,,,
 PROG_FS0_TEXT_GENERAL_0,Text,,"<i>""We have received data from M-AI-Core 12B/735, previously reported as lost. Likely hypothesis: found, repurposed and AI Core firewalled for use as non-sentient aerial vehicle. Parsing video and audio log""</i>
 
 One of our Manticores is back online? After all this time...",,"""Nous avons reçu des données de M-AI-Core 12B/735, précédemment déclarées perdues. Hypothèse probable : trouvé et réutilisé. Le noyau de l'AI Core a été isolé par un pare-feu pour être utilisé comme véhicule aérien non intelligent, d'après l'analyse de l'enregistrement audio et vidéo.""
@@ -45,9 +45,9 @@ PROG_FS10_TEXT_GENERAL_0,Text,,"Using reports from public feeds and satellite im
 
 The chronology of events and their causal relationship remains unclear, with some within Synedrion blaming NJ for provoking the Pandoran attack and NJ claiming that they acted in self defense.
 
-The Disciples of Anu insist that the emergence of what they call the “Behemoth” and the “Festering Skies” was preordained and inevitable.",,"En utilisant des données provenant de sources publiques et d’images satellitaires, nous pouvons maintenant établir que New Jericho a lancé une attaque massive de roquettes sur le cratère Hammerfall, vraisemblablement l’opération Mongoose planifié par West. La force de frappe a été à son tour anéantie par l’imposante monstruosité pandorane, entourée d’une myriade de créatures volantes.
+The Disciples of Anu insist that the emergence of what they call the “Behemoth” and the “Festering Skies” was preordained and inevitable.",,"En utilisant des données provenant de sources publiques et d’images satellitaires, nous pouvons maintenant établir que New Jericho a lancé une attaque massive de roquettes sur le cratère 'Marteau du Ciel', vraisemblablement l’opération Mongoose planifié par West. La force de frappe a été à son tour anéantie par l’imposante monstruosité pandorane, entourée d’une myriade de créatures volantes.
 
-La chronologie des événements et leur relation de cause à effet reste floues, certains au sein de Synedrion accusent NJ d’avoir provoqué l’attaque du Pandoran et NJ affirme qu’ils ont agi en légitime défense.
+La chronologie des événements et leur relation de cause à effet reste floues, certains au sein de Synédrion accusent NJ d’avoir provoqué l’attaque Pandorienne et la Nouvelle Jéricho affirme qu’ils ont agi en légitime défense.
 
 Les disciples d’Anu insistent sur le fait que l’émergence de ce qu’ils appellent le ""Béhémoth"" et le ""Ciel fétide"" était prédestinée et inévitable.",,,,,,
 PROG_FS10_TITLE,Text,,Operation Mongoose,,Opération Mongoose,,,,,,
@@ -124,15 +124,15 @@ Using reports from public feeds and satellite imagery we can now piece together 
 
 The chronology of events and their causal relationship remains unclear, with some within Synedrion blaming New Jericho for provoking the Pandoran attack, and New Jericho themselves claiming that they acted in self defense.
 
-The Disciples of Anu insist that the emergence of what they call the “Behemoth” and the “Festering Skies” was preordained and inevitable.",,"L'attaque sur [HavenName] venait du cratère Hammerfall. Nous supposons que ce refuge particulier a été ciblé parce qu'il abritait l'œuf récupéré par la citoyenne Eileen.
+The Disciples of Anu insist that the emergence of what they call the “Behemoth” and the “Festering Skies” was preordained and inevitable.",,"L'attaque sur [HavenName] venait du cratère 'Marteau du Ciel'. Nous supposons que ce refuge particulier a été ciblé parce qu'il abritait l'œuf récupéré par la citoyenne Eileen.
 
-En utilisant des données provenant de sources publiques et d’images satellitaires, nous pouvons maintenant établir que New Jericho a lancé une attaque massive de roquettes sur le cratère Hammerfall, vraisemblablement l’opération Mongoose planifié par West. La force de frappe a été à son tour anéantie par l’imposante monstruosité pandorane, entourée d’une myriade de créatures volantes.
+En utilisant des données provenant de sources publiques et d’images satellitaires, nous pouvons maintenant établir que New Jericho a lancé une attaque massive de roquettes sur le cratère 'Marteau du Ciel', vraisemblablement l’opération Mongoose planifié par West. La force de frappe a été à son tour anéantie par l’imposante monstruosité pandorienne, entourée d’une myriade de créatures volantes.
 
-La chronologie des événements et leur relation de cause à effet reste floues, certains au sein de Synedrion accusent NJ d’avoir provoqué l’attaque du Pandoran et NJ affirme qu’ils ont agi en légitime défense.
+La chronologie des événements et leur relation de cause à effet reste floues, certains au sein de Synédrion accusent NJ d’avoir provoqué l’attaque du Pandoran et NJ affirme qu’ils ont agi en légitime défense.
 
 Les disciples d’Anu insistent sur le fait que l’émergence de ce qu’ils appellent le ""Béhémoth"" et le ""Ciel fétide"" était prédestinée et inévitable.",,,,,,
 PROG_FS1_WIN_TITLE,Text,,Homecoming,,Retour à la maison,,,,,,
-KEY_DLC3_MOUNTEGG_NAME,Text,,HAMMERFALL CRATER,,LE CRATERE DU HAMMERFALL,,,,,,
+KEY_DLC3_MOUNTEGG_NAME,Text,,HAMMERFALL CRATER,,"CRATÈRE 'MARTEAU DU CIEL'",,,,,,
 KEY_DLC3_TAC_HINT_EILEEN_STORY_WIN_DESCRIPTION,Text,,"""Is everybody on board? I'm afraid we can't stay any longer. This was my home, until I brought that fragging egg here... Maybe if you had come earlier... forget it, I can't lay this on you. It's not your fault. Prepare for takeoff!""",,"""Est-ce que tout le monde est à bord? Je crains que nous ne puissions plus rester. C’était ma maison, jusqu’à ce que j’apporte cet oeuf de malheur ici... Peut-être que si vous étiez venu plus tôt... oubliez ça, je ne peux pas vous mettre ça sur le dos. Ce n’est pas de votre faute. Préparez-vous au décollage !""",,,,,,
 KEY_DLC3_TAC_HINT_MANTICORE_RUN_HURRY_DESCRIPTION,Text,,"""Phoenix? I'm almost done here, everyone else is... gone. More crabmen are approaching from all sides, so hurry up! I'm waiting for you inside the Manticore.""",,"""Phoenix ? j’ai presque fini ici, tout le monde est... parti. D’autres crabes s’approchent de tous les côtés, alors dépêchez-vous! Je vous attends dans le Manticore.""",,,,,,
 KEY_DLC3_TAC_HINT_MANTICORE_RUN_START_NAME,Text,,AURORA,,AURORA,,,,,,
@@ -218,7 +218,8 @@ Akari Ito, excerpt from ""Interviews with survivors of Incident #ZGB12/68""
 
 <i>""It's a fragging gargantuan biomass harvester, what's so hard to understand about it?! How should I know why it destroyed only half of the frigging haven!""</i>
 
-Dr. Philemon Stavropoulos, Non-Executive Chairman of the Extraordinary Advisory Committee on Suspected Pandoravirus Related Aerial Phenomena Commonly Known as Festering Skies",,"<i>""Il était difficile de distinguer le Kaiju des créatures ailées qui l’entouraient… Ensemble, ils étaient un, et l’horreur qu’ils produisaient était complète. Une machine alimentée par la vie. Elle dévore sans pitié ni plaisir.""</i>
+Dr. Philemon Stavropoulos, Non-Executive Chairman of the Extraordinary Advisory Committee on Suspected Pandoravirus Related Aerial Phenomena Commonly Known as Festering Skies
+",,"<i>""Il était difficile de distinguer le Kaiju des créatures ailées qui l’entouraient… Ensemble, ils étaient un, et l’horreur qu’ils produisaient était complète. Une machine alimentée par la vie. Elle dévore sans pitié ni plaisir.""</i>
 
 Akari Ito, extrait de ""Entretiens avec les survivants de l’incident #ZGB12/68""
 
@@ -233,7 +234,7 @@ If we want to destroy it we need the right antibodies... or more like the right 
 
 Si nous voulons le détruire, nous avons besoin des bons anticorps... ou plutôt de la bonne arme biologique de destruction massive... et d'une méthode pour la délivrer. Nous trouverons quelque chose, comme toujours. Mais en attendant, vous devez continuer à abattre les... céphalopodes aériens ? S'ils atteignent un refuge et retournent au Behemoth, ce refuge sera ciblé pour la ""récolte"".
 ",,,,,,
-AFTER_YE_SIGNAL_TITLE,Text,,Messages from the Void,,Messages du vide,,,,,,
+AFTER_YE_SIGNAL_TITLE,Text,,Messages from the Void,,Messages du Néant,,,,,,
 AFTER_YE_SIGNAL_TEXT,Text,,"Director, the Oneiric Delirium is a signal, a signal that has to cross at least 90 billion kilometers to reach us. That would take days traveling at the speed of light. The energy cost of delivering this signal to every infected human on the planet is… It's impossible.",,"Directeur, le délire onirique est un signal, un signal qui doit traverser au moins 90 milliards de kilomètres pour nous atteindre. Cela prendrait des jours à voyager à la vitesse de la lumière. Le coût énergétique de la transmission de ce signal à chaque humain infecté sur la planète est… C’est impossible.",,,,,,
 AFTER_YE_SIGNAL_OUTCOME,Text,,"There must be infrastructure here, on Earth. Something to receive the signal, transform it, augment it… A network of relays that is powered locally, using our planet's resources.",,"Il doit y avoir une infrastructure ici, sur Terre. Quelque chose pour recevoir le signal, le transformer, l’augmenter… Un réseau de relais alimentés localement en utilisant les ressources de notre planète.",,,,,,
 AFTER_YE_SIGNAL_CHOICE,Text,,How do you explain it then?,,Comment l’expliquez-vous alors ?,,,,,,
@@ -242,7 +243,8 @@ BEHEMOTH_PATTERN_TEXT,Text,,"There is a pattern.. I didn’t see it at first, bu
 
 And we know what they need it for: to amplify the Oneiric Delirium signal from Yuggoth. 
 
-If we take out the Behemoth, we will weaken its grip on us, maybe even neutralize it completely. ",,"Il y a une tendance.. Je ne l’ai pas vue au début, mais ensuite il m’est venu à l’esprit de vérifier les anciens relevés maritimes de l’époque de la Première Brume. Le Béhémoth plonge dans l'océan et émerge <i>toujours</i> près d’un groupe <i>différent</i> de colonies sous-marines, les premières manifestations enregistrées du pandoravirus il y a plus de 20 ans. Il leur livre la biomasse récoltée.
+If we take out the Behemoth, we will weaken its grip on us, maybe even neutralize it completely. 
+",,"Il y a une tendance.. Je ne l’ai pas vue au début, mais ensuite il m’est venu à l’esprit de vérifier les anciens relevés maritimes de l’époque de la Première Brume. Le Béhémoth plonge dans l'océan et émerge <i>toujours</i> près d’un groupe <i>différent</i> de colonies sous-marines, les premières manifestations enregistrées du pandoravirus il y a plus de 20 ans. Il leur livre la biomasse récoltée.
 
 Et nous savons pourquoi ils en ont besoin : pour amplifier le signal du Délire Onirique de Yuggoth.
 
@@ -255,14 +257,18 @@ PROG_FS2_WIN_TITLE,Text,,Will Not Go Gentle Into That Night,,N’entre pas douce
 MASKED_MANTICORE_RESEARCHDEF_TFTV,Text,,"""See, I think the Manti was designed in different times, when aircraft needed to be certified for flight and such… Long story short, it has many in-built redundancies to satisfy safety inspectors who have long turned to crab. We can get rid of <i>that</i> stuff and then we will have space to put in <i>other</i> stuff, know what I'm saying? Beats me why you want to cover it in slime, but you're the boss… or the Director… or whatever"".
 
 Ralph ""Wrench"" Mulligan, Phoenix Project
-",,"""Voyez-vous, je pense que le Manticore a été conçu à différentes époques, alors que les aéronefs devaient être certifiés pour le vol, etc. Bref, il y a de nombreuses redondances pour satisfaire les inspecteurs de la sécurité qui se sont depuis longtemps transformé en crabe. On peut se débarrasser de <i>ça</i> et on aura de la place pour mettre d’<i>autres</i> trucs, tu vois ce que je veux dire ? Ça m’étonne que tu veuilles le couvrir de bave, mais tu es le patron… ou le directeur… ou peu importe.""
+",,"""Voyez-vous, je pense que le Manticore a été conçu à différentes époques, alors que les aéronefs devaient être certifiés pour le vol, etc. Bref, il y a de nombreuses redondances pour satisfaire les inspecteurs de la sécurité qui se sont depuis longtemps transformé en crabes. On peut se débarrasser de <i>ça</i> et on aura de la place pour mettre d’<i>autres</i> trucs, tu vois ce que je veux dire ? Ça m’étonne que vous vouliez le couvrir de <i>bave</i>, mais c'est vous le patron… ou le directeur… ou peu importe.""
 
 Ralph Wrench Mulligan, Projet Phoenix
 ",,,,,,
 KEY_FS_ALN_SMALL_FLYER_RESEARCHDEF_COMPLETE,Text,,"<i>""A flying stingray bigger than our haven? And did you guys see that before or after you scavenged the marijuana dispensary?""</i>
 
-We are getting unconfirmed reports of dorsoventrally flattened flying creatures, some claiming them to be of improbable size. We will continue to monitor the situation until we can confirm or discard these rumors.",,,,,,,,
-KEY_FS_NJ_CRUISE_CONTROL_MODULE_DESCRIPTION,Text,,Extra crew and increased speed module,,,,,,,,
-KEY_FS_NJ_CRUISE_CONTROL_MODULE_NAME,Text,,Quick Response Module,,,,,,,,
-KEY_FS_NJ_FUEL_TANK_MODULE_DESCRIPTION,Text,,Extra crew and increased range module,,,,,,,,
-KEY_FS_NJ_FUEL_TANK_MODULE_NAME,Text,,Extended Range Module,,,,,,,,
+We are getting unconfirmed reports of dorsoventrally flattened flying creatures, some claiming them to be of improbable size. We will continue to monitor the situation until we can confirm or discard these rumors.
+",,"<i>""Une raie volante plus grande que notre refuge ? Et vous avez vu ça avant ou après avoir récupéré le dispensaire de marijuana ?""</i>
+
+Nous recevons des rapports non confirmés de créatures volantes aplaties dorso-ventralement, certains affirmant qu'elles sont de taille improbable. Nous continuerons à surveiller la situation jusqu'à ce que nous puissions confirmer ou infirmer ces rumeurs.
+",,,,,,
+KEY_FS_NJ_CRUISE_CONTROL_MODULE_DESCRIPTION,Text,,Extra crew and increased speed module,,"Module d'équipage supplémentaire et de vitesse accrue",,,,,,
+KEY_FS_NJ_CRUISE_CONTROL_MODULE_NAME,Text,,Quick Response Module,,"Module de réponse rapide",,,,,,
+KEY_FS_NJ_FUEL_TANK_MODULE_DESCRIPTION,Text,,Extra crew and increased range module,,"Module d'équipage supplémentaire et de portée accrue",,,,,,
+KEY_FS_NJ_FUEL_TANK_MODULE_NAME,Text,,Extended Range Module,,"Module d'extension de portée",,,,,,

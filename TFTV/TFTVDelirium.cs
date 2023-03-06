@@ -600,8 +600,8 @@ namespace TFTV
 
                                 __instance.Progression.AddAbility(abilityToAdd);
                                 //__instance.Faction.GeoLevel.View.GeoscapeModules.TutorialModule.SetTutorialStep(test, false);
-                                GameUtl.GetMessageBox().ShowSimplePrompt($"{__instance.GetName()}" + " appears to be afflicted with " + $"<b>{abilityToAdd.ViewElementDef.DisplayName1.LocalizeEnglish()}</b>"
-                                    + " as a result of the experimental mutagen treatment. This condition is likely to be permanent."
+                                GameUtl.GetMessageBox().ShowSimplePrompt($"{__instance.GetName()}" + " semble être affecté de '" + $"<b>{abilityToAdd.ViewElementDef.DisplayName1.Localize()}</b>'"
+                                    + " à la suite du traitement expérimental par mutagène. Cette condition est susceptible d'être permanente." //Calvitix Trad
                                     + "\n\n" + $"<i>{abilityToAdd.ViewElementDef.Description.LocalizeEnglish()}</i>", MessageBoxIcon.None, MessageBoxButtons.OK, null);
                                 TFTVLogger.Always("Added ability " + abilityToAdd.ViewElementDef.DisplayName1.LocalizeEnglish());
                                 i = 100;

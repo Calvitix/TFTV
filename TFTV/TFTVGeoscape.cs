@@ -233,19 +233,20 @@ namespace TFTV
                 {
                     if (scavSiteConf.MissionTags.Any(mt => mt.name.Equals("Contains_ResourceCrates_MissionTagDef")))
                     {
-                        if (main.Config.ChancesScavCrates == TFTVConfig.ScavengingWeight.High)
+						//Calvitix Trad of High/Medium/Low enumeration needs all those changes
+                        if (main.Config.ChancesScavCrates == TFTVConfig.ScavengingWeight.Haut)
                         {
                             scavSiteConf.Weight = 6;
                         }
-                        else if (main.Config.ChancesScavCrates == TFTVConfig.ScavengingWeight.Medium)
+                        else if (main.Config.ChancesScavCrates == TFTVConfig.ScavengingWeight.Moyen)
                         {
                             scavSiteConf.Weight = 4;
                         }
-                        else if (main.Config.ChancesScavCrates == TFTVConfig.ScavengingWeight.Low)
+                        else if (main.Config.ChancesScavCrates == TFTVConfig.ScavengingWeight.Faible)
                         {
                             scavSiteConf.Weight = 1;
                         }
-                        else if (main.Config.ChancesScavCrates == TFTVConfig.ScavengingWeight.None)
+                        else if (main.Config.ChancesScavCrates == TFTVConfig.ScavengingWeight.Aucun)
                         {
                             scavSiteConf.Weight = 0;
                         }
@@ -253,19 +254,19 @@ namespace TFTV
 
                     if (scavSiteConf.MissionTags.Any(mt => mt.name.Equals("Contains_RescueSoldier_MissionTagDef")))
                     {
-                        if (main.Config.ChancesScavSoldiers == TFTVConfig.ScavengingWeight.High)
+                        if (main.Config.ChancesScavSoldiers == TFTVConfig.ScavengingWeight.Haut)
                         {
                             scavSiteConf.Weight = 6;
                         }
-                        else if (main.Config.ChancesScavSoldiers == TFTVConfig.ScavengingWeight.Medium)
+                        else if (main.Config.ChancesScavSoldiers == TFTVConfig.ScavengingWeight.Moyen)
                         {
                             scavSiteConf.Weight = 4;
                         }
-                        else if (main.Config.ChancesScavSoldiers == TFTVConfig.ScavengingWeight.Low)
+                        else if (main.Config.ChancesScavSoldiers == TFTVConfig.ScavengingWeight.Faible)
                         {
                             scavSiteConf.Weight = 1;
                         }
-                        else if (main.Config.ChancesScavSoldiers == TFTVConfig.ScavengingWeight.None)
+                        else if (main.Config.ChancesScavSoldiers == TFTVConfig.ScavengingWeight.Aucun)
                         {
                             scavSiteConf.Weight = 0;
                         }
@@ -275,19 +276,19 @@ namespace TFTV
 
                     if (scavSiteConf.MissionTags.Any(mt => mt.name.Equals("Contains_RescueVehicle_MissionTagDef")))
                     {
-                        if (main.Config.ChancesScavGroundVehicleRescue == TFTVConfig.ScavengingWeight.High)
+                        if (main.Config.ChancesScavGroundVehicleRescue == TFTVConfig.ScavengingWeight.Haut)
                         {
                             scavSiteConf.Weight = 6;
                         }
-                        else if (main.Config.ChancesScavGroundVehicleRescue == TFTVConfig.ScavengingWeight.Medium)
+                        else if (main.Config.ChancesScavGroundVehicleRescue == TFTVConfig.ScavengingWeight.Moyen)
                         {
                             scavSiteConf.Weight = 4;
                         }
-                        else if (main.Config.ChancesScavGroundVehicleRescue == TFTVConfig.ScavengingWeight.Low)
+                        else if (main.Config.ChancesScavGroundVehicleRescue == TFTVConfig.ScavengingWeight.Faible)
                         {
                             scavSiteConf.Weight = 1;
                         }
-                        else if (main.Config.ChancesScavGroundVehicleRescue == TFTVConfig.ScavengingWeight.None)
+                        else if (main.Config.ChancesScavGroundVehicleRescue == TFTVConfig.ScavengingWeight.Aucun)
                         {
                             scavSiteConf.Weight = 0;
                         }
@@ -336,19 +337,19 @@ namespace TFTV
                 {
                     if (scavSiteConf.MissionTags.Any(mt => mt.name.Equals("Contains_ResourceCrates_MissionTagDef")))
                     {
-                        if (main.Config.ChancesScavCrates == TFTVConfig.ScavengingWeight.High)
+                        if (main.Config.ChancesScavCrates == TFTVConfig.ScavengingWeight.Haut)
                         {
                             scavSiteConf.Weight = 6;
                         }
-                        else if (main.Config.ChancesScavCrates == TFTVConfig.ScavengingWeight.Medium)
+                        else if (main.Config.ChancesScavCrates == TFTVConfig.ScavengingWeight.Moyen)
                         {
                             scavSiteConf.Weight = 4;
                         }
-                        else if (main.Config.ChancesScavCrates == TFTVConfig.ScavengingWeight.Low)
+                        else if (main.Config.ChancesScavCrates == TFTVConfig.ScavengingWeight.Faible)
                         {
                             scavSiteConf.Weight = 1;
                         }
-                        else if (main.Config.ChancesScavCrates == TFTVConfig.ScavengingWeight.None)
+                        else if (main.Config.ChancesScavCrates == TFTVConfig.ScavengingWeight.Aucun)
                         {
                             scavSiteConf.Weight = 0;
                         }
@@ -356,19 +357,19 @@ namespace TFTV
 
                     if (scavSiteConf.MissionTags.Any(mt => mt.name.Equals("Contains_RescueSoldier_MissionTagDef")))
                     {
-                        if (main.Config.ChancesScavSoldiers == TFTVConfig.ScavengingWeight.High)
+                        if (main.Config.ChancesScavSoldiers == TFTVConfig.ScavengingWeight.Haut)
                         {
                             scavSiteConf.Weight = 6;
                         }
-                        else if (main.Config.ChancesScavSoldiers == TFTVConfig.ScavengingWeight.Medium)
+                        else if (main.Config.ChancesScavSoldiers == TFTVConfig.ScavengingWeight.Moyen)
                         {
                             scavSiteConf.Weight = 4;
                         }
-                        else if (main.Config.ChancesScavSoldiers == TFTVConfig.ScavengingWeight.Low)
+                        else if (main.Config.ChancesScavSoldiers == TFTVConfig.ScavengingWeight.Faible)
                         {
                             scavSiteConf.Weight = 1;
                         }
-                        else if (main.Config.ChancesScavSoldiers == TFTVConfig.ScavengingWeight.None)
+                        else if (main.Config.ChancesScavSoldiers == TFTVConfig.ScavengingWeight.Aucun)
                         {
                             scavSiteConf.Weight = 0;
                         }
@@ -378,19 +379,19 @@ namespace TFTV
 
                     if (scavSiteConf.MissionTags.Any(mt => mt.name.Equals("Contains_RescueVehicle_MissionTagDef")))
                     {
-                        if (main.Config.ChancesScavGroundVehicleRescue == TFTVConfig.ScavengingWeight.High)
+                        if (main.Config.ChancesScavGroundVehicleRescue == TFTVConfig.ScavengingWeight.Haut)
                         {
                             scavSiteConf.Weight = 6;
                         }
-                        else if (main.Config.ChancesScavGroundVehicleRescue == TFTVConfig.ScavengingWeight.Medium)
+                        else if (main.Config.ChancesScavGroundVehicleRescue == TFTVConfig.ScavengingWeight.Moyen)
                         {
                             scavSiteConf.Weight = 4;
                         }
-                        else if (main.Config.ChancesScavGroundVehicleRescue == TFTVConfig.ScavengingWeight.Low)
+                        else if (main.Config.ChancesScavGroundVehicleRescue == TFTVConfig.ScavengingWeight.Faible)
                         {
                             scavSiteConf.Weight = 1;
                         }
-                        else if (main.Config.ChancesScavGroundVehicleRescue == TFTVConfig.ScavengingWeight.None)
+                        else if (main.Config.ChancesScavGroundVehicleRescue == TFTVConfig.ScavengingWeight.Aucun)
                         {
                             scavSiteConf.Weight = 0;
                         }

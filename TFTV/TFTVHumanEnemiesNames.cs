@@ -5,16 +5,17 @@ namespace TFTV
 {
     internal class TFTVHumanEnemiesNames
     {
-        public static string[] adjectives = new string[] {"Crazy", "Mad", "Sneaky", "Bloody", "Inglorious", "Glorious", "Somber", "Wasteland",
-          "Red", "Green", "Blue", "Golden", "Dead", "Bullet", "Laser", "Shredding", "Acid", "Toxic", "Rampaging", "Festering", "Corrupted", "Kaos",
-          "Explosive", "Broken", "Lewd", "Fierce", "Fire", "Ice", "Mean", "Mech", "War", "Suicide", "Snapshot", "Jagged", "Jaded", "Bloodied",
-          "Shredded", "Cursed", "Blessed", "Alpha", "Bravo", "Charlie", "Tango", "Zulu", "Black", "White", "Zombie", "Hungry", "Thirsty", "Death"};
+    	//Calvitix Trad
+        public static string[] adjectives = new string[] {"Fous", "Déjantés", "Sournois", "Sanglants", "Déshonorés", "Glorieux", "Sombres", "des décharges",
+          "Rouge", "Verts", "Bleux", "Or", "Morts", "Bullet", "Laser", "Déchiquetés", "Acides", "Toxiques", "Rampants", "Suppurants", "Corrompus", "du Kaos",
+          "Explosifs", "Brisés", "Obscènes", "Féroces", "de Feu", "de Glace", "Moyens", "Mech", "de Guerre", "Suicidaires", "Instictifs", "Trancahnts", "Blasés", "Bloodied",
+          "Broyés", "Maudits", "Bénis", "Alpha", "Bravo", "Charlie", "Tango", "Zoulous", "Noirs", "Blancs", "Zombies", "affamés", "assoiffés", "De la mort"};
 
-        public static string[] nouns = new string[] { "Vipers", "Monkeys", "Goats", "Crabmen", "Fishmen", "Mindfraggers", "Chirons",
-            "Sirens", "Scyllas", "Acherons", "Locusts", "Buzzards", "Vultures", "Eagles", "Basterds", "Bastards", "Killers", "Echoes",
-            "Rabbits", "Mice", "Bulls", "Behemoths", "Dillos", "Mantis", "Warriors", "Soldiers", "Dogs", "Panthers", "Turtles", "Boys",
-            "Bugs", "Jokers", "Razors", "Rascals", "Raiders", "Alligators", "Gators", "Raptors", "Monks", "Barbarians", "Seals", "Crabs",
-            "Fighters", "Revenants", "Beriths", "Charuns", "Abbadons", "Lords", "Hawks", "Dealers" };
+        public static string[] nouns = new string[] { "Vipères", "Singes", "Chèvres", "Arthrons", "Pêcheurs", "Corrupteurs", "Chirons",
+            "Sirènes", "Scyllas", "Acherons", "Locustes", "Buzzards", "Vaultours", "Aigles", "Bâtards", "Bâtards", "Tueurs", "Echos",
+            "Lapins", "Souris", "Taureaux", "Béhémoths", "Dillos", "Mantes", "Guerriers", "Soldats", "Chiens", "Panthères", "Tortues", "Gars",
+            "Bugs", "Jokers", "Razors", "Rascals", "Raiders", "Alligators", "Gators", "Raptors", "Prêtres", "Barbares", "Seals", "Crabes",
+            "Combattants", "Revenants", "Beriths", "Charuns", "Abbadons", "Seigneurs", "Faucons", "Dealers" };
 
         public static Dictionary<string, List<string>> names = new Dictionary<string, List<string>>();
         public static Dictionary<string, List<string>> ranks = new Dictionary<string, List<string>>();
@@ -60,7 +61,7 @@ namespace TFTV
         }
 
 
-        public static List<string> pu_Adjectives = new List<string> { "Metal", "Junk", "Titanium", "Oil", "Servo", "Mech", "Wire", "Mesh", "Robo", "Quantum", "Cyber", "Death", "Wire", "Bit", "Gear" };
+        public static List<string> pu_Adjectives = new List<string> { "Métal", "Ferraille", "Titanium", "Huile", "Servo", "Mech", "Cable", "Mesh", "Robot", "Quantum", "Cyber", "Death", "Wire", "Bit", "Gear" };
 
         public static List <string> ban_Names = new List <string> {"Nuka-Cola","Kessar","Viper","Rictus","Nux","Dag","Ace","Barry","Mohawk","Bearclaw","Clunk",
             "Deepdog","Fuk-Ushima","Fifi Macaffe","Sol","Gutgash","Ironbar","Morsov","Mudguts","Papagallo","Sarse","Sav","Roop","Blackfinger","Scrooloose",
@@ -78,7 +79,7 @@ namespace TFTV
             "Okoye","Fagan","Avery","Parker","Joyce","Kai","Angel","Jesse","Riley","Ash","Finley","Shaw","Vickers","Marno","Jikkola",
             "Kris","Strid","Showalter","Grimsrud"};
 
-        public static List<string> syn_Names = new List<string> {"Nagata","Inaros","Avasarala","Liberty","Fraternity","Equality","Lenin","Tenet",
+        public static List<string> syn_Names = new List<string> {"Nagata","Inaros","Avasarala","Liberté","Fraternité","Egalité","Lénine","Tenet",
             "Campion","Meseeks","Squanchy","Nimbus","Mojo","Nostromo","Odyssey","Bono","Eli","Naru","Taabe","Sanchez","Walker","Charlie",
             "Wez","Ziggy","Alex","Max","Miller","Kenzo","Karal","Katoa","Okoye","Fagan","Avery","Parker","Joyce","Kai","Angel","Jesse",
             "Riley","Ash","Finley","Shaw","Vickers","Marno","Jikkola","Kris","Strid","Showalter","Grimsrud","Scruggs","L. Gopnik","S. Ableman","R. Marshak",
@@ -86,24 +87,24 @@ namespace TFTV
 
         public static List<string> pu_Names = new List<string> {"Walker","Charlie","Wez","Ziggy","Alex","Max","Miller","Kenzo","Karal","Katoa",
             "Okoye","Fagan","Avery","Parker","Joyce","Kai","Angel","Jesse","Riley","Ash","Finley","Shaw","Vickers", "Showalter","Grimsrud", "AirKris",
-            "AndyP","Brunks","Dante","Geda","GeoDao","Hokken","Gollop","Kal","Millioneigher","NoobCaptain","Origami","Ravenoid","Bobby","Stridtul",
+            "AndyP","Brunks","Dante","Geda","GeoDao","Hokken","Gollop","Kal","Millioneigher","NoobCaptain","Origami","Ravenoide","Bobby","Stridtul",
             "Tyraenon","Ikobot","Valygar","E.E.","BFIG","Sheepy","Conductiv","mad2342","Pantolomin", "Etermes"};
 
         public static List<string> fo_Names = new List<string> {"Thriceborn","Shai-Hulud","Shorr Kan","Yurtle","Lorax","Seer","Belial","Torinus",
-            "Voland","Yar-Shalak","Ghul","Gheist","Melachot","Xelot","Nacht-Zur'acht","Bane","Oshazahul","Slithering","Azelot",
+            "Voland","Yar-Shalak","Ghul","Gheist","Melachot","Xelot","Nacht-Zur'acht","Bane","Oshazahul","Slithering","Azelote",
             "Ursuk","Hottaku","Weirdling","Outsider","Tleilaxu","Tuek","Whisperblade","Bladehands", "Yokes"};
 
-        public static List<string> ban_NameRanks = new List<string> { "Boss", "Enforcer", "Raider", "Carrion" };
-        public static List<string> nj_NameRanks = new List<string> { "Leader", "Veteran", "Jackboot", "Greenhorn"};
-        public static List<string> syn_NameRanks = new List<string> { "Warden", "Ranger", "Peacekeeper", "Citizen" };
-        public static List<string> anu_NameRanks = new List<string> { "Taxiarch", "Adept", "Acolyte", "Neophyte"};
-        public static List<string> pu_NameRanks = new List<string> { "Machina", "Metalheart", "Cleansed", "Meathead"};
-        public static List<string> fo_NameRanks = new List<string> { "Scourge", "Evolved", "Reborn", "Fledgling" };
+        public static List<string> ban_NameRanks = new List<string> { "Boss", "Exécuteur", "Voleur", "Récupérateur" };
+        public static List<string> nj_NameRanks = new List<string> { "Officier", "Vétéran", "Soldat", "Bidasse" };
+        public static List<string> syn_NameRanks = new List<string> { "Gardien", "Ranger", "Pacificateur", "Citoyen" };
+        public static List<string> anu_NameRanks = new List<string> { "Taxiarche", "Adepte", "Acolyte", "Néophyte"};
+        public static List<string> pu_NameRanks = new List<string> { "Machine", "Coeur de métal", "Purifié", "B. de Conserve"};
+        public static List<string> fo_NameRanks = new List<string> { "Fléau", "Évolué", "Réincarné", "Rejeton" };
 
-        public static string tier1description = "Creates special effect on allies and/or enemies (Tactic). Allies lose 4 WP if character dies.";
-        public static string tier2description = "Allies who can see the character gain +1 WP per turn and lose 3WP if character dies.";
-        public static string tier3description = "Allies lose 2 WP if character dies.";
-        public static string tier4description = "Allies do not lose WP if character dies. Nobody expects them to live long anyway.";
+        public static string tier1description = "Crée un effet spécial sur les alliés et/ou les ennemis (Tactique). Les alliés perdent 4 Volonté si le personnage meurt.";
+        public static string tier2description = "Les alliés qui peuvent voir le personnage gagnent +1 Vol. par tour et perdent 3 Vol. si le personnage meurt.";
+        public static string tier3description = "Les alliés perdent 2 Volonté si le personnage meurt.";
+        public static string tier4description = "Les alliés ne perdent pas de WP si le personnage meurt. Personne ne s'attend à ce qu'ils vivent longtemps de toute façon..";
 
         public static List<string>tierDescriptions = new List<string> { tier1description, tier2description, tier3description, tier4description };
         

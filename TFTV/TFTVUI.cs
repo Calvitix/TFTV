@@ -447,7 +447,8 @@ namespace TFTV
                         populationBar.gameObject.SetActive(true);
                         deliriumIconHolder.gameObject.SetActive(true);
                         deliriumIcon.sprite = TFTVDefsRequiringReinjection.VoidIcon;
-                        deliriumToolTipText = "<color=#ec9006><b>-Our operatives can now be afflicted with a Delirium status equal to their Willpower</b></color>";
+						//Calvitix Trad
+                        deliriumToolTipText = "<color=#ec9006><b>-Nos agents peuvent maintenant être affligés d'un état de délire égal à leur Volonté.</b></color>";
                         separator.gameObject.SetActive(true);
                         separator2.gameObject.SetActive(true);
                     }
@@ -457,7 +458,7 @@ namespace TFTV
                         __instance.PopulationBarRoot.gameObject.SetActive(true);
                         deliriumIconHolder.gameObject.SetActive(true);
                         deliriumIcon.sprite = Helper.CreateSpriteFromImageFile("Void-04Phalf.png");
-                        deliriumToolTipText = "<color=#ec9006><b>-Our operatives can now be afflicted with a Delirium status of up to half of their Willpower</b></color>";
+                        deliriumToolTipText = "<color=#ec9006>-Nos agents peuvent maintenant être affligés d'un état de délire égal à la moitié de leur Volonté.</color>";
                         separator.gameObject.SetActive(true);
                         separator2.gameObject.SetActive(true);
                     }
@@ -468,27 +469,27 @@ namespace TFTV
                         populationBar.gameObject.SetActive(true);
                         __instance.PopulationBarRoot.gameObject.SetActive(true);
                         deliriumIconHolder.gameObject.SetActive(true);
-                        deliriumToolTipText = "<color=#ec9006><b>-Our operatives can now be afflicted with a Delirium status of up to a third of their Willpower</b></color>";
+                        deliriumToolTipText = "<color=#ec9006>-Nos agents peuvent maintenant être affligés d'un état de délire égal à un tiers de leur Volonté.</color>";
                         separator.gameObject.SetActive(true);
                         separator2.gameObject.SetActive(true);
                     }
 
                     if (TFTVVoidOmens.CheckFordVoidOmensInPlay(controller).Contains(10))
                     {
-                        deliriumToolTipText += "\n-<i>No limit to Delirium, regardless of ODI level</i> Void Omen is in effect.";
+                        deliriumToolTipText += "\n-<i>Pas de limite au Délirium, Indépendamment du Niveau d'ODI</i> Le présage du Néant est en vigueur.";
                     }
 
                     if (controller.EventSystem.GetEventRecord("SDI_09")?.SelectedChoice == 0)
                     {
-                        deliriumToolTipText += "\n-Evolved Umbra sighted.";
+                        deliriumToolTipText += "\n-Umbras évolués aperçus.";
                     }
                     else if (controller.EventSystem.GetVariable("UmbraResearched") == 1)
                     {
-                        deliriumToolTipText += "\n-Sightings of Umbra have been reported";
+                        deliriumToolTipText += "\n-Des signes d'Umbras ont été rapportés";
                     }
                     if (controller.EventSystem.GetEventRecord("SDI_07")?.SelectedChoice == 0)
                     {
-                        deliriumToolTipText += "\n-Havens in the Mist can become infested instead of destroyed when attacked by Pandorans. Infested havens accelerate Pandoran evolution.";
+                        deliriumToolTipText += "\n-Les Refuges dans la brume peuvent être infestés au lieu d'être détruits lorsqu'ils sont attaqués par les Pandoriens. Les refuges infestés accélèrent l'évolution des Pandoriens.";
                     }
 
 
@@ -509,7 +510,7 @@ namespace TFTV
                     Image evolutionIcon = evolutionIconHolder.GetComponent<Image>();
 
                     Transform evolutionTooltip = populationBar.GetComponent<Transform>().Find("PandoranEvolutionIcon").GetComponent<Transform>().Find("PandoranEvolutionTooltip");
-                    string evolutionToolTipText = "Based on reports and field observations, we estimate that the Pandorans are evolving ";
+                    string evolutionToolTipText = "D'après les rapports et les observations sur le terrain, nous estimons que les Pandoriens sont en train d'évoluer";
                     if (controller.PhoenixFaction.Research.HasCompleted("PX_Alien_EvolvedAliens_ResearchDef"))
                     {
                         // TFTVLogger.Always("Got here 5");
@@ -521,17 +522,20 @@ namespace TFTV
                         if (pEPerDay >= 12)
                         {
                             evolutionIcon.sprite = Helper.CreateSpriteFromImageFile("FactionIcons_Aliens_Evo_fast.png");
-                            evolutionToolTipText += "<b>very rapidly</b>. We must destroy Pandoran Colonies and Infested Havens before we are overwhelmed!";
+                            //Calvitix Trad
+                            evolutionToolTipText += "<b>très rapidement</b>. Nous devons détruire les colonies pandoriennes et les refuges infestés avant d'être submergés !";
                         }
                         else if (pEPerDay >= 6)
                         {
                             evolutionIcon.sprite = Helper.CreateSpriteFromImageFile("FactionIcons_Aliens_Evo_medium.png");
-                            evolutionToolTipText += "<b>rapidly</b>. We must keep the number of Pandoran Colonies and Infested Havens in check.";
+                            //Calvitix Trad
+                            evolutionToolTipText += "<b>rapidement</b>. Nous devons garder sous contrôle le nombre de colonies pandoriennes et de refuges infestés.";
                         }
                         else
                         {
                             evolutionIcon.sprite = Helper.CreateSpriteFromImageFile("FactionIcons_Aliens_Evo_slow.png");
-                            evolutionToolTipText += ". We are monitoring the situation and will report any newly discovered Pandoran Colonies.";
+                            //Calvitix Trad
+                            evolutionToolTipText += ". Nous surveillons la situation et nous signalerons toute nouvelle colonie pandorienne découverte.";
                         }
                     }
 

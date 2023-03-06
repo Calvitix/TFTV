@@ -52,7 +52,7 @@ namespace PRMBetterClasses
                                         abilityTrackDef.AbilitiesByLevel[i].Ability = DefCache.GetDef<TacticalAbilityDef>(ability);
                                         abilityTrackDef.AbilitiesByLevel[i].Ability.CharacterProgressionData.SkillPointCost = Helper.SPperLevel[i];
                                         abilityTrackDef.AbilitiesByLevel[i].Ability.CharacterProgressionData.MutagenCost = Helper.SPperLevel[i];
-                                        PRMLogger.Debug($"Class '{classSpec.ClassName}' level {i + 1} skill set to: {abilityTrackDef.AbilitiesByLevel[i].Ability.ViewElementDef.DisplayName1.LocalizeEnglish()} ({abilityTrackDef.AbilitiesByLevel[i].Ability.name})");
+                                        PRMLogger.Debug($"Class '{classSpec.ClassName}' level {i + 1} skill set to: {abilityTrackDef.AbilitiesByLevel[i].Ability.ViewElementDef.DisplayName1.Localize()} ({abilityTrackDef.AbilitiesByLevel[i].Ability.name})");  //Calvitix Change LocalizeEnglish
                                     }
                                 }
                             }

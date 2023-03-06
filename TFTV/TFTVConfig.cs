@@ -16,30 +16,32 @@ namespace TFTV
 
 
         //Default settings
-        [ConfigField(text: "DEFAULT TFTV SETTINGS",
-            description: "Sets all settings to default, to provide the Terror from the Void experience as envisioned by its creators")]
+        [ConfigField(text: "CONFIG TFTV PAR DÉFAUT",
+            description: "Définit tous les paramètres par défaut, pour offrir l'expérience de 'Terror from the Void' telle qu'elle a été imaginée par ses créateurs.")]
+        //Sets all settings to default, to provide the Terror from the Void experience as envisioned by its creators
         public bool defaultSettings = false;
 
-        [ConfigField(text: "PLAY WITH MORE MIST VOID OMEN",
-            description: "If you are playing on a Low-end system and experience lag with this Void Omen, you can turn it off here. This will prevent it from rolling" +
-            " and if already rolled, will prevent it from having any effect")]
+        [ConfigField(text: "JOUER AVEC LE PRÉSAGE DU NÉANT : PLUS DE BRUME",
+            description: "Si vous jouez sur un PC d'entrée de gamme et que vous ressentez du lag avec les 'Présages du Néant', vous pouvez le désactiver ici. Cela l'empêchera d'apparaître" +
+            " et s'il est déjà lancé, il n'aura aucun effet.")]
+        // If you are playing on a Low-end system and experience lag with this Void Omen, you can turn it off here. This will prevent it from rolling and if already rolled, will prevent it from having any effect
         public bool MoreMistVO = true;
 
-        [ConfigField(text: "SKIP MOVIES",
-             description: "Choose whether to skip Logos on game launch, Intro and Landing cinematics. Adapted from Mad's Assorted Adjustments.")]
+        [ConfigField(text: "PASSER LES CINÉMATIQUES",
+             description: "Choisissez d'ignorer les logos sur les cinématiques de lancement du jeu, d'introduction et d'atterrissage. Adapté de Mad's Assorted Adjustments..")]
         public bool SkipMovies = false;
 
         //New LOTA settings
-        [ConfigField(text: "AMOUNT OF EXOTIC RESOURCES",
-         description: "Choose the amount of Exotic Resources you want to have in your game per playthrough. Each unit provides enough resources to manufacture one set of Impossible Weapons. " +
-          "So, if you want to have two full sets, set this number to 2, and so on. By default, this is set by the difficulty level: 2.5 on Rookie, 2 on Veteran, 1.5 on Hero, 1 on Legend. " +
-          "Need to restart the game for the changes to take effect")]
+        [ConfigField(text: "QUANTITÉ DE RESSOURCES EXOTIQUES",
+         description: "Choisissez la quantité de ressources exotiques que vous voulez avoir dans votre jeu par partie. Chaque unité fournit suffisamment de ressources pour fabriquer un ensemble d'armes impossibles. " +
+          "Ainsi, si vous voulez avoir deux séries complètes, réglez ce nombre sur 2, et ainsi de suite. Par défaut, ce nombre est défini par le niveau de difficulté: 2.5 en Débutant, 2 en Vétéran, 1.5 en Héros, 1 en Légendaire. " +
+          "Nécessité de redémarrer le jeu pour que les changements prennent effet.")]
         public float amountOfExoticResources = 1f;
 
-        [ConfigField(text: "IMPOSSIBLE WEAPONS ADJUSTMENTS", description: "In TFTV, Ancient Weapons are replaced by the Impossible Weapons (IW) " +
-            "counterparts. They have different functionality (read: they are nerfed) " +
-            "and some of them require additional faction research.  " +
-            "Check this option off to keep Impossible Weapons with the same stats and functionality as Ancient Weapons in Vanilla and without requiring additional faction research.")]
+        [ConfigField(text: "AJUSTEMENTS DES ARMES IMPOSSIBLES", description: "In TFTV, Les armes antiques sont remplacées par les armes impossibles (IW) en " +
+            "contrepartie. Elles ont des fonctionnalités différentes (lire : elles sont affaiblis). " +
+            "et certains d'entre elles nécessitent des recherches supplémentaires sur les factions.  " +
+            "Cochez cette option pour que les armes impossibles conservent les mêmes stats et fonctionnalités que les armes antiques du JEu 'Vanilla' et sans nécessiter de recherche de faction supplémentaire.")]
         public bool impossibleWeaponsAdjustments = true;
 
         //Starting squad
@@ -48,10 +50,10 @@ namespace TFTV
         {
             PHOENIX, ANU, NJ, SYNEDRION
         }
-        [ConfigField(text: "Starting squad",
-         description: "You can choose a different starting squad. If you do, one of your Assaults and your starting Heavy on Legend and Hero, " +
-            "Assault on Veteran, or Sniper on Rookie will be replaced by an operative of the elite class of the Faction of your choice. " +
-            "You will also get the corresponding faction technology once the faction researches it.")]
+        [ConfigField(text: "Escouade de démarrage",
+         description: "Vous pouvez choisir une équipe de départ différente. Si vous le faites, l'un de vos Assauts et votre Soldat Lourd de départ en mode Légende ou Héros, " +
+            "Assaut en Vétéran, ou Sniper en débutant sera remplacé par un agent de la classe d'élite de la faction de votre choix. " +
+            "Vous obtiendrez également la technologie de faction correspondante lorsque la faction l'aura recherchée.")]
         public StartingSquadFaction startingSquad = StartingSquadFaction.PHOENIX;
 
         
@@ -59,137 +61,147 @@ namespace TFTV
         {
             UNBUFFED, BUFFED, RANDOM
         }
-        [ConfigField(text: "Tutorial characters in your starting squad",
-   description: "You can choose to get a completely random squad (as in Vanilla without doing the tutorial), " +
-            "the Vanilla tutorial starting squad (with higher stats), " +
-            "or a squad that will include Sophia Brown and Jacob with unbuffed stats (default on TFTV). " +
-            "Note that Jacob is a sniper, as in the title screen :)")]
+        [ConfigField(text: "Personnages du tutoriels dans votre équipe de départ",
+   description: "Vous pouvez choisir d'obtenir une équipe complètement aléatoire (comme dans Vanilla, sans faire le tutoriel)., " +
+            "l'équipe de départ du tutoriel 'Vanilla' (avec des statistiques plus élevées), " +
+            "ou une équipe qui comprendra Sophia Brown et Jacob avec des stats non améliorées. (par défaut sur TFTV). " +
+            "Notez que Jacob est un sniper, comme dans l'écran titre. :)")]
 
         public StartingSquadCharacters tutorialCharacters = StartingSquadCharacters.UNBUFFED;
        
         // These settings determine amount of resources player can acquire:
-        [ConfigField(text: "Number of scavenging sites",
-            description: "Total number of scavenging sites generated on game start, not counting overgrown sites\n" +
-            "(Vanilla: 16, TFTV default 8, because Ambushes generate additional resources)\n" +
-            "Will not have any effect on a game in progress.")]
+        [ConfigField(text: "Nombre de sites de récupération",
+            description: "Nombre total de sites de pillage générés au début du jeu, sans compter les sites envahis par la végétation.\n" +
+            "(Vanilla: 16, TFTV par défaut 8, parce que les embuscades génèrent des ressources supplémentaires)\n" +
+            "N'aura aucun effet sur une partie en cours..")]
         public int InitialScavSites = 8; // 16 on Vanilla
 
         public enum ScavengingWeight
         {
-            None, Low, Medium, High
+            Aucun, Faible, Moyen, Haut
         }
 
-        [ConfigField(text: "Chances of sites with resource crates",
-           description: "Of the total number of scavenging sites, choose the relative chances of a resource scavenging site being generated.\n" +
-            "Choose none to have 0 scavenging sites of this type (Vanilla and TFTV default: High)\n" +
-            "Will not have any effect on a game in progress.")]
-        public ScavengingWeight ChancesScavCrates = ScavengingWeight.High;
-        [ConfigField(text: "Chances of sites with recruits",
-           description: "Of the total number of scavenging sites, choose the relative chances of a recruits rescue site being generated.\n" +
-            "Choose none to have 0 scavenging sites of this type (Vanilla and TFTV default: low)\n" +
-            "Will not have any effect on a game in progress.")]
-        public ScavengingWeight ChancesScavSoldiers = ScavengingWeight.Low;
-        [ConfigField(text: "Chances of sites with vehicles",
-           description: "Of the total number of scavenging sites, choose the relative chances of a vehile rescue site being generated.\n" +
-            "Choose none to have 0 scavenging sites of this type (Vanilla and TFTV default: low)\n" +
-            "Will not have any effect on a game in progress.")]
-        public ScavengingWeight ChancesScavGroundVehicleRescue = ScavengingWeight.Low;
+        [ConfigField(text: "Proba. des sites avec des caisses de ressources",
+           description: "Sur le nombre total de sites de récupération, choisissez les chances relatives de générer un site de pillage de ressources.\n" +
+            "Choisissez aucun pour avoir 0 site de pillage de ce type (Vanilla et TFTV par défaut : élevé).\n" +
+            "N'aura aucun effet dans un jeu en cours.")]
+        public ScavengingWeight ChancesScavCrates = ScavengingWeight.Haut;
+        [ConfigField(text: "Proba. des sites avec soldats",
+           description: "Sur le nombre total de sites de récupération, choisissez les chances relatives de générer un site de sauvetage de recrues.\n" +
+            "Choisissez aucun pour avoir 0 site de pillage de ce type (Vanilla et TFTV par défaut : faible)\n" +
+            "N'aura aucun effet dans un jeu en cours.")]
+        public ScavengingWeight ChancesScavSoldiers = ScavengingWeight.Faible;
+        [ConfigField(text: "Proba. des sites avec véhicules",
+           description: "Sur le nombre total de sites de sauvetage, choisissez les chances relatives de générer un site de sauvetage de véhicule.\n" +
+            "Choisissez aucun pour avoir 0 site de pillage de ce type (Vanilla et TFTV par défaut : faible)\n" +
+            "N'aura aucun effet dans un jeu en cours.")]
+        public ScavengingWeight ChancesScavGroundVehicleRescue = ScavengingWeight.Faible;
 
         // Determines amount of resources gained in Events. 1f = 100% if Azazoth level.
         // 0.8f = 80% of Azazoth = Pre-Azazoth level (default on BetterGeoscape).
         // For example, to double amount of resources from current Vanilla (Azazoth level), change to 2f 
         // Can be applied to game in progress
-        [ConfigField(text: "Amount of resources gained in events",
-           description: "For current (post Azazoth patch) Vanilla, set to 1. For default TFTV and Vanilla pre-Azazoth patch, set to 0.8.\n" +
-            "Can be applied to a game in progress")]
+        [ConfigField(text: "Quantité de ressources gagnées des évén.",
+           description: "Pour la version actuelle (post patch Azazoth) de Vanilla, réglez à 1. Pour le TFTV par défaut et vanilla avant le patch Azazoth, mettez 0.8..\n" +
+            "Peut être appliqué sur une partie en cours")]
         public float ResourceMultiplier = 0.8f;
 
         // Changing the settings below will make the game easier:
 
         // Determines if diplomatic penalties are applied when cozying up to one of the factions by the two other factions
         // Can be applied to game in progress
-        [ConfigField(text: "Higher diplomatic penalties",
-           description: "Diplomatic penalties from choices in events are doubled and revealing diplomatic missions for one faction gives a diplomatic penalty with the other factions.\n" +
-                        "Can be applied to a game in progress")]
+        [ConfigField(text: "Pénalités diplomatiques élevées",
+           description: "Les pénalités diplomatiques découlant des choix effectués lors des événements sont doublées et le fait de révéler des missions diplomatiques pour une faction entraîne une pénalité diplomatique avec les autres factions.\n" +
+                        "Peut être appliqué sur une partie en cours")]
         public bool DiplomaticPenalties = true;
 
 
         // If set to false, a disabled limb in tactical will not set character's Stamina to zero in geo
-        [ConfigField(text: "Stamina drained on injury",
-           description: "The stamina of any operative that sustains an injury in combat that results in a disabled body part will be set to zero after the mission.\n" +
-            "Can be applied to a game in progress.")]
+        [ConfigField(text: "Endurance drainée par les blessures",
+           description: "L'endurance de tout agent qui subit une blessure au combat entraînant une invalidité d'une partie du corps sera remise à zéro après la mission.\n" +
+            "Peut être appliqué sur une partie en cours.")]
         public bool StaminaPenaltyFromInjury = true;
 
         // If set to false, applying a mutation will not set character's Stamina to zero
-        [ConfigField(text: "Stamina drained on mutation",
-          description: "The stamina of any operative that undergoes a mutation will be set to zero.\n" +
-           "Can be applied to a game in progress.")]
+        [ConfigField(text: "Endurance drainée par les mutations",
+          description: "L'endurance de tout agent qui subit une mutation sera mise à zéro..\n" +
+           "Peut être appliqué sur une partie en cours.")]
         public bool StaminaPenaltyFromMutation = true;
 
         // If set to false, adding a bionic will not set character's Stamina to zero
-        [ConfigField(text: "Stamina drained on bionic augmentation",
-          description: "The stamina of any operative that undergoes a bionic augmentation will be set to zero.\n" +
-           "Can be applied to a game in progress.")]
+        [ConfigField(text: "Endurance drainée par les augment. bioniques",
+          description: "L'endurance de tout opérateur qui subit une augmentation bionique sera mise à zéro..\n" +
+           "Peut être appliqué sur une partie en cours.")]
         public bool StaminaPenaltyFromBionics = true;
 
         // If set to false, ambushes will happen as rarely as in Vanilla, and will not have crates in them
-        [ConfigField(text: "New ambush",
-          description: "Ambushes will happen more often and will be harder. Regardless of this setting, all ambushes will have crates in them.")]
+        [ConfigField(text: "Nouvelles embuscades",
+          description: "Les embuscades se produiront plus souvent et seront plus difficiles. Indépendamment de ce paramètre, toutes les embuscades contiendront des caisses.")]
         public bool MoreAmbushes = true;
 
         // Changing the settings below will make the game harder:
 
         // If set to true, the passenger module FAR-M will no longer regenerate Stamina in flight
         // For players who prefer having to come back to base more often
-        [ConfigField(text: "Stamina recuperation from FAR-M",
-         description: "The starting type of passenger module, FAR-M, will slowly recuperate the stamina of the operatives on board.\n" +
-            "Switch off if you prefer to have to return to base more often")]
+        [ConfigField(text: "Récupération d'endurance dans le RPA",
+         description: "Le module de passagers de type initial, RPA, récupérera lentement l'endurance des agents à bord.\n" +
+            "Désactiver si vous préférez devoir retourner à la base plus souvent")]
         public bool ActivateStaminaRecuperatonModule = true;
 
         // If set to true reversing engineering an item allows to research the faction technology that allows manufacturing the item 
-        [ConfigField(text: "Enhanced Reverse Engineering",
-        description: "Reversing engineering an item allows to research the faction technology that allows manufacturing the item. IF YOU CHANGE THIS SETTING, QUIT THE GAME TO DESKTOP AND RESTART FOR CHANGES TO TAKE EFFECT")]
+        [ConfigField(text: "Rétro-ingénierie avancée",
+        description: "Après avoir réalisé la rétro-ingénierie d'un objet, permet ensuite de rechercher la technologie de la faction qui permet de fabriquer l'objet. SI VOUS MODIFIEZ CE PARAMÈTRE, QUITTEZ LE JEU SUR LE BUREAU ET REDÉMARREZ POUR QUE LES CHANGEMENTS PRENNENT EFFET.")]
         public bool ActivateReverseEngineeringResearch = true;
 
         // Below are advanced settings. The mod was designed to be played with all of them turned on
 
         //If set to true, modifes stats of some weapons and modules, and adds random chance that weapon will be lost when disengaging
-        [ConfigField(text: "Changes to air combat",
-       description: "Modifes stats of some weapons and modules.")]
+        [ConfigField(text: "Changements du combat aérien",
+       description: "Modifie les stats de certaines armes et modules.")]
         public bool ActivateAirCombatChanges = true;
 
         // If set to true activates DLC5 Kaos Engines story rework (in progress)
-        [ConfigField(text: "Changes to DLC5 Marketplace (in progress)",
-       description: "Removes cutscenes and missions, all items available at lowest prices 24 hours after discovering Marketplace.")]
+        [ConfigField(text: "Changements du Marché DLC5 (en cours)",
+       description: "Supprime les cutscenes et les missions, tous les articles sont disponibles aux prix les plus bas 24 heures après leur découverte sur le marché..")]
         public bool ActivateKERework = true;
 
         // If set to true, unrevealed havens will be revealed when attacked
-        [ConfigField(text: "Havens under attack revealed",
-       description: "Havens under attack will send an SOS, revealing their location to the player.")]
+        [ConfigField(text: "Révélation des Refuges attaqués",
+       description: "Les Refuges attaqués enverront un SOS, révélant leur emplacement au joueur.")]
         public bool HavenSOS = true;
 
         //If set to 1, shows when any error ocurrs. Do not change unless you know what you are doing.
         [ConfigField(text: "Debug log & messages",
-       description: "Shows when any error ocurrs. Please, do not change unless you know what you are doing.")]
+       description: "Montre quand une erreur se produit. S'il vous plaît, ne changez rien sans savoir ce que vous faites..")]
         public bool Debug = true;
 
-        [ConfigField(text: "Learn the first personal skill",
-           description: "If enabled, the first personal skill (level 1) is set right after a character is created (starting soldiers, new recruits on haven, rewards ect)")]
+        [ConfigField(text: "Apprendre la première compétence personnelle",
+           description: "Si elle est activée, la première compétence personnelle (niveau 1) est définie juste après la création d'un personnage (soldats de départ, nouvelles recrues des refuges, récompenses, etc).")]
         public bool LearnFirstPersonalSkill = true;
 
         // Deactivate auto standy in tactical missions
-        [ConfigField(text: "Deactivate tactical auto standby",
-            description: "Disables or enables the vanilla behavior of automatically putting an actor into standby mode and thus switching to the next actor when all AP are used.\n"
+        [ConfigField(text: "Désactiver la mise en veille automatique tactique",
+            description: "Désactive ou active le comportement 'vanilla' qui consiste à mettre automatiquement un acteur en mode veille et donc à passer à l'acteur suivant lorsque tous les AP sont utilisés.\n"
                          + "ATTENTION: This function is WIP, i.e. currently still experimental!")]
         public bool DeactivateTacticalAutoStandby = false;
 
         // Infiltrator Crossbow Ammo changes
-        [ConfigField(text: "Eros ammo",
-            description: "Set the amount of bolts for the magazine of the base crossbows (Eros CRB III)")]
-        public int BaseCrossbow_Ammo = 3;
-        [ConfigField(text: "Psyche ammo",
-            description: "Set the amount of bolts for the magazine of the advanced crossbow (Psyche CRB IV)")]
-        public int VenomCrossbow_Ammo = 3;
+        [ConfigField(text: "Munitions de l'Eros",
+            description: "Définissez le nombre de carreaux pour le magasin des arbalètes de base. (Eros CRB III)")]
+        public int BaseCrossbow_Ammo = 5; //3
+        [ConfigField(text: "Munitions du Psyche",
+            description: "Définissez le nombre de carreaux pour le magasin des arbalètes avancées (Psyche CRB IV)")]
+        public int VenomCrossbow_Ammo = 5; //3
+
+        [ConfigField(text: "Changements de Gameplay Calvitix",
+            description: "+1 place dans les avions," +
+            "Coût des ammo / 2," +
+            "Coût des batiments x 2," +
+            "Production de matériau et tech par les batiments," +
+            "Plus de munitions pour les véhicules " +
+            "Reload avec Grenade Launcher ammo," +
+            "Tyr Autocanon, 1 coup après l'autre,\n...")]
+        public bool ApplyCalvitixChanges = true;
 
 
     }

@@ -285,29 +285,30 @@ namespace TFTV
 
                         foreach (ContextHelpHintDef tacticsHint in TFTVHumanEnemies.TacticsHint)
                         {
-                            if (tacticsHint.name == hintDef.name && !hintDef.Title.LocalizationKey.Contains("Should not appear"))  //hintDef.Text.LocalizeEnglish().Contains("Their leader is"))
+                        	//Calvitix Trad : Faction names has to match those in Humanenemies.cs file. LocalizeEnglish keeped on purpose
+                            if (tacticsHint.name == hintDef.name && !hintDef.Title.LocalizationKey.Contains("Ne devrait pas apparaître"))  //hintDef.Text.LocalizeEnglish().Contains("Their leader is"))
                             {
                                 //  TFTVLogger.Always("leaderSightedHint if check passed");
 
-                                if (hintDef.Text.LocalizeEnglish().Contains("Synedrion"))
+                                if (hintDef.Text.LocalizeEnglish().Contains("Synédrion"))
                                 {
                                     __instance.Image.overrideSprite = Helper.CreateSpriteFromImageFile("syn_squad.jpg");
                                 }
-                                else if (hintDef.Text.LocalizeEnglish().Contains("a pack of Forsaken"))
+                                else if (hintDef.Text.LocalizeEnglish().Contains("un groupe de Rejetés"))
                                 {
                                     __instance.Image.overrideSprite = Helper.CreateSpriteFromImageFile("fo_squad.png");
                                 }
-                                else if (hintDef.Text.LocalizeEnglish().Contains("New Jericho"))
+                                else if (hintDef.Text.LocalizeEnglish().Contains("Nouvelle-Jéricho"))
                                 {
                                     __instance.Image.overrideSprite = Helper.CreateSpriteFromImageFile("nj_squad.jpg");
                                 }
-                                else if (hintDef.Text.LocalizeEnglish().Contains("Disciples of Anu"))
+                                else if (hintDef.Text.LocalizeEnglish().Contains("Disciples d'Anu"))
                                 {
                                     __instance.Image.overrideSprite = Helper.CreateSpriteFromImageFile("anu_squad.jpg");
                                 }
-                                else if (hintDef.Text.LocalizeEnglish().Contains("an array of the Pure"))
+                                else if (hintDef.Text.LocalizeEnglish().Contains("une brigade de Purs"))
                                 {
-                                    if (!hintDef.Text.LocalizeEnglish().Contains("You are finally facing Subject 24"))
+                                    if (!hintDef.Text.LocalizeEnglish().Contains("Vous rencontrez enfin Sujet 24"))
                                     {
                                         __instance.Image.overrideSprite = Helper.CreateSpriteFromImageFile("pu_squad.jpg");
                                     }
@@ -316,7 +317,7 @@ namespace TFTV
                                         __instance.Image.overrideSprite = Helper.CreateSpriteFromImageFile("subject24_squad.png");
                                     }
                                 }
-                                else if (hintDef.Text.LocalizeEnglish().Contains("a gang"))
+                                else if (hintDef.Text.LocalizeEnglish().Contains("un gang"))
                                 {
                                     __instance.Image.overrideSprite = Helper.CreateSpriteFromImageFile("ban_squad.png");
                                 }

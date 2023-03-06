@@ -17,7 +17,7 @@ namespace TFTV
             _logPath = logPath;
             if (debugLevel) 
             {
-                _debugLevel = 1;
+                _debugLevel = 1; //Calvitix TOFIND - for Debug 3
             }
             else 
             {

@@ -144,7 +144,7 @@ namespace TFTV.PortedAATweaks.UIEnhancements
 
                     if (resourcesAvailable?.Count > 0 && textAnchor != null && ____site.GeoLevel.PhoenixFaction.Research.HasCompleted("PX_HavenTrade_ResearchDef"))
                     {
-                        string format = "<size=26>Exchange {0} for {1} ({2})</size>\n";
+                        string format = "<size=26> Échange {0} contre {1} ({2})</size>\n"; //Calvitix Trad
 
                         textAnchor.horizontalOverflow = HorizontalWrapMode.Overflow;
                         textAnchor.lineSpacing = 0.8f;
@@ -242,7 +242,7 @@ namespace TFTV.PortedAATweaks.UIEnhancements
                     __instance.SiteAttackedByText.horizontalOverflow = HorizontalWrapMode.Overflow;
 
                     string battleInfo = "\n";
-                    battleInfo += $"<size=30>{attackedZone} UNDER ATTACK</size>\n";
+                    battleInfo += $"<size=30>{attackedZone} SE FAIT ATTAQUER</size>\n"; //Calvitix Trad
                     battleInfo += $"{defender}  vs  {attacker} \n";
                     battleInfo += $"{defenderStrength}{new string(' ', 15)}{attackerStrength}";
 
@@ -283,15 +283,15 @@ namespace TFTV.PortedAATweaks.UIEnhancements
                         return;
                     }
 
-                    string alertnessLabel = "Alertness";
+                    string alertnessLabel = "Niveau d'alerte ";
                     string alertnessLevel;
                     switch (haven.AlertLevel)
                     {
                         case GeoHaven.HavenAlertLevel.Alert:
-                            alertnessLevel = "High";
+                            alertnessLevel = "Élevé";
                             break;
                         case GeoHaven.HavenAlertLevel.HighAlert:
-                            alertnessLevel = "Extreme";
+                            alertnessLevel = "Extrême";
                             break;
                         default:
                             alertnessLevel = "Normal";

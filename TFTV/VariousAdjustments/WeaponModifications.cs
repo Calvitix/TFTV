@@ -8,6 +8,9 @@ using PhoenixPoint.Common.UI;
 using PhoenixPoint.Common.View.ViewControllers.Inventory;
 using PhoenixPoint.Tactical.Entities.DamageKeywords;
 using PhoenixPoint.Tactical.Entities.Weapons;
+using PhoenixPoint.Geoscape.Entities.Research; //Calvitix needed
+using PhoenixPoint.Common.Entities; //Calvitix needed
+
 using System;
 using System.Collections.Generic;
 using System.Reflection;
@@ -32,6 +35,12 @@ namespace PRMBetterClasses.VariousAdjustments
             Change_NergalsWrath();
             Change_Crossbows();
             Change_PriestWeapons();
+            if (TFTVMain.Main.Settings.ApplyCalvitixChanges)
+
+            {
+            
+	            Change_Phoenix_Autocanon();
+	     	}
         }
 
         /// <summary>
@@ -329,5 +338,183 @@ namespace PRMBetterClasses.VariousAdjustments
             redeemer.DamagePayload.DamageKeywords[2].Value = redeemerViral;
             subjector.DamagePayload.DamageKeywords[2].Value = subjectorViral;
         }
+
+        //Calvitix Weapon changes 
+        public static void Change_Phoenix_Autocanon()
+        {
+            if (TFTVMain.Main.Settings.ApplyCalvitixChanges)
+
+            {
+
+                TFTVLogger.Info("Calvitix_Change on FS_Autocannon_WeaponDef...");
+                WeaponDef PhoenixAutocanon = DefCache.GetDef<WeaponDef>("FS_Autocannon_WeaponDef");
+                //ItemDef ErosCrb_Ammo = DefCache.GetDef<ItemDef>("SY_Crossbow_AmmoClip_ItemDef");
+                PhoenixAutocanon.APToUsePerc = 25;
+                PhoenixAutocanon.DamagePayload.AutoFireShotCount = 1;
+                PhoenixAutocanon.DamagePayload.RageBurstsWhenInfiniteCharges = 12;
+                PhoenixAutocanon.DamagePayload.DamageKeywords[0].Value = 90.0f;
+
+                TFTVLogger.Info("Calvitix_Change on NE_MachineGun_WeaponDef...");
+
+                WeaponDef MachineGun = DefCache.GetDef<WeaponDef>("NE_MachineGun_WeaponDef");
+                MachineGun.APToUsePerc = 75;
+                MachineGun.DamagePayload.AutoFireShotCount = 25;
+                MachineGun.ChargesMax = 100;
+                MachineGun.DamagePayload.DamageKeywords[0].Value = 30.0f;
+                MachineGun.DamagePayload.DamageKeywords[1].Value = 1.0f;
+                MachineGun.SpreadDegrees = 2.5f;
+
+
+                TFTVLogger.Info("Calvitix_Change on NE_MachineGun_AmmoClip_ItemDef...");
+
+                ItemDef MachineGun_Ammo = DefCache.GetDef<ItemDef>("NE_MachineGun_AmmoClip_ItemDef");
+                MachineGun_Ammo.ChargesMax = 100;
+
+                TFTVLogger.Info("Calvitix_Change on NJ_Gauss_MachineGun_WeaponDef...");
+
+                WeaponDef NJ_MachineGun = DefCache.GetDef<WeaponDef>("NJ_Gauss_MachineGun_WeaponDef");
+                NJ_MachineGun.APToUsePerc = 75;
+                NJ_MachineGun.DamagePayload.AutoFireShotCount = 15;
+                NJ_MachineGun.ChargesMax = 90;
+                NJ_MachineGun.DamagePayload.DamageKeywords[0].Value = 40;
+                NJ_MachineGun.DamagePayload.DamageKeywords[1].Value = 2;
+                NJ_MachineGun.SpreadDegrees = 2;
+
+
+                TFTVLogger.Info("Calvitix_Change on NJ_Gauss_MachineGun_AmmoClip_ItemDef...");
+
+                ItemDef NJ_MachineGun_Ammo = DefCache.GetDef<ItemDef>("NJ_Gauss_MachineGun_AmmoClip_ItemDef");
+                NJ_MachineGun_Ammo.ChargesMax = 90;
+
+                TFTVLogger.Info("Calvitix_Change on PX_SniperRifle_WeaponDef...");
+
+                WeaponDef PX_SniperRifle = DefCache.GetDef<WeaponDef>("PX_SniperRifle_WeaponDef");
+                PX_SniperRifle.DamagePayload.DamageKeywords[0].Value = 150;
+
+                WeaponDef NJ_APC_MachineGun = DefCache.GetDef<WeaponDef>("NJ_Armadillo_Gauss_Turret_GroundVehicleWeaponDef");
+                NJ_APC_MachineGun.APToUsePerc = 50;
+                NJ_APC_MachineGun.DamagePayload.AutoFireShotCount = 15;
+                NJ_APC_MachineGun.ChargesMax = 120;
+                NJ_APC_MachineGun.DamagePayload.DamageKeywords[0].Value = 40;
+                NJ_APC_MachineGun.DamagePayload.DamageKeywords[1].Value = 5;
+
+
+                WeaponDef PX_Scarab_Missile = DefCache.GetDef<WeaponDef>("PX_Scarab_Missile_Turret_GroundVehicleWeaponDef");
+                PX_Scarab_Missile.DamagePayload.AutoFireShotCount = 4;
+                PX_Scarab_Missile.ChargesMax = 20;
+                PX_Scarab_Missile.DamagePayload.DamageKeywords[0].Value = 60;
+
+                WeaponDef PX_Scarab_Missile2 = DefCache.GetDef<WeaponDef>("PX_Scarab_Scorpio_GroundVehicleWeaponDef");
+                PX_Scarab_Missile2.DamagePayload.AutoFireShotCount = 4;
+                PX_Scarab_Missile2.ChargesMax = 20;
+                PX_Scarab_Missile2.DamagePayload.DamageKeywords[0].Value = 100;
+
+                WeaponDef PX_Scarab_Missile3 = DefCache.GetDef<WeaponDef>("PX_Scarab_Taurus_GroundVehicleWeaponDef");
+                PX_Scarab_Missile3.ChargesMax = 8;
+
+                WeaponDef PX_Armadillo_Grenade = DefCache.GetDef<WeaponDef>("NJ_Armadillo_Purgatory_GroundVehicleWeaponDef");
+                PX_Armadillo_Grenade.ChargesMax = 8;
+
+                WeaponDef PX_Armadillo_Grenade2 = DefCache.GetDef<WeaponDef>("NJ_Armadillo_Mephistopheles_GroundVehicleWeaponDef");
+                PX_Armadillo_Grenade2.ChargesMax = 8;
+
+
+                WeaponDef PX_Grenade_Launcher = DefCache.GetDef<WeaponDef>("PX_GrenadeLauncher_WeaponDef");
+                PX_Grenade_Launcher.APToUsePerc = 50;
+
+                WeaponDef PX_HealGrenade = DefCache.GetDef<WeaponDef>("PX_HealGrenade_WeaponDef");
+                PX_HealGrenade.DamagePayload.DamageKeywords[0].Value = 120;
+
+
+                //AmmoCost: divided by 2
+                ////Calvitix Other Changes 
+                Single multipleCostMaterial = 3;
+                Single multipleCostTech = 2;
+
+                List<String> PX_ammoList = new List<String>
+                {
+                    "AN_AcidHandGun_AmmoClip_ItemDef",
+                    "AN_HandCannon_AmmoClip_ItemDef",
+                    "AN_Redemptor_AmmoClip_ItemDef",
+                    "AN_Shotgun_AmmoClip_ItemDef",
+                    "AN_ShreddingShotgun_AmmoClip_ItemDef",
+                    "AN_Subjector_AmmoClip_ItemDef",
+                    "FS_AssaultGrenadeLauncher_AmmoClip_ItemDef",
+                    "FS_Autocannon_AmmoClip_ItemDef",
+                    "FS_BiogasLauncher_AmmoClip_ItemDef",
+                    "FS_LightSniperRifle_AmmoClip_ItemDef",
+                    "FS_SlamstrikeShotgun_AmmoClip_ItemDef",
+                    "KS_AssaultRifle_AmmoClip_ItemDef",
+                    "KS_Autocannon_AmmoClip_ItemDef",
+                    "KS_Gauss_HandGun_AmmoClip_ItemDef",
+                    "KS_ShreddingShotgun_AmmoClip_ItemDef",
+                    "KS_SniperRifle_AmmoClip_ItemDef",
+                    "MechArms_AmmoClip_ItemDef",
+                    "NE_AssaultRifle_AmmoClip_ItemDef",
+                    "NE_MachineGun_AmmoClip_ItemDef",
+                    "NE_Pistol_AmmoClip_ItemDef",
+                    "NE_SniperRifle_AmmoClip_ItemDef",
+                    "NJ_Flamethrower_AmmoClip_ItemDef",
+                    "NJ_Gauss_AssaultRifle_AmmoClip_ItemDef",
+                    "NJ_Gauss_HandGun_AmmoClip_ItemDef",
+                    "NJ_Gauss_MachineGun_AmmoClip_ItemDef",
+                    "NJ_Gauss_PDW_AmmoClip_ItemDef",
+                    "NJ_Gauss_SniperRifle_AmmoClip_ItemDef",
+                    "NJ_GuidedMissileLauncher_AmmoClip_ItemDef",
+                    "NJ_HeavyRocketLauncher_AmmoClip_ItemDef",
+                    "NJ_PRCRTechTurretGun_AmmoClip_ItemDef",
+                    "NJ_PRCR_AssaultRifle_AmmoClip_ItemDef",
+                    "NJ_PRCR_PDW_AmmoClip_ItemDef",
+                    "NJ_PRCR_SniperRifle_AmmoClip_ItemDef",
+                    "NJ_RocketLauncher_AmmoClip_ItemDef",
+                    "NJ_TechTurretGun_AmmoClip_ItemDef",
+                    "PX_AcidCannon_AmmoClip_ItemDef",
+                    "PX_AssaultRifle_AmmoClip_ItemDef",
+                    "PX_GrenadeLauncher_AmmoClip_ItemDef",
+                    "PX_HeavyCannon_AmmoClip_ItemDef",
+                    "PX_LaserArray_AmmoClip_ItemDef",
+                    "PX_LaserPDW_AmmoClip_ItemDef",
+                    "PX_LaserTechTurretGun_AmmoClip_ItemDef",
+                    "PX_PDW_AmmoClip_ItemDef",
+                    "PX_Pistol_AmmoClip_ItemDef",
+                    "PX_ShotgunRifle_AmmoClip_ItemDef",
+                    "PX_ShredingMissileLauncher_AmmoClip_ItemDef",
+                    "PX_SniperRifle_AmmoClip_ItemDef",
+                    "PX_VirophageSniperRifle_AmmoClip_ItemDef",
+                    "SY_Crossbow_AmmoClip_ItemDef",
+                    "SY_LaserAssaultRifle_AmmoClip_ItemDef",
+                    "SY_LaserPistol_AmmoClip_ItemDef",
+                    "SY_LaserSniperRifle_AmmoClip_ItemDef",
+                    "SY_NeuralPistol_AmmoClip_ItemDef",
+                    "SY_NeuralSniperRifle_AmmoClip_ItemDef",
+                    "SY_SpiderDroneLauncher_AmmoClip_ItemDef",
+                    "SY_Venombolt_AmmoClip_ItemDef"
+
+
+         };
+
+                foreach (String PX_AmmoStr in PX_ammoList)
+                {
+
+                    ////Plants Cost
+                    ItemDef PX_Ammo = DefCache.GetDef<ItemDef>(PX_AmmoStr);
+                    //TFTVLogger.Info("Item " & PX_AmmoStr & "Manuf : " & PX_Ammo.ManufactureMaterials.ToString & ", Tech : " & PX_Ammo.ManufactureTech.ToString);
+
+                    PX_Ammo.ManufactureMaterials = (Single)Math.Max(1,(Math.Round(PX_Ammo.ManufactureMaterials / multipleCostMaterial, 0)));
+                    PX_Ammo.ManufactureTech = (Single)Math.Max(0,(Math.Round(PX_Ammo.ManufactureTech / multipleCostTech,0)));
+                    TFTVLogger.Info("Calvitix_Change all done...");
+
+
+                }
+
+
+
+
+
+                TFTVLogger.Info("Calvitix_Change all done...");
+            }
+
+        }
+
     }
 }
