@@ -75,8 +75,8 @@ namespace TFTV.BetterEnemies
                 sAEEffect.DamagePayload.DamageKeywords[1].Value = faceHuggerAcidDamage;
                 sAEEffect.DamagePayload.AoeRadius = faceHuggerAOERadius;
 
-                sAE.ViewElementDef.DisplayName1 = new LocalizedTextBind("ACID EXPLOSION");
-                sAE.ViewElementDef.Description = new LocalizedTextBind("Upon death, the mindfragger bursts in an acid explosion damaging nearby targets");
+                sAE.ViewElementDef.DisplayName1 = new LocalizedTextBind("EXPLOSION D'ACIDE");
+                sAE.ViewElementDef.Description = new LocalizedTextBind("À sa mort, le Corrupteur explose, projettant de l'acide qui va endommager les cibles proches.");
 
                 RagdollDieAbilityDef FHDie = (RagdollDieAbilityDef)faceHugger.Abilities[2];
                 FHDie.DeathEffect = sAEEffect;

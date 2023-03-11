@@ -194,14 +194,15 @@ namespace TFTV
         public int VenomCrossbow_Ammo = 5; //3
 
         [ConfigField(text: "Changements de Gameplay Calvitix",
-            description: "+1 place dans les avions," +
-            "Coût des ammo / 2," +
-            "Coût des batiments x 2," +
-            "Production de matériau et tech par les batiments," +
-            "Plus de munitions pour les véhicules " +
-            "Reload avec Grenade Launcher ammo," +
-            "Tyr Autocanon, 1 coup après l'autre,\n...")]
-        public bool ApplyCalvitixChanges = true;
+            description: "Nb max en mission : 16," + "\n" 
+            +"+1 slot dans les avions," + "\n" 
+            +"Coût des ammo / 2," + "\n" 
+            +"Coût des batiments x 2," + "\n" 
+            +"Production de matériau et tech par les batiments," + "\n" 
+            +"Plus de munitions pour les véhicules " + "\n" 
+            +"Reload avec Grenade Launcher ammo," + "\n" 
+            +"Tyr Autocanon, 1 coup après l'autre,\n...")]
+        public bool ApplyCalvitixChanges = false;
 
 
     }

@@ -20,6 +20,7 @@ using PhoenixPoint.Tactical.Entities.Statuses;
 using PhoenixPoint.Tactical.Entities.Weapons;
 using PhoenixPoint.Tactical.View.ViewControllers;
 using PhoenixPoint.Tactical.View.ViewModules;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using TFTV;
@@ -550,7 +551,7 @@ namespace PRMBetterClasses.VariousAdjustments
             bool hasArmor = true;
             bool hasWeapon = true;
 
-			if (TFTVMain.Main.Settings.ApplyCalvitixChanges)
+			if (TFTVMain.Main.Config.ApplyCalvitixChanges)
             {
                 hasArmor = false; //Calvitix added
                 hasWeapon = false; //Calvitix added

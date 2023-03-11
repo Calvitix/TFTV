@@ -947,14 +947,14 @@ namespace TFTV
                    revenantResistanceAbilityDef.Multiplier = 1f;
                }*/
 
-            revenantResistanceStatus.Visuals.DisplayName1 = new LocalizedTextBind("REVENANT RESISTANCE - " + descriptionDamage.ToUpper(), true);
-            revenantResistanceStatus.Visuals.Description = new LocalizedTextBind((1 - revenantResistanceStatus.Multiplier) * 100 + "%" + " resistance gained to " + descriptionDamage + " from knowledge of Phoenix ways", true);
+            revenantResistanceStatus.Visuals.DisplayName1 = new LocalizedTextBind("RÉSISTANCE DE REVENANT - " + descriptionDamage.ToUpper(), true);
+            revenantResistanceStatus.Visuals.Description = new LocalizedTextBind((1 - revenantResistanceStatus.Multiplier) * 100 + "%" + " de résistance gagné en " + descriptionDamage + " de la connaissance de la Voie Phoenix", true);
 
             if (revenantResistanceStatus.DamageTypeDefs[0] == null)
             {
-                revenantResistanceStatus.Visuals.DisplayName1 = new LocalizedTextBind("REVENANT RESISTANCE - " + descriptionDamage.ToUpper(), true);
-                revenantResistanceStatus.Visuals.Description = new LocalizedTextBind("<b>Damage from first hit in a turn is reduced by 75%</b>, " +
-                    "an evolutionary response to Phoenix Project overwhelming use of weapons with high damage per projectile/strike", true);
+                revenantResistanceStatus.Visuals.DisplayName1 = new LocalizedTextBind("RÉSISTANCE DE REVENANT - " + descriptionDamage.ToUpper(), true);
+                revenantResistanceStatus.Visuals.Description = new LocalizedTextBind("<b>Les dégâts du premier Tir atteint lors d'un tour sont réduits de 75%</b>, " +
+                    "une réponse évolutive à l'utilisation massive, par le projet Phoenix, d'armes infligeant des dégâts importants par projectile/coup.", true);
             }
         }
         public static void AddRevenantResistanceStatus(TacticalActorBase tacticalActorBase)
@@ -1213,7 +1213,7 @@ namespace TFTV
                             new ItemStatModification {TargetStat = StatModificationTarget.Willpower, Modification = StatModificationType.AddMax, Value = 10}
                         };
 
-                        revenantTechnician.ViewElementDef.Description = new LocalizedTextBind("+5 Strength, +10 Willpower", true);
+                        revenantTechnician.ViewElementDef.Description = new LocalizedTextBind("+5 Puissance, +10 Volonté", true);
                     }
                     else if (tacticalActor.GameTags.Contains(revenantTier3GameTag))
                     {
@@ -1226,7 +1226,7 @@ namespace TFTV
                             new ItemStatModification {TargetStat = StatModificationTarget.Willpower, Modification = StatModificationType.AddMax, Value = 10}
                         };
 
-                        revenantTechnician.ViewElementDef.Description = new LocalizedTextBind("+10 Strength, +10 Willpower", true);
+                        revenantTechnician.ViewElementDef.Description = new LocalizedTextBind("+10 Puissance, +10 Volonté", true);
                     }
                 }
 

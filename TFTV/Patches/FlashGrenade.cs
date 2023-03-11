@@ -337,6 +337,7 @@ namespace TFTV.FlashGrenade
                 }
                 catch (Exception ex)
                 {
+                    TFTVLogger.Error(ex);
                 }
             }
         }

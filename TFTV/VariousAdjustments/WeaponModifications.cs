@@ -35,7 +35,7 @@ namespace PRMBetterClasses.VariousAdjustments
             Change_NergalsWrath();
             Change_Crossbows();
             Change_PriestWeapons();
-            if (TFTVMain.Main.Settings.ApplyCalvitixChanges)
+            if (TFTVMain.Main.Config.ApplyCalvitixChanges)
 
             {
             
@@ -342,7 +342,7 @@ namespace PRMBetterClasses.VariousAdjustments
         //Calvitix Weapon changes 
         public static void Change_Phoenix_Autocanon()
         {
-            if (TFTVMain.Main.Settings.ApplyCalvitixChanges)
+            if (TFTVMain.Main.Config.ApplyCalvitixChanges)
 
             {
 

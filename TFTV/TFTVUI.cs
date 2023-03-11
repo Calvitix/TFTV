@@ -448,7 +448,7 @@ namespace TFTV
                         deliriumIconHolder.gameObject.SetActive(true);
                         deliriumIcon.sprite = TFTVDefsRequiringReinjection.VoidIcon;
 						//Calvitix Trad
-                        deliriumToolTipText = "<color=#ec9006><b>-Nos agents peuvent maintenant être affligés d'un état de délire égal à leur Volonté.</b></color>";
+                        deliriumToolTipText = "<color=#ec9006><b>- Nos agents peuvent maintenant être affligés d'un état de délire égal à leur Volonté.</b></color>";
                         separator.gameObject.SetActive(true);
                         separator2.gameObject.SetActive(true);
                     }
@@ -458,7 +458,7 @@ namespace TFTV
                         __instance.PopulationBarRoot.gameObject.SetActive(true);
                         deliriumIconHolder.gameObject.SetActive(true);
                         deliriumIcon.sprite = Helper.CreateSpriteFromImageFile("Void-04Phalf.png");
-                        deliriumToolTipText = "<color=#ec9006>-Nos agents peuvent maintenant être affligés d'un état de délire égal à la moitié de leur Volonté.</color>";
+                        deliriumToolTipText = "<color=#ec9006>- Nos agents peuvent maintenant être affligés d'un état de délire égal à la moitié de leur Volonté.</color>";
                         separator.gameObject.SetActive(true);
                         separator2.gameObject.SetActive(true);
                     }
@@ -469,7 +469,7 @@ namespace TFTV
                         populationBar.gameObject.SetActive(true);
                         __instance.PopulationBarRoot.gameObject.SetActive(true);
                         deliriumIconHolder.gameObject.SetActive(true);
-                        deliriumToolTipText = "<color=#ec9006>-Nos agents peuvent maintenant être affligés d'un état de délire égal à un tiers de leur Volonté.</color>";
+                        deliriumToolTipText = "<color=#ec9006>- Nos agents peuvent maintenant être affligés d'un état de délire égal à un tiers de leur Volonté.</color>";
                         separator.gameObject.SetActive(true);
                         separator2.gameObject.SetActive(true);
                     }

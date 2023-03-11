@@ -60,6 +60,10 @@ namespace PRMBetterClasses.SkillModifications
 
             // War Cry: -1 AP and -10% damage, doubled if WP of target < WP of caster (see Harmony patch below)
             //Change_WarCry();
+
+            // Calvitix Shield Cost only 0.01 ?
+            //Change_Shield();
+
         }
 
         private static void Change_ReturnFire()

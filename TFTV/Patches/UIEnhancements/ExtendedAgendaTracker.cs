@@ -199,7 +199,7 @@ namespace TFTV.UIEnhancements
         {
             TimeUnit timeUnit = TimeUnit.FromHours(hours);
             TimeRemainingFormatterDef timeFormatter = new TimeRemainingFormatterDef();
-            timeFormatter.DaysText = new LocalizedTextBind("{0}d", true);
+            timeFormatter.DaysText = new LocalizedTextBind("{0}j", true);  // Calvitix Trad d -> j
             timeFormatter.HoursText = new LocalizedTextBind("{0}h", true);
             string timeString = UIUtil.FormatTimeRemaining(timeUnit, timeFormatter);
 

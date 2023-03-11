@@ -128,7 +128,7 @@ namespace TFTV
                                 {
                                     GeoscapeLogEntry entry = new GeoscapeLogEntry
                                     {
-                                        Text = new LocalizedTextBind(haven.Site.Owner + " " + haven.Site.LocalizedSiteName + " was destroyed by Hammerfall!", true)
+                                        Text = new LocalizedTextBind(haven.Site.Owner + " " + haven.Site.LocalizedSiteName + " a été détruit par le 'Marteau du Ciel' !", true)  //" was destroyed by Hammerfall!"
                                     };
                                     typeof(GeoscapeLog).GetMethod("AddEntry", BindingFlags.NonPublic | BindingFlags.Instance).Invoke(__instance.GeoLevel.Log, new object[] { entry, null });
                                     haven.Site.DestroySite();

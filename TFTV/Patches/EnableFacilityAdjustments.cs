@@ -32,6 +32,8 @@ namespace TFTV.Patches
             //HarmonyInstance harmony = HarmonyInstance.Create(typeof(EconomyAdjustments).Namespace);
             DefRepository defRepository = GameUtl.GameComponent<DefRepository>();
 
+            if (TFTVMain.Main.Config.ApplyCalvitixChanges)
+            {
             List<HealFacilityComponentDef> healFacilityComponentDefs = defRepository.DefRepositoryDef.AllDefs.OfType<HealFacilityComponentDef>().ToList();
             foreach (HealFacilityComponentDef hfcDef in healFacilityComponentDefs)
             {
@@ -84,7 +86,7 @@ namespace TFTV.Patches
                 if (rgfDef.name.Contains("FabricationPlant"))
                 {
                     ResourcePack resources = rgfDef.BaseResourcesOutput;
-                    ResourceUnit supplies = new ResourceUnit(ResourceType.Production, 5); //AssortedAdjustments.Settings.FabricationPlantGenerateProductionAmount
+                    ResourceUnit supplies = new ResourceUnit(ResourceType.Production, 4); //AssortedAdjustments.Settings.FabricationPlantGenerateProductionAmount
                     resources.Set(supplies);
 
                     // When added here they are also affected by general research buffs. This is NOT intended.
@@ -137,7 +139,7 @@ namespace TFTV.Patches
                 TFTVLogger.Info($"[FacilityAdjustments_Apply] rgfDef: {rgfDef.name}, GUID: {rgfDef.Guid}, BaseResourcesOutput: {rgfDef.BaseResourcesOutput.ToString()}");
             }
 
-
+            }
 
             //HarmonyHelpers.Patch(harmony, typeof(ResourceGeneratorFacilityComponent), "UpdateOutput", typeof(FacilityAdjustments), null, "Postfix_ResourceGeneratorFacilityComponent_UpdateOutput");
             //HarmonyHelpers.Patch(harmony, typeof(HealFacilityComponent), "UpdateOutput", typeof(FacilityAdjustments), null, "Postfix_HealFacilityComponent_UpdateOutput");
@@ -160,6 +162,8 @@ namespace TFTV.Patches
         public static class ResourceGeneratorFacilityComponent_UpdateOutput_patch
         {
             public static void Postfix(ResourceGeneratorFacilityComponent __instance)
+            {
+                if (TFTVMain.Main.Config.ApplyCalvitixChanges)
             {
                 try
                 {
@@ -205,6 +209,7 @@ namespace TFTV.Patches
                     TFTVLogger.Error(e);
                 }
             }
+        }
         }
 
         [HarmonyPatch(typeof(HealFacilityComponent), "UpdateOutput")]
@@ -364,14 +369,14 @@ namespace TFTV.Patches
                     {
                         __instance.Description.text = $"Les véhicules et les avions de la base récupèrent {currentVehicleSlotFacilityVehicleHealOuput} Points de santé par heure. Permet l'entretien de 2 véhicules terrestres et de 2 avions.";
                     }
-                    else if (facility.name.Contains("FabricationPlant"))//&& AssortedAdjustments.Settings.FabricationPlantGenerateMaterialsAmount > 0)
+                    else if (facility.name.Contains("FabricationPlant") && TFTVMain.Main.Config.ApplyCalvitixChanges)//&& AssortedAdjustments.Settings.FabricationPlantGenerateMaterialsAmount > 0)
                     {
                         float FabricationPlantGenerateMaterialsAmount = 2f;
                         string org = __instance.Description.text;
                         string add = $"Chaque usine génère {FabricationPlantGenerateMaterialsAmount} matériaux par heure.";
                         __instance.Description.text = $"{org}\n{add}";
                     }
-                    else if (facility.name.Contains("ResearchLab"))//&& AssortedAdjustments.Settings.ResearchLabGenerateTechAmount > 0)
+                    else if (facility.name.Contains("ResearchLab") && TFTVMain.Main.Config.ApplyCalvitixChanges)//&& AssortedAdjustments.Settings.ResearchLabGenerateTechAmount > 0)
                     {
                         float ResearchLabGenerateTechAmount = 1f;
                         string org = __instance.Description.text;

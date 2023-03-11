@@ -690,7 +690,7 @@ namespace TFTV
                 try
                 {
                     //  TFTVLogger.Always("FactionObjective Invoked");
-                    if (objective.Description.LocalizationKey.Contains("VOID"))
+                    if (objective.Description.LocalizationKey.Contains("VOID") || objective.Description.LocalizationKey.Contains("NEANT"))
                     {
                         objective.Description = new LocalizedTextBind(objective.Description.Localize().ToUpper(), true);
                     }

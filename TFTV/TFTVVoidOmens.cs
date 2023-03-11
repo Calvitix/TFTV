@@ -1257,7 +1257,7 @@ namespace TFTV
                 {
                     TFTVConfig config = TFTVMain.Main.Config;
 
-	                if 		(TFTVMain.Main.Settings.ApplyCalvitixChanges)
+	                if 		(TFTVMain.Main.Config.ApplyCalvitixChanges)
 	                {
 						//My way of playing
 	                    __result = 16; //Calvitix added
@@ -1266,7 +1266,7 @@ namespace TFTV
                     if (VoidOmensCheck[7] && __instance.Mission.MissionDef.MaxPlayerUnits == 8 && config.MoreMistVO)
                     {
                         __result += 1;
-						if (TFTVMain.Main.Settings.ApplyCalvitixChanges)
+						if (TFTVMain.Main.Config.ApplyCalvitixChanges)
 		                {
 		
 		                    __result += 4; //Calvitix added
@@ -1280,7 +1280,7 @@ namespace TFTV
                     if (__instance.Mission.MissionDef.name.Equals("StoryFS2_CustomMissionTypeDef"))
                     {
                         __result = 8;
-						if (TFTVMain.Main.Settings.ApplyCalvitixChanges)
+						if (TFTVMain.Main.Config.ApplyCalvitixChanges)
 		                {
 		
 		                    __result += 8; //Calvitix added

@@ -165,7 +165,7 @@ namespace TFTV
                             else
                             {
                                 // TFTVLogger.Always("Entry.text is not null");
-                                entry.Text = new LocalizedTextBind(GeoSiteForInfestation.Owner + " " + DefenseMission.Haven.Site.Name + " has succumbed to Pandoran infestation!", true);
+                                entry.Text = new LocalizedTextBind(GeoSiteForInfestation.Owner + " " + DefenseMission.Haven.Site.Name + " a succombé à l'infestation Pandorienne !", true);  //Calvitix Trad " has succumbed to Pandoran infestation!"
                                 // TFTVLogger.Always("The following entry to Log was added" + GeoSiteForInfestation.Owner + " " + DefenseMission.Haven.Site.Name + " has succumbed to Pandoran infestation!");
 
                             }
@@ -301,7 +301,7 @@ namespace TFTV
                                         haven.Population += refugeesToHaven;
                                         GeoscapeLogEntry entry = new GeoscapeLogEntry
                                         {
-                                            Text = new LocalizedTextBind(refugeesToHaven + " survivors from " + site.LocalizedSiteName + " have fled to  " + haven.Site.LocalizedSiteName, true)
+                                            Text = new LocalizedTextBind("Les survivants de '" + refugeesToHaven + "' du refuge " + site.LocalizedSiteName + " ont fuit vers " + haven.Site.LocalizedSiteName, true)  //Calvitix Trad
                                         };
                                         typeof(GeoscapeLog).GetMethod("AddEntry", BindingFlags.NonPublic | BindingFlags.Instance).Invoke(site.GeoLevel.Log, new object[] { entry, null });
 
@@ -342,27 +342,27 @@ namespace TFTV
                             GeoscapeEventDef LW3Miss = DefCache.GetDef<GeoscapeEventDef>("PROG_LW3_WIN_GeoscapeEventDef");
 
                             LocalizedTextBind lWDescription1 = new LocalizedTextBind(
-                                    "As your team searches for survivors and salvage in " + havenName + ", they come across a former clinic. " +
-                                    "It is full of horrors: mutilated bodies litter the floor, and the walls are covered in incomprehensible symbols scrawled in thick, dark blood. " +
-                                    "\r\n\r\nOne of the exam tables draws the attention of " + nameMainCharacter + ": \r\n\"It looks like an altar in a temple... Is this an offering? Whoa, it's alive!\"\r\n\r\n" +
-                                    "It turns out to be a remarkable armored suit: a mutated, living organism bio-engineered using some unknown technology. \r\n", true);
+                                    "Alors que votre équipe était à la recherche de survivants et d'objets pouvant être récupérés dans le Refuge de " + havenName + ", ils sont tombés sur une ancienne clinique. " +
+                                    "Elle est pleine d'horreurs : des corps mutilés jonchent le sol et les murs sont couverts de symboles incompréhensibles griffonnés dans un sang épais et sombre. " +
+                                    "\r\n\r\nL'une des tables d'examen a attiré l'attention de " + nameMainCharacter + ": \r\n\"On dirait un autel dans un temple... Est-ce une offrande ? Whoa, c'est vivant !\"\r\n\r\n" +
+                                    "Il s'agit en fait d'une remarquable combinaison blindée : un organisme vivant muté, fabriqué par bio-ingénierie à l'aide d'une technologie inconnue. \r\n", true);
 
-                            LocalizedTextBind lWDescription2 = new LocalizedTextBind("As with the first infested haven, your operatives encounter another temple to the horrors that took " +
-                                "possession of the infected; this time in an underground warehouse.\r\n\r\nIn a corner on the floor there sits a man, seemingly lost in thought, " +
-                                "a strange weapon lying in front of him. As " + nameMainCharacter + " come" + plural + " nearer, " + pronoun + " notice" + plural + " that the man is covered in acid burns and is completely catatonic. " +
-                                "By the rags of the uniform he must have been a janitor once.\r\n", true);
+                            LocalizedTextBind lWDescription2 = new LocalizedTextBind("Comme dans le premier refuge infesté, vos agents rencontrent un autre temple des horreurs installé " +
+                                "par les infectés; cette fois dans un entrepôt souterrain.\r\n\r\nDans un coin du sol, un homme est assis, apparemment perdu dans ses pensées, " +
+                                "une arme étrange est posée devant lui. Lorsque " + nameMainCharacter + " se rapproche" + plural + " plus près, " + pronoun + " remarque" + plural + " que l'homme est couvert de brûlures à l'acide et qu'il est complètement catatonique. " +
+                                "D'après les haillons de son uniforme, il a dû être concierge à une époque.\r\n", true);
 
-                            LocalizedTextBind lWDescription3text = new LocalizedTextBind("A man comes running, stumbling and falling through the ruins of " + havenName + " towards your team. " +
-                                "At first " + nameMainCharacter + " mistake" + plural + " his eagerness for madness and hostile intent, and almost shoot" + plural + " him. " +
-                                "\r\n\r\n“I have something for you, I have something for you! You <i>must</i> take it! Come with me!”\r\n", true);
+                            LocalizedTextBind lWDescription3text = new LocalizedTextBind("Un homme arrive en courant, en trébuchant et en tombant à travers les ruines de " + havenName + ", s'approchant de votre escouade. " +
+                                "Tout d'abord " + nameMainCharacter + " lui prête" + plural + " des intentions hostiles, provoquées par la folie, et envisage" + plural + " de lui tirer dessus. " +
+                                "\r\n\r\n“J'ai quelque chose pour vous, j'ai quelque chose pour vous ! Vous <i>devez</i> la prendre ! Venez avec moi!”\r\n", true);
 
-                            LocalizedTextBind lWDescription3outcome = new LocalizedTextBind("As your operatives walk after him, he keeps running ahead and coming back, all the while repeating " +
-                                "“You have to take it! You have to take it! Yes! Take it, and Malachi Constant shall be free! Free!”" +
-                                "\r\n\r\nMalachi takes your team to a workshop behind the haven’s main generator. " +
-                                "On a workbench is another mysterious device that looks like a multi-projectile heavy weapon. " +
-                                "He looks pleadingly at " + nameMainCharacter + ", begging " + possesivePronoun + " to take the weapon." +
-                                "\r\n\r\nWhen " + pronoun + " does, Malachi erupts in boundless joy “They chose me to give it to you! Somebody up there really likes me!”" +
-                                "\r\n\r\nUnfortunately, this exertion was too much for him. He collapses, dead, but with a smile of bliss on his face. \r\n", true);
+                            LocalizedTextBind lWDescription3outcome = new LocalizedTextBind("Alors que vos agents le poursuivent, il continue à courir devant lui, puis à revenir, tout en répétant " +
+                                "“Vous devez le prendre ! Vous devez le prendre ! Oui ! Prends-le, et Constant Malachi sera libre ! Libre !”" +
+                                "\r\n\r\nMalachi emmène votre équipe dans un atelier situé derrière le générateur principal du Refuge. " +
+                                "Sur un établi se trouve un autre appareil mystérieux qui ressemble à une arme lourde à projectiles multiples. " +
+                                "Il jette un regard suppliant à " + nameMainCharacter + ", "+ possesivePronoun + " priant de prendre l'arme." +
+                                "\r\n\r\nLorsqu'" + pronoun + " le fait, Malachi éclate d'une joie sans limites. “Ils m'ont choisi pour te le donner ! Quelqu'un là-haut m'aime vraiment !”" +
+                                "\r\n\r\nMalheureusement, cet effort est trop important pour lui. Il s'effondre, mort, mais avec un sourire de béatitude sur le visage. \r\n", true);
 
 
                             if (site.GeoLevel.EventSystem.GetVariable(LivingWeaponsAcquired) == 0)

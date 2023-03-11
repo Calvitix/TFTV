@@ -1028,8 +1028,8 @@ namespace TFTV
                     new ItemStatModification {TargetStat = StatModificationTarget.Speed, Modification = StatModificationType.Add, Value = 2},
                 };
                 revenantAssault.ItemTagStatModifications = new EquipmentItemTagStatModification[0];
-                revenantAssault.ViewElementDef.DisplayName1 = new LocalizedTextBind("Assault Revenant", true);
-                revenantAssault.ViewElementDef.Description = new LocalizedTextBind("+5% Damage", true);
+                revenantAssault.ViewElementDef.DisplayName1 = new LocalizedTextBind("Revenant Assaut", true);  //Calvitix Trad "Assault Revenant"
+                revenantAssault.ViewElementDef.Description = new LocalizedTextBind("+5% de dégâts", true);
 
                 revenantAssault.ViewElementDef.LargeIcon = VoidIcon;
                 revenantAssault.ViewElementDef.SmallIcon = VoidIcon;
@@ -1065,8 +1065,8 @@ namespace TFTV
                 new ItemStatModification {TargetStat = StatModificationTarget.Speed, Modification = StatModificationType.Add, Value = 4},
                 };
                 revenantBerserker.ItemTagStatModifications = new EquipmentItemTagStatModification[0];
-                revenantBerserker.ViewElementDef.DisplayName1 = new LocalizedTextBind("Berserker Revenant", true);
-                revenantBerserker.ViewElementDef.Description = new LocalizedTextBind("+4 Speed", true);
+                revenantBerserker.ViewElementDef.DisplayName1 = new LocalizedTextBind("Revenant Berserker", true);
+                revenantBerserker.ViewElementDef.Description = new LocalizedTextBind("+4 Vitesse", true);
 
                 revenantBerserker.ViewElementDef.LargeIcon = VoidIcon;
                 revenantBerserker.ViewElementDef.SmallIcon = VoidIcon;
@@ -1102,8 +1102,8 @@ namespace TFTV
                   new ItemStatModification {TargetStat = StatModificationTarget.Health, Modification = StatModificationType.Add, Value = 100},
                 };
                 heavy.ItemTagStatModifications = new EquipmentItemTagStatModification[0];
-                heavy.ViewElementDef.DisplayName1 = new LocalizedTextBind("Heavy Revenant", true);
-                heavy.ViewElementDef.Description = new LocalizedTextBind("+5 Strength", true);
+                heavy.ViewElementDef.DisplayName1 = new LocalizedTextBind("Revenant Mastodonte", true);
+                heavy.ViewElementDef.Description = new LocalizedTextBind("+5 Puissance", true);
 
                 heavy.ViewElementDef.LargeIcon = VoidIcon;
                 heavy.ViewElementDef.SmallIcon = VoidIcon;
@@ -1137,8 +1137,8 @@ namespace TFTV
                 { new ItemStatModification {TargetStat = StatModificationTarget.Stealth, Modification = StatModificationType.Add, Value = 0.15f},
                 };
                 infiltrator.ItemTagStatModifications = new EquipmentItemTagStatModification[0];
-                infiltrator.ViewElementDef.DisplayName1 = new LocalizedTextBind("Infiltrator Revenant", true);
-                infiltrator.ViewElementDef.Description = new LocalizedTextBind("+15% Stealth", true);
+                infiltrator.ViewElementDef.DisplayName1 = new LocalizedTextBind("Revenant Infiltrateur", true);
+                infiltrator.ViewElementDef.Description = new LocalizedTextBind("+15% de furtivité", true);
 
                 infiltrator.ViewElementDef.LargeIcon = VoidIcon;
                 infiltrator.ViewElementDef.SmallIcon = VoidIcon;
@@ -1173,8 +1173,8 @@ namespace TFTV
                 new ItemStatModification {TargetStat = StatModificationTarget.Willpower, Modification = StatModificationType.AddMax, Value = 10},
                 };
                 priest.ItemTagStatModifications = new EquipmentItemTagStatModification[0];
-                priest.ViewElementDef.DisplayName1 = new LocalizedTextBind("Priest Revenant", true);
-                priest.ViewElementDef.Description = new LocalizedTextBind("+10 Willpower", true);
+                priest.ViewElementDef.DisplayName1 = new LocalizedTextBind("Revenant Prêtre", true);
+                priest.ViewElementDef.Description = new LocalizedTextBind("+10 de Volonté", true);
 
                 priest.ViewElementDef.LargeIcon = VoidIcon;
                 priest.ViewElementDef.SmallIcon = VoidIcon;
@@ -1210,7 +1210,7 @@ namespace TFTV
                 { new ItemStatModification {TargetStat = StatModificationTarget.Perception, Modification = StatModificationType.Add, Value = 10},
                 };
                 sniper.ItemTagStatModifications = new EquipmentItemTagStatModification[0];
-                sniper.ViewElementDef.DisplayName1 = new LocalizedTextBind("Sniper Revenant", true);
+                sniper.ViewElementDef.DisplayName1 = new LocalizedTextBind("Revenant Sniper", true);
                 sniper.ViewElementDef.Description = new LocalizedTextBind("+10 Perception", true);
 
                 sniper.ViewElementDef.LargeIcon = VoidIcon;
@@ -1248,8 +1248,8 @@ namespace TFTV
                  new ItemStatModification {TargetStat = StatModificationTarget.Willpower, Modification = StatModificationType.AddMax, Value = 5}
                 };
                 technician.ItemTagStatModifications = new EquipmentItemTagStatModification[0];
-                technician.ViewElementDef.DisplayName1 = new LocalizedTextBind("Technician Revenant", true);
-                technician.ViewElementDef.Description = new LocalizedTextBind("+5 Strength, +5 Willpower", true);
+                technician.ViewElementDef.DisplayName1 = new LocalizedTextBind("Revenant Technicien", true);
+                technician.ViewElementDef.Description = new LocalizedTextBind("+5 Puissance, +5 Volonté", true);
 
                 technician.ViewElementDef.LargeIcon = VoidIcon;
                 technician.ViewElementDef.SmallIcon = VoidIcon;
@@ -1593,9 +1593,9 @@ namespace TFTV
                 { new ItemStatModification {TargetStat = StatModificationTarget.BonusAttackDamage, Modification = StatModificationType.Multiply, Value = 1.10f},
                 };
                 ambushAbility.ItemTagStatModifications = new EquipmentItemTagStatModification[0];
-                ambushAbility.ViewElementDef.DisplayName1 = new LocalizedTextBind("Ambush (Tactics)", true);
+                ambushAbility.ViewElementDef.DisplayName1 = new LocalizedTextBind("Embuscade (Tactiques)", true);
                 ambushAbility.ViewElementDef.Description = new LocalizedTextBind
-                    ("+10% damage. Received ability because Leader was alive and there were no enemies in sight within 10 tiles at the start of the turn.", true);
+                    ("+10% de dégâts. Reçoit cette capacité lorsque le chef est en vie et qu'il n'y a pas d'ennemis en vue dans un rayon de 10 cases au début du tour.", true);
                 Sprite icon = Helper.CreateSpriteFromImageFile("UI_AbilitiesIcon_PersonalTrack_TacticalAnalyst.png");
                 ambushAbility.ViewElementDef.LargeIcon = icon;
                 ambushAbility.ViewElementDef.SmallIcon = icon;

@@ -131,14 +131,14 @@ namespace TFTV
                             }
 
                             string name = "InfestationMissionIntro";
-                            string title = "Search and Rescue";
-                            string text = "Director, " + characterName + " reporting. We are at " + __instance.Site.LocalizedSiteName + ". Are you seeing this? The green shimmering…  I… I feel like I have been here before…";
+                            string title = "Recherche et sauvetage"; // "Search and Rescue"; 
+                            string text = "Directeur, " + characterName + " au rapport. Nous sommes à " + __instance.Site.LocalizedSiteName + ". Vous voyez ça ? Ce vert scintillant... Je... J'ai l'impression d'être déjà venu ici...";
 
 
 
-                            string reply = characterName + " snap out of it! " +
-                                "We are still Phoenix operatives and we got a job to do. " +
-                                "Scans show that there are survivors out there. Stay frosty and be ready for anything. " + orderedOperatives[0].DisplayName + " out.";
+                            string reply = characterName + " ne vous laissez pas abattre ! " +
+                                "Nous sommes toujours des agents de Phoenix et nous avons un travail à faire. " +
+                                "Les scanners montrent qu'il y a des survivants. Gardez votre sang froid et soyez prêts à tout. " + orderedOperatives[0].DisplayName + " terminé.";
 
                             ContextHelpHintDef infestationIntro2 = DefCache.GetDef<ContextHelpHintDef>(name + "2");
                             ContextHelpHintDef infestationIntro = DefCache.GetDef<ContextHelpHintDef>(name);
@@ -169,12 +169,12 @@ namespace TFTV
                 if (GetTacticalActorsPhoenix(level).Count >= 1)
                 {
                     string nameOfOperative = GetTacticalActorsPhoenix(level)[0].DisplayName;
-                    string title = "Awakening";
-                    string text = " <i>”There were a few survivors here and there. The couple of soldiers who were lucky to get mindfragged during the initial attack; " +
-                        "but also civilians, who were not fully taken by the creature. They came out of it, as if waking up from a nightmare. " +
-                        "It was then that I understood what Alistair meant when he joked that we were waging a war for our place in the new food chain: " +
-                        "the Pandorans didn’t want to exterminate us. That would have been too merciful. They wanted us for something else.”</i>\n\n" + nameOfOperative
-                        + ", Phoenix Project";
+                    string title = "Le Réveil";
+                    string text = " <i>”Il y avait quelques survivants ici et là. Les quelques soldats qui ont eu la chance d'être contrôlés lors de l'attaque initiale; " +
+                        "mais aussi des civils, qui n'ont pas été totalement saisis par la créature. Ils s'en sont sortis, comme s'ils se réveillaient d'un cauchemar. " +
+                        "C'est alors que j'ai compris ce qu'Alistair voulait dire lorsqu'il disait en plaisantant que nous étions en train de mener une guerre pour notre place dans la nouvelle chaîne alimentaire : " +
+                        "Les Pandoriens ne veulent pas nous exterminer. Cela aurait été trop clément. Ils nous veulent pour autre chose.”</i>\n\n" + nameOfOperative
+                        + ", Projet Phoenix";
 
                     ContextHelpHintDef infestationOutro = DefCache.GetDef<ContextHelpHintDef>("InfestationMissionEnd");
                     infestationOutro.Trigger = HintTrigger.MissionOver;

@@ -328,7 +328,7 @@ namespace PRMBetterClasses
         public int VenomCrossbow_Ammo = 4;
 
 		// Détermine si les Modifs doivent être appliquées ou non
-        public bool ApplyCalvitixChanges = true;
+        //public bool ApplyCalvitixChanges = false;
 
 
         // Flag if UI texts should be changed to default (Enlish) text or set by localization

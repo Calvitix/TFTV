@@ -1709,7 +1709,7 @@ namespace TFTV
                 StatMultiplierStatusDef trembling = DefCache.GetDef<StatMultiplierStatusDef>("Trembling_StatusDef");
                 trembling.ApplicationConditions = new EffectConditionDef[] { organicEffectConditionDef };
 
-                DefCache.GetDef<CallReinforcementsAbilityDef>("Acheron_CallReinforcements_AbilityDef").WillPointCost = 10;
+      //Calvitix change ?          DefCache.GetDef<CallReinforcementsAbilityDef>("Acheron_CallReinforcements_AbilityDef").WillPointCost = 10;
 
 
             }
@@ -2330,7 +2330,7 @@ namespace TFTV
                 //Reduce all craft seating (except blimp) by 4 and create clones with previous seating
 
                 int CalvitixMoreSpace = 0;
-                if (TFTVMain.Main.Settings.ApplyCalvitixChanges)
+                if (TFTVMain.Main.Config.ApplyCalvitixChanges)
                 {
 
                     CalvitixMoreSpace = 1;
@@ -2496,7 +2496,7 @@ namespace TFTV
 
                 //reducing evolution per day because there other sources of evolution points now
                 hard.EvolutionProgressPerDay = 50; 
-                if (TFTVMain.Main.Settings.ApplyCalvitixChanges)
+                if (TFTVMain.Main.Config.ApplyCalvitixChanges)
                 {
                 	hard.EvolutionProgressPerDay = 40; 
                 	//Calvitix 50; //vanilla 70; moved from 60 in Update#6
@@ -3174,7 +3174,7 @@ namespace TFTV
             {
                 HealFacilityComponentDef e_HealMedicalBay_PhoenixFacilityDe = DefCache.GetDef<HealFacilityComponentDef>("E_Heal [MedicalBay_PhoenixFacilityDef]");
                 e_HealMedicalBay_PhoenixFacilityDe.BaseHeal = 16;
-                if (TFTVMain.Main.Settings.ApplyCalvitixChanges)
+                if (TFTVMain.Main.Config.ApplyCalvitixChanges)
                 {
                     e_HealMedicalBay_PhoenixFacilityDe.BaseHeal = 4; //Calvitix, to match 'reality', and a pool of soldiers more needed
                 }
@@ -3187,7 +3187,7 @@ namespace TFTV
                     new ResourceUnit { Type = ResourceType.Tech, Value = 50 }
                 };
 
-                if (TFTVMain.Main.Settings.ApplyCalvitixChanges)
+                if (TFTVMain.Main.Config.ApplyCalvitixChanges)
 
                 {
                     //Science
