@@ -173,7 +173,6 @@
     <Compile Include="Patches\PauseOnRecruitsGenerated.cs" />
     <Compile Include="Patches\Reload.cs" />    
     <Compile Include="Patches\UIEnhancements\BetterObjectives.cs" />
-    <Compile Include="Patches\UIEnhancements\ExtendedAgendaTracker.cs" />
     <Compile Include="Patches\UIEnhancements\DetailedResearchAndProduction.cs" />
     <Compile Include="PortedAATweaks\UIEnhancements\ExtendedBaseInfo.cs" />
     
@@ -201,6 +200,7 @@
     <Compile Include="Tactical\Entities\Statuses\AddDependentDamageKeywordsStatusDef.cs" />
     <Compile Include="Tactical\Entities\Statuses\OnActorDazedEffectStatus.cs" />
     <Compile Include="Tactical\Entities\Statuses\OnActorDazedEffectStatusDef.cs" />
+    <Compile Include="TFTVAAExperiment.cs" />
     <Compile Include="TFTVAirCombat.cs" />
     <Compile Include="TFTVAmbushes.cs" />
     <Compile Include="TFTVAncients.cs" />
@@ -214,10 +214,10 @@
     <Compile Include="TFTVCommonMethods.cs" />
     <Compile Include="TFTVDefsInjectedOnlyOnce.cs" />
     <Compile Include="TFTVDefsRequiringReinjection.cs" />
-    <Compile Include="TFTVDefsWithConfigDependency.cs" />
     <Compile Include="TFTVDelirium.cs" />
     <Compile Include="TFTVDeliriumPerks.cs" />
     <Compile Include="TFTVDiplomacyPenalties.cs" />
+    <Compile Include="TFTVSpecialDifficulties.cs" />
     <Compile Include="TFTVExperimental.cs" />
     <Compile Include="TFTVGeoscape.cs" />
     <Compile Include="TFTVConfig.cs" />

@@ -1,6 +1,7 @@
 using PhoenixPoint.Modding;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 
 namespace TFTV
 {
@@ -20,6 +21,24 @@ namespace TFTV
             description: "Définit tous les paramètres par défaut, pour offrir l'expérience de 'Terror from the Void' telle qu'elle a été imaginée par ses créateurs.")]
         //Sets all settings to default, to provide the Terror from the Void experience as envisioned by its creators
         public bool defaultSettings = false;
+
+        [ConfigField(text: "FORCER LES PARAMÈTRES DE DIFFICULTÉ DES DÉBUTANTS",
+          description: "Certains paramètres de configuration sont définis par défaut à un certain niveau pour les débutants (voir chaque option de configuration pour plus de détails). Si vous souhaitez les forcer, cochez cette case.")]
+        public bool OverrideRookieDifficultySettings = false;
+
+        [ConfigField(text: "MISSIONS TACTIQUES FACILES",
+          description: "Tous les ennemis gagnent un trait spécial augmentant les dégâts qui leur sont infligés de 50%, les Pandorians n'ont jamais plus de 20 d'armure, Les Scylla et Noeuds ont moins de PV." +
+            "Tous les agents de Phoenix bénéficient d'une caractéristique spéciale qui augmente leur résistance aux dégâts de 50 %. Réglé par défaut à 'Oui' en mode débutant")]
+        public bool EasyTactical = false;
+
+        [ConfigField(text: "GEOSCAPE FACILE",
+          description: "Toutes les récompenses diplomatiques, les récompenses en ressources des missions, les résultats de la recherche sont doublés et toutes les pénalités diplo. sont réduites de moitié. " +
+            " Réglé par défaut à 'Oui' en mode débutant")]
+        public bool EasyGeoscape = false;
+
+        [ConfigField(text: "JE SUIS ETERMES",
+                  description: "TU ES ETERMES")]
+        public bool EtermesMode = false;
 
         [ConfigField(text: "JOUER AVEC LE PRÉSAGE DU NÉANT : PLUS DE BRUME",
             description: "Si vous jouez sur un PC d'entrée de gamme et que vous ressentez du lag avec les 'Présages du Néant', vous pouvez le désactiver ici. Cela l'empêchera d'apparaître" +
@@ -196,8 +215,8 @@ namespace TFTV
         [ConfigField(text: "Changements de Gameplay Calvitix",
             description: "Nb max en mission : 16," + "\n" 
             +"+1 slot dans les avions," + "\n" 
-            +"Coût des ammo / 2," + "\n" 
-            +"Coût des batiments x 2," + "\n" 
+            +"Coût des munitions / 2," + "\n" 
+            +"Coût des bâtiments x 2," + "\n" 
             +"Production de matériau et tech par les batiments," + "\n" 
             +"Plus de munitions pour les véhicules " + "\n" 
             +"Reload avec Grenade Launcher ammo," + "\n" 

@@ -510,7 +510,7 @@ namespace TFTV
                     Image evolutionIcon = evolutionIconHolder.GetComponent<Image>();
 
                     Transform evolutionTooltip = populationBar.GetComponent<Transform>().Find("PandoranEvolutionIcon").GetComponent<Transform>().Find("PandoranEvolutionTooltip");
-                    string evolutionToolTipText = "D'après les rapports et les observations sur le terrain, nous estimons que les Pandoriens sont en train d'évoluer";
+                    string evolutionToolTipText = "D'après les rapports et les observations sur le terrain, nous estimons que les Pandoriens sont en train d'évoluer ";
                     if (controller.PhoenixFaction.Research.HasCompleted("PX_Alien_EvolvedAliens_ResearchDef"))
                     {
                         // TFTVLogger.Always("Got here 5");
