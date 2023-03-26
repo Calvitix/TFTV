@@ -496,15 +496,15 @@ UMBRA_SIGHTED2_TEXT,Text,,"
 ",,,,,,
 VO_HINT_TITLE,Text,,Void Omens!,,Les présages du Néant !,,,,,,
 VO_HINT_TEXT,Text,,Terror!,,Terrreur !,,,,,,
-KEY_INDEPENDENCE_DAY_NAME,Text,,To Kill a Behemoth,,Tuer un béhémoth,,,,,,
-KEY_INDEPENDENCE_DAY_REVEAL,Text,,"The Virophage should be able to kill the Behemoth, but we still need a delivery system that would allow us to deploy it safely in sufficient quantities. Perhaps we can repurpose the injector designed by the Barnabas AI.",,"Le Virophage devrait être capable de tuer le Béhémoth, mais il nous faut encore un système d'administration qui nous permette de le déployer en toute sécurité et en quantité suffisante. Peut-être pouvons-nous réutiliser l'injecteur conçu par l'IA Barnabas.",,,,,,
+KEY_INDEPENDENCE_DAY_NAME,Text,,To Kill a Behemoth,,Pour tuer un béhémoth,,,,,,
+KEY_INDEPENDENCE_DAY_REVEAL,Text,,"The Virophage should be able to kill the Behemoth, but we still need a delivery system that would allow us to deploy it safely in sufficient quantities. Perhaps we can repurpose the injector designed by the Barnabas AI.",,"Le Virophage devrait être capable de tuer le Béhémoth, mais il nous faut encore un système d'administration qui nous permette de le déployer en toute sécurité et en quantité suffisante. Peut-être pouvons-nous réutiliser l'injecteur conçu par l'I.A. Barnabas.",,,,,,
 KEY_INDEPENDENCE_DAY_UNLOCK,Text,,,,,,,,,,
 KEY_INDEPENDENCE_DAY_COMPLETE,Text,,"Repurposing the injector turned out to be the easy part. The rest of it is more... extravagant. Olena will explain. 
 
 /AA",,"Réutiliser l'injecteur s'est avéré être la partie la plus facile. Le reste est plus... extravagant. Olena t'expliquera. 
 
 /AA",,,,,,
-PROG_FS2_TITLE,Text,,Operation Dreamcatcher,,Opération Attrape-rêve,,,,,,
+PROG_FS2_TITLE,Text,,Operation Dreamcatcher,,Opération 'Attrape-Rêve',,,,,,
 PROG_FS2_TEXT_GENERAL_0,Text,,"We have examined different options for delivering the virophage to the Behemoth, from rockets to aerosols. However, the Festering Skies form an impenetrable air defense system and to succeed we need not only strike the Behemoth with the virophage; we need to contaminate the whole ecosystem. 
 
 We have come up with a plan but I don’t think you will like it, Director: a modified Manticore, covered in Mutagen-rich biomass, will deploy a strike team on the surface of the Behemoth to locally inject the Virophage at pre-identified vital points. Hopefully it will kill the Behemoth and its death will provoke a cascade failure on the Festering Skies ecology. 
@@ -1071,7 +1071,7 @@ HOPLITES_SELF_REPAIR_NAME,Text,,HOPLITES SELF-REPAIR,,"AUTO-RÉPARATION DES HOPL
 HOPLITES_SELF_REPAIR_DESCRIPTION,Text,,"Any Automata destroyed within 7 tiles of another one will allow it to recover a missing body part or 50 HP, and 5 WP",,"Tout Automate détruit à moins de 7 cases d'un autre Automate permettra à ce dernier de récupérer une partie manquante de son corps, ou 50 PV, et 5 Volonté",,,,,,
 POWERED_UP_NAME,Text,,ALL POWERED UP,,TOUT EST SOUS TENSION,,,,,,
 POWERED_UP_DESCRIPTION,Text,,"From the moment it is alerted, an Automata gains 5 WP per turn. Its speed is determined by its current WP. Once it reaches maximum WP, it gains the this status, receving +50% damage to all attacks and 25% damage resistance",,"A partir du moment où il est alerté, un Automate gagne 5 Volonté par tour. Sa vitesse est déterminée par sa Volonté actuelle. Une fois qu'il a atteint la Volonté maximum, il gagne ce statut, recevant +50% de dégâts à toutes les attaques et 25% de résistance aux dégâts",,,,,,
-UNKNOWN_STATUS_NAME,Text,,?,,,,,,,,
+UNKNOWN_STATUS_NAME,Text,,?,,"?",,,,,,
 UNKNOWN_STATUS_DESCRIPTION,Text,,Research the entity to learn what it is capable of,,"Faites des recherches sur l'entité pour savoir ce dont elle est capable.",,,,,,
 KEY_EMP_RESISTANCE_NAME,Text,,IMMUNE TO EMP,,IMMUNISÉ A L'EMP,,,,,,
 KEY_EMP_RESISTANCE_DESCRIPTION,Text,,Immune to EMP attacks,,"Immunisé contre les attaques utilisant des EMP",,,,,,
@@ -1112,9 +1112,20 @@ Tant que ce présage du néant est en vigueur, les défenseurs du havre vous ser
 Gagnez de l'XP en protégeant les structures ou les civils comme d'habitude.
 
 Vous pouvez piller les caisses avec des armes de faction, mais seul l'équipement dans l'inventaire de vos agents ou de vos véhicules sera récupéré.",,,,,,
-ROOKIE_VULNERABILITY_NAME,Text,,Heroes always win,,,,,,,,
-ROOKIE_VULNERABILITY_DESCRIPTION,Text,,...When you are playing on Rookie. All enemies suffer 50% more damage. ,,,,,,,,
-ROOKIE_PROTECTION_DESCRIPTION,Text,,...When you are playing on Rookie. All Phoenix operatives suffer 50% less damage.,,,,,,,,
-ETERMES_VULNERABILITY_NAME,Text,,You are Etermes,,,,,,,,
-ETERMES_VULNERABILITY_DESCRIPTION,Text,,...And everything is always too easy for you. All Phoenix operatives suffer 25% more damage.,,,,,,,,
-ETERMES_PROTECTION_DESCRIPTION,Text,,...And everything is always too easy for you. All enemies suffer 25% less damage. ,,,,,,,,
+FIRE_QUENCHER_NAME,Text,,FIRE QUENCHER,,EXTINCTEUR,,,,,,
+FIRE_QUENCHER_DESCRIPTION,Text,,Immunity to fire. Replaces any lit tiles it passes through with Mist.,,"Immunité au feu. Remplace toutes les cases en feu qu'il traverse par de la brume.",,,,,,
+HINT_FIRE_QUENCHER_TITLE,Text,,Fire Quencher,,"Extincteur",,,,,,
+HINT_FIRE_QUENCHER_TEXT,Text,,"<i>“There was nothing special about this one… Here comes the bisque, I thought… Boy was I wrong.”</i>
+
+Some Arthrons have evolved the ability to instantly quench the fire they come in contact with, replacing it with Mist. They are apparently doing this by spraying some biochemical compound  from their <b>heads</b>. Disabling their heads should remove both their immunity to fire and their ability to quench it.",,"<i>“Il n'y avait rien de spécial à propos de celui-ci... Voilà la bisque, me suis-je dit... Je me suis trompé.”</i>
+
+Certains Arthrons ont développé la capacité d'éteindre instantanément le feu avec lequel ils entrent en contact, en le remplaçant par de la brume. Ils le font apparemment en pulvérisant un composé biochimique à partir de leur <b>tête</b>. 
+
+La désactivation de leur tête devrait supprimer à la fois leur immunité au feu et leur capacité à l'éteindre.",,,,,,
+
+ROOKIE_VULNERABILITY_NAME,Text,,Heroes always win,,"Les Héros gagnent toujours",,,,,,
+ROOKIE_VULNERABILITY_DESCRIPTION,Text,,...When you are playing on Rookie. All enemies suffer 50% more damage. ,,"Lorsque vous jouez en mode débutant. Tous les ennemis subissent 50 % de dégâts supplémentaires.",,,,,,
+ROOKIE_PROTECTION_DESCRIPTION,Text,,...When you are playing on Rookie. All Phoenix operatives suffer 50% less damage.,,"Lorsque vous jouez en mode débutant. Tous les agents de Phoenix subissent 50 % de dégâts en moins.",,,,,,
+ETERMES_VULNERABILITY_NAME,Text,,You are Etermes,,Vous êtes Etermes,,,,,,
+ETERMES_VULNERABILITY_DESCRIPTION,Text,,...And everything is always too easy for you. All Phoenix operatives suffer 25% more damage.,,"...Et tout est toujours trop facile pour vous. Tous les agents de Phoenix subissent 25% de dégâts supplémentaires.",,,,,,
+ETERMES_PROTECTION_DESCRIPTION,Text,,...And everything is always too easy for you. All enemies suffer 25% less damage. ,,"...Et tout est toujours trop facile pour vous. Tous les ennemis subissent 25 % de dégâts en moins.",,,,,,

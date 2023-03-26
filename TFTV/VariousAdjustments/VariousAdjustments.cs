@@ -259,6 +259,10 @@ namespace PRMBetterClasses.VariousAdjustments
             PassiveModifierAbilityDef mountedItemsProficiency = DefCache.GetDef<PassiveModifierAbilityDef>("MountedWeaponTalent_AbilityDef");
             mountedItemsProficiency.ViewElementDef.DisplayName1.LocalizationKey = "PR_BC_MOUNTED_ITEMS_PROF";
             mountedItemsProficiency.ViewElementDef.Description = new LocalizedTextBind("PR_BC_MOUNTED_ITEMS_PROF_DESC");
+            //Calvitix Trad
+            PassiveModifierAbilityDef PistolItemsProficiency = DefCache.GetDef<PassiveModifierAbilityDef>("HandgunsTalent_AbilityDef");
+            PistolItemsProficiency.ViewElementDef.DisplayName1.LocalizationKey = "PR_BC_HANDGUN_ITEMS_PROF";
+            PistolItemsProficiency.ViewElementDef.Description = new LocalizedTextBind("PR_BC_HANDGUN_ITEMS_PROF_DESC"); //("Compétence permettant d'utiliser sans pénalités les Pistolets et armes de poings";// 
             //Sprite icon = Repo.GetAllDefs<ViewElementDef>().FirstOrDefault(ve => ve.name.Equals("E_View [NJ_Technician_MechArms_WeaponDef]")).LargeIcon;
             //mountedItemsProficiency.ViewElementDef.LargeIcon = icon;
             //mountedItemsProficiency.ViewElementDef.SmallIcon = icon;

@@ -2,51 +2,51 @@
   "E_ViewElement [AssaultRiflesTalent_AbilityDef]": {
     "DisplayName1": "ASSAULT RIFLE PROFICIENCY",
     "DisplayName2": "",
-    "Description": "Ma�trise des Fusils d'Assaut"
+    "Description": "Compétence permettant d'utiliser sans pénalités les Fusils d'Assaut"
   },
   "E_ViewElement [GrenadesTalent_AbilityDef]": {
     "DisplayName1": "GRENADE PROFICIENCY",
     "DisplayName2": "",
-    "Description": "Ma�trise des Grenades"
+    "Description": "Compétence permettant d'utiliser sans pénalités les Grenades"
   },
   "E_ViewElement [HandgunsTalent_AbilityDef]": {
     "DisplayName1": "HANDGUN PROFICIENCY",
     "DisplayName2": "",
-    "Description": "Ma�trise des Pistolets"
+    "Description": "Compétence permettant d'utiliser sans pénalités les Pistolets et armes de poings"
   },
   "E_ViewElement [HeavyWeaponsTalent_AbilityDef]": {
     "DisplayName1": "HEAVY WEAPON PROFICIENCY",
     "DisplayName2": "",
-    "Description": "Ma�trise des Armes Lourdes"
+    "Description": "Compétence permettant d'utiliser sans pénalités les Armes Lourdes"
   },
   "E_ViewElement [MeleeWeaponTalent_AbilityDef]": {
     "DisplayName1": "MELEE WEAPON PROFICIENCY",
     "DisplayName2": "",
-    "Description": "Ma�trise des Armes de contact"
+    "Description": "Compétence permettant d'utiliser sans pénalités les Armes de contact"
   },
   "E_ViewElement [MountedWeaponTalent_AbilityDef]": {
     "DisplayName1": "MOUNTED WEAPON PROFICIENCY",
     "DisplayName2": "",
-    "Description": "Ma�trise des Armes greff�es"
+    "Description": "Compétence permettant d'utiliser sans pénalités tous les armes accrochées aux armures."
   },
   "E_ViewElement [PDWTalent_AbilityDef]": {
     "DisplayName1": "PDW PROFICIENCY",
     "DisplayName2": "",
-    "Description": "Ma�trise des Mitraillettes"
+    "Description": "Compétence permettant d'utiliser sans pénalités les Mitraillettes."
   },
   "E_ViewElement [ShotgunTalent_AbilityDef]": {
     "DisplayName1": "SHOTGUN PROFICIENCY",
     "DisplayName2": "",
-    "Description": "Ma�trise des Fusils � pompe"
+    "Description": "Compétence permettant d'utiliser sans pénalités les Fusils à pompe et armes de proximité"
   },
   "E_ViewElement [SilencedWeaponTalent_AbilityDef]": {
     "DisplayName1": "SILENCED WEAPON PROFICIENCY",
     "DisplayName2": "",
-    "Description": "Ma�trise des Armes silencieuses"
+    "Description": "Compétence permettant d'utiliser sans pénalités les armes silencieuses, arbalètes,..."
   },
   "E_ViewElement [SniperTalent_AbilityDef]": {
     "DisplayName1": "SNIPER RIFLE PROFICIENCY",
     "DisplayName2": "",
-    "Description": "Ma�trise des Fusils-Sniper"
+    "Description": "Compétence permettant d'utiliser sans pénalités les Fusils de Sniper"
   }
 }

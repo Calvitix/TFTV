@@ -37,11 +37,12 @@ namespace TFTV
         public bool EasyGeoscape = false;
 
         [ConfigField(text: "JE SUIS ETERMES",
-                  description: "TU ES ETERMES")]
+                  description: "...Et tout est toujours trop facile pour vous.Tous les agents de Phoenix subissent 25 % de dégâts supplémentaires." +
+                  "...Et tout est toujours trop facile pour vous. Tous les ennemis subissent 25 % de dégâts en moins.")]
         public bool EtermesMode = false;
 
         [ConfigField(text: "JOUER AVEC LE PRÉSAGE DU NÉANT : PLUS DE BRUME",
-            description: "Si vous jouez sur un PC d'entrée de gamme et que vous ressentez du lag avec les 'Présages du Néant', vous pouvez le désactiver ici. Cela l'empêchera d'apparaître" +
+            description: "Si vous jouez sur un PC d'entrée de gamme et que vous ressentez du lag avec ce 'Présage du Néant', vous pouvez le désactiver ici. Cela l'empêchera d'apparaître" +
             " et s'il est déjà lancé, il n'aura aucun effet.")]
         // If you are playing on a Low-end system and experience lag with this Void Omen, you can turn it off here. This will prevent it from rolling and if already rolled, will prevent it from having any effect
         public bool MoreMistVO = true;
@@ -121,8 +122,8 @@ namespace TFTV
         // For example, to double amount of resources from current Vanilla (Azazoth level), change to 2f 
         // Can be applied to game in progress
         [ConfigField(text: "Quantité de ressources gagnées des évén.",
-           description: "Pour la version actuelle (post patch Azazoth) de Vanilla, réglez à 1. Pour le TFTV par défaut et vanilla avant le patch Azazoth, mettez 0.8..\n" +
-            "Peut être appliqué sur une partie en cours")]
+           description: "Pour la version actuelle (post patch Azazoth) de Vanilla, réglez à 1. Pour le TFTV par défaut et vanilla avant le patch Azazoth, mettez 0.8.\n" +
+            "Peut être appliqué sur une partie en cours.\n"+"Valeur par défaut en mode débutant : 1.2")] //done
         public float ResourceMultiplier = 0.8f;
 
         // Changing the settings below will make the game easier:
@@ -131,31 +132,31 @@ namespace TFTV
         // Can be applied to game in progress
         [ConfigField(text: "Pénalités diplomatiques élevées",
            description: "Les pénalités diplomatiques découlant des choix effectués lors des événements sont doublées et le fait de révéler des missions diplomatiques pour une faction entraîne une pénalité diplomatique avec les autres factions.\n" +
-                        "Peut être appliqué sur une partie en cours")]
+                        "Peut être appliqué sur une partie en cours\n" + "Valeur par défaut en mode débutant : non.")] //done
         public bool DiplomaticPenalties = true;
 
 
         // If set to false, a disabled limb in tactical will not set character's Stamina to zero in geo
         [ConfigField(text: "Endurance drainée par les blessures",
            description: "L'endurance de tout agent qui subit une blessure au combat entraînant une invalidité d'une partie du corps sera remise à zéro après la mission.\n" +
-            "Peut être appliqué sur une partie en cours.")]
+            "Peut être appliqué sur une partie en cours.\n" + "Valeur par défaut en mode débutant : non.")] //done
         public bool StaminaPenaltyFromInjury = true;
 
         // If set to false, applying a mutation will not set character's Stamina to zero
         [ConfigField(text: "Endurance drainée par les mutations",
           description: "L'endurance de tout agent qui subit une mutation sera mise à zéro..\n" +
-           "Peut être appliqué sur une partie en cours.")]
+           "Peut être appliqué sur une partie en cours.\n" + "Valeur par défaut en mode débutant : non.")] //done
         public bool StaminaPenaltyFromMutation = true;
 
         // If set to false, adding a bionic will not set character's Stamina to zero
         [ConfigField(text: "Endurance drainée par les augment. bioniques",
           description: "L'endurance de tout opérateur qui subit une augmentation bionique sera mise à zéro..\n" +
-           "Peut être appliqué sur une partie en cours.")]
+           "Peut être appliqué sur une partie en cours.\n" + "Valeur par défaut en mode débutant : non.")] //done")]
         public bool StaminaPenaltyFromBionics = true;
 
         // If set to false, ambushes will happen as rarely as in Vanilla, and will not have crates in them
         [ConfigField(text: "Nouvelles embuscades",
-          description: "Les embuscades se produiront plus souvent et seront plus difficiles. Indépendamment de ce paramètre, toutes les embuscades contiendront des caisses.")]
+          description: "Les embuscades se produiront plus souvent et seront plus difficiles. Indépendamment de ce paramètre, toutes les embuscades contiendront des caisses.\n" + "Valeur par défaut en mode débutant : non.")] //done")]
         public bool MoreAmbushes = true;
 
         // Changing the settings below will make the game harder:
@@ -181,7 +182,7 @@ namespace TFTV
 
         // If set to true activates DLC5 Kaos Engines story rework (in progress)
         [ConfigField(text: "Changements du Marché DLC5 (en cours)",
-       description: "Supprime les cutscenes et les missions, tous les articles sont disponibles aux prix les plus bas 24 heures après leur découverte sur le marché..")]
+       description: "Supprime les cutscenes et les missions, tous les articles sont disponibles aux prix les plus bas 24 heures après leur découverte sur le marché.")]
         public bool ActivateKERework = true;
 
         // If set to true, unrevealed havens will be revealed when attacked
@@ -207,10 +208,10 @@ namespace TFTV
         // Infiltrator Crossbow Ammo changes
         [ConfigField(text: "Munitions de l'Eros",
             description: "Définissez le nombre de carreaux pour le magasin des arbalètes de base. (Eros CRB III)")]
-        public int BaseCrossbow_Ammo = 5; //3
+        public int BaseCrossbow_Ammo = 6; //3
         [ConfigField(text: "Munitions du Psyche",
             description: "Définissez le nombre de carreaux pour le magasin des arbalètes avancées (Psyche CRB IV)")]
-        public int VenomCrossbow_Ammo = 5; //3
+        public int VenomCrossbow_Ammo = 4; //3
 
         [ConfigField(text: "Changements de Gameplay Calvitix",
             description: "Nb max en mission : 16," + "\n" 

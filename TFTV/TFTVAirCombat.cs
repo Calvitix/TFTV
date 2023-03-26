@@ -144,11 +144,11 @@ namespace TFTV
                                     string destructionDescription;
                                     if (haven.Zones.First().Health <= 500 || startingPopulation >= haven.Population + 1000)
                                     {
-                                        destructionDescription = " suffered heavy damage from Harmmerfall!";
+                                        destructionDescription = " a subi de lourds dommages dus au 'Marteau du Ciel' !";//" suffered heavy damage from Harmmerfall!";
                                     }
                                     else
                                     {
-                                        destructionDescription = " suffered some damage from Hammerfall";
+                                        destructionDescription = " a subi des dommages dus au 'Marteau du Ciel' !";//" suffered some damage from Hammerfall";
 
                                     }
                                     GeoscapeLogEntry entry = new GeoscapeLogEntry

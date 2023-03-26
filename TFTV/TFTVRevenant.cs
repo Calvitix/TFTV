@@ -357,12 +357,12 @@ namespace TFTV
                     }
                     string newGuid = Guid.NewGuid().ToString();
                     string hintDescription = revenantResistanceStatus.Visuals.Description.LocalizeEnglish() +
-                        ".\nKilling the Revenant will not remove this resistance from any Pandoran that already has it." +
-                        "\nPandorans arriving as reinforcements will not receive the resistance.";
+                        ".\nTuer le Revenant n'enlèvera pas cette résistance à un Pandorien qui la possède déjà." +
+                        "\nLes pandoriens qui arrivent en renfort ne bénéficient pas de la résistance.";
 
                     // TFTVLogger.Always("Got to before hint");
 
-                    TFTVTutorialAndStory.CreateNewTacticalHintForRevenantResistance("RevenantResistanceSighted", HintTrigger.ActorSeen, "RevenantResistance_GameTagDef", "Revenant resistance", hintDescription);
+                    TFTVTutorialAndStory.CreateNewTacticalHintForRevenantResistance("RevenantResistanceSighted", HintTrigger.ActorSeen, "RevenantResistance_GameTagDef", "Résistance de Revenant", hintDescription); //Calvitix
                     revenantResistanceHintCreated = true;
                 }
             }
@@ -402,7 +402,7 @@ namespace TFTV
 
                     // TFTVLogger.Always("Got to before hint");
 
-                    TFTVTutorialAndStory.CreateNewTacticalHintForRevenantResistance("RevenantResistanceSighted", HintTrigger.ActorSeen, "RevenantResistance_GameTagDef", "Revenant resistance", hintDescription);
+                    TFTVTutorialAndStory.CreateNewTacticalHintForRevenantResistance("RevenantResistanceSighted", HintTrigger.ActorSeen, "RevenantResistance_GameTagDef", "Résistance de Revenant", hintDescription);
                     revenantResistanceHintCreated = true;
 
                 }
@@ -438,7 +438,7 @@ namespace TFTV
                             && !DeadSoldiersDelirium.ContainsKey(deathReport.Actor.GeoUnitId))
                         {
                             AddtoListOfDeadSoldiers(deathReport.Actor);
-                            TFTVStamina.charactersWithBrokenLimbs.Remove(deathReport.Actor.GeoUnitId);
+                            TFTVStamina.charactersWithDisabledBodyParts.Remove(deathReport.Actor.GeoUnitId);
                             TFTVLogger.Always(deathReport.Actor.DisplayName + " died at. The deathlist now has " + DeadSoldiersDelirium.Count);
                             if (deathReport.Actor.DisplayName != __instance.TacticalGameParams.Statistics.LivingSoldiers[deathReport.Actor.GeoUnitId].Name)
                             {
@@ -915,31 +915,31 @@ namespace TFTV
 
             if (revenantResistanceStatus.DamageTypeDefs[0] == acidDamage)
             {
-                descriptionDamage = "<b>acid damage</b>";
+                descriptionDamage = "<b>dégâts d'acide</b>"; //Calvitix  <b>acid damage</b>
             }
             else if (revenantResistanceStatus.DamageTypeDefs[0] == blastDamage)
             {
-                descriptionDamage = "<b>blast damage</b>";
+                descriptionDamage = "<b>dégâts d'explosion</b>";
             }
             else if (revenantResistanceStatus.DamageTypeDefs[0] == fireDamage)
             {
-                descriptionDamage = "<b>fire damage</b>";
+                descriptionDamage = "<b>dégâts de feu</b>";
             }
             else if (revenantResistanceStatus.DamageTypeDefs[0] == shredDamage)
             {
-                descriptionDamage = "<b>shred damage</b>";
+                descriptionDamage = "<b>dégâts de déchiquetage</b>";
             }
             else if (revenantResistanceStatus.DamageTypeDefs[0] == virusDamage)
             {
-                descriptionDamage = "<b>virus damage</b>";
+                descriptionDamage = "<b>dégâts de virus</b>";
             }
             else if (revenantResistanceStatus.DamageTypeDefs[0] == paralysisDamage)
             {
-                descriptionDamage = "<b>paralysis damage</b>";
+                descriptionDamage = "<b>dégâts paralysants</b>";
             }
             else if (revenantResistanceStatus.DamageTypeDefs[0] == null)
             {
-                descriptionDamage = "<b>high damage attacks </b>";
+                descriptionDamage = "<b>des attaques de dégats importants </b>";
                 revenantResistanceStatus.Multiplier = 1f;
             }
             /*   else if (revenantResistanceAbilityDef.DamageTypeDef == projectileDamage)
