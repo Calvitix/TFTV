@@ -2,6 +2,7 @@
 using Base.Core;
 using Base.Entities.Statuses;
 using Base.Levels;
+using Base.UI;
 using Base.UI.VideoPlayback;
 using HarmonyLib;
 using PhoenixPoint.Common.Core;
@@ -14,7 +15,6 @@ using PhoenixPoint.Common.Game;
 using PhoenixPoint.Common.View.ViewControllers;
 using PhoenixPoint.Common.View.ViewModules;
 using PhoenixPoint.Geoscape.Entities;
-using PhoenixPoint.Geoscape.Events.Eventus;
 using PhoenixPoint.Geoscape.Levels;
 using PhoenixPoint.Geoscape.View;
 using PhoenixPoint.Geoscape.View.DataObjects;
@@ -37,9 +37,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using System.Runtime.Remoting.Contexts;
 using UnityEngine;
-using UnityEngine.PlayerLoop;
 using UnityEngine.UI;
 
 namespace TFTV
@@ -65,7 +63,7 @@ namespace TFTV
         internal static Color syn = new Color(0.160784319f, 0.8862745f, 0.145098045f, 1.0f);
 
 
-        
+
 
 
         [HarmonyPatch(typeof(UIModuleMutationSection), "SelectMutation")]
@@ -121,7 +119,7 @@ namespace TFTV
                         UIModuleActorCycle controller = (UIModuleActorCycle)UnityEngine.Object.FindObjectOfType(typeof(UIModuleActorCycle));
 
                         controller.DisplaySoldier(____parentModule.CurrentCharacter, true);
-                        
+
 
                     }
                 }
@@ -170,9 +168,9 @@ namespace TFTV
 
                     MethodInfo singleItemRepairMethodInfo = typeof(UIModuleReplenish).GetMethod("SingleItemRepair", BindingFlags.Instance | BindingFlags.NonPublic);
                     Delegate singleItemRepairDelegate = Delegate.CreateDelegate(typeof(Action<GeoManufactureItem>), __instance, singleItemRepairMethodInfo);
-                   
+
                     float equippedItemHealth = character.GetEquippedItemHealth(itemDef);
-                    ResourcePack resourcePack = itemDef.ManufacturePrice * (1f - equippedItemHealth)*0.5f;
+                    ResourcePack resourcePack = itemDef.ManufacturePrice * (1f - equippedItemHealth) * 0.5f;
                     materialsCost += resourcePack.ByResourceType(ResourceType.Materials).RoundedValue;
                     techCost += resourcePack.ByResourceType(ResourceType.Tech).RoundedValue;
                     GeoManufactureItem geoManufactureItem = UnityEngine.Object.Instantiate(__instance.ItemListPrefab, __instance.ItemListContainer);
@@ -180,8 +178,8 @@ namespace TFTV
                     geoManufactureItem.OnEnter = (InteractHandler)Delegate.Combine(geoManufactureItem.OnEnter, onEnterSlotDelegate);
                     geoManufactureItem.OnExit = (InteractHandler)Delegate.Combine(geoManufactureItem.OnExit, onExitSlotDelegate);
 
-                  
-                    geoManufactureItem.OnSelected = (Action<GeoManufactureItem>)Delegate.Combine(geoManufactureItem.OnSelected, singleItemRepairDelegate);                
+
+                    geoManufactureItem.OnSelected = (Action<GeoManufactureItem>)Delegate.Combine(geoManufactureItem.OnSelected, singleItemRepairDelegate);
                     geoManufactureItem.Init(itemDef, faction, resourcePack, repairMode: true);
                     PhoenixGeneralButton component = geoManufactureItem.AddToQueueButton.GetComponent<PhoenixGeneralButton>();
                     if (component != null && equippedItemHealth == 1f)
@@ -190,7 +188,7 @@ namespace TFTV
                     }
 
                     __instance.RepairableItems.Add(geoManufactureItem);
-                    __result= faction.Wallet.HasResources(resourcePack);
+                    __result = faction.Wallet.HasResources(resourcePack);
                     return false;
                 }
                 catch (Exception e)
@@ -254,13 +252,14 @@ namespace TFTV
             {
                 try
                 {
-                    // TFTVLogger.Always("GetDamageKeywordValue invoked");
+                    SharedData shared = GameUtl.GameComponent<SharedData>();
+                    SharedDamageKeywordsDataDef damageKeywords = shared.SharedDamageKeywords;
                     StandardDamageTypeEffectDef projectileDamage = DefCache.GetDef<StandardDamageTypeEffectDef>("Projectile_StandardDamageTypeEffectDef");
                     StandardDamageTypeEffectDef blastDamage = DefCache.GetDef<StandardDamageTypeEffectDef>("Blast_StandardDamageTypeEffectDef");
 
-                    if (tacticalActor != null && (damageKeyword.DamageTypeDef == projectileDamage || damageKeyword.DamageTypeDef == blastDamage)) //&& damageKeyword is PiercingDamageKeywordDataDef == false) 
+                    if (tacticalActor != null && (damageKeyword.DamageTypeDef == projectileDamage || damageKeyword.DamageTypeDef == blastDamage) && damageKeyword != damageKeywords.SyphonKeyword) //&& damageKeyword is PiercingDamageKeywordDataDef == false) 
                     {
-
+                       
                         float numberOfMutations = 0;
 
                         //   TFTVLogger.Always("GetDamageKeywordValue check passed");
@@ -278,6 +277,7 @@ namespace TFTV
                             // TFTVLogger.Always("damage value is " + payload.GenerateDamageValue(tacticalActor.CharacterStats.BonusAttackDamage));
 
                             __result = payload.GenerateDamageValue(tacticalActor.CharacterStats.BonusAttackDamage) * (1f + (numberOfMutations * 2) / 100 * (float)tacticalActor.CharacterStats.Corruption);
+                            TFTVLogger.Always($"GetDamageKeywordValue invoked for {tacticalActor.DisplayName} and result is {__result}");
                             //  TFTVLogger.Always("result is " + __result +", damage increase is " + (1f + (((numberOfMutations * 2) / 100) * (float)tacticalActor.CharacterStats.Corruption)));
                         }
 
@@ -771,7 +771,7 @@ namespace TFTV
 
                     evolutionTooltip.gameObject.GetComponent<UITooltipText>().TipText = evolutionToolTipText;
 
-                 
+
                 }
 
                 catch (Exception e)
@@ -781,13 +781,13 @@ namespace TFTV
             }
         }
 
-        
-       
+
+
 
 
         public static string CreateTextForAnuTooltipText(GeoLevelController controller)
         {
-            try 
+            try
             {
                 string text = "";
                 GeoFaction phoenix = controller.PhoenixFaction;
@@ -851,7 +851,7 @@ namespace TFTV
                 {
                     text += "\n-Vous avez reporté la troisième mission spéciale proposée par cette faction (sera de nouveau proposé à 74%)";
                 }
-               
+
                 else if (controller.EventSystem.GetEventRecord("PROG_SY1")?.SelectedChoice == 2)
                 {
                     text += "\n-Vous avez reporté la première mission spéciale proposée par cette faction (sera de nouveau proposé à 24%)";
@@ -861,7 +861,7 @@ namespace TFTV
                 {
                     text += "\n-Vous avez accompli toutes les missions spéciales de cette faction ; vous avez un accès complet à leur arbre de recherche.";
                 }
-                else if (controller.EventSystem.GetEventRecord("PROG_SY3_WIN")?.SelectedChoice !=null)
+                else if (controller.EventSystem.GetEventRecord("PROG_SY3_WIN")?.SelectedChoice != null)
                 {
                     text += "\n-Vous avez accompli la deuxième mission spéciale de cette faction ; vous aurez accès à toutes les technologies recherchées par la faction.";
                 }
@@ -870,7 +870,7 @@ namespace TFTV
                     text += "\n-Vous avez accompli la deuxième mission spéciale de cette faction ; vous aurez accès à toutes les technologies recherchées par la faction.";
                 }
 
-                if (polyCounter > terraCounter) 
+                if (polyCounter > terraCounter)
                 {
                     text += "\n-Sous l'influence du Phoenix Project, la tendance polyphonique est actuellement en plein essor au sein du Synédrion.";
 
@@ -879,7 +879,7 @@ namespace TFTV
                 {
                     text += "\n-Sous l'influence du Phoenix Project, la tendance des terraformeurs est actuellement en plein essor au sein du Synédrion.";
                 }
-                
+
 
 
                 return text;
@@ -1131,6 +1131,77 @@ namespace TFTV
             }
         }
 
+       /* [HarmonyPatch(typeof(UIModuleSoldierEquip), "Init")]
+        internal static class TFTV_UIModuleSoldierEquip_Awake_SuperExperiment_Patch
+        {
+            private static void Postfix(UIModuleSoldierEquip __instance)
+            {
+                try
+                {
+                  
+                     Type sourceType = Type.GetType("UIModuleSoldierCustomization");
+
+                    // Get a reference to the UIStateSoldierCustomization instance
+                    Debug.Log("Finding UIStateSoldierCustomization object");
+                    GameObject uiState = (GameObject)UnityEngine.Object.FindObjectOfType(sourceType);
+
+                    if (uiState == null)
+                    {
+                        Debug.LogError("Could not find UIStateSoldierCustomization object");
+                        return;
+                    }
+
+
+                    // Get a reference to the PhoenixGeneralButton with the text "HIDE HELMET"
+                    PhoenixGeneralButton targetButton = null;
+
+                    foreach (PhoenixGeneralButton button in uiState.GetComponentsInChildren<PhoenixGeneralButton>(true))
+                    {
+
+                        TFTVLogger.Always($"{button.name}");
+                        Text text = button.gameObject.GetComponentInChildren<Text>();
+
+
+                        if (text.text == "HIDE HELMET")
+                        {
+                            TFTVLogger.Always($"Found the button!");
+                            targetButton = button;
+                            break;
+                        }
+                    }
+
+                    if (targetButton != null)
+                    {
+                        // Use reflection to get the type of the PhoenixGeneralButton
+                        Type buttonType = targetButton.GetType();
+
+                        // Create a new instance of the PhoenixGeneralButton type
+                        object newButton = Activator.CreateInstance(buttonType);
+
+                        // Copy relevant properties from the original button to the new button
+                        foreach (FieldInfo field in buttonType.GetFields(BindingFlags.Public | BindingFlags.Instance))
+                        {
+                            field.SetValue(newButton, field.GetValue(targetButton));
+                        }
+
+                        // Add the new button to the UIModuleSoldierEquip hierarchy
+                        // (assuming you already have a reference to the UIModuleSoldierEquip instance)
+                        GameObject newButtonObj = new GameObject("MyButton");
+                        newButtonObj.transform.SetParent(__instance.transform, false);
+                        newButtonObj.AddComponent(buttonType);
+                       // ((PhoenixGeneralButton)newButtonObj.GetComponent(buttonType)).Text.text = "NEW BUTTON TEXT";
+                    }
+
+
+                }
+
+                catch (Exception e)
+                {
+                    TFTVLogger.Error(e);
+                }
+            }
+        }*/
+
         //Patch to show correct encumbrance
         [HarmonyPatch(typeof(UIModuleSoldierEquip), "RefreshWeightSlider")]
         internal static class TFTV_UIModuleSoldierEquip_RefreshWeightSlider_Patch
@@ -1287,15 +1358,19 @@ namespace TFTV
 
         public static TacticalActor HookCharacterStatsForDeliriumShader = null;
 
-        [HarmonyPatch(typeof(TacticalActor), "SetupFaceCorruptionShader")]
 
-        class TFTV_TacticalActor_SetupFaceCorruptionShader
+        
+
+
+        [HarmonyPatch(typeof(SquadMemberScrollerController), "SetupFaceCorruptionShader")]
+
+        class TFTV_SquadMemberScrollerController_SetupFaceCorruptionShader
         {
-            private static void Prefix(TacticalActor __instance)
+            private static void Prefix(TacticalActor actor)
             {
                 try
                 {
-                    HookCharacterStatsForDeliriumShader = __instance;
+                    HookCharacterStatsForDeliriumShader = actor;
 
 
                 }
@@ -1375,6 +1450,8 @@ namespace TFTV
                                     __result = 0.05f;
                                 }
                             }
+
+                          //  TFTVLogger.Always($"corruption shader result is {__result}");
                         }
                     }
 
@@ -1552,6 +1629,9 @@ namespace TFTV
                          {
                              uIModuleSoldierCustomization.HideHelmetToggle.interactable = true;
                          }*/
+
+
+                        
 
                     }
 

@@ -111,7 +111,7 @@ Requires completing Living Crystal and Protean Mutane researches.",,"Le but ulti
 PX_SCORPION_RESEARCHDEF_NAME,Text,,Scorpion,,Scorpion,,,,,,
 PX_SCORPION_RESEARCHDEF_UNLOCK,Text,,This blueprint by renowned rocket engineer John Antonasov is for some sort of long rifle with incredible damage capacity.,,Ce plan du célèbre ingénieur en fusée John Antonasov est pour une sorte de long fusil avec une capacité de pénétration et de dégâts incroyable.,,,,,,
 TFTV_KEY_AC_SCYTHE_NAME,Text,,Scyther,,Scythère,,,,,,
-TFTV_SYN_BIONICS3_RESEARCHDEF_BENEFITS,Text,,The breakthrough we have been waiting for! We can now manufacture the Scyther Impossible Weapon,,"La percée que nous attendions ! Nous pouvons maintenant fabriquer l'arme impossible Scythère",,,,,,
+TFTV_SYN_BIONICS3_RESEARCHDEF_BENEFITS,Text,,Cybernetics Lab facility and additional designs. The breakthrough we have been waiting for! We can now manufacture the Scyther Impossible Weapon,,"Laboratoire de cybernétique et autres projets. La percée que nous attendions ! Nous pouvons maintenant fabriquer l'arme impossible Scythère",,,,,,
 TFTV_PX_SCYTHER_RESEARCHDEF_COMPLETE,Text,,"According to the notes accompanying the recovered data, Jules Godfry designed the Scyther after his disappointing performance in some sort of corporate ludic e-competition called “Chaos Reborn 2022 Annual Tournament”. In psychological terms it is the expression of unfathomable anger directed at all things, living and inanimate, though its practical military applications in the real world were doubtful until the appearance of the Pandoran monstrosities.
 
 Unfortunately, elemental safety concerns prevent us from manufacturing the Scyther, a bladed weapon with an area of effect. This weapon requires very fine sensors that can re-balance the weapon while in full swing to avoid harming its wielder. The reaction times demanded of these sensors are beyond what our own technology can provide, but New Jericho’s Project Purity was making strides in the right direction. Perhaps further development of bionics technology will give us the solution we need. Until then, the Scyther remains a dream.
@@ -1129,3 +1129,77 @@ ROOKIE_PROTECTION_DESCRIPTION,Text,,...When you are playing on Rookie. All Phoen
 ETERMES_VULNERABILITY_NAME,Text,,You are Etermes,,Vous êtes Etermes,,,,,,
 ETERMES_VULNERABILITY_DESCRIPTION,Text,,...And everything is always too easy for you. All Phoenix operatives suffer 25% more damage.,,"...Et tout est toujours trop facile pour vous. Tous les agents de Phoenix subissent 25% de dégâts supplémentaires.",,,,,,
 ETERMES_PROTECTION_DESCRIPTION,Text,,...And everything is always too easy for you. All enemies suffer 25% less damage. ,,"...Et tout est toujours trop facile pour vous. Tous les ennemis subissent 25 % de dégâts en moins.",,,,,,
+KEY_GEO_HINT_AUGMENTATION_SCREEN_DESCRIPTION,Text,,"You are about to augment your first soldier. A character can only have UP TO 2 BODY PARTS replaced this way.
+
+Once an augmentation is installed, the soldier will not be able to revert back to their natural limbs. However, augmented body parts CAN BE SWAPPED with different cybernetic parts.
+
+Augmented body parts are IMMUNE TO BLEEDING and RESISTANT TO VIRAL DAMAGE, POISON, AND PARALYSIS. Damaged cybernetics CAN BE REPAIRED after battle at the expense of Tech and Materials. 
+
+In addition, each bionic augmentation reduces the maximum Delirium the character can have by 1/3, and removes up to that amount of Delirium from the character. 
+
+Augmenting a character will reduce their Stamina to zero.",,"Vous êtes sur le point d'augmenter votre premier soldat. Un personnage ne peut se faire remplacer que jusqu'à DEUX PARTIES DU CORPS de cette manière.
+
+Une fois l'augmentation installée, le soldat ne pourra pas revenir à ses membres naturels. Cependant, les parties du corps augmentées peuvent être échangées avec d'autres parties cybernétiques.
+
+Les parties du corps augmentées sont immunisées contre l'hémorragie et résistent aux dommages causés par les virus, aux poisons et à la paralysie. Les parties cybernétiques endommagées PEUVENT ÊTRE RÉPARÉES après la bataille, au prix de tech et des matériaux. 
+
+De plus, chaque augmentation bionique réduit le Délirium maximum que le personnage peut avoir de 1/3, et enlève jusqu'à cette quantité de Délirium au personnage. 
+
+L'augmentation d'un personnage réduit son endurance à zéro.",,,,,,
+BASEDEFENSE_INFESTATION_OBJECTIVE,Text,,DESTROY ALL PANDORAN STRUCTURES,,DÉTRUIRE TOUTES LES STRUCTURES PANDORIENNES,,,,,,
+BASEDEFENSE_SECOND_OBJECTIVE,Text,,SCATTER THE REMAINING ATTACKERS,,DISPERSER LES ATTAQUANTS RESTANTS,,,,,,
+BASEDEFENSE_EVENT_TITLE ,Text,,A Phoenix Project base is under attack!,,"Une base du projet Phoenix est attaquée !",,,,,,
+BASEDEFENSE_EVENT_TEXT,Text,,"Director! We are under attack! Our automated defenses and bullheads will buy us some time, but we need to deploy a squad to secure the base as soon as possible. The longer we take, the more time the enemy will have to achieve its objectives.
+",,"Directeur ! Nous sommes attaqués ! Nos défenses automatisées et nos têtes de pont nous permettront de gagner du temps, mais nous devons déployer une escouade pour sécuriser la base dès que possible. Plus nous prendrons de temps, plus l'ennemi aura de temps pour atteindre ses objectifs.
+",,,,,,
+BASEDEFENSE_INFESTATION_TITLE ,Text,,Infested.,,"Infesté.",,,,,,
+BASEDEFENSE_INFESTATION_DESCRIPTION,Text,,"<i>“They're coming out of the walls! They're coming out of the goddamn walls!”</i>
+
+Security footage shows the Pandorans taking over the base. 
+
+Director, they are colonizing it.
+
+We will deploy through maintenance access in the tunnels under the base facilities.",,"<i>“Ils sortent des murs ! Ils sortent de ces putains de murs!”</i>
+
+Les images de sécurité montrent les Pandoriens s'emparant de la base. 
+
+Directeur, ils la colonisent.
+
+Nous nous déploierons par l'accès de maintenance dans les tunnels sous les installations de la base.",,,,,,
+BASEDEFENSE_NESTING_TITLE ,Text,,Infestation in progress...,,Infestation en cours...,,,,,,
+BASEDEFENSE_NESTING_DESCRIPTION,Text,,"<i>“Busy little creatures”</i>
+
+The enemy has breached our defenses and has spread throughout the base. We will deploy through maintenance access in the tunnels under the base facilities. ",,"<i>“Petites créatures actives”</i>
+
+L'ennemi a ouvert une brèche dans nos défenses et s'est répandu dans la base. Nous nous déploierons par l'accès de maintenance dans les tunnels sous les installations de la base.",,,,,,
+BASEDEFENSE_TACTICAL_ADVANTAGE_TITLE ,Text,,Tactical Advantage!,,Avantage tactique !,,,,,,
+BASEDEFENSE_TACTICAL_ADVANTAGE_DESCRIPTION,Text,,"<i>“You're down there, we're up here! You walked into the wrong goddamn room...”</i>
+
+We have taken defensive positions around the main entrance. As long as we hold this choke point we should be fine. ",,"<i>“Vous êtes en bas, nous sommes en haut ! Vous êtes entrés dans la mauvaise pièce...”</i>
+
+Nous avons pris des positions défensives autour de l'entrée principale. Tant que nous tenons ce goulot d'étranglement, tout devrait bien se passer.",,,,,,
+BASEDEFENSE_UMBRASTRAT_TEXT,Text,,"Director, we are detecting something in the air vents. It's the Mist. And where there is Mist, there are Umbra.",,"Directeur, nous détectons quelque chose dans les bouches d'aération. C'est la brume. Et là où il y a de la brume, il y a de l'Umbra.",,,,,,
+BASEDEFENSE_UMBRASTRAT_TITLE,Text,,Umbra,,Umbra,,,,,,
+BASEDEFENSE_WORMSSTRAT_TEXT,Text,,"Director, there is something burrowing down towards your team. Small, multiple targets bearing on the hangar.",,"Directeur, il y a quelque chose qui se dirige vers votre équipe. Des petites cibles multiples, en direction du hangar.",,,,,,
+BASEDEFENSE_WORMSSTRAT_TITLE,Text,,Worms or Myrmidons,,Vers ou Myrmidons,,,,,,
+BASEDEFENSE_FORCE2STRAT_TEXT,Text,,"Director, be advised, we have detected a secondary strike force digging their way in. They can appear behind our backs any minute!",,"Directeur, sachez que nous avons détecté une force d'intervention secondaire en train de creuser un tunnel. Ils peuvent arriver dans notre dos d'une minute à l'autre !",,,,,,
+BASEDEFENSE_FORCE2STRAT_TITLE,Text,,Secondary Strike Force,,Force d'intervention secondaire,,,,,,
+BASEDEFENSE_VENTING_TITLE,Text,,Emergency venting,,Ventilation d'urgence,,,,,,
+BASEDEFENSE_VENTING_TEXT,Text,,"<i>“Between a rock and a hard place, be water.”</i> 
+
+The geothermal plant that powers the base has an emergency steam vent that can scald the Pandorans that are trying to get into the base, removing the currently incoming wave of reinforcements. However, this will likely damage the generator and will cause the base systems to malfunction, resulting in fires and explosions. 
+
+There are several consoles around the base that can be activated; inbuilt safety measures prevent repeating the operation at the same console.",,"<i>“Entre le marteau et l'enclume, l'eau.”</i> 
+
+La centrale géothermique qui alimente la base dispose d'un évent d'urgence qui peut ébouillanter les Pandoriens qui tentent d'entrer dans la base, éliminant ainsi la vague de renforts qui arrive actuellement. Cependant, cela risque d'endommager le générateur et de provoquer un dysfonctionnement des systèmes de la base, entraînant des incendies et des explosions. 
+
+Il y a plusieurs consoles dans la base qui peuvent être activées ; des mesures de sécurité intégrées empêchent de répéter l'opération sur la même console.",,,,,,
+BASEDEFENSE_BRIEFING_OBJECTIVES_SIMPLE,Text,,Scatter the attackers.,,Dispersez les attaquants.,,,,,,
+BASEDEFENSE_BRIEFING_OBJECTIVES_DOUBLE,Text,,Destroy all Pandoran structures and scatter the remaining attackers. ,,"Détruisez toutes les structures pandoriennes et dispersez les attaquants restants.",,,,,,
+BASEDEFENSE_BRIEFING_TACTICALADVANTAGE,Text,,"If we take the attackers on now, we can take optimal defensive positions. The mission gets harder over time. If we fail, we lose control of the base.",,"Si nous attaquons les assaillants maintenant, nous pourrons prendre des positions défensives optimales. La mission devient de plus en plus difficile. Si nous échouons, nous perdons le contrôle de la base.",,,,,,
+BASEDEFENSE_BRIEFING_NESTING,Text,,"The enemy has breached our defenses and has spread throughout the base. It can yet get worse. If we fail, we lose control of the base.",,"L'ennemi a ouvert une brèche dans nos défenses et s'est répandu dans la base. La situation peut encore empirer. Si nous échouons, nous perdons le contrôle de la base.",,,,,,
+BASEDEFENSE_BRIEFING_INFESTATION,Text,,"Security footage shows the Pandorans have almost taken over the base. If we fail, we lose control of the base.",,"Les images de sécurité montrent que les Pandoriens ont presque pris le contrôle de la base. Si nous échouons, nous perdons le contrôle de la base.",,,,,,
+BASEDEFENSE_EVENT_TEXT,Text ,,"Director! Our base is under attack! Our automated defenses and bullheads will buy us some time, but we need to deploy a squad to secure the base as soon as possible. The longer we take, the more time the enemy will have to achieve its objectives.",,"Directeur ! Notre base est attaquée ! Nos défenses automatisées et nos têtes de pont nous permettront de gagner du temps, mais nous devons déployer une escouade pour sécuriser la base dès que possible. Plus nous prendrons de temps, plus l'ennemi aura de temps pour atteindre ses objectifs.",,,,,,
+BASEDEFENSE_EVENT_TITLE,Text ,,PHOENIX BASE UNDER ATTACK,,BASE DE PHOENIX ATTAQUÉE,,,,,,
+BASEDEFENSE_DEFEAT_TITLE,Text,,PHOENIX BASE INFESTED,,BASE DE PHOENIX INFESTÉE,,,,,,
+BASEDEFENSE_DEFEAT_TEXT,Text,,"Our base has been overrun. We will need to send a team to clear out the infestation if we want to recover it.",,"Notre base a été envahie. Nous devrons envoyer une équipe pour éliminer l'infestation si nous voulons la récupérer.",,,,,,
