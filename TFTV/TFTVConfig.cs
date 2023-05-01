@@ -14,15 +14,18 @@ namespace TFTV
 
     public class TFTVConfig : ModConfig
     {
-
-
         //Default settings
         [ConfigField(text: "CONFIG TFTV PAR DÉFAUT",
             description: "Définit tous les paramètres par défaut, pour offrir l'expérience de 'Terror from the Void' telle qu'elle a été imaginée par ses créateurs.")]
         //Sets all settings to default, to provide the Terror from the Void experience as envisioned by its creators
         public bool defaultSettings = false;
 
-        [ConfigField(text: "FORCER LES PARAMÈTRES DE DIFFICULTÉ DES DÉBUTANTS",
+        //BetterEnemies
+        [ConfigField(text: "RENDRE LES PANDORIENS PLUS FOTS",
+       description: "Applique les changements de 'Dtony BetterEnemies' qui donne plus de challenge en modifiant le comportement et certaines caractéristiques des Pandoriens.")]
+        public bool BetterEnemiesOn = false;
+
+       [ConfigField(text: "FORCER LES PARAMÈTRES DE DIFFICULTÉ DES DÉBUTANTS",
           description: "Certains paramètres de configuration sont définis par défaut à un certain niveau pour les débutants (voir chaque option de configuration pour plus de détails). Si vous souhaitez les forcer, cochez cette case.")]
         public bool OverrideRookieDifficultySettings = false;
 
@@ -223,7 +226,7 @@ namespace TFTV
             +"Reload avec Grenade Launcher ammo," + "\n" 
             +"Tyr Autocanon, 1 coup après l'autre,\n...")]
         public bool ApplyCalvitixChanges = false;
-
+        
 
     }
 }
