@@ -21,7 +21,7 @@ namespace TFTV
         public bool defaultSettings = false;
 
         //BetterEnemies
-        [ConfigField(text: "RENDRE LES PANDORIENS PLUS FOTS",
+        [ConfigField(text: "RENDRE LES PANDORIENS PLUS FORTS",
        description: "Applique les changements de 'Dtony BetterEnemies' qui donne plus de challenge en modifiant le comportement et certaines caractéristiques des Pandoriens.")]
         public bool BetterEnemiesOn = false;
 
