@@ -60,11 +60,11 @@ namespace TFTV
 
 
 
-                if (config.tutorialCharacters == TFTVConfig.StartingSquadCharacters.UNBUFFED)
+                if (config.tutorialCharacters == TFTVConfig.StartingSquadCharacters.SANS_BONUS)
                 {
                     startingTemplates = TFTVStarts.SetInitialSquadUnbuffed(levelController);
                 }
-                else if (config.tutorialCharacters == TFTVConfig.StartingSquadCharacters.RANDOM)
+                else if (config.tutorialCharacters == TFTVConfig.StartingSquadCharacters.ALEATOIRE)
                 {
                     startingTemplates = TFTVStarts.SetInitialSquadRandom(levelController);
                 }

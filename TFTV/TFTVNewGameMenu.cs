@@ -65,7 +65,7 @@ namespace TFTV
                     {
                         gameParams.TutorialEnabled = true;
                         TFTVConfig config = TFTVMain.Main.Config;
-                        config.tutorialCharacters = TFTVConfig.StartingSquadCharacters.BUFFED;
+                        config.tutorialCharacters = TFTVConfig.StartingSquadCharacters.AVEC_BONUS;
                     }
                     UIModuleGameSettings gameSettings = (UIModuleGameSettings)UnityEngine.Object.FindObjectOfType(typeof(UIModuleGameSettings));
                     List<EntitlementDef> entitlementDefs = new List<EntitlementDef>();

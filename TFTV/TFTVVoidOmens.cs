@@ -1138,6 +1138,11 @@ namespace TFTV
                     if (VoidOmensCheck[4])
                     {
                         __result -= 2;
+                        if (TFTVMain.Main.Config.ApplyCalvitixChanges)
+                        {
+                            //My way of playing
+                            __result = 6; //Calvitix added
+                        }
                     }
                     if (__instance.Mission.MissionDef.name.Equals("StoryFS2_CustomMissionTypeDef"))
                     {
