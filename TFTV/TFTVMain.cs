@@ -83,9 +83,9 @@ namespace TFTV
                 /// PhoenixGame is accessible at any time.
                 PhoenixGame game = GetGame();
 
-                TFTVversion = $"TFTV July 16 release #1 (Hotfix 1) v{MetaData.Version}";
+                TFTVversion = $"TFTV FR 16 Juil. #1 (HF 1) v{MetaData.Version}";
 
-                Logger.LogInfo("TFTV July 16 release #1 (Hotfix 1)");
+                Logger.LogInfo("TFTV FR 16 Juil. release #1 (Hotfix 1)");
 
                 ModDirectory = Instance.Entry.Directory;
                 //Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
