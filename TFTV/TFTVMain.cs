@@ -187,11 +187,11 @@ namespace TFTV
                 Config.impossibleWeaponsAdjustments = true;
                 Config.startingSquad = StartingSquadFaction.PHOENIX;
                 Config.startingBaseLocation = StartingBaseLocation.Vanilla;
-                Config.tutorialCharacters = StartingSquadCharacters.UNBUFFED;
+                Config.tutorialCharacters = StartingSquadCharacters.SANS_BONUS;
                 Config.InitialScavSites = 8;
-                Config.ChancesScavCrates = TFTVConfig.ScavengingWeight.High;
-                Config.ChancesScavSoldiers = TFTVConfig.ScavengingWeight.Low;
-                Config.ChancesScavGroundVehicleRescue = TFTVConfig.ScavengingWeight.Low;
+                Config.ChancesScavCrates = TFTVConfig.ScavengingWeight.Haut;
+                Config.ChancesScavSoldiers = TFTVConfig.ScavengingWeight.Faible;
+                Config.ChancesScavGroundVehicleRescue = TFTVConfig.ScavengingWeight.Faible;
                 Config.ResourceMultiplier = 0.8f;
                 Config.DiplomaticPenalties = true;
                 Config.StaminaPenaltyFromInjury = true;
@@ -216,12 +216,12 @@ namespace TFTV
             Config.amountOfExoticResources != 1f ||
             Config.impossibleWeaponsAdjustments != true ||
             Config.startingSquad != StartingSquadFaction.PHOENIX ||
-            Config.tutorialCharacters != StartingSquadCharacters.UNBUFFED ||
+            Config.tutorialCharacters != StartingSquadCharacters.SANS_BONUS ||
             Config.startingBaseLocation!=StartingBaseLocation.Vanilla||
             Config.InitialScavSites != 8 ||
-               Config.ChancesScavCrates != TFTVConfig.ScavengingWeight.High ||
-               Config.ChancesScavSoldiers != TFTVConfig.ScavengingWeight.Low ||
-               Config.ChancesScavGroundVehicleRescue != TFTVConfig.ScavengingWeight.Low ||
+               Config.ChancesScavCrates != TFTVConfig.ScavengingWeight.Haut ||
+               Config.ChancesScavSoldiers != TFTVConfig.ScavengingWeight.Faible ||
+               Config.ChancesScavGroundVehicleRescue != TFTVConfig.ScavengingWeight.Faible ||
             Config.ResourceMultiplier != 0.8f ||
             Config.DiplomaticPenalties != true ||
             Config.StaminaPenaltyFromInjury != true ||
@@ -255,10 +255,10 @@ namespace TFTV
 
 
         /// <summary>
-        /// In Phoenix Point there can be only one active level at a time. 
         /// Levels go through different states (loading, unloaded, start, etc.).
         /// General puprose level state change callback.
         /// </summary>
+        /// In Phoenix Point there can be only one active level at a time. 
         /// <param name="level">Level being changed.</param>
         /// <param name="prevState">Old state of the level.</param>
         /// <param name="state">New state of the level.</param>
