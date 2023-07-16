@@ -75,7 +75,7 @@ namespace TFTV
 
                      TFTVLogger.Always("ExitState");
 
-                         GeoLevelController controller = (GeoLevelController)UnityEngine.Object.FindObjectOfType(typeof(GeoLevelController));
+                         GeoLevelController controller = GameUtl.CurrentLevel().GetComponent<GeoLevelController>();
                          TFTVLogger.Always("Intro variable is " + controller.EventSystem.GetVariable("BG_Intro_Played"));
                          //controller.EventSystem.SetVariable("BG_Intro_Played", 0);
                          TFTVNewPXCharacters.PlayIntro(controller);
@@ -602,7 +602,7 @@ namespace TFTV
                 ContextHelpHintDef newContextHelpHintDef = Helper.CreateDefFromClone(sourceContextHelpHintDef, gUID, name);
                 newContextHelpHintDef.Trigger = HintTrigger.Manual;
                 newContextHelpHintDef.Conditions.Clear();
-                newContextHelpHintDef.AnyCondition = true;
+                newContextHelpHintDef.AnyCondition = false;
                 newContextHelpHintDef.Title.LocalizationKey = titleKey;
                 newContextHelpHintDef.Text.LocalizationKey = textKey;
                 newContextHelpHintDef.IsTutorialHint = true;

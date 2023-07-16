@@ -8,11 +8,13 @@ using Base.Entities.Effects.ApplicationConditions;
 using Base.Entities.Statuses;
 using Base.UI;
 using Base.Utils;
+using Code.PhoenixPoint.Tactical.Entities.Equipments;
 using HarmonyLib;
 using PhoenixPoint.Common.ContextHelp;
 using PhoenixPoint.Common.ContextHelp.HintConditions;
 using PhoenixPoint.Common.Core;
 using PhoenixPoint.Common.Entities;
+using PhoenixPoint.Common.Entities.Addons;
 using PhoenixPoint.Common.Entities.Characters;
 using PhoenixPoint.Common.Entities.GameTags;
 using PhoenixPoint.Common.Entities.GameTagsTypes;
@@ -32,6 +34,7 @@ using PhoenixPoint.Geoscape.Events.Eventus;
 using PhoenixPoint.Geoscape.Events.Eventus.Filters;
 using PhoenixPoint.Geoscape.Levels;
 using PhoenixPoint.Geoscape.Levels.ContextHelp.HintConditions;
+using PhoenixPoint.Tactical.AI;
 using PhoenixPoint.Tactical.AI.Actions;
 using PhoenixPoint.Tactical.AI.Considerations;
 using PhoenixPoint.Tactical.AI.TargetGenerators;
@@ -47,12 +50,15 @@ using PhoenixPoint.Tactical.Entities.Equipments;
 using PhoenixPoint.Tactical.Entities.Statuses;
 using PhoenixPoint.Tactical.Entities.Weapons;
 using PhoenixPoint.Tactical.Eventus;
+using PhoenixPoint.Tactical.Levels;
 using PhoenixPoint.Tactical.Levels.FactionObjectives;
 using PhoenixPoint.Tactical.Prompts;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using static PhoenixPoint.Common.Entities.Addons.AddonDef;
+using static PhoenixPoint.Tactical.Entities.Abilities.HealAbilityDef;
 using ResourceType = PhoenixPoint.Common.Core.ResourceType;
 
 namespace TFTV
@@ -62,11 +68,69 @@ namespace TFTV
         //  private static readonly DefRepository Repo = TFTVMain.Repo;
         private static readonly DefCache DefCache = TFTVMain.Main.DefCache;
         private static readonly DefRepository Repo = TFTVMain.Repo;
+        private static readonly SharedData Shared = TFTVMain.Shared;
+
         public static readonly ResearchTagDef CriticalResearchTag = DefCache.GetDef<ResearchTagDef>("CriticalPath_ResearchTagDef");
 
         public static Sprite UmbraIcon = Helper.CreateSpriteFromImageFile("Void-03P.png");
+
+
+
+
+        internal static void Print()
+        {
+            foreach (WeaponDef weapon in Repo.GetAllDefs<WeaponDef>())
+            {
+                foreach(DamageKeywordPair damageKeywordPair in weapon.DamagePayload.DamageKeywords) 
+                {
+                    if (damageKeywordPair.DamageKeywordDef == Shared.SharedDamageKeywords.AcidKeyword) 
+                    {
+                        TFTVLogger.Always($"{weapon.name} does {damageKeywordPair.Value} acid damage");
+
+                    }
+                
+                
+                }
+
+               
+
+            }
+
+        }
+
+
+
+        internal static void ModifyChironWormAndAoETargeting()
+        {
+            try
+            {
+                DefCache.GetDef<TacticalTargetingDataDef>("E_TargetingData [AreaStun_AbilityDef]").Origin.CullTargetTags = new GameTagsList { DefCache.GetDef<GameTagDef>("DamageByCaterpillarTracks_TagDef") };
+                DefCache.GetDef<TacticalTargetingDataDef>("E_TargetingData [LaunchMortar_ShootAbilityDef]").Origin.CullTargetTags = new GameTagsList { DefCache.GetDef<GameTagDef>("DamageByCaterpillarTracks_TagDef") };
+                DefCache.GetDef<TacticalTargetingDataDef>("E_TargetingData [LaunchGoo_ShootAbilityDef]").Origin.CullTargetTags = new GameTagsList { DefCache.GetDef<GameTagDef>("DamageByCaterpillarTracks_TagDef") };
+                DefCache.GetDef<TacticalTargetingDataDef>("E_TargetingData [LaunchPoisonWorm_ShootAbilityDef]").Origin.CullTargetTags = new GameTagsList { DefCache.GetDef<GameTagDef>("DamageByCaterpillarTracks_TagDef") };
+                DefCache.GetDef<TacticalTargetingDataDef>("E_TargetingData [LaunchAcidWorm_ShootAbilityDef]").Origin.CullTargetTags = new GameTagsList { DefCache.GetDef<GameTagDef>("DamageByCaterpillarTracks_TagDef") };
+                DefCache.GetDef<TacticalTargetingDataDef>("E_TargetingData [LaunchFireWorm_ShootAbilityDef]").Origin.CullTargetTags = new GameTagsList { DefCache.GetDef<GameTagDef>("DamageByCaterpillarTracks_TagDef") };
+
+            }
+            catch (Exception e)
+            {
+                TFTVLogger.Error(e);
+            }
+
+
+
+        }
+
+
         public static void InjectDefsInjectedOnlyOnce()
         {
+           
+            //  CreateNewDifficultyLevel();
+            //  CreateNewRookieDifficultyLevel();
+            //   ReEnableFlinching();
+            CreateRoboticSelfRestoreAbility();
+            CreateAcidImmunity();
+
             AugmentationEventsDefs();
             ChangesAmbushMissions();
             CreateHints();
@@ -74,7 +138,6 @@ namespace TFTV
             Create_VoidOmen_Events();
             ChangeInfestationDefs();
             ChangesToMedbay();
-            ChangeUmbra();
             InjectAlistairAhsbyLines();
             InjectOlenaKimLines();
             MistOnAllMissions();
@@ -90,7 +153,7 @@ namespace TFTV
             ChangesToAcherons();
             RemoveCensusResearch();
             AllowMedkitsToTargetMutoids();
-            ChangesToLOTAEarlyLoad();
+            ChangesToLOTA();
             CreateSubject24();
             CreateVoidOmenRemindersInTactical();
             RemoveMindControlImmunityVFX();
@@ -104,7 +167,7 @@ namespace TFTV
             CreateRookieProtectionStatus();
             CreateEtermesStatuses();
             ModifyRecruitsCost();
-            RemoveScyllaResearches();
+            RemoveScyllaAndNodeResearches();
             FixUnarmedAspida();
             AddLoadingScreens();
             AddTips();
@@ -114,32 +177,493 @@ namespace TFTV
             //  Testing();
             CreateNewBaseDefense();
 
-            ImproveScyllas();
-            //  TestingKnockBack();
-            UmbraSubstance();
+            // TestingKnockBack();
             CreateConsolePromptBaseDefense();
             ModifyDecoyAbility();
-            ModifyGuardianAIandStomp();
+            ImproveScyllaAcheronsChironsAndCyclops();
+            AddMissingElectronicTags();
+            ChangeUmbra();
+            FixPriestScream();
+            ModifyChironWormAndAoETargeting();
+            // TestingHavenDefenseFix();
+            // TestingKnockBackRepositionAlternative();
+            // CreateCyclopsScreamStatus();
+            ChangeModulePictures();
+            ChangeVestResearches();
+            RemoveAcidAsVulnerability();
+            ChangesVests();
+            RemoveRepairKitFromPure();
+            AdjustAcidDamage();
+           // Print();
         }
 
-        internal static void ModifyGuardianAIandStomp()
+
+        internal static ActorHasStatusEffectConditionDef CreateNewStatusEffectCondition(string gUID, StatusDef status, bool hasEffect = true)
         {
             try
             {
 
-                DefCache.GetDef<ApplyDamageEffectAbilityDef>("Guardian_Stomp_AbilityDef").IgnoreFriendlies = true;
-                AIActionsTemplateDef mediumGuardianAITemplate = DefCache.GetDef<AIActionsTemplateDef>("MediumGuardian_AIActionsTemplateDef");
-                AIActionDef queenAdvance = DefCache.GetDef<AIActionDef>("Queen_Advance_AIActionDef");
-                List<AIActionDef> aIActions = new List<AIActionDef>(mediumGuardianAITemplate.ActionDefs.ToList())
+                string name = status.EffectName + "_ActorHasStatusEffectConditionDef";
+                ActorHasStatusEffectConditionDef source = DefCache.GetDef<ActorHasStatusEffectConditionDef>("HasParalysisStatus_ApplicationCondition");
+
+                ActorHasStatusEffectConditionDef newCondition = Helper.CreateDefFromClone(source, gUID, name);
+                newCondition.StatusDef = status;
+                newCondition.HasStatus = hasEffect;
+
+
+
+                return newCondition;
+            }
+
+            catch (Exception e)
+            {
+                TFTVLogger.Error(e);
+                throw;
+            }
+
+
+
+        }
+
+        internal static void ChangesVests()
+        {
+            try
+            {
+                CreateHealingMultiplierAbility();
+                CreateParalysisDamageResistance();
+                ModifyPoisonResVest();
+                ModifyBlastAndFireResVests();
+                CreateAcidResistantVest();
+
+            }
+
+
+            catch (Exception e)
+            {
+                TFTVLogger.Error(e);
+                throw;
+            }
+
+        }
+        
+
+        internal static void AdjustAcidDamage()
+        {
+            try 
+            {
+                
+                DefCache.GetDef<DamagePayloadEffectDef>("E_Element0 [SwarmerAcidExplosion_Die_AbilityDef]").DamagePayload.DamageKeywords[1].Value=30;
+
+                DefCache.GetDef<WeaponDef>("AcidSwarmer_Torso_BodyPartDef").DamagePayload.DamageKeywords[1].Value = 20;
+
+                //All Acheron acid attacks reduced by 10.
+
+                /*[TFTV @ 7/13/2023 2:15:32 PM] AN_AcidGrenade_WeaponDef does 20 acid damage
+[TFTV @ 7/13/2023 2:15:32 PM] AN_AcidHandGun_WeaponDef does 10 acid damage
+[TFTV @ 7/13/2023 2:15:32 PM] KS_Redemptor_WeaponDef does 5 acid damage
+[TFTV @ 7/13/2023 2:15:32 PM] FS_AssaultGrenadeLauncher_WeaponDef does 10 acid damage
+[TFTV @ 7/13/2023 2:15:32 PM] PX_AcidCannon_WeaponDef does 40 acid damage
+[TFTV @ 7/13/2023 2:15:32 PM] PX_AcidAssaultRifle_WeaponDef does 10 acid damage
+[TFTV @ 7/13/2023 2:15:32 PM] Mutoid_Head_AcidSpray_WeaponDef does 30 acid damage
+[TFTV @ 7/13/2023 2:15:32 PM] AcheronAchlys_Arms_WeaponDef does 30 acid damage
+[TFTV @ 7/13/2023 2:15:32 PM] AcheronAchlysChampion_Arms_WeaponDef does 30 acid damage
+[TFTV @ 7/13/2023 2:15:32 PM] Acheron_Arms_WeaponDef does 20 acid damage
+[TFTV @ 7/13/2023 2:15:32 PM] AcheronPrime_Arms_WeaponDef does 30 acid damage
+[TFTV @ 7/13/2023 2:15:32 PM] Chiron_Abdomen_Acid_Mortar_WeaponDef does 10 acid damage
+[TFTV @ 7/13/2023 2:15:32 PM] Crabman_LeftHand_Acid_Grenade_WeaponDef does 10 acid damage
+[TFTV @ 7/13/2023 2:15:32 PM] Crabman_LeftHand_Acid_EliteGrenade_WeaponDef does 20 acid damage
+[TFTV @ 7/13/2023 2:15:32 PM] Siren_Torso_AcidSpitter_WeaponDef does 30 acid damage
+[TFTV @ 7/13/2023 2:15:32 PM] Siren_Torso_Orichalcum_WeaponDef does 40 acid damage
+[TFTV @ 7/13/2023 2:15:32 PM] AcidSwarmer_Torso_BodyPartDef does 30 acid damage*/
+
+
+
+            }
+            catch (Exception e)
+            {
+                TFTVLogger.Error(e);
+                throw;
+            }
+
+
+
+
+        }
+
+        internal static void RemoveRepairKitFromPure()
+        {
+
+            try
+            {
+                EquipmentDef repairKit = DefCache.GetDef<EquipmentDef>("FieldRepairKit_EquipmentDef");
+                WeaponDef grenade = DefCache.GetDef<WeaponDef>("PX_HandGrenade_WeaponDef");
+                foreach (TacCharacterDef tacCharacterDef in Repo.GetAllDefs<TacCharacterDef>().Where(tc => tc.Data.EquipmentItems.Any(ei => ei == repairKit)))
                 {
-                    queenAdvance
+
+
+                    List<ItemDef> itemDefs = tacCharacterDef.Data.EquipmentItems.ToList();
+                    itemDefs.Remove(repairKit);
+                    itemDefs.Add(grenade);
+                    tacCharacterDef.Data.EquipmentItems = itemDefs.ToArray();
+                    //  TFTVLogger.Always($"removed {repairKit.name} and gave {grenade.name} to {tacCharacterDef.name}");
+
+                }
+
+                ItemSlotDef backPackSlot = DefCache.GetDef<ItemSlotDef>("Human_BackPack_SlotDef");
+
+              //  ItemSlotDef torsoSlot = DefCache.GetDef<ItemSlotDef>("Human_Torso_SlotDef");
+
+             //   ItemSlotDef backSlot = DefCache.GetDef<ItemSlotDef>("Human_ShieldPoint_Back_SlotDef");
+
+                
+
+              //  TacticalItemDef juggBIO = DefCache.GetDef<TacticalItemDef>("NJ_Jugg_BIO_Torso_BodyPartDef");
+                TacticalItemDef exoBIO = DefCache.GetDef<TacticalItemDef>("NJ_Exo_BIO_Torso_BodyPartDef");
+                TacticalItemDef shinobiBIO = DefCache.GetDef<TacticalItemDef>("SY_Shinobi_BIO_Torso_BodyPartDef");
+
+                ProvidedSlotBind backPackSlotBind = exoBIO.ProvidedSlots[0];
+
+
+                List<ProvidedSlotBind> shinobiSlots = new List<ProvidedSlotBind>(shinobiBIO.ProvidedSlots);
+
+                shinobiSlots.Remove(backPackSlotBind);
+                shinobiBIO.ProvidedSlots = shinobiSlots.ToArray();
+
+                List<ProvidedSlotBind> exoSlots = new List<ProvidedSlotBind>(exoBIO.ProvidedSlots);
+
+                exoSlots.Remove(backPackSlotBind);
+                exoBIO.ProvidedSlots = exoSlots.ToArray();
+
+                TacticalItemDef gooRepeller = DefCache.GetDef<TacticalItemDef>("PX_GooRepeller_Attachment_ItemDef");
+                TacticalItemDef mistRepeller = DefCache.GetDef<TacticalItemDef>("SY_MistRepeller_Attachment_ItemDef");
+                mistRepeller.RequiredSlotBinds = gooRepeller.RequiredSlotBinds;
+
+              /*  foreach (TacticalItemDef tacticalItemDef in Repo.GetAllDefs<TacticalItemDef>())
+                {
+                    if (tacticalItemDef.RequiredSlotBinds.Count() > 0 && tacticalItemDef.RequiredSlotBinds[0].RequiredSlot == torsoSlot)
+                    {
+
+                        foreach (ProvidedSlotBind providedSlotBind in tacticalItemDef.ProvidedSlots)
+                        {
+                            if (providedSlotBind.ProvidedSlot == backPackSlot)
+                            {
+
+                                TFTVLogger.Always($"tactical item {tacticalItemDef.name} is providing backPackSlot");
+                            }
+                        }
+
+                    }
+
+
+                }*/
+            }
+            catch (Exception e)
+            {
+                TFTVLogger.Error(e);
+                throw;
+            }
+        }
+
+        internal static void CreateAcidResistantVest()
+        {
+            try
+            {
+                TacticalItemDef fireVest = DefCache.GetDef<TacticalItemDef>("NJ_FireResistanceVest_Attachment_ItemDef");
+                /* TacticalItemDef newAcidVest = Helper.CreateDefFromClone(fireVest, "{D07B639A-E1F4-46F4-91BB-1CCDCCCE8EC1}", "AcidResistantVest");
+                 newAcidVest.ViewElementDef = Helper.CreateDefFromClone(fireVest.ViewElementDef, "{0F1BD9BA-1895-46C7-90AF-26FB92D702F6}", "AcidResistantVest_ViewElement");*/
+
+                fireVest.Abilities = new AbilityDef[] { DefCache.GetDef<DamageMultiplierAbilityDef>("AcidResistant_DamageMultiplierAbilityDef") };
+                fireVest.ViewElementDef.LargeIcon = Helper.CreateSpriteFromImageFile("modules_fireresvest.png");
+                fireVest.ViewElementDef.InventoryIcon = fireVest.ViewElementDef.LargeIcon;
+
+
+            }
+
+
+            catch (Exception e)
+            {
+                TFTVLogger.Error(e);
+                throw;
+            }
+
+        }
+
+        internal static void CreateHealingMultiplierAbility()
+        {
+            try
+            {
+                DamageMultiplierAbilityDef damageMultiplierAbilityDefSource = DefCache.GetDef<DamageMultiplierAbilityDef>("EMPResistant_DamageMultiplierAbilityDef");
+                DamageMultiplierAbilityDef healingMultiplierAbility = Helper.CreateDefFromClone(damageMultiplierAbilityDefSource, "{39D33BA7-726A-417F-9DC7-42CD4E6762FD}", "ExtraHealing_DamageMultiplierAbilityDef");
+                healingMultiplierAbility.DamageTypeDef = DefCache.GetDef<StandardDamageTypeEffectDef>("Healing_StandardDamageTypeEffectDef");
+                healingMultiplierAbility.Multiplier = 1.25f;
+                healingMultiplierAbility.MultiplierType = DamageMultiplierType.Incoming;
+                healingMultiplierAbility.ViewElementDef = Helper.CreateDefFromClone(damageMultiplierAbilityDefSource.ViewElementDef, "{63C00610-5CAE-4152-9002-7A0F7C90AE30}", "ExtraHealing_ViewElementDef");
+                healingMultiplierAbility.ViewElementDef.DisplayName1.LocalizationKey = "EXTRAHEALING_NAME";
+                healingMultiplierAbility.ViewElementDef.Description.LocalizationKey = "EXTRAHEALING_DESCRIPTION";
+                healingMultiplierAbility.ViewElementDef.LargeIcon = Helper.CreateSpriteFromImageFile("UI_AbilitiesIcon_PersonalTrack_ExpertHealer-2.png");
+                healingMultiplierAbility.ViewElementDef.SmallIcon = Helper.CreateSpriteFromImageFile("UI_AbilitiesIcon_PersonalTrack_ExpertHealer-2.png");
+
+            }
+            catch (Exception e)
+            {
+                TFTVLogger.Error(e);
+            }
+
+        }
+
+        internal static void CreateParalysisDamageResistance()
+        {
+            try
+            {
+                DamageMultiplierAbilityDef damageMultiplierAbilityDefSource = DefCache.GetDef<DamageMultiplierAbilityDef>("EMPResistant_DamageMultiplierAbilityDef");
+                DamageMultiplierAbilityDef ParalysisNotShcokResistance = Helper.CreateDefFromClone(damageMultiplierAbilityDefSource, "{A044047F-A462-46FC-B06A-191181B67800}", "ParalysisNotShockImmunityResistance_DamageMultiplierAbilityDef");
+                ParalysisNotShcokResistance.DamageTypeDef = DefCache.GetDef<DamageOverTimeDamageTypeEffectDef>("Paralysis_DamageOverTimeDamageTypeEffectDef");
+                ParalysisNotShcokResistance.Multiplier = 0.5f;
+                ParalysisNotShcokResistance.ViewElementDef = Helper.CreateDefFromClone(damageMultiplierAbilityDefSource.ViewElementDef, "{F157A5A2-16A0-491A-ABE8-6CF88DEBE1DF}", "ParalysisNotShockImmunityResistance_ViewElementDef");
+                ParalysisNotShcokResistance.ViewElementDef.DisplayName1.LocalizationKey = "RESISTANCE_TO_PARALYSIS_NAME";
+                ParalysisNotShcokResistance.ViewElementDef.Description.LocalizationKey = "RESISTANCE_TO_PARALYSIS_DESCRIPTION";
+                ParalysisNotShcokResistance.ViewElementDef.LargeIcon = Helper.CreateSpriteFromImageFile("ParalysisImmunity.png");
+                ParalysisNotShcokResistance.ViewElementDef.SmallIcon = Helper.CreateSpriteFromImageFile("ParalysisImmunity.png");
+
+            }
+            catch (Exception e)
+            {
+                TFTVLogger.Error(e);
+            }
+
+        }
+
+        internal static void ModifyPoisonResVest()
+        {
+            try
+            {
+                TacticalItemDef poisonVest = DefCache.GetDef<TacticalItemDef>("SY_PoisonResistanceVest_Attachment_ItemDef");
+                DamageMultiplierAbilityDef ParalysisNotShcokResistance = DefCache.GetDef<DamageMultiplierAbilityDef>("ParalysisNotShockImmunityResistance_DamageMultiplierAbilityDef");
+                DamageMultiplierAbilityDef ExtraHealing = DefCache.GetDef<DamageMultiplierAbilityDef>("ExtraHealing_DamageMultiplierAbilityDef");
+
+                poisonVest.Abilities = new AbilityDef[] { poisonVest.Abilities[0], ParalysisNotShcokResistance };
+
+
+
+
+            }
+            catch (Exception e)
+            {
+                TFTVLogger.Error(e);
+                throw;
+            }
+
+
+
+        }
+
+        internal static void ModifyBlastAndFireResVests()
+        {
+            try
+            {
+                TacticalItemDef blastVest = DefCache.GetDef<TacticalItemDef>("PX_BlastResistanceVest_Attachment_ItemDef");
+                TacticalItemDef fireVest = DefCache.GetDef<TacticalItemDef>("NJ_FireResistanceVest_Attachment_ItemDef");
+                blastVest.Abilities = new AbilityDef[] { fireVest.Abilities[0], blastVest.Abilities[0] };
+                blastVest.ViewElementDef.LargeIcon = Helper.CreateSpriteFromImageFile("modules_blastresvest.png");
+                blastVest.ViewElementDef.InventoryIcon = blastVest.ViewElementDef.LargeIcon;
+
+
+
+
+            }
+            catch (Exception e)
+            {
+                TFTVLogger.Error(e);
+                throw;
+            }
+
+
+
+        }
+
+        internal static void AcidElectronicDisableStatus()
+        {
+            try
+            {
+                string statusName = "DisabledElectronicsAcidSlot_StatusDef";
+                string statusGUID = "{A86111C8-13F6-4C0E-83D8-2A00D41D70BD}";
+                SlotStateStatusDef source = DefCache.GetDef<SlotStateStatusDef>("DisabledElectronicSlot_StatusDef");
+
+                SlotStateStatusDef newSlotStatus = Helper.CreateDefFromClone(source, statusGUID, statusName);
+                newSlotStatus.Visuals = Helper.CreateDefFromClone(source.Visuals, "{7EC65D12-4BCB-4B59-A103-A856BE2F1149}", statusName + "Visuals");
+                newSlotStatus.DurationTurns = -1;
+                newSlotStatus.BodypartsEnabled = true;
+
+
+            }
+            catch (Exception e)
+            {
+                TFTVLogger.Error(e);
+                throw;
+            }
+
+
+
+        }
+
+        internal static void RemoveAcidAsVulnerability()
+        {
+            try
+            {
+
+                DefCache.GetDef<DamageMultiplierStatusDef>("BionicVulnerabilities_StatusDef").DamageTypeDefs = new DamageTypeBaseEffectDef[] { };
+                DefCache.GetDef<DamageMultiplierStatusDef>("BionicVulnerabilities_StatusDef").Multiplier = 1;
+
+            }
+
+            catch (Exception e)
+            {
+                TFTVLogger.Error(e);
+                throw;
+            }
+
+
+
+        }
+
+        internal static void ChangeVestResearches() 
+        {
+
+            try
+            {
+                AdjustNanotechResearch();
+
+
+
+            }
+
+            catch (Exception e)
+            {
+                TFTVLogger.Error(e);
+                throw;
+            }
+
+
+
+
+        }
+
+      
+
+        internal static void AdjustNanotechResearch()
+        {
+            try
+            {
+                ResearchDef terrorSentinelResearch = DefCache.GetDef<ResearchDef>("PX_Alien_TerrorSentinel_ResearchDef");
+                ManufactureResearchRewardDef advNanotechRewards = DefCache.GetDef<ManufactureResearchRewardDef>("SYN_NanoTech_ResearchDef_ManufactureResearchRewardDef_0");
+                ManufactureResearchRewardDef newRewardsForTerrorSentinel = Helper.CreateDefFromClone(advNanotechRewards, "{41636380-9889-4D4A-8E0A-8D32A9196DD1}", terrorSentinelResearch.name + "ManuReward");
+
+                //Moving Motion Detection Module to Terror Sentinel Autopsy               
+                terrorSentinelResearch.Unlocks = new ResearchRewardDef[] { terrorSentinelResearch.Unlocks[0], newRewardsForTerrorSentinel };
+
+                EquipmentDef repairKit = DefCache.GetDef<EquipmentDef>("FieldRepairKit_EquipmentDef");
+                HealAbilityDef repairKitAbility = DefCache.GetDef<HealAbilityDef>("FieldRepairKit_AbilityDef");
+
+                Sprite nanotechFieldkitAbilityIcon = Helper.CreateSpriteFromImageFile("nanotechfieldkit.png");
+
+                repairKit.ManufactureMaterials = 30;
+                repairKit.ManufactureTech = 10;
+
+                //Remove adv nanotech buff and add Repair Kit to manufacturing reward
+
+                ResearchDef advNanotechRes = DefCache.GetDef<ResearchDef>("SYN_NanoTech_ResearchDef");
+                advNanotechRes.Unlocks = new ResearchRewardDef[] { advNanotechRes.Unlocks[0] };
+
+               
+
+                List<ItemDef> manuRewards = new List<ItemDef>() { repairKit };
+                
+
+                advNanotechRewards.Items = manuRewards.ToArray();
+
+
+                //need to create a new heal ability
+
+                string nameAbility = "DoTMedkit";
+                string gUIDAbility = "{180418BE-8DC8-467E-80FE-D012A51BE5A9}";
+                HealAbilityDef sourceHealAbility = DefCache.GetDef<HealAbilityDef>("Medkit_AbilityDef");
+                HealAbilityDef newDoTMedkitAbility = Helper.CreateDefFromClone(sourceHealAbility, gUIDAbility, nameAbility);
+                newDoTMedkitAbility.ViewElementDef = Helper.CreateDefFromClone(sourceHealAbility.ViewElementDef, "{DB136772-7CDF-4FC4-B07B-72867E43E16E}", nameAbility);
+
+                newDoTMedkitAbility.ViewElementDef.InventoryIcon = nanotechFieldkitAbilityIcon;
+                newDoTMedkitAbility.ViewElementDef.LargeIcon = nanotechFieldkitAbilityIcon;
+                newDoTMedkitAbility.ViewElementDef.SmallIcon = nanotechFieldkitAbilityIcon;
+                newDoTMedkitAbility.ViewElementDef.DisplayName1.LocalizationKey = "KEY_REPAIR_KIT_ABILITY_NAME";
+                newDoTMedkitAbility.ViewElementDef.Description.LocalizationKey = "KEY_REPAIR_KIT_ABILITY_DESCRIPTION";
+
+                repairKit.Abilities[0] = newDoTMedkitAbility;
+
+
+                //modify ability
+                //need new MultiEffectDef. Copy from CureSpray, because it has everything we need.
+
+                //Make Cure Spray/Cure Cloud remove acid
+                string abilityName = "AcidStatusRemover";
+                StatusRemoverEffectDef sourceStatusRemoverEffect = DefCache.GetDef<StatusRemoverEffectDef>("StrainedRemover_EffectDef");
+                StatusRemoverEffectDef newAcidStatusRemoverEffect = Helper.CreateDefFromClone(sourceStatusRemoverEffect, "0AE26C25-A67D-4F2F-B036-F7649B26B695", abilityName);
+                newAcidStatusRemoverEffect.StatusToRemove = "Acid";
+               
+
+
+                string nameMultiEffect = "DoTMedkitMultiEffect";
+                string gUIDMultiEffect = "{5B0EBBAE-F126-418C-B6F2-7E2FA44EBFBD}";
+                MultiEffectDef sourceMultiEffect = DefCache.GetDef<MultiEffectDef>("Cure_MultiEffectDef");
+                MultiEffectDef newMultiEffect = Helper.CreateDefFromClone(sourceMultiEffect, gUIDMultiEffect, nameMultiEffect);
+
+                List<EffectDef> effectDefsList = newMultiEffect.EffectDefs.ToList();
+                effectDefsList.Add(newAcidStatusRemoverEffect);
+                newMultiEffect.EffectDefs = effectDefsList.ToArray();
+
+                //  TFTVLogger.Always($"{newMultiEffect.EffectDefs.Count()}");
+
+                OrEffectConditionDef sourceOrEffectCondition = DefCache.GetDef<OrEffectConditionDef>("CanBeHealed_StandardMedkit_ApplicationCondition");
+
+                OrEffectConditionDef newEffectCondtions = Helper.CreateDefFromClone(sourceOrEffectCondition, "{ECFC2136-17BA-4FD0-A5BA-B9A1C456353E}", "DoTMedkitEffectCondtiions");
+
+                newEffectCondtions.OrConditions = new EffectConditionDef[]
+                {
+                CreateNewStatusEffectCondition("{0D32B04B-8EAA-4C76-9F24-F92F0FE8CD74}", DefCache.GetDef<StatusDef>("ActorStunned_StatusDef")),
+                CreateNewStatusEffectCondition("{BF5726D7-5E9C-4145-85E8-79545CBB3261}", DefCache.GetDef<StatusDef>("Acid_StatusDef")),
+                CreateNewStatusEffectCondition("{177E042A-B8F8-4302-9520-CC0610C045B0}", DefCache.GetDef<StatusDef>("Blinded_StatusDef")),
+                CreateNewStatusEffectCondition("{A054A669-8C7B-4005-8749-BA6CD71163CA}", DefCache.GetDef<StatusDef>("Slowed_StatusDef")),
+                CreateNewStatusEffectCondition("{F574791A-FAD0-4E1F-9295-5F2A3D9AAB2C}", DefCache.GetDef<StatusDef>("Trembling_StatusDef")),
+                DefCache.GetDef< ActorHasStatusEffectConditionDef>("HasParalysisStatus_ApplicationCondition"),
+                DefCache.GetDef< ActorHasStatusEffectConditionDef>("HasParalysedStatus_ApplicationCondition"),
+                DefCache.GetDef< ActorHasStatusEffectConditionDef>("HasInfectedStatus_ApplicationCondition"),
+                DefCache.GetDef< ActorHasStatusEffectConditionDef>("HasPoisonStatus_ApplicationCondition"),
+
+
+            };
+
+                LocalizedTextBind nanotTechDescription = new LocalizedTextBind("KEY_REPAIR_KIT_ABILITY_DESCRIPTION");
+
+                // string effectDescriptionText = "Removes all acid, bleeding, blind, paralyzed, poisoned, slowed, stun, trembling, viral status from the target.";
+                ConditionalHealEffect conditionalHealEffect = new ConditionalHealEffect()
+
+                {
+                    HealerConditions = new EffectConditionDef[] { },
+                    TargetGenerationConditions = new EffectConditionDef[] { newEffectCondtions },
+                    AdditionalEffectDef = newMultiEffect,
+                    EffectDescription = nanotTechDescription
                 };
-                mediumGuardianAITemplate.ActionDefs = aIActions.ToArray();
+
+                newDoTMedkitAbility.HealEffects = new List<ConditionalHealEffect>() { conditionalHealEffect };
+                newDoTMedkitAbility.GeneralHealAmount = 0.1f;
 
 
 
-                AIActionDef aggresiveAdvance = DefCache.GetDef<AIActionDef>("MediumGuardian_Advance_Aggressive_AIActionDef");
-                aggresiveAdvance.Weight = 10;
+                // repairKitAbility.HealEffects = new List<ConditionalHealEffect>() { conditionalHealEffect };
+                //  repairKitAbility.BodyPartHealSummary = new ViewElementDef() { };
+                //  repairKitAbility.GeneralHealSummary = Helper.CreateDefFromClone(DefCache.GetDef<HealAbilityDef>("Medkit_AbilityDef").GeneralHealSummary, "{FFD78D2F-64D9-479D-AA4B-777A910A5856}", "whatever");
+                // PhoenixPoint.Tactical.UI.Abilities.AbilitySummaryData.
+                //add effects to MultiEffectDef
+
+
 
             }
 
@@ -147,8 +671,253 @@ namespace TFTV
             {
                 TFTVLogger.Error(e);
             }
+
+
         }
 
+        internal static void ChangeModulePictures()
+        {
+            try
+            {
+
+
+                TacticalItemDef nightVisionModule = DefCache.GetDef<TacticalItemDef>("SY_MultiVisualSensor_Attachment_ItemDef");
+                nightVisionModule.ViewElementDef.LargeIcon = Helper.CreateSpriteFromImageFile("modules_nightvision.png");
+                nightVisionModule.ViewElementDef.InventoryIcon = nightVisionModule.ViewElementDef.LargeIcon;
+            }
+
+            catch (Exception e)
+            {
+                TFTVLogger.Error(e);
+            }
+
+
+
+        }
+
+        internal static void CreateNewRookieDifficultyLevel()
+        {
+            try
+            {
+                GameDifficultyLevelDef sourceDef = DefCache.GetDef<GameDifficultyLevelDef>("Easy_GameDifficultyLevelDef");
+                GameDifficultyLevelDef newDifficulty = Helper.CreateDefFromClone(sourceDef, "{B10E3C8C-1398-4398-B1A6-A93DB0C48781}", "NewEasyDifficulty");
+                newDifficulty.Order = 1;
+                newDifficulty.Name.LocalizationKey = "TFTV_DIFFICULTY_ROOKIE_TITLE";
+                newDifficulty.Description.LocalizationKey = "TFTV_DIFFICULTY_ROOKIE_DESCRIPTION";
+
+                List<GameDifficultyLevelDef> difficultyLevelDefs = new List<GameDifficultyLevelDef>(Shared.DifficultyLevels);
+
+                difficultyLevelDefs.Insert(0, newDifficulty);
+
+                Shared.DifficultyLevels = difficultyLevelDefs.ToArray();
+            }
+
+
+            catch (Exception e)
+            {
+                TFTVLogger.Error(e);
+            }
+        }
+
+        internal static void CreateNewDifficultyLevel()
+        {
+            try
+            {
+                GameDifficultyLevelDef sourceDef = DefCache.GetDef<GameDifficultyLevelDef>("VeryHard_GameDifficultyLevelDef");
+                GameDifficultyLevelDef newDifficulty = Helper.CreateDefFromClone(sourceDef, "{F713C90F-5D7D-4F95-B71A-CE094A7DA6AE}", "EtermesDifficulty");
+                newDifficulty.Order = 5;
+                newDifficulty.Name.LocalizationKey = "TFTV_DIFFICULTY_ETERMES_TITLE";
+                newDifficulty.Description.LocalizationKey = "TFTV_DIFFICULTY_ETERMES_DESCRIPTION";
+
+                List<GameDifficultyLevelDef> difficultyLevelDefs = new List<GameDifficultyLevelDef>(Shared.DifficultyLevels) { newDifficulty };
+
+                Shared.DifficultyLevels = difficultyLevelDefs.ToArray();
+            }
+
+
+            catch (Exception e)
+            {
+                TFTVLogger.Error(e);
+            }
+        }
+
+
+        internal static void CreateAcidImmunity()
+        {
+            try
+            {
+                string abilityName = "AcidImmunityAbility";
+                string gUID = "{4915CA1F-5DA2-4F7D-9455-BC775EA1D8CB}";
+                // string characterProgressionGUID = "AA24A50E-C61A-4CD8-97FE-3F8BAC5F7BAA";
+                string viewElementGUID = "{85B86FF6-3EB4-492A-9775-D01611DEDE5B}";
+
+
+
+                DamageMultiplierAbilityDef source = DefCache.GetDef<DamageMultiplierAbilityDef>("AcidResistant_DamageMultiplierAbilityDef");
+                DamageMultiplierAbilityDef newAbility = Helper.CreateDefFromClone(
+                    source,
+                   gUID,
+                    abilityName);
+
+
+                /*newAbility.CharacterProgressionData = Helper.CreateDefFromClone(
+                    source.CharacterProgressionData,
+                    characterProgressionGUID,
+                   abilityName + "CharacterProgression");*/
+                newAbility.ViewElementDef = Helper.CreateDefFromClone(
+                    source.ViewElementDef,
+                    viewElementGUID,
+                    abilityName + "ViewElement");
+                newAbility.ViewElementDef.ShowInStatusScreen = true;
+                newAbility.ViewElementDef.ShowInFreeAimMode = true;
+
+                newAbility.Multiplier = 0.0f;
+
+
+
+            }
+            catch (Exception e)
+            {
+                TFTVLogger.Error(e);
+            }
+
+        }
+
+        internal static void FixPriestScream()
+        {
+            try
+            {
+                AIAbilityNumberOfTargetsConsiderationDef numberOfTargetsConsiderationDefSource = DefCache.GetDef<AIAbilityNumberOfTargetsConsiderationDef>("Siren_PsychicScreamNumberOfTargets_AIConsiderationDef");
+
+                AIAbilityNumberOfTargetsConsiderationDef newNumberOfTargetsConsideration = Helper.CreateDefFromClone(numberOfTargetsConsiderationDefSource, "{EBF0A605-B3DA-45C8-88CD-8CB9832B584E}", "PsychicScreamNumberOfTargets_AIConsiderationDef");
+                AIActionMoveAndExecuteAbilityDef priestMoveAndScreamAIAction = DefCache.GetDef<AIActionMoveAndExecuteAbilityDef>("MoveAndDoPsychicScream_AIActionDef");
+                priestMoveAndScreamAIAction.Evaluations[0].Considerations[1].Consideration = newNumberOfTargetsConsideration;
+                newNumberOfTargetsConsideration.Ability = priestMoveAndScreamAIAction.AbilityToExecute;
+            }
+            catch (Exception e)
+            {
+                TFTVLogger.Error(e);
+            }
+        }
+
+        //Maybe will be used later
+
+        internal static void CreateRoboticSelfRestoreAbility()
+        {
+            try
+            {
+                CreateRoboticHealingStatus();
+                CreateRoboticHealingAbility();
+            }
+            catch (Exception e)
+            {
+                TFTVLogger.Error(e);
+            }
+        }
+
+        internal static void CreateRoboticHealingAbility()
+        {
+            try
+            {
+
+                string abilityGUID = "{5056F0F1-0FDE-4C5B-B69D-A436310CC72E}";
+
+                string abilityName = "RoboticSelfRepair_AbilityDef";
+                PassiveModifierAbilityDef source = DefCache.GetDef<PassiveModifierAbilityDef>("SelfDefenseSpecialist_AbilityDef");
+                PassiveModifierAbilityDef ambushAbility = Helper.CreateDefFromClone(
+                    source,
+                   abilityGUID,
+                    abilityName);
+                ambushAbility.CharacterProgressionData = Helper.CreateDefFromClone(
+                    source.CharacterProgressionData,
+                    "{76838266-6249-46AF-A541-66065F102BD5}",
+                    abilityName);
+                ambushAbility.ViewElementDef = Helper.CreateDefFromClone(
+                    source.ViewElementDef,
+                    "{C464B230-D5D9-4798-A765-CF2398B3A49C}",
+                    abilityName);
+                ambushAbility.StatModifications = new ItemStatModification[] { };
+                ambushAbility.ItemTagStatModifications = new EquipmentItemTagStatModification[0];
+                ambushAbility.ViewElementDef.DisplayName1.LocalizationKey = "ROBOTIC_SELF_REPAIR_TITLE";
+                ambushAbility.ViewElementDef.Description.LocalizationKey = "ROBOTIC_SELF_REPAIR_ABILITY_TEXT";
+
+                Sprite icon = Helper.CreateSpriteFromImageFile("TFTV_status_self_repair.png");
+                ambushAbility.ViewElementDef.LargeIcon = icon;
+                ambushAbility.ViewElementDef.SmallIcon = icon;
+
+            }
+            catch (Exception e)
+            {
+                TFTVLogger.Error(e);
+            }
+        }
+
+        internal static void CreateRoboticHealingStatus()
+        {
+            try
+            {
+                //Creating status effect to show that Guardian will repair a body part next turn. Need to create a status to show small icon.
+
+                DamageMultiplierStatusDef sourceAbilityStatusDef = DefCache.GetDef<DamageMultiplierStatusDef>("BionicResistances_StatusDef");
+
+                string statusSelfRepairAbilityName = "RoboticSelfRepair_AddAbilityStatusDef";
+                DamageMultiplierStatusDef statusSelfRepairAbilityDef = Helper.CreateDefFromClone(sourceAbilityStatusDef, "609D0304-8BA3-4103-BC0D-6BE440E69F3D", statusSelfRepairAbilityName);
+                statusSelfRepairAbilityDef.EffectName = "SelfRoboticRepair";
+                statusSelfRepairAbilityDef.ApplicationConditions = new EffectConditionDef[] { };
+                statusSelfRepairAbilityDef.Visuals = Helper.CreateDefFromClone(sourceAbilityStatusDef.Visuals, "36414ABA-B535-4C4C-AADD-2F3A64D5101C", statusSelfRepairAbilityName);
+                statusSelfRepairAbilityDef.VisibleOnHealthbar = TacStatusDef.HealthBarVisibility.AlwaysVisible;
+                statusSelfRepairAbilityDef.VisibleOnPassiveBar = true;
+                statusSelfRepairAbilityDef.VisibleOnStatusScreen = TacStatusDef.StatusScreenVisibility.VisibleOnStatusesList;
+                statusSelfRepairAbilityDef.Visuals.DisplayName1.LocalizationKey = "ROBOTIC_SELF_REPAIR_TITLE";
+                statusSelfRepairAbilityDef.Visuals.Description.LocalizationKey = "ROBOTIC_SELF_REPAIR_TEXT_TEXT";
+                statusSelfRepairAbilityDef.Visuals.LargeIcon = Helper.CreateSpriteFromImageFile("TFTV_status_self_repair.png");
+                statusSelfRepairAbilityDef.Visuals.SmallIcon = Helper.CreateSpriteFromImageFile("TFTV_status_self_repair.png");
+                statusSelfRepairAbilityDef.DamageTypeDefs = new DamageTypeBaseEffectDef[] { };
+                statusSelfRepairAbilityDef.Multiplier = 1;
+            }
+            catch (Exception e)
+            {
+                TFTVLogger.Error(e);
+            }
+        }
+
+        internal static void AddMissingElectronicTags()
+        {
+            try
+            {
+                ItemMaterialTagDef electronic = DefCache.GetDef<ItemMaterialTagDef>("Electronic_ItemMaterialTagDef");
+
+                TacticalItemDef juggHead = DefCache.GetDef<TacticalItemDef>("NJ_Jugg_BIO_Helmet_BodyPartDef");
+
+                foreach (TacticalItemDef tacticalItemDef in Repo.GetAllDefs<TacticalItemDef>().Where(ti => ti.Tags.Contains(Shared.SharedGameTags.BionicalTag)))
+                {
+                    if (tacticalItemDef.Tags.CanAdd(electronic))
+                    {
+                        tacticalItemDef.Tags.Add(electronic);
+                        TFTVLogger.Always($"added electronic tag to {tacticalItemDef.name}");
+
+                    }
+
+                }
+
+                foreach (GroundVehicleWeaponDef groundVehicleWeaponDef in Repo.GetAllDefs<GroundVehicleWeaponDef>())
+                {
+                    if (groundVehicleWeaponDef.Tags.CanAdd(electronic))
+                    {
+                        groundVehicleWeaponDef.Tags.Add(electronic);
+                        TFTVLogger.Always($"added electronic tag to {groundVehicleWeaponDef.name}");
+
+                    }
+
+
+                }
+            }
+            catch (Exception e)
+            {
+                TFTVLogger.Error(e);
+            }
+
+        }
 
         internal static void ModifyDecoyAbility()
         {
@@ -238,129 +1007,150 @@ namespace TFTV
 
         }
 
-        internal static void UmbraSubstance()
+
+
+        internal static void ImproveScyllaAcheronsChironsAndCyclops()
         {
             try
             {
-                // Create a new ClassTagDef and SubstanceTypeTagDef for Umbras and add/replace them to their actor def
-                ClassTagDef umbraClassTag = Helper.CreateDefFromClone(
-                    DefCache.GetDef<ClassTagDef>("Crabman_ClassTagDef"),
-                    "092D50F3-B4E7-4B8E-9AD3-47E31DBAE82C",
-                    "Umbra_ClassTagDef");
-                SubstanceTypeTagDef voidSubstanceTypeTag = Helper.CreateDefFromClone(
-                    DefCache.GetDef<SubstanceTypeTagDef>("Organic_SubstanceTypeTagDef"),
-                    "A77AA320-9558-443F-92B1-C927E7F5B9DD",
-                    "Void_SubstanceTypeTagDef");
-                foreach (TacticalActorDef umbra in new TacticalActorDef[] { DefCache.GetDef<TacticalActorDef>("Oilcrab_ActorDef"), DefCache.GetDef<TacticalActorDef>("Oilfish_ActorDef") })
+                ModifyScyllaAIAndHeads();
+                MedAndBigMonstersSquishers();
+                ModifyGuardianAIandStomp();
+                CreateNewScreamForCyclops();
+                //  MakeUmbraNotObstacle();
+            }
+            catch (Exception e)
+            {
+                TFTVLogger.Error(e);
+            }
+
+        }
+
+
+
+        internal static void CreateNewScreamForCyclops()
+        {
+            try
+            {
+                string abilityName = "CyclopsScream";
+
+
+                ApplyDamageEffectAbilityDef guardianStomp = DefCache.GetDef<ApplyDamageEffectAbilityDef>("Guardian_Stomp_AbilityDef");
+                PsychicScreamAbilityDef screamAbilitySource = DefCache.GetDef<PsychicScreamAbilityDef>("Siren_PsychicScream_AbilityDef");
+                //blast damage is limited by scenery 
+                PsychicScreamAbilityDef newScreamAbility = Helper.CreateDefFromClone(screamAbilitySource, "{7CD25D07-441C-4E57-8680-FB7B06E9DDE5}", abilityName);
+                newScreamAbility.ViewElementDef = Helper.CreateDefFromClone(screamAbilitySource.ViewElementDef, "{86253E40-9034-4089-A71E-1C1D78B28ECE}", abilityName);
+
+
+                newScreamAbility.ViewElementDef.LargeIcon = Helper.CreateSpriteFromImageFile("ANC_CyclopsScream.png");
+                newScreamAbility.ViewElementDef.SmallIcon = Helper.CreateSpriteFromImageFile("ANC_CyclopsScream.png");
+                newScreamAbility.ViewElementDef.DisplayName1.LocalizationKey = "CYCLOPS_SCREAM_TITLE";
+                newScreamAbility.ViewElementDef.Description.LocalizationKey = "CYCLOPS_SCREAM_DESCRIPTION";
+
+                //Only to show in the UI
+                newScreamAbility.DamagePayload.DamageKeywords = new List<DamageKeywordPair>
                 {
-                    if (umbra.GameTags.CanAdd(umbraClassTag))
-                    {
-                        umbra.GameTags.Add(umbraClassTag);
-                    }
-                    umbra.SubstanceTypeTag = voidSubstanceTypeTag;
-                }
+                    new DamageKeywordPair { DamageKeywordDef = Shared.SharedDamageKeywords.PsychicKeyword, Value = 1 },
+                };
 
+
+                AIAbilityNumberOfTargetsConsiderationDef numberOfTargetsConsiderationDefSource = DefCache.GetDef<AIAbilityNumberOfTargetsConsiderationDef>("Siren_PsychicScreamNumberOfTargets_AIConsiderationDef");
+
+                AIAbilityNumberOfTargetsConsiderationDef newNumberOfTargetsConsideration = Helper.CreateDefFromClone(numberOfTargetsConsiderationDefSource, "{5C5D22BC-0E48-4697-9525-0AA7BBE0D06B}", abilityName);
+                newNumberOfTargetsConsideration.Ability = newScreamAbility;
+
+                TacticalActorDef cyclops = DefCache.GetDef<TacticalActorDef>("MediumGuardian_ActorDef");
+                List<AbilityDef> cyclopsAbilities = new List<AbilityDef>(cyclops.Abilities.ToList());
+                cyclopsAbilities.Remove(guardianStomp);
+                cyclopsAbilities.Add(newScreamAbility);
+                cyclops.Abilities = cyclopsAbilities.ToArray();
+
+                newScreamAbility.ActionPointCost = 0.5f;
+                newScreamAbility.WillPointCost = 0.0f;
+                newScreamAbility.UsesPerTurn = 1;
+
+
+
+                DefCache.GetDef<TacActorSimpleAbilityAnimActionDef>("E_Stomp [MediumGuardian_AnimActionsDef]").AbilityDefs = new AbilityDef[] { newScreamAbility };
+
+                AIActionMoveAndExecuteAbilityDef moveAndStompAIAction = DefCache.GetDef<AIActionMoveAndExecuteAbilityDef>("MediumGuardian_MoveAndDoStomp_AIActionDef");
+                moveAndStompAIAction.AbilityToExecute = newScreamAbility;
+                moveAndStompAIAction.Evaluations[0].Considerations[0].Consideration = newNumberOfTargetsConsideration;
+                moveAndStompAIAction.Weight = 20.0f;
+
+                DefCache.GetDef<AIAttackPositionConsiderationDef>("MediumGuardian_StompAttackPosition_AIConsiderationDef").AbilityDef = newScreamAbility;
+
+                DefCache.GetDef<AIAbilityDisabledStateConsiderationDef>("MediumGuardian_StompAbilityEnabled_AIConsiderationDef").Ability = newScreamAbility;
+
+
+            }
+            catch (Exception e)
+            {
+                TFTVLogger.Error(e);
+            }
+
+        }
+
+
+        internal static void ModifyGuardianAIandStomp()
+        {
+            try
+            {
+
+                AIActorMovementZoneTargetGeneratorDef movementZoneTargetGeneratorDef = DefCache.GetDef<AIActorMovementZoneTargetGeneratorDef>("MediumGuardian_MovementZone_AITargetGeneratorDef");
+                AIActorMovementZoneTargetGeneratorDef halfZone = DefCache.GetDef<AIActorMovementZoneTargetGeneratorDef>("MediumGuardian_ActionZoneHalf_AITargetGeneratorDef");
+                AIActorMovementZoneTargetGeneratorDef actionZone = DefCache.GetDef<AIActorMovementZoneTargetGeneratorDef>("MediumGuardian_ActionZone_AITargetGeneratorDef");
+
+
+                //   DefCache.GetDef<ApplyDamageEffectAbilityDef>("Guardian_Stomp_AbilityDef").IgnoreFriendlies = true;
+                AIActionsTemplateDef mediumGuardianAITemplate = DefCache.GetDef<AIActionsTemplateDef>("MediumGuardian_AIActionsTemplateDef");
+
+                AIActionDef queenAdvance = DefCache.GetDef<AIActionDef>("Queen_Advance_AIActionDef");
+                AIActionDef guardianAdvance = Helper.CreateDefFromClone(queenAdvance, "{BC0497A4-ED7A-427C-910F-35B453B5F205}", "Guardian_Advance_AIActionDef");
+                guardianAdvance.Weight = 1.0f;
+
+
+                guardianAdvance.Evaluations[0].TargetGeneratorDef = DefCache.GetDef<AIActorMovementZoneTargetGeneratorDef>("MediumGuardian_MovementZone_AITargetGeneratorDef");
+
+                List<AIActionDef> aIActions = new List<AIActionDef>(mediumGuardianAITemplate.ActionDefs.ToList())
+                {
+                    guardianAdvance
+                };
+                mediumGuardianAITemplate.ActionDefs = aIActions.ToArray();
+
+                TacAIActorDef cyclopsAIActor = DefCache.GetDef<TacAIActorDef>("MediumGuardian_AIActorDef");
+                cyclopsAIActor.TurnOrderPriority = 1000;
+
+                AIActionDef aggresiveAdvance = DefCache.GetDef<AIActionDef>("MediumGuardian_Advance_Aggressive_AIActionDef");
+
+
+
+                AIActionMoveAndAttackDef moveAndShootAIActionDef = DefCache.GetDef<AIActionMoveAndAttackDef>("MediumGuardian_MoveAndShoot_AIActionDef");
+
+
+                moveAndShootAIActionDef.Evaluations[1].TargetGeneratorDef = actionZone;
+                moveAndShootAIActionDef.Weight = 100.0f;
+                aggresiveAdvance.Weight = 2.0f;
+
+
+                CaterpillarMoveAbilityDef caterPillarMoveDef = DefCache.GetDef<CaterpillarMoveAbilityDef>("ScyllaSquisher");
+
+                movementZoneTargetGeneratorDef.MoveAbilityDef = caterPillarMoveDef;
+                halfZone.MoveAbilityDef = caterPillarMoveDef;
+                actionZone.MoveAbilityDef = caterPillarMoveDef;
             }
 
             catch (Exception e)
             {
                 TFTVLogger.Error(e);
             }
-
-
-
-
-
         }
 
-        internal static void TestingKnockBack()
+
+        internal static void ModifyScyllaAIAndHeads()
         {
             try
             {
-                string nameKnockBack = "KnockBackAbility";
-                string gUIDAbility = "{B4238D2D-3E25-4EE5-A3C0-23CFED493D42}";
-                JetJumpAbilityDef source = DefCache.GetDef<JetJumpAbilityDef>("JetJump_AbilityDef");
-                JetJumpAbilityDef newKnockBackAbility = Helper.CreateDefFromClone(source, gUIDAbility, nameKnockBack);
-                newKnockBackAbility.ActionPointCost = 0.0f;
-                newKnockBackAbility.WillPointCost = 0.0f;
-                newKnockBackAbility.FumblePerc = 0;
-                newKnockBackAbility.TraitsRequired = new string[] { };
-                newKnockBackAbility.HeightToWidth = 0.01f;
-                //  newKnockBackAbility.TesellationPoints = 10;
-                // newKnockBackAbility.UseLeapAnimation = true;
-
-
-                string gUIDTargeting = "{8B266029-F014-4514-865A-C51201944385}";
-                TacticalTargetingDataDef tacticalTargetingDataDef = Helper.CreateDefFromClone(source.TargetingDataDef, gUIDTargeting, nameKnockBack);
-                tacticalTargetingDataDef.Origin.Range = 3;
-
-                string gUIDAnim = "{B1ADC473-1AD8-431F-8953-953E4CB3E584}";
-                TacActorJumpAbilityAnimActionDef animSource = DefCache.GetDef<TacActorJumpAbilityAnimActionDef>("E_JetJump [Soldier_Utka_AnimActionsDef]");
-                TacActorJumpAbilityAnimActionDef knockBackAnimation = Helper.CreateDefFromClone(animSource, gUIDAnim, nameKnockBack);
-                TacActorNavAnimActionDef someAnimations = DefCache.GetDef<TacActorNavAnimActionDef>("E_CrabmanNav [Crabman_AnimActionsDef]");
-                TacActorSimpleReactionAnimActionDef hurtReaction = DefCache.GetDef<TacActorSimpleReactionAnimActionDef>("E_Hurt_Reaction [Crabman_AnimActionsDef]");
-                /*  knockBackAnimation.Clip = hurtReaction.GetAllClips().First();
-                  knockBackAnimation.ClipEnd = someAnimations.FallNoSupport.Stop;
-                  knockBackAnimation.ClipStart = hurtReaction.GetAllClips().First();*/
-                knockBackAnimation.Clip = someAnimations.JetJump.Loop;
-                knockBackAnimation.ClipEnd = hurtReaction.GetAllClips().First();
-                knockBackAnimation.ClipStart = someAnimations.JetJump.Loop;
-
-                knockBackAnimation.AbilityDefs = new AbilityDef[] { newKnockBackAbility };
-
-
-
-                TacActorAnimActionsDef crabAnimActions = DefCache.GetDef<TacActorAnimActionsDef>("Crabman_AnimActionsDef");
-                List<TacActorAnimActionBaseDef> crabAnimations = new List<TacActorAnimActionBaseDef>(crabAnimActions.AnimActions.ToList());
-                crabAnimations.Add(knockBackAnimation);
-                crabAnimActions.AnimActions = crabAnimations.ToArray();
-
-
-            }
-
-
-
-            catch (Exception e)
-            {
-                TFTVLogger.Error(e);
-            }
-
-
-        }
-
-        internal static void ImproveScyllas()
-        {
-            try
-            {
-                string abilityName = "ScyllaSquisher";
-                string abilityGUID = "{B7EBE715-69CE-4163-8E7D-88034ED4DE2A}";
-                string viewElementGUID = "{C74C16D0-98DB-4717-B5E8-D04004151A69}";
-                CaterpillarMoveAbilityDef source = DefCache.GetDef<CaterpillarMoveAbilityDef>("CaterpillarMoveAbilityDef");
-                CaterpillarMoveAbilityDef scyllaCaterpillarAbility = Helper.CreateDefFromClone(source, abilityGUID, abilityName);
-                scyllaCaterpillarAbility.ViewElementDef = Helper.CreateDefFromClone(source.ViewElementDef, viewElementGUID, abilityName);
-                scyllaCaterpillarAbility.ViewElementDef.ShowInStatusScreen = false;
-                // scyllaCaterpillarAbility.
-
-
-                //maybe use later for a new AI leapAndScream/Spit action
-                /*  AIActionExecuteAbilityDef source = DefCache.GetDef<AIActionExecuteAbilityDef>("Egg_Surveillance_AIActionExecuteAbilityDef");
-                AIActionExecuteAbilityDef newScyllaAIAction = Helper.CreateDefFromClone(source, "{F63C49F1-CB26-4EBB-B633-F9AEB1336D28}", "ScyllaPrepareGunsAIAction");
-                StartPreparingShootAbilityDef scyllaStartPreparing = DefCache.GetDef<StartPreparingShootAbilityDef>("Queen_StartPreparing_AbilityDef");
-                AIActionDef moveAndPrepareShooting = DefCache.GetDef<AIActionDef>("Queen_MoveAndPrepareShooting_AIActionDef");
-                newScyllaAIAction.AbilityDefs = new TacticalAbilityDef[] { scyllaStartPreparing };
-                newScyllaAIAction.EarlyExitConsiderations = moveAndPrepareShooting.EarlyExitConsiderations;
-                newScyllaAIAction.Evaluations = moveAndPrepareShooting.Evaluations;
-                newScyllaAIAction.Weight = 1000;
-
-              
-                AIActionsTemplateDef QueenAI = DefCache.GetDef<AIActionsTemplateDef>("Queen_AIActionsTemplateDef");
-
-                List <AIActionDef> QueenAIActions = new List<AIActionDef>(QueenAI.ActionDefs);
-                QueenAIActions.Remove(moveAndPrepareShooting);
-                QueenAIActions.Add(newScyllaAIAction);
-
-                QueenAI.ActionDefs = QueenAIActions.ToArray();*/
-
                 WeaponDef headSpitter = DefCache.GetDef<WeaponDef>("Queen_Head_Spitter_Goo_WeaponDef");
                 // DamageKeywordDef blast = DefCache.GetDef<DamageKeywordDef>("Blast_DamageKeywordDataDef");
                 StandardDamageTypeEffectDef blastDamage = DefCache.GetDef<StandardDamageTypeEffectDef>("Blast_StandardDamageTypeEffectDef");
@@ -374,8 +1164,10 @@ namespace TFTV
                 headSpitter.DamagePayload.AoeRadius = 2f;
 
                 //Reduce Move and SpitGoo/SonicBlast weight, so she also uses Smashers sometimes
-                DefCache.GetDef<AIActionDef>("Queen_MoveAndSpitGoo_AIActionDef").Weight = 50.0f;
-                DefCache.GetDef<AIActionDef>("Queen_MoveAndSonicBlast_AIActionDef").Weight = 50.0f;
+                // DefCache.GetDef<AIActionDef>("Queen_MoveAndSpitGoo_AIActionDef").Weight = 50.0f;
+                //  DefCache.GetDef<AIActionDef>("Queen_MoveAndSonicBlast_AIActionDef").Weight = 50.0f;
+                DefCache.GetDef<AIActionDef>("Queen_MoveAndPrepareShooting_AIActionDef").Weight = 50.0f;
+
 
                 //Reduce range of Sonic and Spitter Heads from 20 to 15 so that cannons are more effective
                 WeaponDef headSonic = DefCache.GetDef<WeaponDef>("Queen_Head_Sonic_WeaponDef");
@@ -384,39 +1176,97 @@ namespace TFTV
 
                 DefCache.GetDef<AIActionDef>("Queen_Recover_AIActionDef").Weight = 0.01f;
 
-                //Make all small critters and things not an obstacle for Scylla movement
+
+            }
+            catch (Exception e)
+            {
+                TFTVLogger.Error(e);
+            }
+        }
+
+        internal static void MedAndBigMonstersSquishers()
+        {
+            try
+            {
+                //Create new Caterpillar ability to (eventually) show different View elements (for now just hidden) 
+                string abilityName = "ScyllaSquisher";
+                string abilityGUID = "{B7EBE715-69CE-4163-8E7D-88034ED4DE2A}";
+                string viewElementGUID = "{C74C16D0-98DB-4717-B5E8-D04004151A69}";
+                CaterpillarMoveAbilityDef source = DefCache.GetDef<CaterpillarMoveAbilityDef>("CaterpillarMoveAbilityDef");
+                CaterpillarMoveAbilityDef scyllaCaterpillarAbility = Helper.CreateDefFromClone(source, abilityGUID, abilityName);
+                scyllaCaterpillarAbility.ViewElementDef = Helper.CreateDefFromClone(source.ViewElementDef, viewElementGUID, abilityName);
+                scyllaCaterpillarAbility.ViewElementDef.ShowInStatusScreen = false;
+
+                //Make all small critters and things not an obstacle for Scylla, MedMonster (Chiron, Cyclops), Acheron movement
 
                 TacticalNavigationComponentDef spiderDroneNav = DefCache.GetDef<TacticalNavigationComponentDef>("SpiderDrone_NavigationDef");
-                spiderDroneNav.ignoreObstacleFor = new string[] { "BigMonster", "MedMonster", "ArmadilloWormsDestroyer" };
+                spiderDroneNav.ignoreObstacleFor = new string[] { "BigMonster", "MedMonster", "ArmadilloWormsDestroyer", "MedMonsterHigh" };
 
                 TacticalNavigationComponentDef wormNav = DefCache.GetDef<TacticalNavigationComponentDef>("Fireworm_NavigationDef");
-                wormNav.ignoreObstacleFor = new string[] { "BigMonster", "MedMonster", "ArmadilloWormsDestroyer" };
-                //  wormNav.CreateNavObstacle = false;
+                wormNav.ignoreObstacleFor = new string[] { "BigMonster", "MedMonster", "ArmadilloWormsDestroyer", "MedMonsterHigh" };
 
                 TacticalNavigationComponentDef faceHuggerNav = DefCache.GetDef<TacticalNavigationComponentDef>("Facehugger_NavigationDef");
-                faceHuggerNav.ignoreObstacleFor = new string[] { "BigMonster", "MedMonster", "ArmadilloWormsDestroyer" };
+                faceHuggerNav.ignoreObstacleFor = new string[] { "BigMonster", "MedMonster", "ArmadilloWormsDestroyer", "MedMonsterHigh" };
 
                 TacticalNavigationComponentDef swarmerNav = DefCache.GetDef<TacticalNavigationComponentDef>("Swarmer_NavigationDef");
-                swarmerNav.ignoreObstacleFor = new string[] { "BigMonster", "MedMonster", "ArmadilloWormsDestroyer" };
+                swarmerNav.ignoreObstacleFor = new string[] { "BigMonster", "MedMonster", "ArmadilloWormsDestroyer", "MedMonsterHigh" };
 
                 TacticalNavigationComponentDef turret1 = DefCache.GetDef<TacticalNavigationComponentDef>("NJ_TechTurret_NavigationDef");
-                turret1.ignoreObstacleFor = new string[] { "BigMonster", "MedMonster", "ArmadilloWormsDestroyer" };
+                turret1.ignoreObstacleFor = new string[] { "BigMonster", "MedMonster", "ArmadilloWormsDestroyer", "MedMonsterHigh" };
 
                 TacticalNavigationComponentDef turret2 = DefCache.GetDef<TacticalNavigationComponentDef>("NJ_PRCRTechTurret_NavigationDef");
-                turret2.ignoreObstacleFor = new string[] { "BigMonster", "MedMonster", "ArmadilloWormsDestroyer" };
+                turret2.ignoreObstacleFor = new string[] { "BigMonster", "MedMonster", "ArmadilloWormsDestroyer", "MedMonsterHigh" };
 
                 TacticalNavigationComponentDef turret3 = DefCache.GetDef<TacticalNavigationComponentDef>("PX_LaserTechTurret_NavigationDef");
-                turret3.ignoreObstacleFor = new string[] { "BigMonster", "MedMonster", "ArmadilloWormsDestroyer" };
+                turret3.ignoreObstacleFor = new string[] { "BigMonster", "MedMonster", "ArmadilloWormsDestroyer", "MedMonsterHigh" };
 
-                foreach (TacCharacterDef tacCharacterDef in Repo.GetAllDefs<TacCharacterDef>().Where(tcd => tcd.name.Contains("Scylla")))
+
+                TacticalAbilityDef fireImmunity = DefCache.GetDef<TacticalAbilityDef>("FireImmunity_DamageMultiplierAbilityDef");
+                TacticalAbilityDef poisonImmunity = DefCache.GetDef<TacticalAbilityDef>("PoisonImmunity_DamageMultiplierAbilityDef");
+                TacticalAbilityDef acidImmunity = DefCache.GetDef<TacticalAbilityDef>("AcidImmunityAbility");
+
+                //Scylla and Chirons with Heavy Legs, as well as all Cyclops get caterpillar ability + fire immunity
+                foreach (TacCharacterDef tacCharacterDef in Repo.GetAllDefs<TacCharacterDef>())
                 {
-                    if (tacCharacterDef.Data.BodypartItems.Contains(DefCache.GetDef<TacticalItemDef>("Queen_Legs_Heavy_ItemDef")))
+                    //  TFTVLogger.Always($"{tacCharacterDef.name}");
+
+                    if (
+                        (tacCharacterDef.name.Contains("Scylla")
+                        && tacCharacterDef.Data.BodypartItems.Contains(DefCache.GetDef<TacticalItemDef>("Queen_Legs_Heavy_ItemDef")))
+                        || (tacCharacterDef.name.Contains("Chiron")
+                        && !tacCharacterDef.Data.BodypartItems.Contains(DefCache.GetDef<TacticalItemDef>("Chiron_Legs_Agile_ItemDef")))
+                        || tacCharacterDef.name.StartsWith("MediumGuardian")
+
+                        )
                     {
-                        List<TacticalAbilityDef> scyllaAbilities = new List<TacticalAbilityDef>(tacCharacterDef.Data.Abilites.ToList()) { scyllaCaterpillarAbility };
-                        tacCharacterDef.Data.Abilites = scyllaAbilities.ToArray();
+                        List<TacticalAbilityDef> monsterAbilities = new List<TacticalAbilityDef>(tacCharacterDef.Data.Abilites.ToList()) { scyllaCaterpillarAbility, fireImmunity };
+
+
+                        if (tacCharacterDef.Data.BodypartItems.Contains(DefCache.GetDef<WeaponDef>("Chiron_Abdomen_FireWorm_Launcher_WeaponDef")))
+                        {
+                            if (!monsterAbilities.Contains(fireImmunity))
+                            {
+                                monsterAbilities.Add(fireImmunity);
+                            }
+
+                        }
+                        else if (tacCharacterDef.Data.BodypartItems.Contains(DefCache.GetDef<WeaponDef>("Chiron_Abdomen_PoisonWorm_Launcher_WeaponDef")))
+                        {
+                            monsterAbilities.Add(poisonImmunity);
+
+                        }
+                        else if (tacCharacterDef.Data.BodypartItems.Contains(DefCache.GetDef<WeaponDef>("Chiron_Abdomen_AcidWorm_Launcher_WeaponDef")))
+                        {
+                            monsterAbilities.Add(acidImmunity);
+
+                        }
+                        tacCharacterDef.Data.Abilites = monsterAbilities.ToArray();
                     }
+
+
                 }
 
+                //ensure that small critters and things have the damagedByCaterpillarTracks_Tag; if check in case BetterEnemies is active
                 GameTagDef damagedByCaterpillar = DefCache.GetDef<GameTagDef>("DamageByCaterpillarTracks_TagDef");
 
                 foreach (TacticalActorDef actor in Repo.GetAllDefs<TacticalActorDef>().Where(a => a.name.Contains("worm") || a.name.Contains("SpiderDrone") || a.name.Contains("TechTurret")))
@@ -427,26 +1277,34 @@ namespace TFTV
                     }
                 }
 
-                //comenting out for hotfix2 release
-               /* foreach (TacCharacterDef actor in Repo.GetAllDefs<TacCharacterDef>().Where(a => a.name.Contains("Chiron")))
+                TacticalDemolitionComponentDef demoCyclops = DefCache.GetDef<TacticalDemolitionComponentDef>("MediumGuardian_DemolitionComponentDef");
+
+                //increase size of demo rectangle to squash worms and stuff
+                demoCyclops.RectangleSize = new Vector3
                 {
-                    List<TacticalAbilityDef> chironAbilities = new List<TacticalAbilityDef>(actor.Data.Abilites) { scyllaCaterpillarAbility };
-                    actor.Data.Abilites = chironAbilities.ToArray();
-                }*/
+                    x = 2.5f,
+                    y = 2.6f,
+                    z = 2.9f,
+                };
 
-                //  DefCache.GetDef<JetJumpAbilityDef>("Queen_Leap_AbilityDef"); //currently costs 3AP!
-                /*  TacticalNavigationComponentDef cyclopsNav = DefCache.GetDef<TacticalNavigationComponentDef>("MediumGuardian_NavigationDef");
+                TacticalDemolitionComponentDef demoChiron = DefCache.GetDef<TacticalDemolitionComponentDef>("Chiron_DemolitionComponentDef");
 
-               //   cyclopsNav.AgentType = "ArmadilloWormsDestroyer";
+                demoChiron.SphereCenter = new Vector3(0f, 0f, 0f);
+                demoChiron.CapsuleStart = new Vector3(0f, 1f, 0f);
+                demoChiron.CapsuleEnd = new Vector3(0f, 3f, 0f);
 
-                  //  TacticalNavigationComponent
+                //improve special Scylla cheat skill to avoid getting damaged from squishing things that blow up
+                // not good, makes them immune to fire...
+                /*   StandardDamageTypeEffectDef fireDamage = DefCache.GetDef<StandardDamageTypeEffectDef>("Fire_StandardDamageTypeEffectDef"); 
+                   AcidDamageTypeEffectDef acidDamage = DefCache.GetDef<AcidDamageTypeEffectDef>("Acid_DamageOverTimeDamageTypeEffectDef");
 
-                  /*  TacCharacterDef tetrarch = DefCache.GetDef <TacCharacterDef>("Scylla4_SpitLaunchGunAgileBelch_AlienMutationVariationDef");
-                  List<ItemDef> tetrachBodyParts = new List<ItemDef>() { };
-                  tetrachBodyParts.AddRange(tetrarch.Data.BodypartItems);
-                  tetrachBodyParts.Remove(guns);
-                  tetrachBodyParts.Add(smashers);
-                  tetrarch.Data.BodypartItems = tetrachBodyParts.ToArray();*/
+                   DamageMultiplierStatusDef scyllaCheatSkill = DefCache.GetDef<DamageMultiplierStatusDef>("E_BlastImmunityStatus [Queen_GunsFire_ShootAbilityDef]");
+
+                   List<DamageTypeBaseEffectDef> damageTypeBaseEffectDefs = new List<DamageTypeBaseEffectDef>(scyllaCheatSkill.DamageTypeDefs) { fireDamage, acidDamage };
+                   scyllaCheatSkill.DamageTypeDefs = damageTypeBaseEffectDefs.ToArray();*/
+
+
+
 
             }
             catch (Exception e)
@@ -572,11 +1430,7 @@ namespace TFTV
                 CreateCosmeticExplosion();
                 CreateFireExplosion();
                 CreateHintsForBaseDefense();
-                //commented out for Hotfix2
-              //  CreateSpawnCrabmanAbility();
-
-
-
+                CreateSpawnCrabmanAbility();
             }
             catch (Exception e)
             {
@@ -588,6 +1442,8 @@ namespace TFTV
         {
             try
             {
+
+
                 string abilityName = "SpawnerySpawnAbility";
                 string abilityGUID = "{7FBEB256-1F44-4F3A-8B3A-17A8A8AF9F8F}";
 
@@ -595,6 +1451,8 @@ namespace TFTV
                 SpawnActorAbilityDef newSpawnerySpawnAbility = Helper.CreateDefFromClone(source, abilityGUID, abilityName);
 
                 newSpawnerySpawnAbility.WillPointCost = 0;
+                newSpawnerySpawnAbility.AnimType = -1;
+                newSpawnerySpawnAbility.EndsTurn = true;
 
                 TacCharacterDef crabman = DefCache.GetDef<TacCharacterDef>("Crabman3_AdvancedCharger_AlienMutationVariationDef");
                 newSpawnerySpawnAbility.TacCharacterDef = crabman;
@@ -602,12 +1460,11 @@ namespace TFTV
                 newSpawnerySpawnAbility.ActorComponentSetDef = crabmanComponent;
                 newSpawnerySpawnAbility.PlaySpawningActorAnimation = true;
                 newSpawnerySpawnAbility.FacePosition = false;
-                newSpawnerySpawnAbility.OverrideDefaultActionAnimation = true;
+                newSpawnerySpawnAbility.OverrideDefaultActionAnimation = false;
                 newSpawnerySpawnAbility.WaitsForActionEnd = false;
 
                 TacCharacterDef spawnery = DefCache.GetDef<TacCharacterDef>("SpawningPoolCrabman_AlienMutationVariationDef");
                 spawnery.Data.Abilites = new TacticalAbilityDef[] { newSpawnerySpawnAbility };
-
 
                 AIActionsTemplateDef spawneryAIActionsTemplate = DefCache.GetDef<AIActionsTemplateDef>("SpawningPool_AIActionsTemplateDef");
 
@@ -616,23 +1473,6 @@ namespace TFTV
                 AIActionExecuteAbilityDef sourceExecuteAbilityAction = DefCache.GetDef<AIActionExecuteAbilityDef>("Queen_SpawnFacehugger_AIActionDef");
                 AIActionExecuteAbilityDef spawneryAIAction = Helper.CreateDefFromClone(sourceExecuteAbilityAction, aIActionGUID, aIActionName);
 
-                TacActorSimpleAbilityAnimActionDef crabmanEnterPlay = DefCache.GetDef<TacActorSimpleAbilityAnimActionDef>("E_EnterPlay [Crabman_AnimActionsDef]");
-                List<AbilityDef> crabmanEntrePlayAbilities = new List<AbilityDef> (crabmanEnterPlay.AbilityDefs.ToList()){newSpawnerySpawnAbility };
-                crabmanEnterPlay.AbilityDefs = crabmanEntrePlayAbilities.ToArray();
-
-                TacActorAnimActionsDef spawneryAnimations = DefCache.GetDef<TacActorAnimActionsDef>("SpawningPoolCrabman_AnimActionsDef");
-             //   TacActorNavAnimActionDef spawneryNavAnimations = DefCache.GetDef<TacActorNavAnimActionDef>("E_DefaultNav [SpawningPoolCrabman_AnimActionsDef]");
-               
-
-
-               string animationGUID = "{E3F8E5FE-CD03-4C8A-B7AE-783E181823C5}";
-                TacActorSimpleAbilityAnimActionDef spawnerySpawnAnimation = Helper.CreateDefFromClone(DefCache.GetDef<TacActorSimpleAbilityAnimActionDef>("E_SpawnFacehugger [Queen_AnimActionsDef]"), animationGUID, aIActionName);
-             //   spawnerySpawnAnimation.NumberOfHands = -1;
-             //   spawnerySpawnAnimation.Equipments = new EquipmentDef[] { };
-                spawnerySpawnAnimation.AbilityDefs = new AbilityDef[] { newSpawnerySpawnAbility };
-                spawnerySpawnAnimation.Clip = spawneryAnimations.DefaultActionClip;
-                List<TacActorAnimActionBaseDef> animations = new List<TacActorAnimActionBaseDef>(spawneryAnimations.AnimActions.ToList()) { spawnerySpawnAnimation };
-                spawneryAnimations.AnimActions = animations.ToArray();
 
                 string aIConsiderationGUID = "{41BE5653-27D3-456D-A76C-E54F8744DAF7}";
                 AIAbilityMaxUsesInTheTurnConsiderationDef sourceAbilityMaxUseConsiderion = DefCache.GetDef<AIAbilityMaxUsesInTheTurnConsiderationDef>("Queen_SpawnFacehuggerNotUsed_AIConsiderationDef");
@@ -643,12 +1483,16 @@ namespace TFTV
                 AISpawnActorPositionTargetGeneratorDef sourceTargetGenerator = DefCache.GetDef<AISpawnActorPositionTargetGeneratorDef>("Queen_SpawnActorPosition_AITargetGeneratorDef");
                 AISpawnActorPositionTargetGeneratorDef spawneryTargetGenerator = Helper.CreateDefFromClone(sourceTargetGenerator, aITargetGeneratorGUID, aIActionName);
 
-                List<AIActionDef> aIActionDefs = new List<AIActionDef>(spawneryAIActionsTemplate.ActionDefs.ToList()) { spawneryAIAction };
-                spawneryAIActionsTemplate.ActionDefs = aIActionDefs.ToArray();
+                //  List<AIActionDef> aIActionDefs = new List<AIActionDef>(spawneryAIActionsTemplate.ActionDefs.ToList()) { spawneryAIAction };
+                //   spawneryAIActionsTemplate.ActionDefs = aIActionDefs.ToArray();
+
+                spawneryAIActionsTemplate.ActionDefs = new AIActionDef[] { spawneryAIAction };
+
                 spawneryAIAction.AbilityDefs = new TacticalAbilityDef[] { newSpawnerySpawnAbility };
                 spawneryAIAction.Weight = 1000;
                 spawneryAIAction.EarlyExitConsiderations = new AIAdjustedConsideration[] { };
                 spawneryAIAction.Evaluations[0].TargetGeneratorDef = spawneryTargetGenerator;
+                spawneryAIAction.Evaluations[0].Considerations.RemoveAt(0);
 
                 spawneryTargetGenerator.SpawnActorAbility = newSpawnerySpawnAbility;
 
@@ -678,6 +1522,7 @@ namespace TFTV
                 killInfestation.MissionObjectiveData.Description.LocalizationKey = "BASEDEFENSE_INFESTATION_OBJECTIVE";
                 killInfestation.MissionObjectiveData.Summary.LocalizationKey = "BASEDEFENSE_INFESTATION_OBJECTIVE";
                 killInfestation.KillTargetGameTag = gameTagMainObjective;
+                killInfestation.IsVictoryObjective = false;
 
                 string nameObjectiveDestroySentinel = "PhoenixBaseDestroySentinel";
 
@@ -685,7 +1530,7 @@ namespace TFTV
                 killSentinel.MissionObjectiveData.Description.LocalizationKey = "BASEDEFENSE_SENTINEL_OBJECTIVE";
                 killSentinel.MissionObjectiveData.Summary.LocalizationKey = "BASEDEFENSE_SENTINEL_OBJECTIVE";
                 killSentinel.KillTargetGameTag = gameTagMainObjective;
-
+                killSentinel.IsVictoryObjective = false;
 
                 string nameObjectiveScatterEnemies = "ScatterRemainingAttackers";
                 GameTagDef gameTagSecondObjective = Helper.CreateDefFromClone(
@@ -696,6 +1541,9 @@ namespace TFTV
                 secondKillAll.KillTargetGameTag = gameTagSecondObjective;
                 secondKillAll.MissionObjectiveData.Description.LocalizationKey = "BASEDEFENSE_SECOND_OBJECTIVE";
                 secondKillAll.MissionObjectiveData.Summary.LocalizationKey = "BASEDEFENSE_SECOND_OBJECTIVE";
+                secondKillAll.ParalysedCounts = true;
+                secondKillAll.AchievedWhenEnemiesAreDefeated = true;
+                //secondKillAll.IsDefeatObjective = false;
 
                 //infestation BD mission, destroy Spawnery, then scatter attackers
                 killInfestation.NextOnSuccess = new FactionObjectiveDef[] { secondKillAll };
@@ -705,23 +1553,27 @@ namespace TFTV
 
                 SurviveTurnsFactionObjectiveDef surviveFiveTurns = Helper.CreateDefFromClone(sourceSurviveObjective, "{EC7E94DD-199B-41BF-B6D7-7933CE40E0C1}", nameObjective);
                 surviveFiveTurns.SurviveTurns = 5;
-                surviveFiveTurns.MissionObjectiveData.Description.LocalizationKey = "BASEDEFENSE_SURVIVE_OBJECTIVE";
-                surviveFiveTurns.MissionObjectiveData.Summary.LocalizationKey = "BASEDEFENSE_SURVIVE_OBJECTIVE";
+                surviveFiveTurns.MissionObjectiveData.Description.LocalizationKey = "BASEDEFENSE_SURVIVE5_OBJECTIVE";
+                surviveFiveTurns.MissionObjectiveData.Summary.LocalizationKey = "BASEDEFENSE_SURVIVE_COMPLETE";
+                surviveFiveTurns.IsDefeatObjective = false;
 
                 //early BD mission, survive 5 turns, then scatter attackers
                 surviveFiveTurns.NextOnSuccess = new FactionObjectiveDef[] { secondKillAll };
 
 
+
                 string nameObjectivSurviveThreeTurns = "SurviveThreeTurns";
 
                 SurviveTurnsFactionObjectiveDef surviveThreeTurns = Helper.CreateDefFromClone(sourceSurviveObjective, "{B817A3CD-482B-472F-85EC-7259451E8F88}", nameObjectivSurviveThreeTurns);
-                surviveThreeTurns.SurviveTurns = 5;
-                surviveThreeTurns.MissionObjectiveData.Description.LocalizationKey = "BASEDEFENSE_SURVIVE_OBJECTIVE";
-                surviveThreeTurns.MissionObjectiveData.Summary.LocalizationKey = "BASEDEFENSE_SURVIVE_OBJECTIVE";
+                surviveThreeTurns.SurviveTurns = 3;
+                surviveThreeTurns.MissionObjectiveData.Description.LocalizationKey = "BASEDEFENSE_SURVIVE3_OBJECTIVE";
+                surviveThreeTurns.MissionObjectiveData.Summary.LocalizationKey = "BASEDEFENSE_SURVIVE_COMPLETE";
                 surviveThreeTurns.NextOnSuccess = new FactionObjectiveDef[] { secondKillAll };
+                surviveThreeTurns.IsDefeatObjective = false;
 
-                //Mid BD mission, first kill Sentinel, then Survive 3 turns, then scatter attackers
-                killSentinel.NextOnSuccess = new FactionObjectiveDef[] { surviveThreeTurns };
+
+                //Mid BD mission, first kill Sentinel, then Survive 3 turns, then scatter attackers //changed to survive 5 turns, to make it harder then first scenario
+                killSentinel.NextOnSuccess = new FactionObjectiveDef[] { surviveFiveTurns };
 
             }
 
@@ -740,6 +1592,7 @@ namespace TFTV
                 baseDefenseMissionTypeDef.MandatoryMission = false;
                 baseDefenseMissionTypeDef.SkipDeploymentSelection = false;
                 //  baseDefenseMissionTypeDef.ClearMissionOnCancel = false;
+                baseDefenseMissionTypeDef.MaxPlayerUnits = 9;
 
             }
             catch (Exception e)
@@ -780,7 +1633,7 @@ namespace TFTV
             }
         }
 
-
+        //Not used
         public static void CreateMeleeChiron()
         {
             try
@@ -991,6 +1844,16 @@ namespace TFTV
                 Sprite forsaken = Helper.CreateSpriteFromImageFile("fo_squad.png");
                 Sprite pure = Helper.CreateSpriteFromImageFile("squad_pu.jpg");
 
+                loadingScreenArtCollectionDef.LoadingScreenImages.Add(Helper.CreateSpriteFromImageFile("CrisisAnu_1_uinomipmaps.png"));
+                loadingScreenArtCollectionDef.LoadingScreenImages.Add(Helper.CreateSpriteFromImageFile("CrisisNJ_1_uinomipmaps.png"));
+                loadingScreenArtCollectionDef.LoadingScreenImages.Add(Helper.CreateSpriteFromImageFile("CrisisNJ_2_uinomipmaps.png"));
+                loadingScreenArtCollectionDef.LoadingScreenImages.Add(Helper.CreateSpriteFromImageFile("CrisisOther_1_uinomipmaps.png"));
+                loadingScreenArtCollectionDef.LoadingScreenImages.Add(Helper.CreateSpriteFromImageFile("CrisisSyn_1_uinomipmaps.png"));
+                loadingScreenArtCollectionDef.LoadingScreenImages.Add(Helper.CreateSpriteFromImageFile("DebateNJ_1_uinomipmaps.png"));
+                loadingScreenArtCollectionDef.LoadingScreenImages.Add(Helper.CreateSpriteFromImageFile("Encounter_1_scarab_uinomipmaps.png"));
+                loadingScreenArtCollectionDef.LoadingScreenImages.Add(Helper.CreateSpriteFromImageFile("Encounter_2_armadillo_uinomipmaps.png"));
+                loadingScreenArtCollectionDef.LoadingScreenImages.Add(Helper.CreateSpriteFromImageFile("Encounter_3_aspida_uinomipmaps.png"));
+
                 loadingScreenArtCollectionDef.LoadingScreenImages.Add(forsaken);
                 loadingScreenArtCollectionDef.LoadingScreenImages.Add(pure);
 
@@ -1023,11 +1886,21 @@ namespace TFTV
                 loadingTipsRepositoryDef.GeoscapeLoadingTips.Add(new LocalizedTextBind() { LocalizationKey = "TFTV_TIP_GEOSCAPE_14" });
                 loadingTipsRepositoryDef.GeoscapeLoadingTips.Add(new LocalizedTextBind() { LocalizationKey = "TFTV_TIP_GEOSCAPE_15" });
                 loadingTipsRepositoryDef.GeoscapeLoadingTips.Add(new LocalizedTextBind() { LocalizationKey = "TFTV_TIP_GEOSCAPE_16" });
+                loadingTipsRepositoryDef.GeoscapeLoadingTips.Add(new LocalizedTextBind() { LocalizationKey = "TFTV_TIP_GEOSCAPE_17" });
+                loadingTipsRepositoryDef.GeoscapeLoadingTips.Add(new LocalizedTextBind() { LocalizationKey = "TFTV_TIP_GEOSCAPE_18" });
+                loadingTipsRepositoryDef.GeoscapeLoadingTips.Add(new LocalizedTextBind() { LocalizationKey = "TFTV_TIP_GEOSCAPE_19" });
+
+
                 loadingTipsRepositoryDef.TacticalLoadingTips.Add(new LocalizedTextBind() { LocalizationKey = "TFTV_TIP_TACTICAL_1" });
                 loadingTipsRepositoryDef.TacticalLoadingTips.Add(new LocalizedTextBind() { LocalizationKey = "TFTV_TIP_TACTICAL_2" });
                 loadingTipsRepositoryDef.TacticalLoadingTips.Add(new LocalizedTextBind() { LocalizationKey = "TFTV_TIP_TACTICAL_3" });
                 loadingTipsRepositoryDef.TacticalLoadingTips.Add(new LocalizedTextBind() { LocalizationKey = "TFTV_TIP_TACTICAL_4" });
-
+                loadingTipsRepositoryDef.TacticalLoadingTips.Add(new LocalizedTextBind() { LocalizationKey = "TFTV_TIP_TACTICAL_5" });
+                loadingTipsRepositoryDef.TacticalLoadingTips.Add(new LocalizedTextBind() { LocalizationKey = "TFTV_TIP_TACTICAL_6" });
+                loadingTipsRepositoryDef.TacticalLoadingTips.Add(new LocalizedTextBind() { LocalizationKey = "TFTV_TIP_TACTICAL_7" });
+                loadingTipsRepositoryDef.TacticalLoadingTips.Add(new LocalizedTextBind() { LocalizationKey = "TFTV_TIP_TACTICAL_8" });
+                loadingTipsRepositoryDef.TacticalLoadingTips.Add(new LocalizedTextBind() { LocalizationKey = "TFTV_TIP_TACTICAL_9" });
+                loadingTipsRepositoryDef.TacticalLoadingTips.Add(new LocalizedTextBind() { LocalizationKey = "TFTV_TIP_TACTICAL_10" });
 
             }
             catch (Exception e)
@@ -1060,7 +1933,7 @@ namespace TFTV
         }
 
 
-        public static void RemoveScyllaResearches()
+        public static void RemoveScyllaAndNodeResearches()
         {
             try
             {
@@ -1076,10 +1949,16 @@ namespace TFTV
                 ResearchDef scylla8Research = DefCache.GetDef<ResearchDef>("ALN_Scylla8_ResearchDef");
                 ResearchDef scylla9Research = DefCache.GetDef<ResearchDef>("ALN_Scylla9_ResearchDef");
                 ResearchDef scylla10Research = DefCache.GetDef<ResearchDef>("ALN_Scylla10_ResearchDef");
-
+                ResearchDef nodeResearch = DefCache.GetDef<ResearchDef>("ALN_CorruptionNode_ResearchDef");
 
                 researchDbDef.Researches.RemoveAll(r => r.name.Contains("ALN_Scylla"));
+                researchDbDef.Researches.Remove(nodeResearch);
 
+                ResearchDef alnMFSoldiersResearch = DefCache.GetDef<ResearchDef>("ALN_MindfraggedSoldiers_ResearchDef");
+                alnMFSoldiersResearch.RevealRequirements = DefCache.GetDef<ResearchDef>("ALN_CrabmanBasic_ResearchDef").RevealRequirements;
+                alnMFSoldiersResearch.InitialStates = DefCache.GetDef<ResearchDef>("ALN_CrabmanBasic_ResearchDef").InitialStates;
+                alnMFSoldiersResearch.Priority = DefCache.GetDef<ResearchDef>("ALN_CrabmanBasic_ResearchDef").Priority;
+                alnMFSoldiersResearch.ResearchCost = DefCache.GetDef<ResearchDef>("ALN_CrabmanBasic_ResearchDef").ResearchCost;
 
 
 
@@ -1846,7 +2725,6 @@ namespace TFTV
         {
             try
             {
-
                 DefCache.GetDef<SyphoningDamageKeywordDataDef>("Syphon_DamageKeywordDataDef").SyphonBasedOnHealthDamageDealt = false;
             }
 
@@ -1874,7 +2752,6 @@ namespace TFTV
                 DefCache.GetDef<TacticalAbilityDef>("DeployTurret_AbilityDef").ContributionPointsOnUse = 500;
                 DefCache.GetDef<ApplyStatusAbilityDef>("ManualControl_AbilityDef").ContributionPointsOnUse = 500;
                 DefCache.GetDef<HealAbilityDef>("FieldMedic_AbilityDef").ContributionPointsOnUse = 500;
-
             }
 
             catch (Exception e)
@@ -1884,7 +2761,7 @@ namespace TFTV
         }
 
 
-        public static void ChangesToLOTAEarlyLoad()
+        public static void ChangesToLOTA()
         {
             try
             {
@@ -1897,6 +2774,23 @@ namespace TFTV
                 CreateLivingCrystalResearch();
                 CreateProteanMutaneResearch();
                 ChangeCostAncientProbe();
+                AddHoplitePortrait();
+                CyclopsMindCrushEffect();
+                //  CreateAdjustedHopliteBeams();
+                //  CreateAdjustedCyclopsBeams();
+                /* ChangeHoplites();
+                 ChangeAncientsWeapons();
+                 ChangeSchemataMissionRequirement();
+                 ChangeAncientSiteExploration();
+                 ChangeImpossibleWeapons();
+                 RemovePandoranVirusResearchRequirement();
+                 CreateEventsForLOTA();
+                 ChangeAncientDefenseMission();
+                 ChangeAncientSiteMissions();
+                 ModifyCyclops();
+                 CyclopsJoinStreamsAttack();*/
+
+
                 //  CreateImpossibleWeaponsManufactureRequirements();
             }
             catch (Exception e)
@@ -1906,12 +2800,12 @@ namespace TFTV
 
         }
 
-
+        //deprecated, assumed everyone is playing with new LOTA
         public static void ChangesToLOTA2()
         {
             try
             {
-                ChangeAncientsBodyParts();
+                ChangeHoplites();
                 ChangeAncientsWeapons();
                 ChangeSchemataMissionRequirement();
                 ChangeAncientSiteExploration();
@@ -1920,6 +2814,9 @@ namespace TFTV
                 CreateEventsForLOTA();
                 ChangeAncientDefenseMission();
                 ChangeAncientSiteMissions();
+                ModifyCyclops();
+                CyclopsJoinStreamsAttack();
+
             }
 
             catch (Exception e)
@@ -1927,6 +2824,47 @@ namespace TFTV
                 TFTVLogger.Error(e);
             }
         }
+
+        internal static void CyclopsMindCrushEffect()
+        {
+            try
+            {
+
+                DamageEffectDef sourceMindCrushEffect = DefCache.GetDef<DamageEffectDef>("E_Effect [MindCrush_AbilityDef]");
+                DamageEffectDef newMindCrushEffect = Helper.CreateDefFromClone(sourceMindCrushEffect, "{83EC17D9-AC39-471D-AEF7-CEFB638EB2EA}", "Cyclops_MindCrush");
+                newMindCrushEffect.MaximumDamage = 60;
+                newMindCrushEffect.MinimumDamage = 60;
+            }
+
+            catch (Exception e)
+            {
+                TFTVLogger.Error(e);
+            }
+
+        }
+
+        internal static void AddHoplitePortrait()
+        {
+            try
+            {
+                SquadPortraitsDef squadPortraits = DefCache.GetDef<SquadPortraitsDef>("SquadPortraitsDef");
+                TacticalItemDef torsoDrill = DefCache.GetDef<TacticalItemDef>("HumanoidGuardian_TorsoDrill_BodyPartDef");
+                TacticalItemDef hopliteLegs = DefCache.GetDef<TacticalItemDef>("HumanoidGuardian_Legs_Armoured_ItemDef");
+
+
+                squadPortraits.ManualPortraits.Add(new SquadPortraitsDef.ManualPortrait { HeadPart = hopliteLegs, Portrait = Helper.CreateSpriteFromImageFile("hoplite_portrait.png") });
+
+            }
+
+            catch (Exception e)
+            {
+                TFTVLogger.Error(e);
+            }
+
+
+
+        }
+
 
         public static void RemoveMindControlImmunityVFX()
         {
@@ -1986,6 +2924,38 @@ namespace TFTV
             {
                 TFTVLogger.Error(e);
             }
+
+        }
+
+        internal static void ModifyCyclops()
+        {
+            try
+            {
+                PassiveModifierAbilityDef selfRepairAbility = DefCache.GetDef<PassiveModifierAbilityDef>("RoboticSelfRepair_AbilityDef");
+
+                RecoverWillAbilityDef recoverWillAbilityDef = DefCache.GetDef<RecoverWillAbilityDef>("RecoverWill_AbilityDef");
+
+                TacticalActorDef cyclops = DefCache.GetDef<TacticalActorDef>("MediumGuardian_ActorDef");
+
+                List<AbilityDef> abilityDefs = new List<AbilityDef>(cyclops.Abilities)
+                {
+                    selfRepairAbility
+                };
+
+                abilityDefs.Remove(recoverWillAbilityDef);
+
+                cyclops.Abilities = abilityDefs.ToArray();
+
+
+
+
+            }
+            catch (Exception e)
+            {
+                TFTVLogger.Error(e);
+            }
+
+
 
         }
 
@@ -2111,12 +3081,75 @@ namespace TFTV
         {
             try
             {
+                ClassTagDef hoplite = DefCache.GetDef<ClassTagDef>("HumanoidGuardian_ClassTagDef");
+                GameDifficultyLevelDef easy = DefCache.GetDef<GameDifficultyLevelDef>("Easy_GameDifficultyLevelDef");
+                GameDifficultyLevelDef hero = DefCache.GetDef<GameDifficultyLevelDef>("Hard_GameDifficultyLevelDef");
+                GameDifficultyLevelDef legend = DefCache.GetDef<GameDifficultyLevelDef>("VeryHard_GameDifficultyLevelDef");
+                TacCharacterDef shielder = DefCache.GetDef<TacCharacterDef>("HumanoidGuardian_Shielder_TacCharacterDef");
+                TacCharacterDef driller = DefCache.GetDef<TacCharacterDef>("HumanoidGuardian_Driller_TacCharacterDef");
+
+                TacCharacterDef mortarCrystalChiron = DefCache.GetDef<TacCharacterDef>("Chiron13_MortarCrystal_AlienMutationVariationDef");
+
+                //   TacCharacterDef crystalScylla =  DefCache.GetDef<TacCharacterDef>("Scylla10_Crystal_AlienMutationVariationDef");
+
+                ClassTagDef facehuggerTag = DefCache.GetDef<ClassTagDef>("Facehugger_ClassTagDef");
+
+                CustomMissionTypeDef sourceMission = DefCache.GetDef<CustomMissionTypeDef>("CrystalsHarvestAttack_Ancient_CustomMissionTypeDef");
                 CustomMissionTypeDef crystalHarvest = DefCache.GetDef<CustomMissionTypeDef>("CrystalsHarvestDefence_Alien_CustomMissionTypeDef");
                 CustomMissionTypeDef crystalRefinery = DefCache.GetDef<CustomMissionTypeDef>("CrystalsRefineryDefence_Alien_CustomMissionTypeDef");
                 CustomMissionTypeDef orichalcumHarvest = DefCache.GetDef<CustomMissionTypeDef>("OrichalcumHarvestDefence_Alien_CustomMissionTypeDef");
                 CustomMissionTypeDef orichalcumRefinery = DefCache.GetDef<CustomMissionTypeDef>("OrichalcumRefineryDefence_Alien_CustomMissionTypeDef");
                 CustomMissionTypeDef proteanHarvest = DefCache.GetDef<CustomMissionTypeDef>("ProteanHarvestDefence_Alien_CustomMissionTypeDef");
                 CustomMissionTypeDef proteanRefinery = DefCache.GetDef<CustomMissionTypeDef>("ProteanRefineryDefence_Alien_CustomMissionTypeDef");
+
+                TacMissionTypeParticipantData.UniqueChatarcterBind uniqueChironHero = new TacMissionTypeParticipantData.UniqueChatarcterBind()
+                {
+                    Amount = { Min = 1, Max = 1 },
+                    Character = mortarCrystalChiron,
+                    Difficulty = hero,
+
+                };
+
+                TacMissionTypeParticipantData.UniqueChatarcterBind uniqueChironLegend = new TacMissionTypeParticipantData.UniqueChatarcterBind()
+                {
+                    Amount = { Min = 1, Max = 1 },
+                    Character = mortarCrystalChiron,
+                    Difficulty = legend,
+
+                };
+
+
+                CustomMissionParticipantData participantData = new CustomMissionParticipantData()
+                {
+                    ParticipantKind = TacMissionParticipant.Player,
+                    UniqueUnits = new TacMissionTypeParticipantData.UniqueChatarcterBind[]
+
+
+                    {new TacMissionTypeParticipantData.UniqueChatarcterBind()
+
+                    {
+                        Amount = { Min = 3, Max = 3 },
+                        Character = shielder,
+                        Difficulty = easy,
+
+                    },
+
+
+                        new TacMissionTypeParticipantData.UniqueChatarcterBind()
+                        {
+                            Amount = { Min = 3, Max = 3 },
+                            Character = driller,
+                            Difficulty = easy,
+
+                        }
+
+                    }
+
+                };
+
+                participantData.ActorDeployParams = sourceMission.ParticipantsData[0].ActorDeployParams;
+                participantData.FactionDef = Shared.FactionDefs[1];
+
 
                 List<CustomMissionTypeDef> allMissions = new List<CustomMissionTypeDef>
                 { crystalHarvest, crystalRefinery, orichalcumHarvest, orichalcumRefinery, proteanHarvest, proteanRefinery };
@@ -2136,10 +3169,27 @@ namespace TFTV
                 {
                     List<FactionObjectiveDef> objectives = customMissionType.CustomObjectives.ToList();
                     objectives.Add(protectCyclopsObjective);
+                    customMissionType.ParticipantsData.Add(participantData);
 
                     customMissionType.CustomObjectives = objectives.ToArray();
                     // customMissionType.MandatoryMission = true; //to prevent being able to cancel it
                     customMissionType.ClearMissionOnCancel = true; //first try this
+                    customMissionType.MandatoryMission = true;
+                    customMissionType.SkipDeploymentSelection = true;
+                    customMissionType.MaxPlayerUnits = 0;
+
+                    foreach (MissionDeployParams deployParams in customMissionType.ParticipantsData[0].ActorDeployParams)
+                    {
+                        if (deployParams.Limit.ActorTag == facehuggerTag)
+                        {
+                            deployParams.Limit.ActorLimit.Max = 0;
+
+                        }
+                    }
+                    List<TacMissionTypeParticipantData.UniqueChatarcterBind> uniqueUnits = customMissionType.ParticipantsData[0].UniqueUnits.ToList();
+                    uniqueUnits.Add(uniqueChironHero);
+                    uniqueUnits.Add(uniqueChironLegend);
+                    customMissionType.ParticipantsData[0].UniqueUnits = uniqueUnits.ToArray();
 
                 }
 
@@ -2196,6 +3246,9 @@ namespace TFTV
                 research.RevealRequirements.Operation = ResearchContainerOperation.ALL;
                 research.Unlocks = new ResearchRewardDef[] { livingCrystalFunctionalityResearchReward };
                 research.Tags = new ResearchTagDef[] { CriticalResearchTag };
+
+
+
             }
             catch (Exception e)
             {
@@ -2305,6 +3358,9 @@ namespace TFTV
                 GeoscapeEventDef virophage = TFTVCommonMethods.CreateNewEvent("Helena_Virophage", "HELENA_VIROPHAGE_TITLE", "HELENA_VIROPHAGE_TEXT", null);
                 virophage.GeoscapeEventData.Choices[0].Outcome.Cinematic =
                                DefCache.GetDef<GeoscapeEventDef>("PROG_LE_FINAL_GeoscapeEventDef").GeoscapeEventData.Choices[0].Outcome.Cinematic;
+
+                TFTVLogger.Always("Lota events created");
+
             }
             catch (Exception e)
             {
@@ -2394,11 +3450,6 @@ namespace TFTV
                 TFTVLogger.Error(e);
             }
         }
-
-
-
-
-
 
 
         public static void ChangeImpossibleWeapons()
@@ -2501,7 +3552,6 @@ namespace TFTV
         {
             try
             {
-
                 ActorResearchRequirementDef sourceActorResearchRequirement = DefCache.GetDef<ActorResearchRequirementDef>("PX_Alien_Fishman_ResearchDef_ActorResearchRequirementDef_0");
                 TacticalActorDef humanoidGuardianTacticalActor = DefCache.GetDef<TacticalActorDef>("HumanoidGuardian_ActorDef");
                 ActorResearchRequirementDef requirementDef = Helper.CreateDefFromClone(sourceActorResearchRequirement, "14163A38-C07E-4BFF-8366-6E30F524F85D", "HumanoidActorResearchRequirement");
@@ -2527,8 +3577,6 @@ namespace TFTV
                 research.RevealRequirements.Container = revealRequirementContainer;
                 research.RevealRequirements.Operation = ResearchContainerOperation.ALL;
                 research.Tags = new ResearchTagDef[] { CriticalResearchTag };
-
-
             }
             catch (Exception e)
             {
@@ -2640,6 +3688,9 @@ namespace TFTV
                 statusCyclopsDefense.Visuals.DisplayName1.LocalizationKey = "CYCLOPS_DEFENSE_NAME";
                 statusCyclopsDefense.Visuals.Description.LocalizationKey = "CYCLOPS_DEFENSE_DESCRIPTION";
 
+
+                //   DefCache.GetDef<AddAttackBoostStatusDef>("E_Status [Aura_ProteanMutaneFire_AbilityDef]");
+
                 //Status for hoplites; extra damage when charged
                 string skillName = "AncientsPoweredUp";
                 DamageMultiplierStatusDef ancientPowerUp = Helper.CreateDefFromClone(
@@ -2652,6 +3703,7 @@ namespace TFTV
                 ancientPowerUp.VisibleOnStatusScreen = TacStatusDef.StatusScreenVisibility.VisibleOnStatusesList;
                 ancientPowerUp.HealthbarPriority = -1;
                 ancientPowerUp.ExpireOnEndOfTurn = false;
+                ancientPowerUp.ParticleEffectPrefab = DefCache.GetDef<AddAttackBoostStatusDef>("E_Status [Aura_ProteanMutaneFire_AbilityDef]").ParticleEffectPrefab;
 
 
 
@@ -2699,6 +3751,92 @@ namespace TFTV
                 TFTVLogger.Error(e);
             }
         }
+        internal static void CreateAdjustedCyclopsBeams()
+        {
+            try
+            {
+                WeaponDef cyclopsLCBeam = DefCache.GetDef<WeaponDef>("MediumGuardian_Head_LivingCrystal_WeaponDef");
+                //    cyclopsLCBeam.DamagePayload.DamageKeywords[0].Value = 120;
+
+                string beamVsMutantsName = "CyclopsVSMutantsBeam";
+                string beamVsMutantsGUID = "{A2EC580D-1B79-470F-A8AA-E4BFF2BD2F92}";
+                string beamVsCyborgsName = "CyclopsVSCyborgs";
+                string beamVsCyborgsGUID = "{390C3BA2-1147-40CB-9B84-B77D5AA3FD90}";
+                /*  string beamVsOrganicMeatbagsName = "HopliteVsOrganicMeatbags";
+                  string beamVsOrganicMeatbagsGUID = "{4AA7F3D9-D126-4E4F-8C49-9802DDB60CB9}";*/
+
+                string beamVsMutantsViewElementGUID = "{F443F001-CF50-4AF5-A28C-CE662B792FE8}";
+                string beamVsCyborgsViewElementGUID = "{03430CB8-CE7E-4BDC-BB6B-5C3F5DFE12F7}";
+                //   string beamVsOrganicMeatbagsViewElementGUID = "{F3D348E2-8127-4FA1-B9BB-B1B885447222}";
+
+                WeaponDef beamVsMutants = Helper.CreateDefFromClone(cyclopsLCBeam, beamVsMutantsGUID, beamVsMutantsName);
+                WeaponDef beamVsCyborgs = Helper.CreateDefFromClone(cyclopsLCBeam, beamVsCyborgsGUID, beamVsCyborgsName);
+                //    WeaponDef beamVsOrganicMeatbags = Helper.CreateDefFromClone(originalBeam, beamVsOrganicMeatbagsGUID, beamVsOrganicMeatbagsName);
+
+                GameTagDamageKeywordDataDef virophageDamageKeyword = DefCache.GetDef<GameTagDamageKeywordDataDef>("Virophage_DamageKeywordDataDef");
+                GameTagDamageKeywordDataDef empDamageKeyword = DefCache.GetDef<GameTagDamageKeywordDataDef>("EMP_DamageKeywordDataDef");
+
+                DamageKeywordPair virophageDamage = new DamageKeywordPair { Value = 80, DamageKeywordDef = virophageDamageKeyword };
+
+
+                DamageKeywordPair empDamage = new DamageKeywordPair { Value = 60, DamageKeywordDef = empDamageKeyword };
+
+                beamVsMutants.DamagePayload.DamageKeywords.Add(virophageDamage);
+                beamVsMutants.ViewElementDef = Helper.CreateDefFromClone(cyclopsLCBeam.ViewElementDef, beamVsMutantsViewElementGUID, beamVsMutantsName);
+                beamVsCyborgs.DamagePayload.DamageKeywords.Add(empDamage);
+                beamVsCyborgs.ViewElementDef = Helper.CreateDefFromClone(cyclopsLCBeam.ViewElementDef, beamVsCyborgsViewElementGUID, beamVsCyborgsName);
+            }
+
+
+            catch (Exception e)
+            {
+                TFTVLogger.Error(e);
+            }
+        }
+
+
+        internal static void CreateAdjustedHopliteBeams()
+        {
+            try
+            {
+                WeaponDef originalBeam = DefCache.GetDef<WeaponDef>("HumanoidGuardian_Head_WeaponDef");
+
+                string beamVsMutantsName = "HopliteVSMutantsBeam";
+                string beamVsMutantsGUID = "{3FC682B1-03E2-4447-A115-2ABA1E0D98DA}";
+                string beamVsCyborgsName = "HopliteVSCyborgs";
+                string beamVsCyborgsGUID = "{E05F5D3F-5FBB-4A28-918F-5688576C164C}";
+                /*  string beamVsOrganicMeatbagsName = "HopliteVsOrganicMeatbags";
+                  string beamVsOrganicMeatbagsGUID = "{4AA7F3D9-D126-4E4F-8C49-9802DDB60CB9}";*/
+
+                string beamVsMutantsViewElementGUID = "{D1E8DE09-65EB-4E1D-BED2-6336658E47F1}";
+                string beamVsCyborgsViewElementGUID = "{CAE19680-202A-4FC2-89C2-E8AB07BEE93C}";
+                //   string beamVsOrganicMeatbagsViewElementGUID = "{F3D348E2-8127-4FA1-B9BB-B1B885447222}";
+
+                WeaponDef beamVsMutants = Helper.CreateDefFromClone(originalBeam, beamVsMutantsGUID, beamVsMutantsName);
+                WeaponDef beamVsCyborgs = Helper.CreateDefFromClone(originalBeam, beamVsCyborgsGUID, beamVsCyborgsName);
+                //    WeaponDef beamVsOrganicMeatbags = Helper.CreateDefFromClone(originalBeam, beamVsOrganicMeatbagsGUID, beamVsOrganicMeatbagsName);
+
+                GameTagDamageKeywordDataDef virophageDamageKeyword = DefCache.GetDef<GameTagDamageKeywordDataDef>("Virophage_DamageKeywordDataDef");
+                GameTagDamageKeywordDataDef empDamageKeyword = DefCache.GetDef<GameTagDamageKeywordDataDef>("EMP_DamageKeywordDataDef");
+
+                DamageKeywordPair virophageDamage = new DamageKeywordPair { Value = 60, DamageKeywordDef = virophageDamageKeyword };
+
+
+                DamageKeywordPair empDamage = new DamageKeywordPair { Value = 40, DamageKeywordDef = empDamageKeyword };
+
+                beamVsMutants.DamagePayload.DamageKeywords.Add(virophageDamage);
+                beamVsMutants.ViewElementDef = Helper.CreateDefFromClone(originalBeam.ViewElementDef, beamVsMutantsViewElementGUID, beamVsMutantsName);
+                beamVsCyborgs.DamagePayload.DamageKeywords.Add(empDamage);
+                beamVsCyborgs.ViewElementDef = Helper.CreateDefFromClone(originalBeam.ViewElementDef, beamVsCyborgsViewElementGUID, beamVsCyborgsName);
+            }
+
+
+            catch (Exception e)
+            {
+                TFTVLogger.Error(e);
+            }
+        }
+
 
         public static void ChangeAncientsWeapons()
         {
@@ -2716,12 +3854,16 @@ namespace TFTV
 
                 WeaponDef cyclopsLCBeam = DefCache.GetDef<WeaponDef>("MediumGuardian_Head_LivingCrystal_WeaponDef");
                 cyclopsLCBeam.DamagePayload.DamageKeywords[0].Value = 120;
+                cyclopsLCBeam.APToUsePerc = 25;
 
                 WeaponDef cyclopsOBeam = DefCache.GetDef<WeaponDef>("MediumGuardian_Head_Orichalcum_WeaponDef");
                 cyclopsOBeam.DamagePayload.DamageKeywords[0].Value = 120;
+                cyclopsOBeam.APToUsePerc = 25;
 
                 WeaponDef cyclopsPBeam = DefCache.GetDef<WeaponDef>("MediumGuardian_Head_ProteanMutane_WeaponDef");
                 cyclopsPBeam.DamagePayload.DamageKeywords[0].Value = 120;
+                cyclopsPBeam.APToUsePerc = 25;
+
 
 
             }
@@ -2749,10 +3891,81 @@ namespace TFTV
             }
         }
 
-        public static void ChangeAncientsBodyParts()
+
+
+
+        internal static void CyclopsJoinStreamsAttack()
         {
             try
             {
+                //For reference
+                TacticalActorDef hopliteActor = DefCache.GetDef<TacticalActorDef>("HumanoidGuardian_ActorDef");
+                ShootAbilityDef cyclopsOldShootAbility = DefCache.GetDef<ShootAbilityDef>("Guardian_Beam_ShootAbilityDef");
+
+                //Creating new ShootAbility + Effect
+                AdditionalEffectShootAbilityDef sourceAdditionalEffectShootAbility = DefCache.GetDef<AdditionalEffectShootAbilityDef>("TurretCombo_ShootAbilityDef");
+                string abilityName = "CyclopsBeamTFTVShootAbility";
+                string abilityGUID = "{DD029932-A3F2-45AC-8A47-0B6275EBE8B5}";
+
+                MassShootTargetActorEffectDef sourceAdditionalEffect = DefCache.GetDef<MassShootTargetActorEffectDef>("E_AdditionalEffect [TurretCombo_ShootAbilityDef]");
+                string additionalEffectGUID = "{FFE817B7-2702-4EE6-A456-FAC9A01D7BBA}";
+
+                AdditionalEffectShootAbilityDef newCyclopsShootAbility = Helper.CreateDefFromClone(sourceAdditionalEffectShootAbility, abilityGUID, abilityName);
+                MassShootTargetActorEffectDef newCyclopsAdditionalEffect = Helper.CreateDefFromClone(sourceAdditionalEffect, additionalEffectGUID, abilityName);
+                //Adjusting new created Defs
+                newCyclopsAdditionalEffect.ShootersActorDef = hopliteActor;
+                newCyclopsShootAbility.AdditionalEffectDef = newCyclopsAdditionalEffect;
+                newCyclopsShootAbility.ShownModeToTrack = cyclopsOldShootAbility.ShownModeToTrack;
+                newCyclopsShootAbility.TrackWithCamera = cyclopsOldShootAbility.TrackWithCamera;
+                newCyclopsShootAbility.WillPointCost = cyclopsOldShootAbility.WillPointCost;
+                newCyclopsShootAbility.EquipmentTags = cyclopsOldShootAbility.EquipmentTags;
+                newCyclopsShootAbility.IsDefault = cyclopsOldShootAbility.IsDefault;
+                newCyclopsShootAbility.CharacterProgressionData = cyclopsOldShootAbility.CharacterProgressionData;
+                newCyclopsShootAbility.ViewElementDef = cyclopsOldShootAbility.ViewElementDef;
+                newCyclopsShootAbility.UsesPerTurn = 1;
+                newCyclopsShootAbility.ActionPointCost = 0.25f;
+
+
+                WeaponDef cyclopsLCBeam = DefCache.GetDef<WeaponDef>("MediumGuardian_Head_LivingCrystal_WeaponDef");
+
+
+                WeaponDef cyclopsOBeam = DefCache.GetDef<WeaponDef>("MediumGuardian_Head_Orichalcum_WeaponDef");
+
+
+                WeaponDef cyclopsPBeam = DefCache.GetDef<WeaponDef>("MediumGuardian_Head_ProteanMutane_WeaponDef");
+
+                cyclopsPBeam.Abilities = new AbilityDef[] { newCyclopsShootAbility };
+
+                cyclopsOBeam.Abilities = new AbilityDef[] { newCyclopsShootAbility };
+                cyclopsLCBeam.Abilities = new AbilityDef[] { newCyclopsShootAbility };
+            }
+            catch (Exception e)
+            {
+                TFTVLogger.Error(e);
+            }
+        }
+
+        public static void ChangeHoplites()
+        {
+            try
+            {
+
+                RecoverWillAbilityDef recoverWillAbilityDef = DefCache.GetDef<RecoverWillAbilityDef>("RecoverWill_AbilityDef");
+
+                TacticalActorDef hopliteActor = DefCache.GetDef<TacticalActorDef>("HumanoidGuardian_ActorDef");
+
+                List<AbilityDef> abilityDefs = new List<AbilityDef>(hopliteActor.Abilities)
+                {
+
+                };
+
+                abilityDefs.Remove(recoverWillAbilityDef);
+
+                hopliteActor.Abilities = abilityDefs.ToArray();
+
+
+
+
                 //string name = "BlackShielder";
                 TacCharacterDef shielder = DefCache.GetDef<TacCharacterDef>("HumanoidGuardian_Shielder_TacCharacterDef");
                 TacCharacterDef driller = DefCache.GetDef<TacCharacterDef>("HumanoidGuardian_Driller_TacCharacterDef");
@@ -2777,30 +3990,9 @@ namespace TFTV
                 orichalcumTorso.Abilities = new AbilityDef[] { };
                 livingCrystalTorso.Abilities = new AbilityDef[] { };
 
-                ApplyDamageEffectAbilityDef stomp = DefCache.GetDef<ApplyDamageEffectAbilityDef>("Guardian_Stomp_AbilityDef");
-                stomp.DamagePayload.AoeRadius = 7;
-                stomp.TargetingDataDef.Origin.Range = 7;
-
-                 TacCharacterDef lcGuardian = DefCache.GetDef<TacCharacterDef>("MediumGuardian_LivingCrystal_TacCharacterDef");
-                  TacCharacterDef pmGuardian = DefCache.GetDef<TacCharacterDef>("MediumGuardian_ProteanMutane_TacCharacterDef");
-                  TacCharacterDef oGuardian = DefCache.GetDef<TacCharacterDef>("MediumGuardian_Orichalcum_TacCharacterDef");
-               
-                //Commented out for Hotfix2
-               /*   List<TacCharacterDef> medGuardians = new List<TacCharacterDef>() { lcGuardian, pmGuardian, oGuardian };
-
-                  foreach(TacCharacterDef guardian in medGuardians) 
-                  {
-
-                      guardian.Data.Abilites = new TacticalAbilityDef[]
-                     {
-                  DefCache.GetDef<TacticalAbilityDef>("CaterpillarMoveAbilityDef"),
-
-                     };
-
-
-                  }*/
-
-                  
+                /* ApplyDamageEffectAbilityDef stomp = DefCache.GetDef<ApplyDamageEffectAbilityDef>("Guardian_Stomp_AbilityDef");
+                 stomp.DamagePayload.AoeRadius = 7;
+                 stomp.TargetingDataDef.Origin.Range = 7;*/
 
             }
             catch (Exception e)
@@ -2874,14 +4066,6 @@ namespace TFTV
                 //Allow medkits to target Mutoids
                 DefCache.GetDef<TacticalTargetingDataDef>("E_TargetingData [Medkit_AbilityDef]").Origin.CullTargetTags.Clear();
 
-                //Make Cure Spray/Cure Cloud remove acid
-                string abilityName = "AcidStatusRemover";
-                StatusRemoverEffectDef sourceStatusRemoverEffect = DefCache.GetDef<StatusRemoverEffectDef>("StrainedRemover_EffectDef");
-                StatusRemoverEffectDef newAcidStatusRemoverEffect = Helper.CreateDefFromClone(sourceStatusRemoverEffect, "0AE26C25-A67D-4F2F-B036-F7649B26B695", abilityName);
-                newAcidStatusRemoverEffect.StatusToRemove = "Acid";
-                List<EffectDef> effectDefsList = DefCache.GetDef<MultiEffectDef>("Cure_MultiEffectDef").EffectDefs.ToList();
-                effectDefsList.Add(newAcidStatusRemoverEffect);
-                DefCache.GetDef<MultiEffectDef>("Cure_MultiEffectDef").EffectDefs = effectDefsList.ToArray();
 
                 //Skill toss per Belial's suggestions
 
@@ -2992,6 +4176,8 @@ namespace TFTV
                 ContextHelpHintDef tutorial3MissionEnd = DefCache.GetDef<ContextHelpHintDef>("TUT3_MissionSuccess_HintDef");
                 tutorial3MissionEnd.NextHint = tutorialTFTV1;
                 tutorialTFTV1.NextHint = tutorialTFTV2;
+                tutorialTFTV1.Conditions = tutorial3MissionEnd.Conditions;
+                tutorialTFTV2.Conditions = tutorial3MissionEnd.Conditions;
 
                 HasSeenHintHintConditionDef seenOilCrabConditionDef = DefCache.GetDef<HasSeenHintHintConditionDef>("UmbraSightedHasSeenHintConditionDef");
                 HasSeenHintHintConditionDef seenFishCrabConditionDef = DefCache.GetDef<HasSeenHintHintConditionDef>("UmbraSightedTritonHasSeenHintConditionDef");
@@ -3050,6 +4236,7 @@ namespace TFTV
                 trembling.ApplicationConditions = new EffectConditionDef[] { organicEffectConditionDef };
 
       //Calvitix change ?          DefCache.GetDef<CallReinforcementsAbilityDef>("Acheron_CallReinforcements_AbilityDef").WillPointCost = 10;
+
 
 
             }
@@ -3329,7 +4516,7 @@ namespace TFTV
                 spitArmsAcheronAchlysChampion.DamagePayload.DamageKeywords.Add(new DamageKeywordPair
                 {
                     DamageKeywordDef = acid,
-                    Value = 30
+                    Value = 20
                 });
                 spitArmsAcheronAchlysChampion.DamagePayload.DamageType = blastDamage;
                 spitArmsAcheronAchlysChampion.DamagePayload.AoeRadius = 2f;
@@ -3354,7 +4541,7 @@ namespace TFTV
                 acheronArms.DamagePayload.DamageKeywords.Add(new DamageKeywordPair
                 {
                     DamageKeywordDef = acid,
-                    Value = 20
+                    Value = 10
                 });
                 acheronArms.DamagePayload.DamageKeywords.Add(new DamageKeywordPair
                 {
@@ -3374,7 +4561,7 @@ namespace TFTV
                 acheronPrimeArms.DamagePayload.DamageKeywords.Add(new DamageKeywordPair
                 {
                     DamageKeywordDef = acid,
-                    Value = 30
+                    Value = 20
                 });
                 acheronPrimeArms.DamagePayload.DamageKeywords.Add(new DamageKeywordPair
                 {
@@ -4597,6 +5784,36 @@ namespace TFTV
 
         }
 
+        internal static void CreateUmbraImmunities()
+        {
+            try
+            {
+                AbilityDef paralysisImmunity = DefCache.GetDef<AbilityDef>("ParalysisNotShockImmunity_DamageMultiplierAbilityDef");
+                AbilityDef poisonImmunity = DefCache.GetDef<AbilityDef>("PoisonImmunity_DamageMultiplierAbilityDef");
+                AbilityDef psychicResistance = DefCache.GetDef<AbilityDef>("PsychicResistant_DamageMultiplierAbilityDef");
+
+                List<AbilityDef> abilityDefs = new List<AbilityDef>() { paralysisImmunity, poisonImmunity, psychicResistance };
+
+                TacticalActorDef oilcrabDef = DefCache.GetDef<TacticalActorDef>("Oilcrab_ActorDef");
+
+                List<AbilityDef> ocAbilities = new List<AbilityDef>(oilcrabDef.Abilities);
+                ocAbilities.AddRange(abilityDefs);
+                oilcrabDef.Abilities = ocAbilities.ToArray();
+
+                TacticalActorDef oilfishDef = DefCache.GetDef<TacticalActorDef>("Oilfish_ActorDef");
+                List<AbilityDef> ofAbilities = new List<AbilityDef>(oilfishDef.Abilities);
+                ofAbilities.AddRange(abilityDefs);
+                oilfishDef.Abilities = ofAbilities.ToArray();
+            }
+
+            catch (Exception e)
+            {
+                TFTVLogger.Error(e);
+            }
+
+
+        }
+
         public static void ChangeUmbra()
 
         {
@@ -4651,6 +5868,9 @@ namespace TFTV
                 oilTritonAddAbilityStatus.ApplicationConditions = new EffectConditionDef[] { };
                 AddAbilityStatusDef oilCrabAddAbilityStatus = DefCache.GetDef<AddAbilityStatusDef>("OilCrab_AddAbilityStatusDef");
                 oilCrabAddAbilityStatus.ApplicationConditions = new EffectConditionDef[] { };
+
+                CreateUmbraImmunities();
+
             }
             catch (Exception e)
             {
@@ -4813,6 +6033,224 @@ namespace TFTV
                 TFTVLogger.Error(e);
             }
         }
+
+        internal static void TestingKnockBackRepositionAlternative()
+        {
+            try
+            {
+                string nameKnockBack = "KnockBackAbility";
+                string gUIDAbility = "{B4238D2D-3E25-4EE5-A3C0-23CFED493D42}";
+
+                RepositionAbilityDef source = DefCache.GetDef<RepositionAbilityDef>("Dash_AbilityDef");
+                RepositionAbilityDef newKnockBackAbility = Helper.CreateDefFromClone(source, gUIDAbility, nameKnockBack);
+                newKnockBackAbility.ActionPointCost = 0.0f;
+                newKnockBackAbility.WillPointCost = 0.0f;
+                newKnockBackAbility.UsesPerTurn = -1;
+                newKnockBackAbility.EventOnActivate = new TacticalEventDef();
+                newKnockBackAbility.AmountOfMovementToUseAsRange = 0;
+                // newKnockBackAbility.FumblePerc = 0;
+                newKnockBackAbility.TraitsRequired = new string[] { };
+                //    newKnockBackAbility.HeightToWidth = 0.01f;
+                //  newKnockBackAbility.TesellationPoints = 10;
+                // newKnockBackAbility.UseLeapAnimation = true;
+
+
+                string gUIDTargeting = "{8B266029-F014-4514-865A-C51201944385}";
+                TacticalTargetingDataDef tacticalTargetingDataDef = Helper.CreateDefFromClone(source.TargetingDataDef, gUIDTargeting, nameKnockBack);
+                tacticalTargetingDataDef.Origin.Range = 3;
+
+                /*   string gUIDAnim = "{B1ADC473-1AD8-431F-8953-953E4CB3E584}";
+                   TacActorJumpAbilityAnimActionDef animSource = DefCache.GetDef<TacActorJumpAbilityAnimActionDef>("E_JetJump [Soldier_Utka_AnimActionsDef]");
+                   TacActorJumpAbilityAnimActionDef knockBackAnimation = Helper.CreateDefFromClone(animSource, gUIDAnim, nameKnockBack);
+                   TacActorNavAnimActionDef someAnimations = DefCache.GetDef<TacActorNavAnimActionDef>("E_CrabmanNav [Crabman_AnimActionsDef]");
+                   TacActorSimpleReactionAnimActionDef hurtReaction = DefCache.GetDef<TacActorSimpleReactionAnimActionDef>("E_Hurt_Reaction [Crabman_AnimActionsDef]");
+                   /*  knockBackAnimation.Clip = hurtReaction.GetAllClips().First();
+                     knockBackAnimation.ClipEnd = someAnimations.FallNoSupport.Stop;
+                     knockBackAnimation.ClipStart = hurtReaction.GetAllClips().First();*/
+                /*  knockBackAnimation.Clip = someAnimations.JetJump.Loop;
+                  knockBackAnimation.ClipEnd = hurtReaction.GetAllClips().First();
+                  knockBackAnimation.ClipStart = someAnimations.JetJump.Loop;
+
+                  knockBackAnimation.AbilityDefs = new AbilityDef[] { newKnockBackAbility };
+
+
+
+                  TacActorAnimActionsDef crabAnimActions = DefCache.GetDef<TacActorAnimActionsDef>("Crabman_AnimActionsDef");
+                  List<TacActorAnimActionBaseDef> crabAnimations = new List<TacActorAnimActionBaseDef>(crabAnimActions.AnimActions.ToList());
+                  crabAnimations.Add(knockBackAnimation);
+                  crabAnimActions.AnimActions = crabAnimations.ToArray();*/
+
+
+            }
+
+
+            catch (Exception e)
+            {
+                TFTVLogger.Error(e);
+            }
+        }
+
+        internal static void TestingKnockBack()
+        {
+            try
+            {
+                string nameKnockBack = "KnockBackAbility";
+                string gUIDAbility = "{B4238D2D-3E25-4EE5-A3C0-23CFED493D42}";
+
+                JetJumpAbilityDef source = DefCache.GetDef<JetJumpAbilityDef>("JetJump_AbilityDef");
+                JetJumpAbilityDef newKnockBackAbility = Helper.CreateDefFromClone(source, gUIDAbility, nameKnockBack);
+                newKnockBackAbility.ActionPointCost = 0.0f;
+                newKnockBackAbility.WillPointCost = 0.0f;
+                newKnockBackAbility.FumblePerc = 0;
+                newKnockBackAbility.TraitsRequired = new string[] { };
+                newKnockBackAbility.HeightToWidth = 0.01f;
+                //  newKnockBackAbility.TesellationPoints = 10;
+                // newKnockBackAbility.UseLeapAnimation = true;
+
+
+                string gUIDTargeting = "{8B266029-F014-4514-865A-C51201944385}";
+                TacticalTargetingDataDef tacticalTargetingDataDef = Helper.CreateDefFromClone(source.TargetingDataDef, gUIDTargeting, nameKnockBack);
+                tacticalTargetingDataDef.Origin.Range = 1;
+
+                string gUIDAnim = "{B1ADC473-1AD8-431F-8953-953E4CB3E584}";
+                TacActorJumpAbilityAnimActionDef animSource = DefCache.GetDef<TacActorJumpAbilityAnimActionDef>("E_JetJump [Soldier_Utka_AnimActionsDef]");
+                TacActorJumpAbilityAnimActionDef knockBackAnimation = Helper.CreateDefFromClone(animSource, gUIDAnim, nameKnockBack);
+                TacActorNavAnimActionDef someAnimations = DefCache.GetDef<TacActorNavAnimActionDef>("E_CrabmanNav [Crabman_AnimActionsDef]");
+                TacActorSimpleReactionAnimActionDef hurtReaction = DefCache.GetDef<TacActorSimpleReactionAnimActionDef>("E_Hurt_Reaction [Crabman_AnimActionsDef]");
+                /*  knockBackAnimation.Clip = hurtReaction.GetAllClips().First();
+                  knockBackAnimation.ClipEnd = someAnimations.FallNoSupport.Stop;
+                  knockBackAnimation.ClipStart = hurtReaction.GetAllClips().First();*/
+                knockBackAnimation.Clip = someAnimations.JetJump.Loop;
+                knockBackAnimation.ClipEnd = hurtReaction.GetAllClips().First();
+                knockBackAnimation.ClipStart = someAnimations.JetJump.Loop;
+
+                knockBackAnimation.AbilityDefs = new AbilityDef[] { newKnockBackAbility };
+
+
+
+                TacActorAnimActionsDef crabAnimActions = DefCache.GetDef<TacActorAnimActionsDef>("Crabman_AnimActionsDef");
+                List<TacActorAnimActionBaseDef> crabAnimations = new List<TacActorAnimActionBaseDef>(crabAnimActions.AnimActions.ToList());
+                crabAnimations.Add(knockBackAnimation);
+                crabAnimActions.AnimActions = crabAnimations.ToArray();
+
+
+            }
+
+
+            catch (Exception e)
+            {
+                TFTVLogger.Error(e);
+            }
+        }
+
+        //Causes too many issues
+        internal static void MakeUmbraNotObstacle()
+        {
+            try
+            {
+
+                TacticalActorDef oilcrab = DefCache.GetDef<TacticalActorDef>("Oilcrab_ActorDef");
+                TacticalActorDef oilfish = DefCache.GetDef<TacticalActorDef>("Oilfish_ActorDef");
+
+                DefCache.GetDef<TacticalNavigationComponentDef>("Oilcrab_NavigationDef").CreateNavObstacle = false;
+                DefCache.GetDef<TacticalNavigationComponentDef>("Oilfish_NavigationDef").CreateNavObstacle = false;
+
+                DieAbilityDef source = DefCache.GetDef<DieAbilityDef>("ArmadilloHulk_DieAbilityDef");
+                DieAbilityDef newDieAbility = Helper.CreateDefFromClone(source, "{8654CB01-602D-4204-8A03-2BA50999C1B8}", "DieNoRagDoll");
+
+                RagdollDieAbilityDef oilMonsterRagDollDie = DefCache.GetDef<RagdollDieAbilityDef>("OilMonster_Die_AbilityDef");
+
+                newDieAbility.EventOnActivate = oilMonsterRagDollDie.EventOnActivate;
+                newDieAbility.DeathEffect = oilMonsterRagDollDie.DeathEffect;
+                newDieAbility.DestroyItems = false;
+
+                oilcrab.Abilities[4] = newDieAbility;
+                oilfish.Abilities[4] = newDieAbility;
+
+
+            }
+
+            catch (Exception e)
+            {
+                TFTVLogger.Error(e);
+            }
+        }
+
+        internal static void ReEnableFlinching()
+        {
+            try
+            {
+                // TacticalLevelController
+
+                TacticalLevelControllerDef tacticalLevelControllerDef = DefCache.GetDef<TacticalLevelControllerDef>("TacticalLevelControllerDef");
+                tacticalLevelControllerDef.UseFlinching = true;
+
+                AddonsComponentDef fishmanAddons = DefCache.GetDef<AddonsComponentDef>("Fishman_AddonsComponentDef");
+                TacActorSimpleReactionAnimActionDef fishReactionAnim = DefCache.GetDef<TacActorSimpleReactionAnimActionDef>("E_Hurt_Reaction_01Hands [Fishman_AnimActionsDef]");
+                TacActorAnimActionsDef fishAnimations = DefCache.GetDef<TacActorAnimActionsDef>("Fishman_AnimActionsDef");
+                fishAnimations.DefaultReactionClip = fishReactionAnim.GetAllClips().First();
+
+                //  fishmanAddons.InitialRagdollMode = CollidersRagdollActivationMode.Ragdoll;
+
+                RagdollDummyDef ragdollDummyDef = DefCache.GetDef<RagdollDummyDef>("Generic_RagdollDummyDef");
+                ragdollDummyDef.FlinchForceMultiplier = 200f; //2f //4f //5f
+                                                              //    ragdollDummyDef.OverrideAngularDrag = 40;
+                                                              //   ragdollDummyDef.OverrideDrag = 10;
+                ragdollDummyDef.FlinchForceMultiplierSecondary = 50f;
+                //   ragdollDummyDef.LeashDamper = 1f;
+                ComponentSetDef crabmanComponent = DefCache.GetDef<ComponentSetDef>("Crabman_Template_ComponentSetDef");
+
+
+                List<ObjectDef> crabComponentSetDefs = new List<ObjectDef>(crabmanComponent.Components);
+                crabComponentSetDefs.Insert(crabComponentSetDefs.Count - 2, ragdollDummyDef);
+                crabmanComponent.Components = crabComponentSetDefs.ToArray();
+
+
+                ComponentSetDef fishmanComponent = DefCache.GetDef<ComponentSetDef>("Fishman_ComponentSetDef");
+
+
+                List<ObjectDef> fishComponentSetDefs = new List<ObjectDef>(fishmanComponent.Components);
+                fishComponentSetDefs.Insert(fishComponentSetDefs.Count - 2, ragdollDummyDef);
+                fishmanComponent.Components = fishComponentSetDefs.ToArray();
+
+
+            }
+
+            catch (Exception e)
+            {
+                TFTVLogger.Error(e);
+            }
+        }
+
+        internal static void CreateCyclopsScreamStatus()
+        {
+            try
+            {
+                BleedStatusDef sourceBleedStatusDef = DefCache.GetDef<BleedStatusDef>("Bleed_StatusDef");
+
+                string statusScreamedLevel1Name = "CyclopsScreamLevel1_BleedStatusDef";
+                BleedStatusDef statusScreamedLevel1 = Helper.CreateDefFromClone(sourceBleedStatusDef, "{73C5B78E-E9CB-4558-95AA-807B7AE2755A}", statusScreamedLevel1Name);
+                statusScreamedLevel1.EffectName = "CyclopsScreamLevel1";
+                statusScreamedLevel1.ApplicationConditions = new EffectConditionDef[] { };
+                statusScreamedLevel1.Visuals = Helper.CreateDefFromClone(sourceBleedStatusDef.Visuals, "{A7BADADA-F936-4D28-B171-A4A770A673E7}", statusScreamedLevel1Name);
+                statusScreamedLevel1.VisibleOnHealthbar = TacStatusDef.HealthBarVisibility.AlwaysVisible;
+                statusScreamedLevel1.VisibleOnPassiveBar = true;
+                statusScreamedLevel1.VisibleOnStatusScreen = TacStatusDef.StatusScreenVisibility.VisibleOnStatusesList;
+                statusScreamedLevel1.Visuals.DisplayName1.LocalizationKey = "SCREAMED_LEVEL1_TITLE";
+                statusScreamedLevel1.Visuals.Description.LocalizationKey = "SCREAMED_LEVEL1_TEXT";
+                statusScreamedLevel1.Visuals.LargeIcon = Helper.CreateSpriteFromImageFile("TFTV_status_self_repair.png");
+                statusScreamedLevel1.Visuals.SmallIcon = Helper.CreateSpriteFromImageFile("TFTV_status_self_repair.png");
+
+            }
+            catch (Exception e)
+            {
+                TFTVLogger.Error(e);
+            }
+        }
+
+
+
     }
+
 
 }

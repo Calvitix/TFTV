@@ -150,6 +150,15 @@ namespace PRMBetterClasses.SkillModifications
             internal static List<TacticalActorBase> DieHardActorsToKeepAlive { get; } = new List<TacticalActorBase>();
             internal static bool OnFactionStartTurnSubscribed { get; set; } = false;
             internal static GameTagDef ExcludeFromAiBlackboard { get; } = DefCache.GetDef<GameTagDef>("ExcludeFromAiBlackboard_TagDef");
+            internal static StatusDef[] StatusesToRemove = new StatusDef[]
+            {
+                        DieHardKeepAliveStatus,
+                        DefCache.GetDef<StatusDef>("Bleed_StatusDef"),
+                        DefCache.GetDef<StatusDef>("Poison_DamageOverTimeStatusDef"),
+                        DefCache.GetDef<StatusDef>("Paralysis_DamageOverTimeStatusDef"),
+                        DefCache.GetDef<StatusDef>("Acid_StatusDef"),
+                        DefCache.GetDef<StatusDef>("Infected_StatusDef"), // = virus applied
+            };
 
             public static void Prefix(TacticalActor __instance, ref DamageResult damageResult)
             {
@@ -179,7 +188,7 @@ namespace PRMBetterClasses.SkillModifications
                         if (clampedOverflowDamage > roll)
                         {
                             PRMLogger.Always($"Die Hard for {__instance}: Clamped overflow damage ({clampedOverflowDamage}) > RNG roll ({roll}), actor has to die :-(");
-                            //return; // Don't trigger Die Hard, RNG was against the actor
+                            return; // Don't trigger Die Hard, RNG was against the actor
                         }
                         PRMLogger.Always($"Die Hard for {__instance}: Clamped overflow damage ({clampedOverflowDamage}) <= RNG roll ({roll}), trigger DH, actor get another chance :-)");
                         _ = __instance.Status.ApplyStatus(DieHardTriggeredStatus);
@@ -197,10 +206,13 @@ namespace PRMBetterClasses.SkillModifications
                     // Set damage value to actors HP -1 so he has 1 HP left
                     damageResult.HealthDamage = __instance.Health.IntValue - 1;
 
-                    // Clear all effects, statuses, stat modifier if set
+                    // Clear all effects, statuses, stat modifier if set from the damage result
                     damageResult.ActorEffects?.Clear();
                     damageResult.ApplyStatuses?.Clear();
                     damageResult.StatModifications?.Clear();
+
+                    // Unapply any existent DoT on the actor
+                    //__instance.Status.UnapplyAllStatusesFiltered(status => StatusesToRemove.Contains(status.BaseDef));
                 }
                 catch (Exception e)
                 {
@@ -217,18 +229,9 @@ namespace PRMBetterClasses.SkillModifications
                         return;
                     }
                     // Unapply any existent DoT on the actor
-                    StatusDef[] statusesToRemove = new StatusDef[]
-                    {
-                        DieHardKeepAliveStatus,
-                        DefCache.GetDef<StatusDef>("Bleed_StatusDef"),
-                        DefCache.GetDef<StatusDef>("Poison_DamageOverTimeStatusDef"),
-                        DefCache.GetDef<StatusDef>("Paralysis_DamageOverTimeStatusDef"),
-                        DefCache.GetDef<StatusDef>("Acid_StatusDef"),
-                        DefCache.GetDef<StatusDef>("Infected_StatusDef"), // = virus applied
-                    };
                     foreach (TacticalActorBase actor in DieHardActorsToKeepAlive)
                     {
-                        actor.Status.UnapplyAllStatusesFiltered(status => statusesToRemove.Contains(status.BaseDef));
+                        actor.Status.UnapplyAllStatusesFiltered(status => StatusesToRemove.Contains(status.BaseDef));
                         (actor as TacticalActor)?.SetSpecialShader(null);
                         _ = actor.RemoveGameTags(new GameTagsList() { ExcludeFromAiBlackboard });
                         if (OnFactionStartTurnSubscribed)
@@ -395,6 +398,11 @@ namespace PRMBetterClasses.SkillModifications
                     }
                     // end copy
 
+
+                    if (death.Actor.TacticalActorBaseDef.WillPointWorth == 0)
+                    {
+                        return;
+                    }
                     TacticalAbilityDef punisherAbilityDef = DefCache.GetDef<TacticalAbilityDef>("Punisher_AbilityDef");
                     if (death.Killer != null && death.Killer.GetAbilityWithDef<TacticalAbility>(punisherAbilityDef) != null)
                     {
@@ -731,75 +739,80 @@ namespace PRMBetterClasses.SkillModifications
             {
                 try
                 {
-                    object ___Source = AccessTools.Property(typeof(Status), "Source").GetValue(__instance, null);
-                    TacticalActor ___TacticalActor = (TacticalActor)AccessTools.Property(typeof(TacStatus), "TacticalActor").GetValue(__instance, null);
-                    TacticalAbility SowerOfChange = ___TacticalActor.GetAbilities<TacticalAbility>().FirstOrDefault(s => s.AbilityDef.name.Equals("SowerOfChange_AbilityDef"));
-                    if (SowerOfChange != null)
+                    TacticalActor tacticalActor = __instance.TacticalActor;
+                    TacticalAbility SowerOfChange = tacticalActor.GetAbilities<TacticalAbility>().FirstOrDefault(s => s.AbilityDef.name.Equals("SowerOfChange_AbilityDef"));
+                    if (SowerOfChange == null)
                     {
-                        PRMLogger.Debug("----------------------------------------------------------------------------------------------------", false);
-                        PRMLogger.Debug($"OnActorDamageReceivedStatus.OnActorDamageReceived() called from '{SowerOfChange.AbilityDef.name}' ...");
-                        PRMLogger.Debug($"Actor: {___TacticalActor.DisplayName}");
-                        PRMLogger.Debug($"Recieved HealthDamage: {damageResult.HealthDamage}");
-                        if (!(damageResult.Source is IDamageDealer damageDealer))
-                        {
-                            PRMLogger.Debug($"damageResult.Source, type {damageResult.Source.GetType().Name}, is no IDamageDealer, exit without apply effect!");
-                            PRMLogger.Debug("----------------------------------------------------------------------------------------------------", false);
-                            return false;
-                        }
-                        if (!__instance.OnActorDamageReceivedStatusDef.DamageDeliveryTypeFilter.IsEmpty()
-                            && !__instance.OnActorDamageReceivedStatusDef.DamageDeliveryTypeFilter.Contains(damageDealer.GetDamagePayload().DamageDeliveryType))
-                        {
-                            PRMLogger.Debug($"DamageDeliveryType {damageDealer.GetDamagePayload().DamageDeliveryType} does not fit preset, exit without apply effect!");
-                            PRMLogger.Debug("----------------------------------------------------------------------------------------------------", false);
-                            return false;
-                        }
-                        TacticalActorBase tacticalActorBase = damageDealer.GetTacticalActorBase();
-                        if (tacticalActorBase == null)
-                        {
-                            PRMLogger.Debug($"damageDealer.GetTacticalActorBase() returned 'null', exit without apply effect!");
-                            PRMLogger.Debug("----------------------------------------------------------------------------------------------------", false);
-                            return false;
-                        }
-                        PRMLogger.Debug($"TacticalActorBase of target: {tacticalActorBase}");
-                        EffectConditionDef[] targetApplicationConditions = __instance.OnActorDamageReceivedStatusDef.TargetApplicationConditions;
-                        for (int i = 0; i < targetApplicationConditions.Length; i++)
-                        {
-                            if (!targetApplicationConditions[i].ConditionMet(tacticalActorBase))
-                            {
-                                PRMLogger.Debug($"OnActorDamageReceivedStatusDef.TargetApplicationConditions not met, exit without apply effect!");
-                                PRMLogger.Debug("----------------------------------------------------------------------------------------------------", false);
-                                return false;
-                            }
-                        }
-                        EffectTarget actorEffectTarget = TacUtil.GetActorEffectTarget(tacticalActorBase, null);
-                        if (actorEffectTarget == null)
-                        {
-                            PRMLogger.Debug($"tacticalActorBase.GetActorEffectTarget() of target returned 'null', exit without apply effect!");
-                            PRMLogger.Debug("----------------------------------------------------------------------------------------------------", false);
-                            return false;
-                        }
-                        //GameObject effectTargetObject = actorEffectTarget.GameObject;
-                        DamagePayloadEffectDef effectDef = (DamagePayloadEffectDef)__instance.OnActorDamageReceivedStatusDef.EffectForAttacker;
-                        float viralDamage = 1;
-                        //float blastDamage = 0;
-                        float timingScale = 0.8f;
-                        //blastDamage = effectDef.DamagePayload.DamageKeywords.Find(dk => dk.DamageKeywordDef == Shared.SharedDamageKeywords.BlastKeyword).Value;
-                        viralDamage = damageResult.HealthDamage >= 4 ? damageResult.HealthDamage / 4 : 1.0f;
-                        AddStatusDamageKeywordDataDef RawVirausDamageKeyword = DefCache.GetDef<AddStatusDamageKeywordDataDef>("RawViral_DamageKeywordDataDef");
-                        effectDef.DamagePayload.DamageKeywords.Find(dk => dk.DamageKeywordDef == RawVirausDamageKeyword).Value = viralDamage;
-                        //effectDef.DamagePayload.DamageKeywords.Find(dk => dk.DamageKeywordDef == Shared.SharedDamageKeywords.ViralKeyword).Value = viralDamage;
-                        ___TacticalActor.Timing.Scale = timingScale;
-                        tacticalActorBase.Timing.Scale = timingScale;
-                        PRMLogger.Debug($"'{___TacticalActor}' applies {viralDamage} viral damage on '{actorEffectTarget}', position '{actorEffectTarget.Position + effectDef.EffectPositionOffset}'");
-                        //Logger.Always($"'{___TacticalActor}' applies {blastDamage} blast and {viralDamage} viral damage on '{effectTargetObject}', position '{actorEffectTarget.Position + effectDef.EffectPositionOffset}'");
-                        Effect.Apply(__instance.Repo, effectDef, actorEffectTarget, ___TacticalActor);
-                        ___TacticalActor.Timing.Scale = timingScale;
-                        tacticalActorBase.Timing.Scale = timingScale;
-                        PRMLogger.Debug($"Effect applied on {tacticalActorBase}");
+                        return true;
+                    }
+                    PRMLogger.Debug("----------------------------------------------------------------------------------------------------", false);
+                    PRMLogger.Debug($"OnActorDamageReceivedStatus.OnActorDamageReceived() called from '{SowerOfChange.AbilityDef.name}' ...");
+                    PRMLogger.Debug($"Actor: {tacticalActor.DisplayName}");
+                    PRMLogger.Debug($"Recieved HealthDamage: {damageResult.HealthDamage}");
+                    if (damageResult.Source == null)
+                    {
+                        PRMLogger.Debug($"damageResult.Source is NULL, exit without apply effect!");
                         PRMLogger.Debug("----------------------------------------------------------------------------------------------------", false);
                         return false;
                     }
-                    return true;
+                    if (!(damageResult.Source is IDamageDealer damageDealer))
+                    {
+                        PRMLogger.Debug($"damageResult.Source, type {damageResult.Source.GetType().Name}, is no IDamageDealer, exit without apply effect!");
+                        PRMLogger.Debug("----------------------------------------------------------------------------------------------------", false);
+                        return false;
+                    }
+                    if (!__instance.OnActorDamageReceivedStatusDef.DamageDeliveryTypeFilter.IsEmpty()
+                        && !__instance.OnActorDamageReceivedStatusDef.DamageDeliveryTypeFilter.Contains(damageDealer.GetDamagePayload().DamageDeliveryType))
+                    {
+                        PRMLogger.Debug($"DamageDeliveryType {damageDealer.GetDamagePayload().DamageDeliveryType} does not fit preset, exit without apply effect!");
+                        PRMLogger.Debug("----------------------------------------------------------------------------------------------------", false);
+                        return false;
+                    }
+                    TacticalActorBase tacticalActorBase = damageDealer.GetTacticalActorBase();
+                    if (tacticalActorBase == null)
+                    {
+                        PRMLogger.Debug($"damageDealer.GetTacticalActorBase() returned 'null', exit without apply effect!");
+                        PRMLogger.Debug("----------------------------------------------------------------------------------------------------", false);
+                        return false;
+                    }
+                    PRMLogger.Debug($"TacticalActorBase of target: {tacticalActorBase}");
+                    EffectConditionDef[] targetApplicationConditions = __instance.OnActorDamageReceivedStatusDef.TargetApplicationConditions;
+                    for (int i = 0; i < targetApplicationConditions.Length; i++)
+                    {
+                        if (!targetApplicationConditions[i].ConditionMet(tacticalActorBase))
+                        {
+                            PRMLogger.Debug($"OnActorDamageReceivedStatusDef.TargetApplicationConditions not met, exit without apply effect!");
+                            PRMLogger.Debug("----------------------------------------------------------------------------------------------------", false);
+                            return false;
+                        }
+                    }
+                    EffectTarget actorEffectTarget = TacUtil.GetActorEffectTarget(tacticalActorBase, null);
+                    if (actorEffectTarget == null)
+                    {
+                        PRMLogger.Debug($"tacticalActorBase.GetActorEffectTarget() of target returned 'null', exit without apply effect!");
+                        PRMLogger.Debug("----------------------------------------------------------------------------------------------------", false);
+                        return false;
+                    }
+                    //GameObject effectTargetObject = actorEffectTarget.GameObject;
+                    DamagePayloadEffectDef effectDef = (DamagePayloadEffectDef)__instance.OnActorDamageReceivedStatusDef.EffectForAttacker;
+                    float viralDamage = 1;
+                    //float blastDamage = 0;
+                    float timingScale = 0.8f;
+                    //blastDamage = effectDef.DamagePayload.DamageKeywords.Find(dk => dk.DamageKeywordDef == Shared.SharedDamageKeywords.BlastKeyword).Value;
+                    viralDamage = damageResult.HealthDamage >= 4 ? damageResult.HealthDamage / 4 : 1.0f;
+                    AddStatusDamageKeywordDataDef RawVirausDamageKeyword = DefCache.GetDef<AddStatusDamageKeywordDataDef>("RawViral_DamageKeywordDataDef");
+                    effectDef.DamagePayload.DamageKeywords.Find(dk => dk.DamageKeywordDef == RawVirausDamageKeyword).Value = viralDamage;
+                    //effectDef.DamagePayload.DamageKeywords.Find(dk => dk.DamageKeywordDef == Shared.SharedDamageKeywords.ViralKeyword).Value = viralDamage;
+                    tacticalActor.Timing.Scale = timingScale;
+                    tacticalActorBase.Timing.Scale = timingScale;
+                    PRMLogger.Debug($"'{tacticalActor}' applies {viralDamage} viral damage on '{actorEffectTarget}', position '{actorEffectTarget.Position + effectDef.EffectPositionOffset}'");
+                    //Logger.Always($"'{___TacticalActor}' applies {blastDamage} blast and {viralDamage} viral damage on '{effectTargetObject}', position '{actorEffectTarget.Position + effectDef.EffectPositionOffset}'");
+                    Effect.Apply(__instance.Repo, effectDef, actorEffectTarget, tacticalActor);
+                    tacticalActor.Timing.Scale = timingScale;
+                    tacticalActorBase.Timing.Scale = timingScale;
+                    PRMLogger.Debug($"Effect applied on {tacticalActorBase}");
+                    PRMLogger.Debug("----------------------------------------------------------------------------------------------------", false);
+                    return false;
                 }
                 catch (Exception e)
                 {

@@ -1,26 +1,27 @@
 Key,Type,Desc,English,Chinese (Simplified),French,German,Italian,Polish,Russian,Spanish,UI_Tester
 KEY_CH_ALN_ACHERON_ACHLYS_CHAMPION_RESEARCHDEF_COMPLETE,Text,,"Species classification AC-Beta-2
-Considered the most lethal specimen of Acheron, the creature is capable of releasing bio chemicals that cause humans to go insane, go temporarily blind, or even become gooed to the ground. The specimen can mutate and transform corpses into Pandorans, and also release corrosive substances in a large area affecting everything within. To be killed from a distance.",,"Classification de l'espèce AC-Beta-2
+Possibly the most lethal specimen of Acheron. In addition to projecting corrosive goo and transforming corpses into Pandorans, and possessing the capability of evolved Acherons that enables other Pandorans on the battlefield to spread Delirium, reports indicate that the death of this specimen is invariably accompanied by excess Umbra sightings.",,"Classification de l'espèce AC-Beta-2
 Considéré comme le spécimen le plus mortel de l'Achéron, cette créature est capable de libérer des substances biochimiques qui rendent les humains fous, temporairement aveugles ou même immobilisés au sol. Le spécimen peut muter et transformer les cadavres en Pandoriens, et aussi libérer des substances corrosives dans une large zone affectant tout ce qui s'y trouve. A tuer à distance.",,,,,,
 KEY_CH_ALN_ACHERON_ACHLYS_CHAMPION_RESEARCHDEF_NAME,Text,,ACHERON ACHLYS CHAMPION,,ACHERON ACHLYS CHAMPION,,,,,,
-KEY_CH_ALN_ACHERON_ACHLYS_RESEARCHDEF_COMPLETE,Text,,"Species classification AC-Beta-1
-An enhanced species of Acheron that has evolved to release chemicals capable of partially paralysing humans by temporarily reducing their speed or disabling a limb. Field observations have found that the creature is also capable of granting Pandorans the ability to spread the Third Mist strain of the Pandoraviurs on people, driving them to delirium, and also can mutate dead corpses, transforming them into Arthrons and Tritons. To be dealt with caution.",,"Classification de l'espèce AC-Beta-1
+KEY_CH_ALN_ACHERON_ACHLYS_RESEARCHDEF_COMPLETE,Text,,"Species classification AC-Beta-1 “Achlys”
+An enhanced species of Acheron that has evolved to release chemicals capable of partially paralyzing humans by temporarily reducing their speed, or trapping them or vehicles in corrosive goo. Field observations have found that the creature is also capable of granting Pandorans the ability to spread the Third Mist strain of the Pandoraviurs on people, driving them to delirium, and also can mutate dead corpses, transforming them into Arthrons and Tritons.
+",,"Classification de l'espèce AC-Beta-1
 Une espèce améliorée d'Achéron qui a évolué pour libérer des produits chimiques capables de paralyser partiellement les humains en réduisant temporairement leur vitesse ou en désactivant un membre. Des observations sur le terrain ont révélé que la créature est également capable de donner aux Pandoriens la capacité de propager la souche de la Troisieme Brume du Pandoravirus sur les gens, les poussant au délire, et peut également faire muter les cadavres, les transformant en Arthrons et en Tritons. À traiter avec prudence.",,,,,,
 KEY_CH_ALN_ACHERON_ACHLYS_RESEARCHDEF_NAME,Text,,ACHERON ACHLYS,,ACHERON ACHLYS,,,,,,
 KEY_CH_ALN_ACHERON_ASCLEPIUS_CHAMPION_RESEARCHDEF_COMPLETE,Text,,"Species classification AC-Alpha-2
-Considered a superior version of the Acheron Asclepius the specimen is of superior strength as well as capable of shooting goo at enemies to immobilise them. The creature retains the ability to recover the health and armor of other Pandorans, as well as grant them the ability to inflict corruption in combat. The Acheron is also capable of mutating living Pandorans out of dead bodies.",,"Classification de l'espèce AC-Alpha-2
-Considéré comme une version supérieure de l'Acheron Asclepius, le spécimen est d'une force supérieure et est capable de lancer de la gelée sur ses ennemis pour les immobiliser. La créature conserve la capacité de restaurer la santé et l'armure des autres Pandoriens, ainsi que de leur accorder la capacité d'infliger la corruption en combat. L'Achéron est également capable de faire muter des Pandoriens vivants à partir de cadavres.",,,,,,
+Considered a superior version of the Acheron Asclepius the specimen is of superior strength and able to project a neuro-toxic spray that temporarily disables limbs. The creature retains the ability to recover the health and armor of other Pandorans, as well as grant them the ability to inflict corruption in combat. The Acheron is also capable of calling reinforcements to its aid.",,"Classification de l'espèce AC-Alpha-2
+Considéré comme une version supérieure de l'Acheron Asclepius, le spécimen est d'une force supérieure et est capable de lancer du goo sur ses ennemis pour les immobiliser. La créature conserve la capacité de restaurer la santé et l'armure des autres Pandoriens, ainsi que de leur accorder la capacité d'infliger la corruption en combat. L'Achéron est également capable de faire muter des Pandoriens vivants à partir de cadavres.",,,,,,
 KEY_CH_ALN_ACHERON_ASCLEPIUS_CHAMPION_RESEARCHDEF_NAME,Text,,ACHERON ASCLEPIUS CHAMPION,,ACHERON ASCLEPIUS CHAMPION,,,,,,
-KEY_CH_ALN_ACHERON_ASCLEPIUS_RESEARCHDEF_COMPLETE,Text,,"Species classification AC-Alpha-1
-An advanced form of Acheron, this specimen has mutated to use regenerative spray to remove negative status effects from enemies as well as restore their armor. The greatest threat of the entity is its ability to mutate and transform corpses into Tritons and Arthrons. While on the battlefield, the creature releases organic chemicals, allowing all Pandorans to spread Oneiric Delirium.",,"Classification de l'espèce AC-Alpha-1
+KEY_CH_ALN_ACHERON_ASCLEPIUS_RESEARCHDEF_COMPLETE,Text,,"Species classification AC-Alpha-1 “Asclepius”
+An advanced form of Acheron, this specimen has mutated to use regenerative spray to remove negative status effects from enemies as well as restore their armor. The greatest threat of the entity is its ability to call reinforcements. While on the battlefield, the creature releases organic chemicals, allowing all Pandorans to spread Oneiric Delirium.",,"Classification de l'espèce AC-Alpha-1
 Forme avancée de l'Achéron, ce spécimen a muté pour utiliser un spray régénérateur afin de supprimer les effets d'état négatifs et de restaurer leur armure. La plus grande menace de cette entité est sa capacité à muter et à transformer les cadavres en Tritons et en Arthrons. Lorsqu'elle est sur le champ de bataille, la créature libère des produits chimiques organiques, permettant à tous les Pandoriens de propager le délire onirique.",,,,,,
 KEY_CH_ALN_ACHERON_ASCLEPIUS_RESEARCHDEF_NAME,Text,,ACHERON ASCLEPIUS,,ACHERON ASCLEPIUS,,,,,,
 KEY_CH_ALN_ACHERON_PRIME_RESEARCHDEF_COMPLETE,Text,,"Species classification AC-2
-A mutation of the Acheron, capable of infecting the minds of our soldiers on touch as well as of releasing a regenerative substance in a large area that restores Pandoran armor. ",,"Classification de l'espèce AC-2
+A mutation of the Acheron that spreads the Third Mist Pandoravirus strain more effectively, releasing the infectious compound in cloud form and somehow allowing other Pandorans to spread it too through their attacks. Also has a more dangerous long range acid and Mist attack. As with the previous variation, wherever this creature appears, Umbra sightings and reports of other unexplainable phenomena significantly increase.",,"Classification de l'espèce AC-2
 Une mutation de l'Achéron, capable d'infecter l'esprit de nos soldats au contact ainsi que de libérer une substance régénératrice dans une large zone qui restaure les armures des Pandoriens. ",,,,,,
 KEY_CH_ALN_ACHERON_PRIME_RESEARCHDEF_NAME,Text,,ACHERON PRIME,,ACHERON PRIME,,,,,,
 KEY_CH_ALN_ACHERON_RESEARCHDEF_COMPLETE,Text,,"Species classification AC-1
-A previously unknown creature, named the Acheron due to its ability to spread the Third Mist Pandoravirus strain affecting people's minds and will. Unlike other Pandoran specimens, this one does not rely on direct attack, rather affecting targets in an area around it. The Acheron has the ability to temporarily affect human accuracy, as well as call Pandoran reinforcements.",,"Classification de l'espèce AC-1
+A previously unknown creature, named the Acheron due to its ability to spread the Third Mist Pandoravirus strain affecting people's minds and will. Can launch an acid and Mist attack at long range. Sightings of this species have been accompanied by more frequent reports of Umbra presence.",,"Classification de l'espèce AC-1
 Une créature jusqu'alors inconnue, nommée l'Acheron en raison de sa capacité à propager la souche du pandoravirus de la Troisième Brume affectant l'esprit et la volonté des gens. Contrairement à d'autres spécimens pandoriens, celui-ci ne repose pas sur une attaque directe, mais affecte plutôt les cibles dans une zone autour de lui. L'Acheron a la capacité d'affecter temporairement la précision humaine, ainsi que d'appeler des renforts pandoriens.",,,,,,
 KEY_CH_ALN_ACHERON_RESEARCHDEF_NAME,Text,,ACHERON,,ACHERON,,,,,,
 PX_ACHERON_DISSECTION_RESEARCHDEF_BENEFITS,Text,,Delirium treatment available,,Traitement du délire onirique disponible,,,,,,
@@ -111,8 +112,8 @@ DLC4 Hypnos/KEY_TAC_HINT_STATUS_CORRUPTED_NAME,Text,,Delirium,,Delirium,,,,,,
 DLC4 Hypnos/KEY_STATUS_CORRUPTED_NAME,Text,,Delirium,,Delirium,,,,,,
 KEY_STATUS_CORRUPTED_NAME,Text,,DELIRIUM,,DELIRIUM,,,,,,
 KEY_STATUS_CORRUPTED_DESCRIPTION,Text,,"Delirium reduces WP. This effect is, in turn, reduced by 1 per 10 Stamina. Maximum Delirium level is determined by ODI.",,"Le délire réduit la Volonté. Cet effet est, à son tour, réduit de 1 par 10 d'Endurance. Le niveau maximal de délire est déterminé par l'IDO.",,,,,,
-KEY_CO_CORRUPTION_NAME,Text,,Co-Delirium,,Co-Délirium,,,,,,
-KEY_CO_CORRUPTION_DESCRIPTION,Text,,All Pandorans in battle deal Delirium damage,,Tous les Pandoriens en combat infligent des dégâts de Délirium.,,,,,,
+KEY_CO_CORRUPTION_NAME,Text,,Co-Delirium,,Co-Delirium,,,,,,
+KEY_CO_CORRUPTION_DESCRIPTION,Text,,All Pandorans in battle deal Delirium damage,,Tous les Pandoriens en combat infligent des dégâts de Delirium.,,,,,,
 KEY_CONTACT_CORRUPTION_NAME,Text,,CONTACT DELIRIUM,,DELIRE DE CONTACT,,,,,,
 KEY_CONTACT_CORRUPTION_DESCRIPTION,Text,,Increases Delirium of attacker when suffering Melee or Bash attacks.,,Augmente le délire de l'attaquant lorsqu'il subit des attaques de mêlée.,,,,,,
 DLC4 Hypnos/KEY_DAMAGE_TYPE_CORRUPTION,Text,,DELIRIUM,,DELIRIUM,,,,,,
@@ -143,7 +144,7 @@ Delirium is gained by participating in missions where Mist is present (""Deliriu
 
 Different ways of dealing or living with Delirium will become avaliable with Phoenix and faction research.",,"Dans cette troisième brume, le pandoravirus a encore muté. La nouvelle souche rend les survivants lentement fous.
 
-Les Points de Volonté sont réduits par la quantité de Délirium qui affecte le personnage. Cet effet est à son tour réduit lorsque le personnage est bien reposé : chaque tranche de 10 points d'endurance réduit l'effet du délire de 1. La quantité maximale de délire qu'un personnage peut acquérir dépend de l'Indice de Délire Onirique.
+Les Points de Volonté sont réduits par la quantité de Delirium qui affecte le personnage. Cet effet est à son tour réduit lorsque le personnage est bien reposé : chaque tranche de 10 points d'endurance réduit l'effet du délire de 1. La quantité maximale de délire qu'un personnage peut acquérir dépend de l'Indice de Délire Onirique.
 
 Le délire s'acquiert en participant à des missions où la brume est présente (""zones de Délirium"") ou en subissant des attaques de Pandoriens avec des dégâts de Délirium ou de Co-Délirium.
 
@@ -155,7 +156,7 @@ Your soldiers can no longer become corrupted. Those that are currently corrupted
 
 Vos soldats ne peuvent plus être corrompus. Cependant, ceux qui sont actuellement corrompus ont encore besoin d'un traitement.",,,,,,
 KEY_GEO_HINT_ENEMY_SPECIAL_CORRUPTION_OVER_NAME,Text,NEED TO CHANGE,CORRUPTION VACCINE,,VACCIN CONTRE LA CORRUPTION,,,,,,
-KEY_GEO_HINT_ENEMY_SPECIAL_CURE_DESCRIPTION,Text,,"Now that you have researched a treatment for the Oneiric Delirium, you can remove this condition from your operatives, though they will acquire it again if they operate in an area covered by mist or are attacked by Pandorans with the Delirium attack. In addition, be aware that the treatment can cause SERIOUS and PERMANENT side effects: every time you make use of it, there is a 25% chance that the operative will acquire one of the special Delirium perks, which grant a negative and a positive ability. The same operative can acquire any number of these special Delirium perks. 
+KEY_GEO_HINT_ENEMY_SPECIAL_CURE_DESCRIPTION,Text,,"Now that you have researched a treatment for the Oneiric Delirium, you can remove this condition from your operatives, though they will acquire it again if they operate in an area covered by mist or are attacked by Pandorans with the Delirium attack. In addition, be aware that the treatment can cause SERIOUS and LONG LASTING side effects: every time you make use of it, there is a 25% chance that the operative will acquire one of the special Delirium perks, which grant a negative and a positive ability. The same operative can acquire any number of these special Delirium perks. They will lose these perks eventually as they complete missions, provided that they do not acquire new Delirium perks.
  
 In order to treat a soldier you need to pay 50 MUTAGENS for every 25% of Delirium that has affected the soldier as compared to their Willpower.",,"Maintenant que vous avez recherché un traitement pour le délire onirique, vous pouvez supprimer cette affection de vos agents, bien qu'ils la contractent à nouveau s'ils opèrent dans une zone couverte de brume ou s'ils sont attaqués par des Pandoriens avec l'attaque Délire. De plus, sachez que le traitement peut avoir des effets secondaires GRAVES et PERMANENTS : chaque fois que vous l'utilisez, il y a 25% de chances que l'agent acquière l'un des avantages spéciaux du délire, qui confèrent une capacité négative et une capacité positive. Le même agent peut acquérir n'importe quel nombre de ces effets spéciaux du délire. 
 
@@ -299,24 +300,30 @@ DELIRIUM_PERK_HYPERALGESIA_DESCRIPTION,Text,,"Lose 1 WP when taking damage, no W
 <i>Subject has extreme sensitivity to pain and exhibits symptoms of empathy fatigue</i>",,"Perte de 1 Point de Volonté en cas de dégâts, pas de perte de Point de Volonté en cas de mort d'alliés.
 <i>Le sujet est extrêmement sensible à la douleur et présente des symptômes de fatigue empathique.</i>",,,,,,
 "DELIRIUM_PERK_FERAL_NAME
-",Text,,"FERAL",,"SAUVAGE
+",Text,,"FERAL
+",,"SAUVAGE
 ",,,,,,
 "DELIRIUM_PERK_FERAL_DESCRIPTION
 ",Text,,"All actions have 10% chance to fumble, recover 1 AP from killing enemies
 <i>Subject engages in atavistic behavior. Alterations in adrenal glands function are also observed</i>",,"Toutes les actions ont 10% de chances d'échouer, récupére 1 Point d'Action en tuant des ennemis
 <i>Le sujet adopte un comportement atavique. Des altérations du fonctionnement des glandes surrénales sont également observées.</i>",,,,,,
+"DELIRIUM_PERK_NEW_FERAL_DESCRIPTION
+",Text,,"All skills that cost WP cost +1 WP, +8 to Strength
+<i>Subject engages in atavistic behavior. Alterations in adrenal glands function are also observed</i>",,,,,,,,
 DELIRIUM_PERK_DEREALIZATION_NAME,Text,,DEREALIZATION,,DEREALISATION,,,,,,
 DELIRIUM_PERK_DEREALIZATION_DESCRIPTION,Text,,"-5 to Strength, disabled limbs remain functional
 <i>Subject reports increasing detachment from reality and own body</i>",,"-5 à la Force, les membres handicapés restent fonctionnels
 <i>Le sujet rapporte un détachement croissant de la réalité et de son propre corps.</i>",,,,,,
 DELIRIUM_PERK_ONE_OF_THEM_NAME,Text,,ONE OF THEM,,L'UN D'EUX,,,,,,
-DELIRIUM_PERK_ONE_OF_THEM_DESCRIPTION,Text,,"-2 to Willpower, immune to Mist
+DELIRIUM_PERK_ONE_OF_THEM_DESCRIPTION,Text,,"Receives Delirium damage x2, immune to Mist
 <i>Subject appears to have acquired tolerance to Mist, resulting in a cognitive dissonance</i>",,"-2 à la Volonté, immunisé contre la brume
 <i>Le sujet semble avoir acquis une tolérance à la Brume, ce qui entraîne une dissonance cognitive.</i>",,,,,,
 DELIRIUM_PERK_WOLVERINE_NAME,Text,,WOLVERINE,,WOLVERINE,,,,,,
 DELIRIUM_PERK_WOLVERINE_DESCRIPTION,Text,,"-20% to Accuracy, gain Slashing Strike
 <i>Subject has gained a retractable claw-like appendage protruding from the right wrist. Unfortunately, discharging firearms has become moderately uncomfortable</i>",,"-20% à la précision, gain de Slashing Strike
 F142<i>Le sujet a acquis un appendice rétractable en forme de griffe qui dépasse du poignet droit. Malheureusement, le maniement des armes à feu est devenu modérément inconfortable.</i>",,,,,,
+DELIRIUM_PERK_WOLVERINE_CURED_DESCRIPTION,Text,,"Slashing Strike
+<i>""I just got used to it, I guess""</i>",,,,,,,,
 DELIRIUM_PERK_TERROR_NAME,Text,,TERROR,,TERREUR,,,,,,
 DELIRIUM_PERK_TERROR_DESCRIPTION,Text,,"-2 to Speed, +25% to Stealth
 <i>Despite enhanced treatment, subject remains fearful and acts with extreme caution in the field</i>",,"-2 à la Vitesse, +25% à la Furtivité
@@ -333,52 +340,41 @@ DELIRIUM_PERK_ANXIETY_NAME,Text,,ANXIETY,,ANXIETE,,,,,,
 DELIRIUM_PERK_ANXIETY_DESCRIPTION,Text,,"Start each mission Disoriented for 2 turns
 <i>Subject exhibits symptoms of a General Anxiety Disorder; limited response to treatment</i>",,"Commencez chaque mission en étant désorienté pendant 2 tours
 <i>Le sujet présente les symptômes d'un trouble anxieux général ; réponse limitée au traitement.</i>",,,,,,
+DELIRIUM_PERK_NEW_ANXIETY_DESCRIPTION,Text,,"Start each mission Disoriented for 2 turns, immune to Mind Control
+<i>Subject exhibits symptoms of a General Anxiety Disorder; limited response to treatment</i>",,,,,,,,
 DELIRIUM_PERK_INNER_SIGHT_NAME,Text,,INNER SIGHT,,VUE INTERIEURE,,,,,,
 DELIRIUM_PERK_INNER_SIGHT_DESCRIPTION,Text,,"-10 Perception, +10 Hearing Range
 <i>The subject is often observed with eyes closed; claims to see with an 'inner eye'; possible schizophrenia, but heightened extrasensorial perception confirmed</i>",,"-10 Perception, +10 Portée auditive
 <i>Le sujet est souvent observé les yeux fermés ; il prétend voir avec un ""œil intérieur"" ; peut-être schizophrénie, mais une perception extrasensorielle accrue est confirmée.</i>",,,,,,
-TFTV_KEY_UMBRA_TARGET_DISPLAY_NAME,Text,,UMBRA,,OMBRE,,,,,,
-TFTV_KEY_UMBRA_TARGET_DISPLAY_DESCRIPTION,Text,,It's not real it's not real it's not real it's not real,,Ce n'est pas réel, ce n'est pas réel, ce n'est pas réel, ce n'est pas réel.,,,,,,
+TFTV_KEY_UMBRA_TARGET_DISPLAY_NAME,Text,,UMBRA,,,,,,,,
+TFTV_KEY_UMBRA_TARGET_DISPLAY_DESCRIPTION,Text,,It's not real it's not real it's not real it's not real,,,,,,,,
 ,,,,,,,,,,,
 KEY_GEO_HINT_AUGMENTATION_SCREEN_DESCRIPTION,Text,,"You are about to augment your first soldier. A character can only have UP TO 2 BODY PARTS replaced this way.
 
 Once an augmentation is installed, the soldier will not be able to revert back to their natural limbs. However, augmented body parts CAN BE SWAPPED with different cybernetic parts.
 
-Augmented body parts are IMMUNE TO BLEEDING and RESISTANT TO VIRAL DAMAGE, POISON, AND PARALYSIS. Damaged cybernetics CAN BE REPAIRED after battle at the expense of Tech and Materials. ",,"Vous êtes sur le point d'augmenter votre premier soldat. Un personnage ne peut avoir que jusqu'à 2 parties du corps remplacées de cette façon.
+Augmented body parts are IMMUNE TO BLEEDING and RESISTANT TO VIRAL DAMAGE, POISON, AND PARALYSIS. Damaged cybernetics CAN BE REPAIRED after battle at the expense of Tech and Materials. 
 
-Une fois l'augmentation installée, le soldat ne pourra pas revenir à ses membres naturels. Cependant, les parties du corps augmentées peuvent être échangées avec d'autres parties cybernétiques.
+In addition, each bionic augmentation reduces the maximum Delirium the character can have by 1/3, and removes up to that amount of Delirium from the character. 
 
-Les parties du corps augmentées sont immunisées contre les saignements et résistent aux dégâts causés par les virus, les poisons et la paralysie. Les parties cybernétiques endommagées PEUVENT ÊTRE REMPLACÉES après la bataille au prix de la technologie et des matériaux. ",,,,,,
-KEY_GEO_HINT_AUGMENTATION_SCREEN_NAME,Text,,AUGMENTING A SOLDIER,,AUGMENTER UN SOLDAT,,,,,,
+Augmenting a character will reduce their Stamina to zero.",,,,,,,,
+KEY_GEO_HINT_AUGMENTATION_SCREEN_NAME,Text,,AUGMENTING A SOLDIER,,,,,,,,
 KEY_GEO_HINT_CYBERNETICS_LAB_BUILT_DESCRIPTION,Text,,"The construction of your Cybernetics Lab is complete. You will now be able to AUGMENT SOLDIERS, replacing their natural limbs with powerful cybernetics.
 
 Each augmentation reduces the maximum Delirium a character may have by 1/3 and also immediately removes that much Delirium from the character.  
 
-To Augment a soldier, navigate to the PERSONNEL tab, select EDIT UNIT and then select AUGMENT.",,"La construction de votre laboratoire de cybernétique est terminée. Vous pourrez désormais augmenter les soldats, en remplaçant leurs membres naturels par de puissantes cybernétiques.
-
-Chaque augmentation réduit d'un tiers le délire maximum qu'un personnage peut avoir et supprime immédiatement cette quantité de délire du personnage.  
-
-Pour augmenter un soldat, naviguez jusqu'à l'onglet PERSONNEL, sélectionnez MODIFIER UNITÉ, puis sélectionnez AUGMENTER".,,,,,,
-KEY_GEO_HINT_CYBERNETICS_LAB_BUILT_NAME,Text,,AUGMENTATION NOW AVAILABLE,,AUGMENTATION DISPONIBLE,,,,,,
+To Augment a soldier, navigate to the PERSONNEL tab, select EDIT UNIT and then select AUGMENT.",,,,,,,,
+KEY_GEO_HINT_CYBERNETICS_LAB_BUILT_NAME,Text,,AUGMENTATION NOW AVAILABLE,,,,,,,,
 KEY_GEO_HINT_MUTATION_LAB_BUILT_DESCRIPTION,Text,,"The construction of your Mutation Lab is complete. You will now be able to MUTATE SOLDIERS, replacing their natural limbs with ones enhanced by Pandoravirus mutation.
 
 
-To Mutate a soldier, navigate to the PERSONNEL tab, select EDIT UNIT and then select MUTATE.",,"La construction de votre laboratoire de mutation est terminée. Vous allez maintenant pouvoir MUTER DES SOLDATS, en remplaçant leurs membres naturels par des membres améliorés par la mutation du Pandoravirus.
-
-
-Pour muter un soldat, naviguez jusqu'à l'onglet PERSONNEL, sélectionnez MODIFIER UNE UNITÉ, puis sélectionnez MUTER.",,,,,,
-KEY_GEO_HINT_MUTATION_LAB_BUILT_NAME,Text,,MUTATION NOW AVAILABLE,,MUTATION DISPONIBLE,,,,,,
+To Mutate a soldier, navigate to the PERSONNEL tab, select EDIT UNIT and then select MUTATE.",,,,,,,,
+KEY_GEO_HINT_MUTATION_LAB_BUILT_NAME,Text,,MUTATION NOW AVAILABLE,,,,,,,,
 KEY_GEO_HINT_MUTATION_SCREEN_DESCRIPTION,Text,,"You are about to mutate your first soldier. A character can only have UP TO 2 BODY PARTS altered this way.
 
 Each mutated body part increases damage dealt by character by 2% per each Delirium point that the character has.
 
 Once a mutation is applied, the operative won't be able to revert back to their natural limbs. However, mutated body parts CAN BE SWAPPED with different mutation variants.
 
-The :PRIEST: PRIEST soldier class has access to UNIQUE HEAD MUTATIONS greatly enhancing their powers.",,"Vous êtes sur le point de faire muter votre premier soldat. Un personnage ne peut avoir que jusqu'à 2 PARTIES DU CORPS modifiées de cette façon.
-
-Chaque partie du corps mutée augmente les dégâts infligés par le personnage de 2% pour chaque point de délire que possède le personnage.
-
-Une fois qu'une mutation est appliquée, l'agent ne pourra pas revenir à ses membres naturels. Cependant, les parties du corps mutées PEUVENT ÊTRE ÉCHANGÉES avec différentes variantes de mutation.
-
-La classe de soldat :PRIEST : PRIEST a accès à des MUTATIONS DE TÊTE UNIQUES améliorant considérablement leurs pouvoirs.",,,,,,
-KEY_GEO_HINT_MUTATION_SCREEN_NAME,Text,,MUTATING A SOLDIER,,MUTER UN SOLDAT,,,,,,
+The :PRIEST: PRIEST soldier class has access to UNIQUE HEAD MUTATIONS greatly enhancing their powers.",,,,,,,,
+KEY_GEO_HINT_MUTATION_SCREEN_NAME,Text,,MUTATING A SOLDIER,,,,,,,,

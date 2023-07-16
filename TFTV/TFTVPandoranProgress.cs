@@ -1,25 +1,22 @@
-﻿using Base.Defs;
-using Base.Entities;
-using Base.Entities.Effects;
-using Base.Levels.Nav;
+﻿using Base.Core;
+using Base.Defs;
 using HarmonyLib;
 using PhoenixPoint.Common.Core;
-using PhoenixPoint.Common.Entities.GameTags;
 using PhoenixPoint.Geoscape.Entities;
 using PhoenixPoint.Geoscape.Entities.Sites;
+using PhoenixPoint.Geoscape.Events;
 using PhoenixPoint.Geoscape.Levels;
 using PhoenixPoint.Geoscape.Levels.Factions;
 using PhoenixPoint.Tactical.Entities;
-using PhoenixPoint.Tactical.Entities.Abilities;
 using PhoenixPoint.Tactical.Entities.DamageKeywords;
 using PhoenixPoint.Tactical.Entities.Statuses;
-using PhoenixPoint.Tactical.Levels;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 namespace TFTV
 {
@@ -63,7 +60,7 @@ namespace TFTV
               }
           }*/
 
-       
+
 
 
 
@@ -196,15 +193,27 @@ namespace TFTV
                 try
                 {
 
-                    PhoenixStatisticsManager statisticsManager = (PhoenixStatisticsManager)UnityEngine.Object.FindObjectOfType(typeof(PhoenixStatisticsManager));
+                    //PhoenixStatisticsManager statisticsManager = (PhoenixStatisticsManager)UnityEngine.Object.FindObjectOfType(typeof(PhoenixStatisticsManager));
 
                     /*int citadelCount = statisticsManager.CurrentGameStats.GeoscapeStats.SurvivingCitadels + statisticsManager.CurrentGameStats.GeoscapeStats.DestroyedCitadels;
                     TFTVLogger.Always("There are " + statisticsManager.CurrentGameStats.GeoscapeStats.SurvivingCitadels + " existing citadels and " + statisticsManager.CurrentGameStats.GeoscapeStats.DestroyedCitadels
                         + " have been destroyed, so Citadel counter is " + citadelCount);*/
+                    GeoscapeEventSystem eventSystem = __instance.Site.GeoLevel.EventSystem;
+
 
                     
-                    SpawnScylla(__instance, RollScylla(ScyllaCount));
-                    ScyllaCount += 1;
+                    SpawnScylla(__instance, RollScylla(eventSystem.GetVariable("ScyllaCounter")));
+
+                  
+
+                    eventSystem.SetVariable("ScyllaCounter", eventSystem.GetVariable("ScyllaCounter") + 1);
+
+                   
+
+                  
+
+                    TFTVLogger.Always($"Scylla spawned! Count is now {eventSystem.GetVariable("ScyllaCounter")}");
+
                     return false;
 
                 }
@@ -240,7 +249,7 @@ namespace TFTV
         {
             try
             {
-                GeoLevelController controller = (GeoLevelController)UnityEngine.Object.FindObjectOfType(typeof(GeoLevelController));
+                GeoLevelController controller = GameUtl.CurrentLevel().GetComponent<GeoLevelController>();
 
                 TacCharacterDef startingScylla = DefCache.GetDef<TacCharacterDef>("Scylla1_FrenzyMistSmasherAgileSpawner_AlienMutationVariationDef");
                 TacCharacterDef scylla2 = DefCache.GetDef<TacCharacterDef>("Scylla2_SpitMistSmashAgileSpawn_AlienMutationVariationDef");

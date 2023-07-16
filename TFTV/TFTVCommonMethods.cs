@@ -1,9 +1,5 @@
-﻿using Base.Defs;
-using Base.UI;
-using Base.UI.VideoPlayback;
-using EnviroSamples;
+﻿using Base.UI;
 using HarmonyLib;
-using I2.Loc;
 using PhoenixPoint.Common.ContextHelp;
 using PhoenixPoint.Common.Entities.GameTagsTypes;
 using PhoenixPoint.Common.Saves;
@@ -19,12 +15,11 @@ using PhoenixPoint.Geoscape.Levels.Objectives;
 using PhoenixPoint.Tactical.Entities;
 using PhoenixPoint.Tactical.Entities.Effects.DamageTypes;
 using PhoenixPoint.Tactical.Entities.Statuses;
-using PhoenixPoint.Tactical.View.ViewStates;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using System.Runtime.Remoting.Contexts;
+using UnityEngine;
 using static PhoenixPoint.Tactical.Entities.Statuses.TacStatusDef;
 
 namespace TFTV
@@ -32,7 +27,7 @@ namespace TFTV
     internal class TFTVCommonMethods
     {
         private static readonly DefCache DefCache = TFTVMain.Main.DefCache;
-      //  private static readonly DefRepository Repo = TFTVMain.Repo;
+        //  private static readonly DefRepository Repo = TFTVMain.Repo;
 
         public static object View { get; private set; }
 
@@ -55,6 +50,8 @@ namespace TFTV
 
 
         }
+
+        
 
         public static void ClearInternalVariables()
         {
@@ -82,12 +79,19 @@ namespace TFTV
                 TFTVInfestation.InfestationMissionWon = false;
                 ClearHints();
                 TFTVUI.uIModuleSoldierCustomization = null;
-                TFTVAncients.HoplitesKilled = 0;
-                TFTVBetaSaveGamesFixes.LOTAReworkGlobalCheck = false;
+            //    TFTVBetaSaveGamesFixes.LOTAReworkGlobalCheck = false;
                 TFTVTactical.TurnZeroMethodsExecuted = false;
-                TFTVBaseDefenseTactical.ConsoleInBaseDefense = new bool[3];
                 TFTVBaseDefenseGeoscape.PhoenixBasesUnderAttack = new Dictionary<int, Dictionary<string, double>>();
+                TFTVBaseDefenseGeoscape.PhoenixBasesInfested.Clear();
                 TFTVBaseDefenseTactical.VentingHintShown = false;
+                TFTVBaseDefenseTactical.ConsolePositions = new Dictionary<float, float>();
+                TFTVAncients.CyclopsMolecularDamageBuff.Clear();
+                TFTVPandoranProgress.ScyllaCount = 0;
+                TFTVAncients.AutomataResearched = false;
+                TFTVAncients.AlertedHoplites.Clear();
+                TFTVUI.CharacterLoadouts?.Clear();
+              //  TFTVUI.CurrentlyAvailableInv.Clear();
+              //  TFTVUI.CurrentlyHiddenInv.Clear();
                 TFTVLogger.Always("Internal variables cleared");
             }
             catch (Exception e)
@@ -136,7 +140,12 @@ namespace TFTV
                 TFTVRevenant.revenantSpawned = false;
                 TFTVRevenant.revenantID = 0;
                 TFTVTactical.TurnZeroMethodsExecuted = false;
-
+                TFTVBaseDefenseTactical.ConsolePositions = new Dictionary<float, float>();
+                TFTVBaseDefenseTactical.StratToBeAnnounced = 0;
+                TFTVBaseDefenseTactical.StratToBeImplemented = 0;
+                TFTVAncients.CyclopsMolecularDamageBuff.Clear();
+                TFTVAncients.AlertedHoplites.Clear();
+                //  TFTVBaseDefenseTactical.VentingHintShown = false;
             }
             catch (Exception e)
             {
@@ -159,7 +168,12 @@ namespace TFTV
                 TFTVHumanEnemiesNames.CreateNamesDictionary();
                 ClearHints();
                 TFTVTactical.TurnZeroMethodsExecuted = false;
-                TFTVBaseDefenseTactical.ConsoleInBaseDefense = new bool[3];
+                TFTVAncients.CyclopsMolecularDamageBuff.Clear();
+                TFTVBaseDefenseTactical.ConsolePositions = new Dictionary<float, float>();
+                TFTVBaseDefenseTactical.StratToBeAnnounced = 0;
+                TFTVBaseDefenseTactical.StratToBeImplemented = 0;
+                TFTVBaseDefenseTactical.VentingHintShown = false;
+                TFTVAncients.AlertedHoplites.Clear();
 
             }
             catch (Exception e)
@@ -210,7 +224,50 @@ namespace TFTV
             }
         }
 
-     
+
+        //Method to remove manually set objective
+        public static void RemoveManuallySetObjective(GeoLevelController controller, string title)
+        {
+            try
+            {
+                List<GeoFactionObjective> listOfObjectives = controller.PhoenixFaction.Objectives.ToList();
+
+                foreach (GeoFactionObjective objective1 in listOfObjectives)
+                {
+                    if (objective1.Title == null)
+                    {
+                        TFTVLogger.Always("objective1.Title is missing!");
+                    }
+                    else
+                    {
+                        if (objective1.Title.LocalizationKey == null)
+                        {
+                            TFTVLogger.Always("objective1.Title.LocalizationKey is missing!");
+                        }
+                        else
+                        {
+                            TFTVLogger.Always("objective1.Title.LocalizationKey is " + objective1.Title.LocalizationKey);
+
+                            if (objective1.Title.LocalizationKey == title)
+                            {
+                                controller.PhoenixFaction.RemoveObjective(objective1);
+                            }
+                        }
+                    }
+
+                }
+
+
+
+            }
+            catch (Exception e)
+            {
+                TFTVLogger.Error(e);
+            }
+
+
+        }
+
 
         [HarmonyPatch(typeof(Research), "CompleteResearch")]
         public static class Research_NewTurnEvent_CalculateDelirium_Patch
@@ -254,19 +311,19 @@ namespace TFTV
 
                     }
                     else if (research.ResearchID == "PX_VirophageWeapons_ResearchDef")
-                    {                       
+                    {
                         if (controller.EventSystem.GetVariable("SymesAlternativeCompleted") == 1)
                         {
                             GeoscapeEventContext context = new GeoscapeEventContext(research.Faction.GeoLevel.AlienFaction, research.Faction.GeoLevel.PhoenixFaction);
                             research.Faction.GeoLevel.EventSystem.TriggerGeoscapeEvent("Helena_Virophage", context);
 
-                        }                     
+                        }
                     }
 
 
                     else if (research.ResearchID == "PX_YuggothianEntity_ResearchDef")
                     {
-                       
+
                         GeoscapeEventContext context = new GeoscapeEventContext(research.Faction.GeoLevel.AlienFaction, research.Faction.GeoLevel.PhoenixFaction);
                         research.Faction.GeoLevel.EventSystem.TriggerGeoscapeEvent("AlistairOnMessagesFromTheVoid", context);
 
@@ -281,8 +338,8 @@ namespace TFTV
                         GeoscapeEventContext context = new GeoscapeEventContext(research.Faction.GeoLevel.AlienFaction, research.Faction.GeoLevel.PhoenixFaction);
                         research.Faction.GeoLevel.EventSystem.TriggerGeoscapeEvent("Olena_Styx", context);
 
-                      //  ResearchElement exoticMaterialsResearch = research.Faction.GeoLevel.PhoenixFaction.Research.GetResearchById("ExoticMaterialsResearch");
-                      //  research.Faction.GeoLevel.FactionObjectiveSystem.CreateResearchObjective(research.Faction.GeoLevel.PhoenixFaction, exoticMaterialsResearch);
+                        //  ResearchElement exoticMaterialsResearch = research.Faction.GeoLevel.PhoenixFaction.Research.GetResearchById("ExoticMaterialsResearch");
+                        //  research.Faction.GeoLevel.FactionObjectiveSystem.CreateResearchObjective(research.Faction.GeoLevel.PhoenixFaction, exoticMaterialsResearch);
                     }
 
                     else if (research.ResearchID == "PX_LivingCrystalResearchDef")
@@ -298,12 +355,12 @@ namespace TFTV
                         TFTVAncients.AncientsCheckResearchState(research.Faction.GeoLevel);
                         TFTVAncients.SetObtainLCandPMSamplesObjective(controller);
 
-                     //   ResearchElement livingCrystalsResearch = research.Faction.GeoLevel.PhoenixFaction.Research.GetResearchById("PX_LivingCrystalResearchDef");
-                     //   GeoFactionObjective researchLC = research.Faction.GeoLevel.FactionObjectiveSystem.CreateResearchObjective(research.Faction.GeoLevel.PhoenixFaction, livingCrystalsResearch);
-                     //  controller.PhoenixFaction.AddObjective(researchLC);
-                     //  ResearchElement proteanMutaneResearch = research.Faction.GeoLevel.PhoenixFaction.Research.GetResearchById("PX_ProteanMutaneResearchDef");
-                     //  GeoFactionObjective researchPM = research.Faction.GeoLevel.FactionObjectiveSystem.CreateResearchObjective(research.Faction.GeoLevel.PhoenixFaction, proteanMutaneResearch);
-                     //  controller.PhoenixFaction.AddObjective(researchPM);
+                        //   ResearchElement livingCrystalsResearch = research.Faction.GeoLevel.PhoenixFaction.Research.GetResearchById("PX_LivingCrystalResearchDef");
+                        //   GeoFactionObjective researchLC = research.Faction.GeoLevel.FactionObjectiveSystem.CreateResearchObjective(research.Faction.GeoLevel.PhoenixFaction, livingCrystalsResearch);
+                        //  controller.PhoenixFaction.AddObjective(researchLC);
+                        //  ResearchElement proteanMutaneResearch = research.Faction.GeoLevel.PhoenixFaction.Research.GetResearchById("PX_ProteanMutaneResearchDef");
+                        //  GeoFactionObjective researchPM = research.Faction.GeoLevel.FactionObjectiveSystem.CreateResearchObjective(research.Faction.GeoLevel.PhoenixFaction, proteanMutaneResearch);
+                        //  controller.PhoenixFaction.AddObjective(researchPM);
                     }
                     else if (research.ResearchID == "PX_ProteanMutaneResearchDef")
                     {
@@ -314,7 +371,7 @@ namespace TFTV
 
                     else if (research.ResearchID == "NJ_Bionics2_ResearchDef")
                     {
-                       
+
                         ResearchElement bionics3 = controller.SynedrionFaction.Research.GetResearchById("SYN_Bionics3_ResearchDef");
                         controller.SynedrionFaction.Research.GiveResearch(bionics3);
                         controller.SynedrionFaction.Research.CompleteResearch(bionics3);
@@ -323,9 +380,9 @@ namespace TFTV
 
                     }
 
-                 
-                        TFTVAncients.CheckImpossibleWeaponsAdditionalRequirements(controller);
-                    
+
+                    TFTVAncients.CheckImpossibleWeaponsAdditionalRequirements(controller);
+
 
                 }
                 catch (Exception e)
@@ -354,23 +411,23 @@ namespace TFTV
 
         }
 
-        public static DamageMultiplierStatusDef CreateNewDescriptiveTacticalStatus(string statusName, string gUIDStatus, 
+        public static DamageMultiplierStatusDef CreateNewDescriptiveTacticalStatus(string statusName, string gUIDStatus,
             string gUIDVisuals, string title, string description, string iconFileName)
         {
-            try 
+            try
             {
                 DamageMultiplierStatusDef source = DefCache.GetDef<DamageMultiplierStatusDef>("BionicResistances_StatusDef");
                 DamageMultiplierStatusDef newStatus = Helper.CreateDefFromClone(
                     source,
                     gUIDStatus,
                     statusName);
-                
+
                 newStatus.Visuals = Helper.CreateDefFromClone(
                     source.Visuals,
                     gUIDVisuals,
-                    statusName+"VisualsDef");
+                    statusName + "VisualsDef");
 
-                newStatus.EffectName =statusName;
+                newStatus.EffectName = statusName;
                 newStatus.VisibleOnHealthbar = HealthBarVisibility.AlwaysVisible;
                 newStatus.VisibleOnPassiveBar = true;
                 newStatus.VisibleOnStatusScreen = StatusScreenVisibility.VisibleOnStatusesList;
@@ -380,10 +437,10 @@ namespace TFTV
                 newStatus.Visuals.LargeIcon = Helper.CreateSpriteFromImageFile(iconFileName);
                 newStatus.Visuals.SmallIcon = Helper.CreateSpriteFromImageFile(iconFileName);
 
-              //  TacticalAbilityViewElementDef visuals = (TacticalAbilityViewElementDef)newStatus.Visuals;
-              //  visuals.HideFromPassives = true;
-              //  visuals.ShowInStatusScreen = false;
-              
+                //  TacticalAbilityViewElementDef visuals = (TacticalAbilityViewElementDef)newStatus.Visuals;
+                //  visuals.HideFromPassives = true;
+                //  visuals.ShowInStatusScreen = false;
+
 
                 return newStatus;
             }

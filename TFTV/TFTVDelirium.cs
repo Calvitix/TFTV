@@ -1,12 +1,14 @@
 ﻿using Base;
 using Base.Core;
 using Base.Entities.Statuses;
+using Base.Levels.SceneObjectIds;
 using Base.UI.MessageBox;
 using HarmonyLib;
 using PhoenixPoint.Common.Core;
 using PhoenixPoint.Common.Entities;
 using PhoenixPoint.Common.Entities.Characters;
 using PhoenixPoint.Common.Entities.GameTags;
+using PhoenixPoint.Common.View.ViewModules;
 using PhoenixPoint.Geoscape.Entities;
 using PhoenixPoint.Geoscape.Levels;
 using PhoenixPoint.Geoscape.View.ViewModules;
@@ -17,9 +19,11 @@ using PhoenixPoint.Tactical.Entities.Equipments;
 using PhoenixPoint.Tactical.Entities.Statuses;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
 using UnityEngine;
+using static Base.Audio.WwiseIDs.SWITCHES;
 using Random = System.Random;
 
 namespace TFTV
@@ -27,12 +31,31 @@ namespace TFTV
     internal class TFTVDelirium
     {
         //  private static readonly DefRepository Repo = TFTVMain.Repo;
+        private static readonly SharedData Shared = TFTVMain.Shared;
         private static readonly DefCache DefCache = TFTVMain.Main.DefCache;
         private static readonly GameTagDef bionicalTag = GameUtl.GameComponent<SharedData>().SharedGameTags.BionicalTag;
         private static readonly GameTagDef mutationTag = GameUtl.GameComponent<SharedData>().SharedGameTags.AnuMutationTag;
         // Patch to increase damage by 2% per mutated body part per Delirium point
 
+        private static readonly TacticalAbilityDef InnerSight_AbilityDef = DefCache.GetDef<TacticalAbilityDef>("InnerSight_AbilityDef");
+        private static readonly TacticalAbilityDef Terror_AbilityDef = DefCache.GetDef<TacticalAbilityDef>("Terror_AbilityDef");
+        private static readonly TacticalAbilityDef feralDeliriumPerk = DefCache.GetDef<TacticalAbilityDef>("FeralNew_AbilityDef");
+        private static readonly TacticalAbilityDef hyperalgesiaAbilityDef = DefCache.GetDef<TacticalAbilityDef>("Hyperalgesia_AbilityDef");
+        private static readonly TacticalAbilityDef feralAbilityDef = DefCache.GetDef<TacticalAbilityDef>("Feral_AbilityDef");
+        private static readonly TacticalAbilityDef bloodthirstyAbilityDef = DefCache.GetDef<TacticalAbilityDef>("Bloodthirsty_AbilityDef");
+        private static readonly TacticalAbilityDef fasterSynapsesDef = DefCache.GetDef<TacticalAbilityDef>("FasterSynapses_AbilityDef");
+        private static readonly TacticalAbilityDef anxietyDef = DefCache.GetDef<TacticalAbilityDef>("AnxietyAbilityDef");
+        private static readonly TacticalAbilityDef newAnxietyDef = DefCache.GetDef<TacticalAbilityDef>("NewAnxietyAbilityDef");
+        private static readonly TacticalAbilityDef oneOfThemDef = DefCache.GetDef<TacticalAbilityDef>("OneOfThemPassive_AbilityDef");
+        private static readonly TacticalAbilityDef wolverineDef = DefCache.GetDef<TacticalAbilityDef>("Wolverine_AbilityDef");
+        private static readonly TacticalAbilityDef wolverineCuredDef = DefCache.GetDef<TacticalAbilityDef>("WolverineCured_AbilityDef");        
+        private static readonly TacticalAbilityDef derealizationDef = DefCache.GetDef<TacticalAbilityDef>("DerealizationIgnorePain_AbilityDef");
+        private static readonly TacticalAbilityDef newDerealizationDef = DefCache.GetDef<TacticalAbilityDef>("Derealization_AbilityDef");
 
+        private static readonly List<TacticalAbilityDef> DeliriumPerks = new List<TacticalAbilityDef>() {InnerSight_AbilityDef, Terror_AbilityDef, feralDeliriumPerk, hyperalgesiaAbilityDef,
+        feralAbilityDef, bloodthirstyAbilityDef, fasterSynapsesDef, anxietyDef, newAnxietyDef, oneOfThemDef, wolverineDef, derealizationDef, newDerealizationDef};
+
+        public static Dictionary<int, int> CharactersDeliriumPerksAndMissions = new Dictionary<int, int>();
 
         [HarmonyPatch(typeof(CorruptionStatus), "GetMultiplier")]
         internal static class TFTV_CorruptionStatus_GetMultiplier_Mutations_patch
@@ -69,6 +92,39 @@ namespace TFTV
             }
         }
 
+        public static string CurrentDeliriumLevel(GeoLevelController controller)
+        {
+            try 
+            {
+                string currentDeliriumLevel = "";
+
+                int currentODIlevel = controller.EventSystem.GetVariable("BC_SDI");
+                // TFTVLogger.Always("CurrentODIlevel is " + currentODIlevel);
+                int odiPerc = currentODIlevel * 100 / 20; //TFTVSDIandVoidOmenRoll.ODI_EventIDs.Length;
+
+                if (TFTVVoidOmens.VoidOmensCheck[10] || odiPerc >= 45)
+                {
+                    currentDeliriumLevel = "equal to character's Willpower";
+                }
+                else if(odiPerc < 45) 
+                {
+                    currentDeliriumLevel = "equal to half character's Willpower";
+                }
+                else if (odiPerc < 25) 
+                {
+                    currentDeliriumLevel = "equal to a third of character's Willpower";
+                }
+                                                
+                return currentDeliriumLevel;
+
+            }
+            catch (Exception e)
+            {
+                TFTVLogger.Error(e);
+                throw;
+            }
+        }
+
         //General method to calculate max Delirium a character on geo can have taking into account ODI and bionics
         public static float CalculateMaxCorruption(GeoCharacter character)
         {
@@ -78,7 +134,7 @@ namespace TFTV
                 float bonusWillpower = 0;
 
 
-                //  GeoLevelController level = (GeoLevelController)UnityEngine.Object.FindObjectOfType(typeof(GeoLevelController));
+                //  GeoLevelController level = GameUtl.CurrentLevel().GetComponent<GeoLevelController>();
 
                 /*  foreach (ICommonItem armorItem in character.ArmourItems)
                   {
@@ -391,7 +447,19 @@ namespace TFTV
 
                     // Like the original calculation, but adapted with 'maxCorruption'
                     // Also '__result' for 'return', '__instance' for 'this' and 'base_TacticalActor' for 'base.TacticalActor'
-                    __result = Mathf.Min(__instance.CorruptionStatusDef.ValueIncrement, maxCorruption - base_TacticalActor.CharacterStats.Corruption.IntValue);
+
+                    TacticalAbilityDef oneOfThemDef = DefCache.GetDef<TacticalAbilityDef>("OneOfThemPassive_AbilityDef");
+
+                    if (base_TacticalActor.GetAbilityWithDef<PassiveModifierAbility>(oneOfThemDef) != null)
+                    {
+                        __result = Mathf.Min(__instance.CorruptionStatusDef.ValueIncrement*2, maxCorruption - base_TacticalActor.CharacterStats.Corruption.IntValue);
+                    }
+                    else
+                    {
+                        __result = Mathf.Min(__instance.CorruptionStatusDef.ValueIncrement, maxCorruption - base_TacticalActor.CharacterStats.Corruption.IntValue);
+                    }
+                        TFTVLogger.Always($"{base_TacticalActor.DisplayName} bionics: {numberOfBionics} odi {odiPerc} willpower max: {base_TacticalActor.CharacterStats.Willpower.IntMax}, max delirium {maxCorruption} " +
+                        $"Delirium {base_TacticalActor.CharacterStats.Corruption.IntValue}, result: {__result} ");
 
                 }
                 catch (Exception e)
@@ -561,27 +629,35 @@ namespace TFTV
         public static class GeoCharacter_CureCorruption_SetStaminaTo0_patch
         {
             private static readonly PassiveModifierAbilityDef InnerSight_AbilityDef = DefCache.GetDef<PassiveModifierAbilityDef>("InnerSight_AbilityDef");
-            private static readonly PassiveModifierAbilityDef AnxietyAbilityDef = DefCache.GetDef<PassiveModifierAbilityDef>("AnxietyAbilityDef");
+          //  private static readonly PassiveModifierAbilityDef AnxietyAbilityDef = DefCache.GetDef<PassiveModifierAbilityDef>("AnxietyAbilityDef");
             private static readonly PassiveModifierAbilityDef Hyperalgesia_AbilityDef = DefCache.GetDef<PassiveModifierAbilityDef>("Hyperalgesia_AbilityDef");
             private static readonly PassiveModifierAbilityDef FasterSynapses_AbilityDef = DefCache.GetDef<PassiveModifierAbilityDef>("FasterSynapses_AbilityDef");
             private static readonly PassiveModifierAbilityDef Terror_AbilityDef = DefCache.GetDef<PassiveModifierAbilityDef>("Terror_AbilityDef");
             private static readonly ApplyStatusAbilityDef Wolverine_AbilityDef = DefCache.GetDef<ApplyStatusAbilityDef>("Wolverine_AbilityDef");
-            private static readonly TacticalAbilityDef Derealization_AbilityDef = DefCache.GetDef<TacticalAbilityDef>("DerealizationIgnorePain_AbilityDef");
-            private static readonly ApplyStatusAbilityDef feral_AbilityDef = DefCache.GetDef<ApplyStatusAbilityDef>("Feral_AbilityDef");
+        //    private static readonly TacticalAbilityDef Derealization_AbilityDef = DefCache.GetDef<TacticalAbilityDef>("DerealizationIgnorePain_AbilityDef");
+        //    private static readonly ApplyStatusAbilityDef feral_AbilityDef = DefCache.GetDef<ApplyStatusAbilityDef>("Feral_AbilityDef");
             private static readonly PassiveModifierAbilityDef OneOfThem_AbilityDef = DefCache.GetDef<PassiveModifierAbilityDef>("OneOfThemPassive_AbilityDef");
             private static readonly ApplyStatusAbilityDef bloodthirsty_AbilityDef = DefCache.GetDef<ApplyStatusAbilityDef>("Bloodthirsty_AbilityDef");
-
+            private static readonly PassiveModifierAbilityDef feralDeliriumPerk = DefCache.GetDef<PassiveModifierAbilityDef>("FeralNew_AbilityDef");
+            private static readonly TacticalAbilityDef newAnxietyDef = DefCache.GetDef<TacticalAbilityDef>("NewAnxietyAbilityDef");
+            private static readonly TacticalAbilityDef newDerealization_AbilityDef = DefCache.GetDef<TacticalAbilityDef>("Derealization_AbilityDef");
+           
             public static void Postfix(GeoCharacter __instance)
             {
                 try
                 {
                     List<TacticalAbilityDef> abilityList = new List<TacticalAbilityDef>
-                    { InnerSight_AbilityDef, AnxietyAbilityDef, Hyperalgesia_AbilityDef, FasterSynapses_AbilityDef, Terror_AbilityDef, Wolverine_AbilityDef, Derealization_AbilityDef, feral_AbilityDef,
-                    OneOfThem_AbilityDef, bloodthirsty_AbilityDef
+                    { Wolverine_AbilityDef, InnerSight_AbilityDef, newAnxietyDef, Hyperalgesia_AbilityDef, FasterSynapses_AbilityDef, Terror_AbilityDef,  newDerealization_AbilityDef,
+                    OneOfThem_AbilityDef, bloodthirsty_AbilityDef, feralDeliriumPerk
                     };
 
+                    if (__instance.GetTacticalAbilities().Contains(wolverineCuredDef) && abilityList.Contains(Wolverine_AbilityDef)) 
+                    {
+                        abilityList.Remove(Wolverine_AbilityDef);
+                    }
+
                     UnityEngine.Random.InitState((int)Stopwatch.GetTimestamp());
-                    int num = UnityEngine.Random.Range(0, 200);
+                    int num = UnityEngine.Random.Range(0, 200); //testing,
                     TFTVLogger.Always("Treatment rolled " + num);
 
                     if (num >= 0 && num <= 50)
@@ -597,11 +673,27 @@ namespace TFTV
 
                             __instance.Progression.AddAbility(abilityToAdd);
                           
-                                GameUtl.GetMessageBox().ShowSimplePrompt($"{__instance.GetName()}" + " semble être affecté de '" + $"<b>{abilityToAdd.ViewElementDef.DisplayName1.Localize()}</b>'"
-                                    + " à la suite du traitement expérimental par mutagène. Cette condition est susceptible d'être permanente." //Calvitix Trad
+                            GameUtl.GetMessageBox().ShowSimplePrompt($"{__instance.GetName()} is afflicted with <b>{abilityToAdd.ViewElementDef.DisplayName1.LocalizeEnglish()}</b>"
+                                + $" as a result of the experimental mutagen treatment. The subject may overcome this condition as they continue to be deployed in the field. " +
+                                $"However, aquiring additional afflictions from this experimental treatment will wipe out any progress made in adjusting to this condition."
                                 + "\n\n" + $"<i>{abilityToAdd.ViewElementDef.Description.LocalizeEnglish()}</i>", MessageBoxIcon.None, MessageBoxButtons.OK, null);
+                            
                             TFTVLogger.Always("Added ability " + abilityToAdd.ViewElementDef.DisplayName1.LocalizeEnglish());
+                           
+                            if (CharactersDeliriumPerksAndMissions == null) 
+                            {
+                                CharactersDeliriumPerksAndMissions = new Dictionary<int, int>();           
+                            }
+                            
+                            if (CharactersDeliriumPerksAndMissions.ContainsKey(__instance.Id)) 
+                            {
+                                CharactersDeliriumPerksAndMissions[__instance.Id] = 0;                     
+                            }
+                            else 
+                            {
+                                CharactersDeliriumPerksAndMissions.Add(__instance.Id, 0);
 
+                            }
                         }
                     }
                     else if (num > 50 && num <= 125)
@@ -612,6 +704,123 @@ namespace TFTV
                     }
                 }
 
+                catch (Exception e)
+                {
+                    TFTVLogger.Error(e);
+                }
+            }
+        }
+
+
+        [HarmonyPatch(typeof(GeoMission), "ApplyMissionResults")]
+        public static class GeoMission_ManageGear_RollToRemoveDeliriumPerks_patch
+        {
+            public static void Postfix(GeoMission __instance, TacMissionResult result, GeoSquad squad)
+            {
+                try
+                {
+                   // TFTVLogger.Always($"got here {result.FactionResults.Find(r => r.FactionDef == Shared.PhoenixFactionDef).State}");
+
+                    if (result.FactionResults.Find(r => r.FactionDef == Shared.PhoenixFactionDef).State == PhoenixPoint.Tactical.Levels.TacFactionState.Won) 
+                    {
+                      //  TFTVLogger.Always($"got here passed the if");
+                        RemoveDeliriumPerks(__instance.Site.GeoLevel, squad); 
+                    }
+
+                }
+
+                catch (Exception e)
+                {
+                    TFTVLogger.Error(e);
+                }
+            }
+        }
+
+        public static void RemoveDeliriumPerks(GeoLevelController controller, GeoSquad squad)
+        {
+            try
+            {
+                // GeoLevelController controller = GameUtl.CurrentLevel().GetComponent<GeoLevelController>();
+                int difficultyLevel = controller.CurrentDifficultyLevel.Order;
+
+                if (CharactersDeliriumPerksAndMissions != null) //add difficulty/config option check
+                {
+                   // TFTVLogger.Always($"got here");
+
+                    foreach (GeoCharacter geoCharacter in squad.Soldiers)
+                    {
+                        if (CharactersDeliriumPerksAndMissions.ContainsKey(geoCharacter.Id))
+                        {
+                        //    TFTVLogger.Always($"and here");
+
+                            CharactersDeliriumPerksAndMissions[geoCharacter.Id] += 1;
+
+                         //   if (CharactersDeliriumPerksAndMissions[geoCharacter.Id] > difficultyLevel)
+                         //   {
+                              //  TFTVLogger.Always($"and even here");
+
+                                UnityEngine.Random.InitState((int)Stopwatch.GetTimestamp());
+                                int sides = 100 + (10 * difficultyLevel) - (10 * CharactersDeliriumPerksAndMissions[geoCharacter.Id]);
+
+                                if(sides <= 0) 
+                                {
+                                    sides = 1;
+                                
+                                }
+
+                                int num = UnityEngine.Random.Range(0, sides); //testing,
+                                
+                                
+                                TFTVLogger.Always($"{geoCharacter.DisplayName} with {CharactersDeliriumPerksAndMissions[geoCharacter.Id]} missions rolls {num} on a {sides} sided dice to get rid of Delirium perks");
+
+                                if (num <= 1)
+                                {
+
+                                    foreach (TacticalAbilityDef tacticalAbilityDef in geoCharacter.GetTacticalAbilities().Where(ta => DeliriumPerks.Contains(ta)))
+                                    {
+                                        List<TacticalAbilityDef> abilities = Traverse.Create(geoCharacter.Progression).Field("_abilities").GetValue<List<TacticalAbilityDef>>();
+                                        TFTVLogger.Always($"removing {tacticalAbilityDef.name} from {geoCharacter.DisplayName}");
+
+                                        abilities.Remove(tacticalAbilityDef); // Example modification
+
+                                    if (tacticalAbilityDef == wolverineDef) 
+                                    {
+                                        TFTVLogger.Always($"Adding cured wolverine ability");
+                                        abilities.Add(wolverineCuredDef);
+
+                                    
+                                    }
+                                    }
+
+                                    CharactersDeliriumPerksAndMissions[geoCharacter.Id] = -1;
+                                }
+                      //      }
+                        }
+                    }
+                }
+            }
+
+            catch (Exception e)
+            {
+                TFTVLogger.Error(e);
+            }
+        }
+
+        [HarmonyPatch(typeof(EditUnitButtonsController), "SetEditUnitButtonsBasedOnType")]
+        internal static class TFTV_EditUnitButtonsController_SetEditUnitButtonsBasedOnType_DeliriumPerksCured_patch
+        {
+            public static void Postfix(UIModuleActorCycle ____parentModule)
+            {
+                try
+                {
+                    if(CharactersDeliriumPerksAndMissions!=null && CharactersDeliriumPerksAndMissions.ContainsKey(____parentModule.CurrentCharacter.Id) &&
+                        CharactersDeliriumPerksAndMissions[____parentModule.CurrentCharacter.Id] == -1)                    
+                    {
+                        GameUtl.GetMessageBox().ShowSimplePrompt($"{____parentModule.CurrentCharacter.GetName()} has fully recovered from the effects caused by the experimental Delirium Treatment!", MessageBoxIcon.None, MessageBoxButtons.OK, null);
+                        CharactersDeliriumPerksAndMissions.Remove(____parentModule.CurrentCharacter.Id);
+                    }
+
+                }
                 catch (Exception e)
                 {
                     TFTVLogger.Error(e);
