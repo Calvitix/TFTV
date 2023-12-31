@@ -7,6 +7,9 @@ using PhoenixPoint.Geoscape.Entities;
 using PhoenixPoint.Geoscape.Events;
 using PhoenixPoint.Geoscape.Levels;
 using PhoenixPoint.Geoscape.Levels.Factions;
+using PhoenixPoint.Geoscape.View.ViewControllers;
+using PhoenixPoint.Geoscape.View.ViewModules;
+using PhoenixPoint.Home.View.ViewModules;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -61,7 +64,7 @@ namespace TFTV
         }
 
         //Behemoth roaming
-        [HarmonyPatch(typeof(GeoBehemothActor), "OnBehemothEmerged")]
+      /*  [HarmonyPatch(typeof(GeoBehemothActor), "OnBehemothEmerged")]
         public static class GeoBehemothActor_OnBehemothEmerged_patch
         {
             public static bool Prepare()
@@ -97,7 +100,7 @@ namespace TFTV
 
             }
 
-        }
+        }*/
 
         //Hammerfall
         [HarmonyPatch(typeof(GeoAlienFaction), "SpawnEgg", new Type[] { typeof(Vector3) })]
@@ -204,12 +207,7 @@ namespace TFTV
         [HarmonyPatch(typeof(GeoVehicle), "OnArrivedAtDestination")]
         public static class GeoVehicle_OnArrivedAtDestination
         {
-            public static bool Prepare()
-            {
-                TFTVConfig config = TFTVMain.Main.Config;
-                return config.ActivateAirCombatChanges;
-            }
-
+          
             public static void Postfix(GeoVehicle __instance, bool justPassing)
             {
                 try
@@ -245,11 +243,6 @@ namespace TFTV
         public static class GeoBehemothActor_PickSubmergeLocation_patch
         {
 
-            public static bool Prepare()
-            {
-                TFTVConfig config = TFTVMain.Main.Config;
-                return config.ActivateAirCombatChanges;
-            }
             public static void Postfix(GeoBehemothActor __instance)
 
 
@@ -299,11 +292,7 @@ namespace TFTV
         [HarmonyPatch(typeof(GeoscapeRaid), "StopBehemothFollowing")]
         public static class GeoscapeRaid_StopBehemothFollowing_patch
         {
-            public static bool Prepare()
-            {
-                TFTVConfig config = TFTVMain.Main.Config;
-                return config.ActivateAirCombatChanges;
-            }
+           
             public static void Prefix(GeoscapeRaid __instance)
             {
                 try
@@ -392,12 +381,6 @@ namespace TFTV
         public static class GeoBehemothActor_UpdateHourly_Patch
         {
 
-            public static bool Prepare()
-            {
-                TFTVConfig config = TFTVMain.Main.Config;
-                return config.ActivateAirCombatChanges;
-            }
-
             public static bool Prefix(GeoBehemothActor __instance, ref int ____disruptionThreshhold, int ____disruptionPoints, int ____nextActionHoursLeft)
             {
                 try
@@ -423,39 +406,21 @@ namespace TFTV
 
                     if (____disruptionThreshhold <= 0)
                     {
-                        FesteringSkiesSettingsDef festeringSkiesSettings = __instance.GeoLevel.FesteringSkiesSettings;
-                        GameDifficultyLevelDef currentDifficultyLevel = __instance.GeoLevel.CurrentDifficultyLevel;
-                        int num = festeringSkiesSettings.DisruptionThreshholdBaseValue + currentDifficultyLevel.DisruptionDueToDifficulty;
-                        //  TFTVLogger.Always("The num is " + num);
+                        MethodInfo CalculateDisruptionThreshholdMethod = AccessTools.Method(typeof(GeoBehemothActor), "CalculateDisruptionThreshhold");
 
-                        num += __instance.GeoLevel.EventSystem.GetVariable(BehemothRoamings) * 2;
+                        ____disruptionThreshhold = (int)CalculateDisruptionThreshholdMethod.Invoke(__instance, null);
 
-
-                       /* foreach (BonusesToDisruptionMeter researchDisruptionBonuse in festeringSkiesSettings.ResearchDisruptionBonuses)
-                        {
-                            if (__instance.GeoLevel.AlienFaction.Research.HasCompleted(researchDisruptionBonuse.ResearchDefId))
-                            {
-                                num += researchDisruptionBonuse.DisruptionBonus;
-                            }
-                        }*/
-                        ____disruptionThreshhold = num;
-
-                        // BehemothDisplayController behemothDisplayController = (BehemothDisplayController)UnityEngine.Object.FindObjectOfType(typeof(BehemothDisplayController));
-                        // behemothDisplayController.UpdateDisruptionMeter(____disruptionPoints, ____disruptionThreshhold);
-
-
-                        TFTVLogger.Always("Behemoth hourly update, disruption threshold set to " + ____disruptionThreshhold + ", disruption points are " + ____disruptionPoints);
+                       TFTVLogger.Always($"Behemoth hourly update, disruption threshold set to {____disruptionThreshhold}, disruption points are {____disruptionPoints}");
                     }
 
                     if (!__instance.IsSubmerging && ____disruptionPoints >= ____disruptionThreshhold)
                     {
                         if (__instance.CurrentSite != null)
                         {
-
                             MethodInfo method_GenerateTargetData = AccessTools.Method(typeof(GeoBehemothActor), "PickSubmergeLocation");
 
                             method_GenerateTargetData.Invoke(__instance, null);
-                            TFTVLogger.Always("Behemoth hourly update, disruption points at " + ____disruptionPoints + ", while threshold set to " + ____disruptionThreshhold + ". Behemoth should submerge");
+                            TFTVLogger.Always($"Behemoth hourly update, disruption points at {____disruptionPoints}, while threshold set to {____disruptionThreshhold}. Behemoth should submerge");
                             return false;
                         }
                     }
@@ -466,7 +431,7 @@ namespace TFTV
                     {
                         MethodInfo method_GenerateTargetData = AccessTools.Method(typeof(GeoBehemothActor), "PerformAction");
                         method_GenerateTargetData.Invoke(__instance, null);
-                        TFTVLogger.Always("Behemoth hourly update, " + ____nextActionHoursLeft + " hours left to move, so time to move");
+                        TFTVLogger.Always($"Behemoth hourly update{____nextActionHoursLeft} hours left to move, so time to move");
 
                     }
 
@@ -553,6 +518,50 @@ namespace TFTV
             }
         }
 
+        //Patch to adjust disprution threshold
+        [HarmonyPatch(typeof(GeoBehemothActor), "CalculateDisruptionThreshhold")]
+        public static class GeoBehemothActor_CalculateDisruptionThreshhold_patch
+        {
+           
+            public static void Postfix(GeoBehemothActor __instance, ref int __result, int ____disruptionPoints)
+            {
+                try
+                {
+                    FesteringSkiesSettingsDef festeringSkiesSettings = __instance.GeoLevel.FesteringSkiesSettings;
+                    GameDifficultyLevelDef currentDifficultyLevel = __instance.GeoLevel.CurrentDifficultyLevel;
+                    int num = festeringSkiesSettings.DisruptionThreshholdBaseValue + currentDifficultyLevel.DisruptionDueToDifficulty;
+                    num += __instance.GeoLevel.EventSystem.GetVariable(BehemothRoamings) * 2;
+
+                    //  TFTVLogger.Always("The num is " + num);
+
+                TFTVLogger.Always($"Calculating Disruption Threshold for Big B. " +
+                    $"Base value: {festeringSkiesSettings.DisruptionThreshholdBaseValue} " +
+                    $"From Difficulty: {currentDifficultyLevel.DisruptionDueToDifficulty}  " +
+                    $"Roaming: {__instance.GeoLevel.EventSystem.GetVariable(BehemothRoamings)}" +
+                    $"Total: {num}");
+
+                    int[] voidOmensInEffect = TFTVVoidOmens.CheckFordVoidOmensInPlay(__instance.GeoLevel);
+                    if (voidOmensInEffect.Contains(11))
+                    {
+                        num += 3 * TFTVReleaseOnly.DifficultyOrderConverter(currentDifficultyLevel.Order);
+                        TFTVLogger.Always($"And with VO# 11 in effect, total is now {num}");
+                    }
+
+
+                    __result = num;
+                  //  TFTVLogger.Always($"calculate disruption Threshhold result it {__result}");
+
+                   
+                }
+
+                catch (Exception e)
+                {
+                    TFTVLogger.Error(e);
+                }
+            }
+        }
+
+        
 
 
         //Patch to ensure that Behemoth emerges near exploration sites, written with the help of my new best friend, chatgpt
@@ -568,7 +577,25 @@ namespace TFTV
                 {
                     GeoLevelController controller = __instance.GeoLevel;
 
-                    TFTVLogger.Always("OnBehemothEmerged invoked");
+                  
+
+                    __instance.GeoLevel.EventSystem.SetVariable(BehemothRoamings, __instance.GeoLevel.EventSystem.GetVariable(BehemothRoamings) + 1);
+
+                    TFTVLogger.Always($"Behemoth emerging, this is romaing # {  __instance.GeoLevel.EventSystem.GetVariable(BehemothRoamings)}");
+
+
+                    if (__instance.GeoLevel.PhoenixFaction.Research.HasCompleted("PX_YuggothianEntity_ResearchDef")
+                        && __instance.GeoLevel.PhoenixFaction.Research.HasCompleted("PX_Alien_Citadel_ResearchDef")
+                        && __instance.GeoLevel.EventSystem.GetVariable("BehemothPatternEventTriggered") != 1)
+                    {
+                        GeoscapeEventContext context = new GeoscapeEventContext(__instance.GeoLevel.AlienFaction, __instance.GeoLevel.PhoenixFaction);
+                        __instance.GeoLevel.EventSystem.TriggerGeoscapeEvent("OlenaOnBehemothPattern", context);
+                        __instance.GeoLevel.EventSystem.SetVariable("BehemothPatternEventTriggered", 1);
+                        TFTVLogger.Always("Event on Behemoth pattern should trigger");
+
+                    }
+
+
                     GeoSite randomElement = __instance.GeoLevel.Map.SitesByType[GeoSiteType.MistGenerator]
                         .Where(s => s != __instance.CurrentSite)
                         .Where(s => controller.Map.SitesByType[GeoSiteType.Exploration]
@@ -577,8 +604,7 @@ namespace TFTV
                              .Count(e => Vector3.Distance(e.WorldPosition, s.WorldPosition) <= 5) >= 5)
                         .ToList().GetRandomElement();
 
-                    TFTVLogger.Always("Random Element is " + randomElement.SiteId);
-
+                   
                     Type targetType = typeof(GeoBehemothActor);
                     FieldInfo eventField = targetType.GetField("OnEmerged", BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
                     BehemothSiteEventHandler OnEmerged = (BehemothSiteEventHandler)eventField.GetValue(__instance);
@@ -616,6 +642,8 @@ namespace TFTV
                     ____disruptionPoints = 0;
                     ____disruptionThreshhold = (int)CalculateDisruptionThreshholdMethod.Invoke(__instance, null);
 
+                    TFTVLogger.Always($"disruption threshold set at {____disruptionThreshhold}");
+
                     return false;
                 }
                 catch (Exception e)
@@ -633,12 +661,7 @@ namespace TFTV
 
         public static class GeoBehemothActor_DamageHavenOutcome_Patch
         {
-            public static bool Prepare()
-            {
-                TFTVConfig config = TFTVMain.Main.Config;
-                return config.ActivateAirCombatChanges;
-            }
-
+ 
             public static void Postfix(GeoBehemothActor __instance, ref int ____disruptionPoints)
             {
                 try
@@ -671,11 +694,7 @@ namespace TFTV
         [HarmonyPatch(typeof(GeoBehemothActor), "ChooseNextHavenTarget")]
         public static class GeoBehemothActor_ChooseNextHavenTarget_Patch
         {
-            public static bool Prepare()
-            {
-                TFTVConfig config = TFTVMain.Main.Config;
-                return config.ActivateAirCombatChanges;
-            }
+       
 
             public static bool Prefix(GeoBehemothActor __instance)
             {
@@ -708,16 +727,16 @@ namespace TFTV
             {
                 GeoLevelController controller = geoBehemothActor.GeoLevel;
 
-                TFTVLogger.Always("TargetsForBehemoth counts " + targetsForBehemoth.Count() + " and/but counted as 0, so here we are");
+                TFTVLogger.Always($"TargetsForBehemoth counts {targetsForBehemoth.Count()} and/but counted as 0, so here we are");
 
              
                 //Get site closest to Behemoth  
-                GeoSite behemothSite = geoBehemothActor.GeoLevel.Map.GetClosestSite_Land(geoBehemothActor.WorldPosition, true);
+                GeoSite behemothSite = geoBehemothActor.GeoLevel.Map.GetClosestSite_Land(geoBehemothActor.WorldPosition, false);
 
                 if (behemothSite != null)
                 {
+                    TFTVLogger.Always("Found fallback site on same landmass near the Behemoth");
 
-                    
                 }
                 else 
                 {
@@ -788,6 +807,31 @@ namespace TFTV
             throw new InvalidOperationException();
         }
 
+        public static void SetBehemothOnRampageMod(GeoLevelController geoLevel)
+
+        {
+            try
+            {
+
+                if (geoLevel.EventSystem.GetVariable("BehemothRoamings") >= 3)
+                {
+                    geoLevel.CurrentDifficultyLevel.DestroyHavenOutcomeChance = 50;
+                    geoLevel.FesteringSkiesSettings.NumOfHavensToDestroyBeforeSubmerge = 4;
+                    geoLevel.CurrentDifficultyLevel.DamageHavenOutcomeChance = 50;
+                }
+
+                else
+                {
+                    geoLevel.CurrentDifficultyLevel.DestroyHavenOutcomeChance = 0;
+                    geoLevel.CurrentDifficultyLevel.DamageHavenOutcomeChance = 100;
+
+                }
+            }
+            catch (Exception e)
+            {
+                TFTVLogger.Error(e);
+            }
+        }
 
         /*  public static GeoSite GetSiteForBehemothToMoveTo(GeoBehemothActor geoBehemothActor)
 

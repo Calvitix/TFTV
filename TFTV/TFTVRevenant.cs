@@ -450,10 +450,10 @@ namespace TFTV
 
                         if (TFTVRevenantResearch.ProjectOsiris)
                         {
-                            GameTagDef mutoidTag = DefCache.GetDef<GameTagDef>("Mutoid_TagDef");
+                            ClassTagDef mutoidTag = DefCache.GetDef<ClassTagDef>("Mutoid_ClassTagDef");
 
                             if (__instance.TacticalGameParams.Statistics.LivingSoldiers.ContainsKey(deathReport.Actor.GeoUnitId)
-                            && !__instance.TacticalGameParams.Statistics.DeadSoldiers.ContainsKey(deathReport.Actor.GeoUnitId) && !deathReport.Actor.GameTags.Contains(mutoidTag))
+                            && !__instance.TacticalGameParams.Statistics.DeadSoldiers.ContainsKey(deathReport.Actor.GeoUnitId) && !deathReport.Actor.GameTags.Contains(mutoidTag))                             
 
                                 TFTVRevenantResearch.RecordStatsOfDeadSoldier(deathReport.Actor);
                         }
@@ -1550,13 +1550,13 @@ namespace TFTV
 
                         if (deathReport.Actor.HasGameTag(revenantTier1GameTag))
                         {
-                            TFTVRevenantResearch.RevenantPoints = 1; // testing 1
+                            TFTVRevenantResearch.RevenantPoints = 1;
                                                                      //  TFTVLogger.Always("StartingSkill points " + __instance.GetFactionByCommandName("PX").StartingSkillpoints);
                                                                      // __instance.GetFactionByCommandName("PX").SetStartingSkillPoints(2);
                         }
                         else if (deathReport.Actor.HasGameTag(revenantTier2GameTag))
                         {
-                            TFTVRevenantResearch.RevenantPoints = 5; // testing 5
+                            TFTVRevenantResearch.RevenantPoints = 5; 
                                                                      //  TFTVLogger.Always("StartingSkill points " + __instance.GetFactionByCommandName("PX").StartingSkillpoints);
                                                                      // __instance.GetFactionByCommandName("PX").SetStartingSkillPoints(4);
                         }

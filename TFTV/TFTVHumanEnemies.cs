@@ -5,6 +5,7 @@ using Base.Entities.Statuses;
 using Base.UI;
 using HarmonyLib;
 using PhoenixPoint.Common.ContextHelp;
+using PhoenixPoint.Common.Core;
 using PhoenixPoint.Common.Entities.GameTags;
 using PhoenixPoint.Common.Entities.GameTagsTypes;
 using PhoenixPoint.Common.Levels.Missions;
@@ -29,6 +30,9 @@ namespace TFTV
     {
         private static readonly DefRepository Repo = TFTVMain.Repo;
         private static readonly DefCache DefCache = TFTVMain.Main.DefCache;
+        private static readonly SharedData Shared = TFTVMain.Shared;
+
+
         private static readonly GameTagDef HumanEnemyTier1GameTag = DefCache.GetDef<GameTagDef>("HumanEnemyTier_1_GameTagDef");
         private static readonly GameTagDef HumanEnemyTier2GameTag = DefCache.GetDef<GameTagDef>("HumanEnemyTier_2_GameTagDef");
         private static readonly GameTagDef HumanEnemyTier3GameTag = DefCache.GetDef<GameTagDef>("HumanEnemyTier_3_GameTagDef");
@@ -146,6 +150,8 @@ namespace TFTV
             throw new InvalidOperationException();
         }
 
+
+
         public static void GenerateHumanEnemyUnit(TacticalFaction enemyHumanFaction, string nameOfLeader, int roll)
         {
             try
@@ -166,61 +172,62 @@ namespace TFTV
                 string tactic = "";
                 string description = "";
 
-
-
                 if (roll == 1)
                 {
-                    description = "Enemies who can see the character lose 1 WP";
-                    tactic = "Fearsome";
+                    description = TFTVCommonMethods.ConvertKeyToString("TFTV_HUMAN_ENEMIES_FEARSOME_TEXT");
+                    tactic = TFTVCommonMethods.ConvertKeyToString("TFTV_HUMAN_ENEMIES_FEARSOME_TITLE");
                 }
                 else if (roll == 2)
                 {
-                    description = "Allies first attack with firearms costs 1 AP less";
-                    tactic = "Starting volley";
+                    description = TFTVCommonMethods.ConvertKeyToString("TFTV_HUMAN_ENEMIES_VOLLEY_TEXT");
+                    tactic = TFTVCommonMethods.ConvertKeyToString("TFTV_HUMAN_ENEMIES_VOLLEY_TITLE");
+
                 }
                 else if (roll == 3)
                 {
                     if (enemyHumanFaction.TacticalFactionDef.ShortName.Equals("Purists"))
                     {
-                        description = "Allies gain self-repair ability that restores disabled limbs";
-                        tactic = "Self-repair protocol";
+
+                        description = TFTVCommonMethods.ConvertKeyToString("TFTV_HUMAN_ENEMIES_SELFREPAIR_TEXT");
+                        tactic = TFTVCommonMethods.ConvertKeyToString("TFTV_HUMAN_ENEMIES_SELFREPAIR_TITLE");
                     }
                     else 
                     {
-                        description = "All lowest tier friendlies gain 10 regeneration";
-                        tactic = "Experimental drugs";
+
+                        description = TFTVCommonMethods.ConvertKeyToString("TFTV_HUMAN_ENEMIES_DRUGS_TEXT");
+                        tactic = TFTVCommonMethods.ConvertKeyToString("TFTV_HUMAN_ENEMIES_DRUGS_TITLE");
 
                     }
                 }
                 else if (roll == 4)
                 {
-                    description = "Character and allies within 12 tiles get +100% stealth";
-                    tactic = "Active camo";
+                    description = TFTVCommonMethods.ConvertKeyToString("TFTV_HUMAN_ENEMIES_CAMO_TEXT");
+                    tactic = TFTVCommonMethods.ConvertKeyToString("TFTV_HUMAN_ENEMIES_CAMO_TITLE");
                 }
                 else if (roll == 5)
                 {
-                    description = "Allies within 20 tiles have return fire ability";
-                    tactic = "Fire discipline";
+                    description = TFTVCommonMethods.ConvertKeyToString("TFTV_HUMAN_ENEMIES_DISCIPLINE_TEXT");
+                    tactic = TFTVCommonMethods.ConvertKeyToString("TFTV_HUMAN_ENEMIES_DISCIPLINE_TITLE");
                 }
                 else if (roll == 6)
                 {
-                    description = "When any high ranking character dies, allies gain frenzy status";
-                    tactic = "Blood frenzy";
+                    description = TFTVCommonMethods.ConvertKeyToString("TFTV_HUMAN_ENEMIES_FRENZY_TEXT");
+                    tactic = TFTVCommonMethods.ConvertKeyToString("TFTV_HUMAN_ENEMIES_FRENZY_TITLE");
                 }
                 else if (roll == 7)
                 {
-                    description = "Enemy that attacks character becomes Marked for Death";
-                    tactic = "Retribution";
+                    description = TFTVCommonMethods.ConvertKeyToString("TFTV_HUMAN_ENEMIES_RETRIBUTION_TEXT");
+                    tactic = TFTVCommonMethods.ConvertKeyToString("TFTV_HUMAN_ENEMIES_RETRIBUTION_TITLE");
                 }
                 else if (roll == 8)
                 {
-                    description = "Each ally does +10% damage while leader is alive if there are no enemies in sight within 10 tiles at the start of its turn";
-                    tactic = "Ambush";
+                    description = TFTVCommonMethods.ConvertKeyToString("TFTV_HUMAN_ENEMIES_AMBUSH_TEXT");
+                    tactic = TFTVCommonMethods.ConvertKeyToString("TFTV_HUMAN_ENEMIES_AMBUSH_TITLE");
                 }
                 else if (roll == 9)
                 {
-                    description = "While leader is alive each ally gains +15% accuracy per ally within 12 tiles, up to +60%";
-                    tactic = "Assisted targeting";
+                    description = TFTVCommonMethods.ConvertKeyToString("TFTV_HUMAN_ENEMIES_TARGETING_TEXT");
+                    tactic = TFTVCommonMethods.ConvertKeyToString("TFTV_HUMAN_ENEMIES_TARGETING_TITLE");
                 }
 
                 string nameOfTactic = tactic;
@@ -229,7 +236,7 @@ namespace TFTV
 
                 if (enemyHumanFaction.TacticalFactionDef.ShortName.Equals("ban"))
                 {
-                    unitType = "a gang";
+                    unitType = TFTVCommonMethods.ConvertKeyToString("TFTV_HUMAN_ENEMIES_UNIT_TYPE_GANG");
                     //  factionTag= "NEU_Bandits_TacticalFactionDef";
                     //  FileNameSquadPic = "ban_squad.png";
                 }
@@ -238,34 +245,34 @@ namespace TFTV
                     string factionName = "";
                     if (enemyHumanFaction.TacticalFactionDef.ShortName.Equals("nj"))
                     {
-                        factionName = "New Jericho";
+                        factionName = TFTVCommonMethods.ConvertKeyToString("TFTV_HUMAN_ENEMIES_NJ");
                         //  factionTag = "NewJericho_TacticalFactionDef";
                         // FileNameSquadPic = "nj_squad.jpg";
                     }
                     else if (enemyHumanFaction.TacticalFactionDef.ShortName.Equals("anu"))
                     {
-                        factionName = "Disciples of Anu";
+                        factionName = TFTVCommonMethods.ConvertKeyToString("TFTV_HUMAN_ENEMIES_ANU");
                         //  factionTag = "Anu_TacticalFactionDef";
                         //  FileNameSquadPic = "anu_squad.jpg";
                     }
                     else
                     {
-                        factionName = "Synedrion";
+                        factionName = Shared.SynedrionFactionDef.GetName();
                         //  factionTag = "Synedrion_TacticalFactionDef";                        
                         //  FileNameSquadPic = "syn_squad.jpg";
                     }
 
-                    unitType = "a " + factionName + " squad";
+                    unitType = $"a {factionName} {TFTVCommonMethods.ConvertKeyToString("TFTV_HUMAN_ENEMIES_UNIT_TYPE_SQUAD")}";
                 }
                 else if (enemyHumanFaction.TacticalFactionDef.ShortName.Equals("FallenOnes"))
                 {
-                    unitType = "a pack of Forsaken";
+                    unitType = TFTVCommonMethods.ConvertKeyToString("TFTV_HUMAN_ENEMIES_UNIT_TYPE_PACK");
                     // factionTag = "AN_FallenOnes_TacticalFactionDef";
                     //  FileNameSquadPic = "fo_squad.png";
                 }
                 else if (enemyHumanFaction.TacticalFactionDef.ShortName.Equals("Purists"))
                 {
-                    unitType = "an array of the Pure";
+                    unitType = TFTVCommonMethods.ConvertKeyToString("TFTV_HUMAN_ENEMIES_UNIT_TYPE_ARRAY");
                     // factionTag = "NJ_Purists_TacticalFactionDef";
 
                     //  FileNameSquadPic = "pu_squad.jpg";
@@ -332,7 +339,7 @@ namespace TFTV
 
             {
                 TacticalFaction phoenix = controller.GetFactionByCommandName("PX");
-                int difficultyLevel = controller.Difficulty.Order;
+                int difficultyLevel = TFTVReleaseOnly.DifficultyOrderConverter(controller.Difficulty.Order);
 
                 foreach (TacticalFaction faction in GetHumanEnemyFactions(controller))
                 {
@@ -481,7 +488,7 @@ namespace TFTV
             try
             {
                 TacticalFaction phoenix = controller.GetFactionByCommandName("PX");
-                int difficultyLevel = controller.Difficulty.Order;
+                int difficultyLevel = TFTVReleaseOnly.DifficultyOrderConverter(controller.Difficulty.Order);
 
                 foreach (TacticalFaction faction in GetHumanEnemyFactions(controller))
                 {
@@ -859,63 +866,65 @@ namespace TFTV
                 string name = "Tactic";
                 string tactic = "";
                 string description = "";
+
                 if (roll == 1)
                 {
-                    description = "Enemies who can see the character lose 1 WP at the start of their turn";
-                    tactic = " - Fearsome";
+                    description = TFTVCommonMethods.ConvertKeyToString("TFTV_HUMAN_ENEMIES_FEARSOME_TEXT");
+                    tactic =$"- {TFTVCommonMethods.ConvertKeyToString("TFTV_HUMAN_ENEMIES_FEARSOME_TITLE")}";
                 }
                 else if (roll == 2)
                 {
-                    description = "Allies first attack with firearms costs 1 AP less";
-                    tactic = " - Starting volley";
+                    description = TFTVCommonMethods.ConvertKeyToString("TFTV_HUMAN_ENEMIES_VOLLEY_TEXT");
+                    tactic = $"- {TFTVCommonMethods.ConvertKeyToString("TFTV_HUMAN_ENEMIES_VOLLEY_TITLE")}";
+
                 }
                 else if (roll == 3)
                 {
+
                     if (HumanEnemiesAndTactics.ContainsKey("pu") || HumanEnemiesAndTactics.ContainsKey("Purists"))
                     {
-                        description = "Allies gain self-repair ability that restores disabled limbs";
-                        tactic = " - Self-repair protocol";
 
+                        description = TFTVCommonMethods.ConvertKeyToString("TFTV_HUMAN_ENEMIES_SELFREPAIR_TEXT");
+                        tactic = $"- {TFTVCommonMethods.ConvertKeyToString("TFTV_HUMAN_ENEMIES_SELFREPAIR_TITLE")}";
                     }
                     else
                     {
-                        description = "All lowest tier friendlies gain 10 regeneration";
-                        tactic = " - Experimental drugs";
+
+                        description = TFTVCommonMethods.ConvertKeyToString("TFTV_HUMAN_ENEMIES_DRUGS_TEXT");
+                        tactic = $"- {TFTVCommonMethods.ConvertKeyToString("TFTV_HUMAN_ENEMIES_DRUGS_TITLE")}";
+
                     }
-
                 }
-
                 else if (roll == 4)
                 {
-                    description = "Character and allies within 12 tiles get +100% stealth";
-                    tactic = " - Active camo";
+                    description = TFTVCommonMethods.ConvertKeyToString("TFTV_HUMAN_ENEMIES_CAMO_TEXT");
+                    tactic = $"- {TFTVCommonMethods.ConvertKeyToString("TFTV_HUMAN_ENEMIES_CAMO_TITLE")}";
                 }
                 else if (roll == 5)
                 {
-                    description = "Allies within 20 tiles have return fire ability";
-                    tactic = " - Fire discipline";
+                    description = TFTVCommonMethods.ConvertKeyToString("TFTV_HUMAN_ENEMIES_DISCIPLINE_TEXT");
+                    tactic = $"- {TFTVCommonMethods.ConvertKeyToString("TFTV_HUMAN_ENEMIES_DISCIPLINE_TITLE")}";
                 }
                 else if (roll == 6)
                 {
-                    description = "When any high ranking character dies (level 4 and above), allies gain frenzy status";
-                    tactic = " - Blood frenzy";
+                    description = TFTVCommonMethods.ConvertKeyToString("TFTV_HUMAN_ENEMIES_FRENZY_TEXT");
+                    tactic = $"- {TFTVCommonMethods.ConvertKeyToString("TFTV_HUMAN_ENEMIES_FRENZY_TITLE")}";
                 }
                 else if (roll == 7)
                 {
-                    description = "Enemy that attacks character becomes Marked for Death";
-                    tactic = " - Retribution";
+                    description = TFTVCommonMethods.ConvertKeyToString("TFTV_HUMAN_ENEMIES_RETRIBUTION_TEXT");
+                    tactic = $"- {TFTVCommonMethods.ConvertKeyToString("TFTV_HUMAN_ENEMIES_RETRIBUTION_TITLE")}";
                 }
                 else if (roll == 8)
                 {
-                    description = "Each ally does +10% damage while leader is alive if there are no enemies in sight within 10 tiles at the start of its turn";
-                    tactic = " - Ambush";
+                    description = TFTVCommonMethods.ConvertKeyToString("TFTV_HUMAN_ENEMIES_AMBUSH_TEXT");
+                    tactic = $"- {TFTVCommonMethods.ConvertKeyToString("TFTV_HUMAN_ENEMIES_AMBUSH_TITLE")}";
                 }
                 else if (roll == 9)
                 {
-                    description = "While leader is alive each ally gains +15% accuracy per ally within 12 tiles, up to +60%";
-                    tactic = "Assisted targeting";
+                    description = TFTVCommonMethods.ConvertKeyToString("TFTV_HUMAN_ENEMIES_TARGETING_TEXT");
+                    tactic = $"- {TFTVCommonMethods.ConvertKeyToString("TFTV_HUMAN_ENEMIES_TARGETING_TITLE")}";
                 }
-
 
                 AbilityData abilityData = new AbilityData
                 {
@@ -1006,7 +1015,7 @@ namespace TFTV
 
         public static void AdjustStatsAndSkills(TacticalActor tacticalActor)
         {
-            int difficultyLevel = tacticalActor.TacticalLevel.Difficulty.Order;
+            int difficultyLevel = TFTVReleaseOnly.DifficultyOrderConverter(tacticalActor.TacticalLevel.Difficulty.Order);
 
             try
             {
@@ -1262,7 +1271,7 @@ namespace TFTV
 
         public static int GetStatBuffForTier(TacticalActor tacticalActor)
         {
-            int difficultyLevel = tacticalActor.TacticalLevel.Difficulty.Order;
+            int difficultyLevel = TFTVReleaseOnly.DifficultyOrderConverter(tacticalActor.TacticalLevel.Difficulty.Order);
 
             try
             {
@@ -1625,25 +1634,22 @@ namespace TFTV
                     {
                         if (faction.Faction.FactionDef.ShortName == factionName)
                         {
-                            foreach (TacticalActorBase tacticalActorBase in faction.Actors)
+                            foreach (TacticalActor enemyLeader in faction.TacticalActors)
                             {
-                                TacticalActor tacticalActor = tacticalActorBase as TacticalActor;
-
-                                if (tacticalActorBase.HasGameTag(HumanEnemyTier1GameTag))
+                                if (enemyLeader.HasGameTag(HumanEnemyTier1GameTag) && enemyLeader.IsAlive)
                                 {
-                                    foreach (TacticalActorBase phoenixSoldierBase in phoenix.Actors)
+                                    foreach (TacticalActor phoenixSoldier in phoenix.TacticalActors)
                                     {
-                                        if (phoenixSoldierBase.BaseDef.name == "Soldier_ActorDef" && phoenixSoldierBase.InPlay)
+                                        if (phoenixSoldier.BaseDef.name == "Soldier_ActorDef" && phoenixSoldier.InPlay)
                                         {
-                                            TacticalActor actor = phoenixSoldierBase as TacticalActor;
-                                            float magnitude = actor.GetAdjustedPerceptionValue();
+                                           
+                                            float magnitude = phoenixSoldier.GetAdjustedPerceptionValue();
 
-                                            if ((phoenixSoldierBase.Pos - tacticalActorBase.Pos).magnitude < magnitude
-                                                && TacticalFactionVision.CheckVisibleLineBetweenActors(phoenixSoldierBase, phoenixSoldierBase.Pos, tacticalActor, true)
-                                                && tacticalActor.IsAlive)
+                                            if ((phoenixSoldier.Pos - enemyLeader.Pos).magnitude < magnitude
+                                                && TacticalFactionVision.CheckVisibleLineBetweenActors(phoenixSoldier, phoenixSoldier.Pos, enemyLeader, true))
                                             {
-                                                TFTVLogger.Always(actor.GetDisplayName() + " is within perception range and has LoS on " + tacticalActor.name);
-                                                actor.CharacterStats.WillPoints.Subtract(1);
+                                                TFTVLogger.Always($"{phoenixSoldier.GetDisplayName()} is within perception range and has LoS on {enemyLeader.name}");
+                                                phoenixSoldier.CharacterStats?.WillPoints.Subtract(2);
                                             }
                                         }
                                     }

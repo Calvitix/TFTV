@@ -32,7 +32,56 @@ namespace TFTV
         private static readonly DefRepository Repo = TFTVMain.Repo;
         private static readonly SharedData Shared = TFTVMain.Shared;
 
+        public static bool StrongerPandoransImplemented = false;
+      
         //Adapted from BetterEnemies by Dtony
+
+        internal static void ImplementBetterEnemies()
+        {
+            try
+            {
+                TFTVConfig config = TFTVMain.Main.Config;
+
+                TFTVLogger.Always($"AtImplementStrongerPandorans check");
+
+                if (!CheckIfBEActive())
+                {
+                    TFTVLogger.Always("BetterEnemies not found and StrongerPandorans not implemented yet");
+
+                    BECreateAIActionDefs();
+                    //  TFTVLogger.Always("BE AIActionDefs created");
+                    BEFixesToAI();
+                    //   TFTVLogger.Always("BE Fixes to AI applied");
+                    BEChange_Perception();
+                    // BEFixCaterpillarTracksDamage(); //already added to base
+                    BEReducePandoranWillpower();
+                    if (TFTVNewGameOptions.StrongerPandoransSetting)
+                    {
+                        TFTVLogger.Always("Stronger Pandorans is on!");
+                        BEBuff_ArthronsTritons();
+                        BEBuff_StartingEvolution();
+                        BEBuff_Queen();
+                        BEBUff_SirenChiron();
+                        BEBuff_SmallCharactersAndSentinels();
+                        StrongerPandoransImplemented = true;
+                    }
+                }
+                else
+                {
+                    TFTVLogger.Always("BetterEnemies mod found or StrongerPandorans already implemented, reverting changes to Scylla just in case");
+                    RevertScyllaAIFromBE();
+                }
+
+            }
+            catch (Exception e)
+            {
+                TFTVLogger.Error(e);
+
+            }
+        }
+
+
+
         internal static bool CheckIfBEActive()
         {
             try
@@ -109,48 +158,7 @@ namespace TFTV
             }
         }
 
-        internal static void ImplementBetterEnemies()
-        {
-            try
-            {
-                TFTVConfig config = TFTVMain.Main.Config;
-
-                if (!CheckIfBEActive())
-                {
-                    TFTVLogger.Always("BetterEnemies mod not found");
-
-                    BECreateAIActionDefs();
-                    //  TFTVLogger.Always("BE AIActionDefs created");
-                    BEFixesToAI();
-                    //   TFTVLogger.Always("BE Fixes to AI applied");
-                    BEChange_Perception();
-                   // BEFixCaterpillarTracksDamage(); //already added to base
-                    BEReducePandoranWillpower();
-                    if (config.BetterEnemiesOn)
-                    {
-                        TFTVLogger.Always("More challenging Pandorans from BetterEnemies on!");
-                        BEBuff_ArthronsTritons();
-                        BEBuff_StartingEvolution();
-                        BEBuff_Queen();
-                        BEBUff_SirenChiron();
-                        BEBuff_SmallCharactersAndSentinels();
-                    }
-                }
-                else
-                {
-                    TFTVLogger.Always("BetterEnemies mod found, reverting changes to Scylla");
-                    RevertScyllaAIFromBE();
-
-
-                }
-
-            }
-            catch (Exception e)
-            {
-                TFTVLogger.Error(e);
-
-            }
-        }
+      
 
         public static void BEBuff_SmallCharactersAndSentinels()
         {
@@ -457,7 +465,7 @@ namespace TFTV
 
                     DamageMultiplierStatusDef source = DefCache.GetDef<DamageMultiplierStatusDef>("BionicResistances_StatusDef");
 
-                    TFTVLogger.Always($"{source.DamageTypeDefs.Count()}");
+                 //   TFTVLogger.Always($"{source.DamageTypeDefs.Count()}");
 
                     DamageMultiplierStatusDef newStatus = Helper.CreateDefFromClone(
                         source,
@@ -478,7 +486,7 @@ namespace TFTV
                     newStatus.Range = -1;
                     newStatus.DamageTypeDefs = source.DamageTypeDefs;
 
-                    TFTVLogger.Always($"{newStatus.DamageTypeDefs.Count()}");
+                 //   TFTVLogger.Always($"{newStatus.DamageTypeDefs.Count()}");
 
                     List<DamageTypeBaseEffectDef> damageTypeBaseEffectDefs = new List<DamageTypeBaseEffectDef>();
                     damageTypeBaseEffectDefs.AddRange(newStatus.DamageTypeDefs);
@@ -486,11 +494,11 @@ namespace TFTV
                     damageTypeBaseEffectDefs.Add(standardDamageTypeEffectDef);
                     damageTypeBaseEffectDefs.Add(acidDamage);
 
-                    TFTVLogger.Always($"damageTypeBaseEffectDefs {damageTypeBaseEffectDefs.Count()}");
+               //     TFTVLogger.Always($"damageTypeBaseEffectDefs {damageTypeBaseEffectDefs.Count()}");
 
                     newStatus.DamageTypeDefs = damageTypeBaseEffectDefs.ToArray();
 
-                    TFTVLogger.Always($"{newStatus.DamageTypeDefs.Count()}");
+                  //  TFTVLogger.Always($"{newStatus.DamageTypeDefs.Count()}");
 
                     newStatus.Visuals.LargeIcon = Helper.CreateSpriteFromImageFile("UI_AbilitiesIcon_HunkerDown_2-2.png");
                     newStatus.Visuals.SmallIcon = Helper.CreateSpriteFromImageFile("UI_AbilitiesIcon_HunkerDown_2-2.png");

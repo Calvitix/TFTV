@@ -6,6 +6,7 @@ using HarmonyLib;
 using Newtonsoft.Json;
 using PhoenixPoint.Common.Core;
 using PhoenixPoint.Common.Game;
+using PhoenixPoint.Geoscape.View.ViewControllers;
 using PhoenixPoint.Home.View.ViewModules;
 using PhoenixPoint.Modding;
 using PRMBetterClasses;
@@ -15,6 +16,7 @@ using System;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 using static TFTV.TFTVConfig;
 
@@ -46,6 +48,8 @@ namespace TFTV
         //TFTV Adding references to DefRepo and SharedData
         internal static readonly DefRepository Repo = GameUtl.GameComponent<DefRepository>();
         internal static readonly SharedData Shared = GameUtl.GameComponent<SharedData>();
+
+     //   internal static bool ConfigImplemented = false;
 
         //TFTV We want at least the LogPath, but maybe other directories too...
         internal static string LogPath;
@@ -83,9 +87,9 @@ namespace TFTV
                 /// PhoenixGame is accessible at any time.
                 PhoenixGame game = GetGame();
 
-                TFTVversion = $"TFTV FR 16 Juil. #1 (HF 1) v{MetaData.Version}";
+                TFTVversion = $"TFTV August 21 release #1 (Hotfix1 for Update #35) v{MetaData.Version}";
 
-                Logger.LogInfo("TFTV FR 16 Juil. release #1 (Hotfix 1)");
+                Logger.LogInfo("TFTV August 21 release #1 (Hotfix1 for Update #35)");
 
                 ModDirectory = Instance.Entry.Directory;
                 //Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
@@ -98,7 +102,7 @@ namespace TFTV
                 TFTVLogger.Initialize(LogPath, Config.Debug, ModDirectory, nameof(TFTV));
                 PRMLogger.Initialize(LogPath, Settings.Debug, ModDirectory, nameof(PRMBetterClasses));
                 // DefCache.Initialize();
-                TFTVLogger.Always("TFTV July 16 release #1 (Hotfix 1)");
+                TFTVLogger.Always("TFTV August 21 release #1 (Hotfix1 for Update #35)");
 
                 PRMBetterClasses.Helper.Initialize();
                 // Initialize Helper
@@ -122,11 +126,7 @@ namespace TFTV
                 TFTVHumanEnemiesNames.CreateRanksDictionary();
                 Logger.LogInfo("Ranks for human enemies created");
 
-                if (Config.ActivateReverseEngineeringResearch)
-                {
-                    TFTVReverseEngineering.ModifyReverseEngineering();
-                    Logger.LogInfo("Reverse Engineering changes to Defs injected");
-                }
+               
 
                 TFTVRevenantResearch.CreateRevenantRewardsDefs();
                 TFTVProjectOsiris.CreateProjectOsirisDefs();
@@ -173,73 +173,71 @@ namespace TFTV
             //    BCApplyDefChanges();
             //  WeaponModifications.Change_Crossbows();
 
+           
 
-            if (Config.defaultSettings)
+
+         /*   if (Config.defaultSettings)
             {
 
-                Config.OverrideRookieDifficultySettings = false;
-                Config.EasyTactical = false;
+              //  Config.OverrideRookieDifficultySettings = false;
+              //  Config.EasyTactical = false;
                 Config.EasyGeoscape = false;
                 Config.EtermesMode = false;
                 Config.MoreMistVO = true;
                 Config.SkipMovies = false;
-                Config.amountOfExoticResources = 1f;
-                Config.impossibleWeaponsAdjustments = true;
-                Config.startingSquad = StartingSquadFaction.PHOENIX;
-                Config.startingBaseLocation = StartingBaseLocation.Vanilla;
-                Config.tutorialCharacters = StartingSquadCharacters.SANS_BONUS;
-                Config.InitialScavSites = 8;
-                Config.ChancesScavCrates = TFTVConfig.ScavengingWeight.Haut;
-                Config.ChancesScavSoldiers = TFTVConfig.ScavengingWeight.Faible;
-                Config.ChancesScavGroundVehicleRescue = TFTVConfig.ScavengingWeight.Faible;
-                Config.ResourceMultiplier = 0.8f;
-                Config.DiplomaticPenalties = true;
-                Config.StaminaPenaltyFromInjury = true;
-                Config.StaminaPenaltyFromMutation = true;
-                Config.StaminaPenaltyFromBionics = true;
-                Config.MoreAmbushes = true;
+             //   Config.amountOfExoticResources = 1f;
+             //   Config.impossibleWeaponsAdjustments = true;
+              //  Config.startingSquad = StartingSquadFaction.PHOENIX;
+              //  Config.startingBaseLocation = StartingBaseLocation.Vanilla;
+              //  Config.tutorialCharacters = StartingSquadCharacters.UNBUFFED;
+              //  Config.InitialScavSites = 8;
+              //  Config.ChancesScavCrates = TFTVConfig.ScavengingWeight.High;
+              //  Config.ChancesScavSoldiers = TFTVConfig.ScavengingWeight.Low;
+              //  Config.ChancesScavGroundVehicleRescue = TFTVConfig.ScavengingWeight.Low;
+             //   Config.ResourceMultiplier = 1f;
+              //  Config.DiplomaticPenalties = true;
+              //  Config.StaminaPenaltyFromInjury = true;
+               // Config.StaminaPenaltyFromMutation = true;
+              //  Config.StaminaPenaltyFromBionics = true;
+            //    Config.MoreAmbushes = true;
                 Config.ActivateStaminaRecuperatonModule = true;
-                Config.ActivateReverseEngineeringResearch = true;
-                Config.ActivateAirCombatChanges = true;
-                Config.ActivateKERework = true;
+              //  Config.ActivateReverseEngineeringResearch = true;
                 Config.HavenSOS = true;
                 Config.Debug = true;
-               // Config.ShowFaces = true;
+                Config.EqualizeTrade = true;
+            //    Config.LimitedCapture = true;
+            //    Config.LimitedHarvesting = true;
+                Config.LimitedRaiding = true;
+                Config.ReinforcementsNoDrops = true;
+        // Config.ShowFaces = true;
 
-            }
-            if (Config.OverrideRookieDifficultySettings =! false||
-            Config.EasyTactical != false||
+    }
+            if (
             Config.EasyGeoscape != false||
             Config.EtermesMode != false ||
             Config.MoreMistVO != true ||
             Config.SkipMovies != false ||
-            Config.amountOfExoticResources != 1f ||
-            Config.impossibleWeaponsAdjustments != true ||
-            Config.startingSquad != StartingSquadFaction.PHOENIX ||
-            Config.tutorialCharacters != StartingSquadCharacters.SANS_BONUS ||
-            Config.startingBaseLocation!=StartingBaseLocation.Vanilla||
-            Config.InitialScavSites != 8 ||
-               Config.ChancesScavCrates != TFTVConfig.ScavengingWeight.Haut ||
-               Config.ChancesScavSoldiers != TFTVConfig.ScavengingWeight.Faible ||
-               Config.ChancesScavGroundVehicleRescue != TFTVConfig.ScavengingWeight.Faible ||
-            Config.ResourceMultiplier != 0.8f ||
-            Config.DiplomaticPenalties != true ||
-            Config.StaminaPenaltyFromInjury != true ||
-            Config.StaminaPenaltyFromMutation != true ||
-            Config.StaminaPenaltyFromBionics != true ||
-            Config.MoreAmbushes != true ||
+           // Config.amountOfExoticResources != 1f ||
+          //  Config.impossibleWeaponsAdjustments != true ||             
+         //   Config.ResourceMultiplier != 1f ||
+         //   Config.DiplomaticPenalties != true ||
+         //   Config.StaminaPenaltyFromInjury != true ||          
+        //    Config.MoreAmbushes != true ||
             Config.ActivateStaminaRecuperatonModule != true ||
-            Config.ActivateReverseEngineeringResearch != true ||
-            Config.ActivateAirCombatChanges != true ||
-            Config.ActivateKERework != true ||
+          //  Config.ActivateReverseEngineeringResearch != true ||
             Config.HavenSOS != true ||
-            Config.Debug != true)
-         //   Config.ShowFaces!=true)
+            Config.Debug != true ||
+                Config.EqualizeTrade != true ||
+            
+            Config.LimitedRaiding != true ||
+            Config.ReinforcementsNoDrops != true)
+            //   Config.ShowFaces!=true)
             {
 
                 Config.defaultSettings = false;
 
             }
+         */
          /*   Harmony harmony = (Harmony)HarmonyInstance;
             //  injectionComplete = false;
             harmony.UnpatchAll();
@@ -255,21 +253,26 @@ namespace TFTV
 
 
         /// <summary>
+        /// In Phoenix Point there can be only one active level at a time. 
         /// Levels go through different states (loading, unloaded, start, etc.).
         /// General puprose level state change callback.
         /// </summary>
-        /// In Phoenix Point there can be only one active level at a time. 
         /// <param name="level">Level being changed.</param>
         /// <param name="prevState">Old state of the level.</param>
         /// <param name="state">New state of the level.</param>
         public override void OnLevelStateChanged(Level level, Level.State prevState, Level.State state)
         {
-         
-           // Logger.LogInfo($"{MethodBase.GetCurrentMethod().Name} called for level '{level}' with old state '{prevState}' and new state '{state}'");
-          /*  if (level.name.Contains("Intro") && prevState == Level.State.NotLoaded && state == Level.State.Uninitialized)
-            {
-              
 
+          
+
+
+           // Logger.LogInfo($"{MethodBase.GetCurrentMethod().Name} called for level '{level}' with old state '{prevState}' and new state '{state}'");
+          /*  if (!ConfigImplemented && (level.name.Contains("GeoscapeLevel") || level.name.Contains("TacticalLevel")) && state == Level.State.Loading)
+            {
+                TFTVLogger.Always($"level {level.name} loading");
+                
+                TFTVDefsWithConfigDependency.ImplementConfigChoices();
+                ConfigImplemented = true;
             }*/
 
             

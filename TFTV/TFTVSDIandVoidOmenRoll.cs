@@ -407,7 +407,7 @@ namespace TFTV
                     int voidOmenRoll = 0;
                     // Create variable reflecting difficulty level, 1 being the easiest, and 4 the hardest
                     // This will determine amount of possible simultaneous Void Omens
-                    int difficulty = geoLevelController.CurrentDifficultyLevel.Order;
+                    int difficulty = TFTVReleaseOnly.DifficultyOrderConverter(geoLevelController.CurrentDifficultyLevel.Order);
                     string triggeredVoidOmens = "TriggeredVoidOmen_";
                     string voidOmen = "VoidOmen_";
                     string voidOmenTitle = "VOID_OMEN_TITLE_";
@@ -417,7 +417,7 @@ namespace TFTV
 
                     if (geoLevelController.EventSystem.GetVariable("BC_SDI") > 0)
                     {
-                        // Here comes the roll, for testing purposes with 1/10 chance of no VO happening    
+                        // Here comes the roll, with 1/10 chance of no VO happening    
                         int roll = UnityEngine.Random.Range(1, 11);
                         TFTVLogger.Always("The roll on the 1D10 is " + roll);
                         if (roll == 1)
@@ -468,6 +468,7 @@ namespace TFTV
                             //If there is no space, we have to remove the earliest one
                             if (!voidOmensInPlay.Contains(0))
                             {
+                                TFTVLogger.Always($"All VO slots taken, need to remove an existing VO");
                                 TFTVVoidOmens.RemoveEarliestVoidOmen(geoLevelController);
                             }
                             //Then let's find a spot for the new Void Omen

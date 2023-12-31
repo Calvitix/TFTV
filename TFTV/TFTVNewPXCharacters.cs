@@ -50,7 +50,9 @@ namespace TFTV
                     GeoscapeEventContext geoscapeEventContext = new GeoscapeEventContext(level.PhoenixFaction, level.ViewerFaction);
                     level.EventSystem.TriggerGeoscapeEvent("IntroBetterGeo_2", geoscapeEventContext);
                     level.EventSystem.SetVariable("BG_Intro_Played", 3);
-                    level.EventSystem.SetVariable("NewGameStarted", 1);
+                    
+                    
+                    level.EventSystem.SetVariable("NewConfigImplemented", 1);
                     //  TFTVBetaSaveGamesFixes.CheckNewLOTA(level);
                 }
             }
@@ -89,13 +91,13 @@ namespace TFTV
 
         [HarmonyPatch(typeof(GeoscapeEventSystem), "TriggerGeoscapeEvent")]
 
-        public static class GeoscapeEventSystem_TriggerGeoscapeEvent_patch
+        public static class GeoscapeEventSystem_TriggerGeoscapeEvent_TriggerAdditionalEvent_patch
         {
             public static void Postfix(string eventId, GeoscapeEventSystem __instance, GeoscapeEventContext context)
             {
                 try
                 {
-                    TFTVLogger.Always("TriggerGeoscapeEvent triggered for event " + eventId);
+                    TFTVLogger.Always($"TriggerGeoscapeEvent triggered for event {eventId}");
 
                     if (eventId == "PROG_PX10_WIN")
                     {
@@ -239,6 +241,11 @@ namespace TFTV
                         __result.EventLeader = HelenaPic;
                     }
 
+                  /*  else if (geoEvent.EventID.Contains("SDI"))
+                    {                      
+                        __result.EventBackground = Helper.CreateSpriteFromImageFile("ruins.png");//AlistairOffice;
+                    }*/
+
                     else if (geoEvent.EventID.Equals("VoidOmen") || geoEvent.EventID == "PROG_FS10" || geoEvent.EventID.Contains("Alistair")
                             || geoEvent.EventID.Equals("PROG_LE3_WARN"))
                     {
@@ -276,7 +283,12 @@ namespace TFTV
                         {
                             __result.EventLeader = OlenaPic;
                         }
-                        __result.EventBackground = Helper.CreateSpriteFromImageFile("insidebase.jpg");//OlenaOffice;
+                        if (geoEvent.EventData.Description[0].General.LocalizationKey != "BASEDEFENSE_CONTAINMENTBREACH_TEXT")
+                        {
+                            __result.EventBackground = Helper.CreateSpriteFromImageFile("insidebase.jpg");
+                        }
+
+                        
                     }
 
                     else if(geoEvent.EventID == "PROG_FS20")
@@ -474,7 +486,11 @@ namespace TFTV
                         {
                             __result.EventLeader = OlenaPic;
                         }
-                        __result.EventBackground = Helper.CreateSpriteFromImageFile("insidebase.jpg");
+
+                        if (geoEvent.EventData.Description[0].General.LocalizationKey != "BASEDEFENSE_CONTAINMENTBREACH_TEXT")
+                        {
+                            __result.EventBackground = Helper.CreateSpriteFromImageFile("insidebase.jpg");
+                        }
                     }
 
                     else if (geoEvent.EventID.Equals("PROG_FS3"))

@@ -81,6 +81,7 @@ namespace TFTV
                         if (actor.Status.HasStatus(queenImmunity))
                         {
                             data.DamageResult.ArmorDamage = Mathf.Floor(data.DamageResult.ArmorDamage * 0);
+                            TFTVLogger.Always($"armor damage is {data.DamageResult.ArmorDamage}");
                         }
                     }
                 }
@@ -131,7 +132,7 @@ namespace TFTV
                             palace++;
                         }
                     }
-                    int difficulty = __instance.GeoLevel.CurrentDifficultyLevel.Order;
+                    int difficulty = TFTVReleaseOnly.DifficultyOrderConverter(__instance.GeoLevel.CurrentDifficultyLevel.Order);
                     if (__instance.GeoLevel.EventSystem.GetVariable("Pandorans_Researched_Citadel") == 1)
                     {
                         __instance.AddEvolutionProgress(nests * 5 + lairs * 10 + citadels * 15);

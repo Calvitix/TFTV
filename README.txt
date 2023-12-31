@@ -8,6 +8,8 @@ https://www.youtube.com/playlist?list=PLzBnKdp58-0IS9AY-n3kVx6fUNz53r-_B
 
 REQUIRES ALL DLC
 
+IF YOU INSTALL THE MOD MANUALLY, AFTER ACTIVATING IT IN THE MODS TAB, QUIT TO DESKTOP AND LAUNCH PHOENIX POINT AGAIN BEFORE STARTING A NEW GAME
+
 This is an Open Beta/Early Access. Expect bugs and balance issues. More below.
 
 Features

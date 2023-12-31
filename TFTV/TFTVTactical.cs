@@ -1,5 +1,8 @@
+using Base.Core;
 using Base.Serialization.General;
+using EnviroSamples;
 using Epic.OnlineServices;
+using PhoenixPoint.Geoscape.Levels;
 using PhoenixPoint.Modding;
 using PhoenixPoint.Tactical.Levels;
 using System;
@@ -45,6 +48,12 @@ namespace TFTV
         public List<string> HopliteKillList;       
         public Dictionary<float, float> ConsolePositionsInBaseDefense;
         public Dictionary<int, int> CyclopsMolecularTargeting;
+        public int DeployedAircraftCaptureCapacity;
+        public bool ContainmentFacilityPresent;
+        public bool ScyllaCaptureModule;
+        public int AvailableContainment;
+        public bool Update35TacticalCheck;
+
     }
 
     /// <summary>
@@ -63,6 +72,7 @@ namespace TFTV
             /// Tactical level controller is accessible at any time.
             TacticalLevelController tacController = Controller;
             TFTVConfig config = TFTVMain.Main.Config;
+            TFTVReleaseOnly.ConvertDifficulty(null, tacController);
             if (config.AnimateWhileShooting)
             {
                 TFTVLogger.Always($"Flinching should be on");
@@ -92,18 +102,29 @@ namespace TFTV
             TFTVHumanEnemies.RollCount = 0;
             TFTVAncients.CheckCyclopsDefense();
             TFTVLogger.Always("Tactical start completed");
-            TFTVLogger.Always("Difficulty level is " + tacController.Difficulty.Order);
-            TFTVLogger.Always("LOTA rework active in tactical is " + TFTVAncients.LOTAReworkActive);
-            TFTVAncients.CheckResearchStateOnGeoscapeEndAndOnTacticalStart(null);
+            TFTVLogger.Always($"Difficulty level is {tacController.Difficulty.Order} and treated as {TFTVReleaseOnly.DifficultyOrderConverter(tacController.Difficulty.Order)}");
+         //   TFTVLogger.Always("LOTA rework active in tactical is " + TFTVAncients.LOTAReworkActive);
+            TFTVLogger.Always($"Deployed Aircraft capture capacity is {TFTVCapturePandorans.AircraftCaptureCapacity}");
+            TFTVLogger.Always($"Available containment is {TFTVCapturePandorans.ContainmentSpaceAvailable}");
+            TFTVLogger.Always($"Containment facility is present {TFTVCapturePandorans.ContainmentFacilityPresent}");
+            TFTVLogger.Always($"Scylla Capture Module is present {TFTVCapturePandorans.ScyllaCaptureModulePresent}");
+            TFTVAncientsGeo.CheckResearchStateOnGeoscapeEndAndOnTacticalStart(null);
 
             TFTVBaseDefenseTactical.CheckConsoleSituation(Controller);
             //  TFTVBaseDefenseTactical.InteractionPointPlacement();
             //   TFTVBaseDefenseTactical.CheckIfConsoleActivated(Controller);
             TFTVSpecialDifficulties.CheckForSpecialDifficulties();
-            TFTVBetterEnemies.ImplementBetterEnemies();
+          //  TFTVBetterEnemies.ImplementBetterEnemies();
             TFTVRevenant.CheckIfRevenantPresent(Controller);
-         
-         //   TFTVBaseDefenseTactical.OjectivesDebbuger(Controller);
+
+            if (config.disableSavingOnTactical)
+            {
+                GameUtl.CurrentLevel().GetComponent<TacticalLevelController>().GameController.SaveManager.IsSaveEnabled = false;
+            }
+
+            TFTVNewGameOptions.Change_Crossbows();
+
+            //   TFTVBaseDefenseTactical.OjectivesDebbuger(Controller);
             // TFTVBaseDefenseTactical.RevealAllSpawns(Controller);
 
             // TFTVBaseDefenseTactical.CheckingPortrait(Controller);
@@ -155,17 +176,23 @@ namespace TFTV
                 TFTVInfestationStory.HavenPopulation = data.infestedHavenPopulationSaveData;
                 TFTVInfestationStory.OriginalOwner = data.infestedHavenOriginalOwnerSaveData;
                 TFTVRevenant.revenantID = data.RevenantId;
-                TFTVAncients.LOTAReworkActive = data.LOTAReworkActiveInTactical;
+              //  TFTVAncients.LOTAReworkActive = data.LOTAReworkActiveInTactical;
                 TFTVBaseDefenseTactical.AttackProgress = data.BaseDefenseAttackProgress;
                 TFTVBaseDefenseTactical.StratToBeAnnounced = data.BaseDefenseStratToBeAnnounced;
                 TFTVBaseDefenseTactical.StratToBeImplemented = data.BaseDefenseStratToBeImplemented;  
                 TFTVBaseDefenseTactical.UsedStrats = data.StratsAlreadyImplementedAtBD;
                 TFTVBaseDefenseTactical.ConsolePositions = data.ConsolePositionsInBaseDefense;
                 TFTVAncients.CyclopsMolecularDamageBuff = data.CyclopsMolecularTargeting;
+                TFTVCapturePandorans.AircraftCaptureCapacity = data.DeployedAircraftCaptureCapacity;
+                TFTVCapturePandorans.ContainmentFacilityPresent = data.ContainmentFacilityPresent;
+                TFTVCapturePandorans.ScyllaCaptureModulePresent = data.ScyllaCaptureModule;
                 TFTVBaseDefenseTactical.ModifyObjectives(Controller.TacMission.MissionData.MissionType);
                 TFTVAncients.AutomataResearched = data.AutomataResearched;
                 TFTVAncients.AlertedHoplites = data.HopliteKillList;
-                TFTVBetaSaveGamesFixes.CheckNewLOTASavegame();
+                TFTVCapturePandorans.ContainmentSpaceAvailable = data.AvailableContainment;
+                TFTVNewGameOptions.Update35Check = data.Update35TacticalCheck;
+                //Deprecated
+              //  TFTVBetaSaveGamesFixes.CheckNewLOTASavegame();
 
                 TurnZeroMethodsExecuted = data.TurnZeroMethodsExecuted;
 
@@ -203,8 +230,8 @@ namespace TFTV
                 infestedHavenPopulationSaveData = TFTVInfestationStory.HavenPopulation,
                 infestedHavenOriginalOwnerSaveData = TFTVInfestationStory.OriginalOwner,
                 RevenantId = TFTVRevenant.revenantID,
-      
-                LOTAReworkActiveInTactical = TFTVAncients.LOTAReworkActive,
+
+             //   LOTAReworkActiveInTactical = TFTVAncients.LOTAReworkActive,
                 BaseDefenseAttackProgress = TFTVBaseDefenseTactical.AttackProgress,
                 BaseDefenseStratToBeImplemented = TFTVBaseDefenseTactical.StratToBeImplemented,
                 BaseDefenseStratToBeAnnounced = TFTVBaseDefenseTactical.StratToBeAnnounced,
@@ -213,7 +240,12 @@ namespace TFTV
                 AutomataResearched = TFTVAncients.AutomataResearched,
                 CyclopsMolecularTargeting = TFTVAncients.CyclopsMolecularDamageBuff,
                 HopliteKillList = TFTVAncients.AlertedHoplites,
-      
+                DeployedAircraftCaptureCapacity = TFTVCapturePandorans.AircraftCaptureCapacity,
+                ContainmentFacilityPresent = TFTVCapturePandorans.ContainmentFacilityPresent,
+                ScyllaCaptureModule = TFTVCapturePandorans.ScyllaCaptureModulePresent,
+                AvailableContainment = TFTVCapturePandorans.ContainmentSpaceAvailable,
+                Update35TacticalCheck = TFTVNewGameOptions.Update35Check,
+
                 TurnZeroMethodsExecuted = TurnZeroMethodsExecuted
                 
             };

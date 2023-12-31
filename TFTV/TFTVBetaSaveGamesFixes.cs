@@ -1,4 +1,5 @@
-﻿using Base.Core;
+﻿using Base;
+using Base.Core;
 using HarmonyLib;
 using PhoenixPoint.Common.ContextHelp;
 using PhoenixPoint.Common.Core;
@@ -7,10 +8,13 @@ using PhoenixPoint.Common.Entities.Items;
 using PhoenixPoint.Common.Game;
 using PhoenixPoint.Geoscape.Entities;
 using PhoenixPoint.Geoscape.Entities.Research;
+using PhoenixPoint.Geoscape.Entities.Research.Requirement;
+using PhoenixPoint.Geoscape.Entities.Research.Reward;
 using PhoenixPoint.Geoscape.Entities.Sites;
 using PhoenixPoint.Geoscape.Events;
 using PhoenixPoint.Geoscape.Levels;
 using PhoenixPoint.Geoscape.Levels.Factions;
+using PhoenixPoint.Tactical.Entities.Equipments;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,10 +26,116 @@ namespace TFTV
 {
     internal class TFTVBetaSaveGamesFixes
     {
-        public static bool LOTAapplied = false;
+       // public static bool LOTAapplied = false;
         private static readonly DefCache DefCache = TFTVMain.Main.DefCache;
-        public static bool LOTAReworkGlobalCheck = false;
+       // public static bool LOTAReworkGlobalCheck = false;
 
+        public static void CheckScyllaCaptureTechResearch(GeoLevelController controller) 
+        {
+            try
+            {
+                ResearchDef scyllaCaptureModule = DefCache.GetDef<ResearchDef>("PX_Aircraft_EscapePods_ResearchDef");
+             
+
+             
+
+                if (controller.PhoenixFaction.Research.HasCompleted("PX_Alien_Queen_ResearchDef") &&
+                    (!controller.PhoenixFaction.Research.HasCompleted(scyllaCaptureModule.name) &&
+                    !controller.PhoenixFaction.Research.Researchable.Any(re => re.ResearchDef == scyllaCaptureModule)))
+                {
+                    TFTVLogger.Always($"Player has completed Scylla autopsy research but didn't get the Scylla Capture Tech");
+                    ResearchElement researchElement = controller.PhoenixFaction.Research.GetResearchById(scyllaCaptureModule.name);
+                    researchElement.State = ResearchState.Unlocked;
+                    TFTVLogger.Always($"{scyllaCaptureModule.name} available to PX? {researchElement.IsAvailableToFaction(controller.PhoenixFaction)}");
+
+                }
+
+
+
+
+            }
+            catch (Exception e)
+            {
+                TFTVLogger.Error(e);
+            }
+
+
+
+
+        }
+
+        public static void CheckResearches(GeoLevelController controller)
+        {
+            try
+            {
+
+                ResearchDef terrorSentinelResearch = DefCache.GetDef<ResearchDef>("PX_Alien_TerrorSentinel_ResearchDef");
+                ResearchDef advNanotechRes = DefCache.GetDef<ResearchDef>("SYN_NanoTech_ResearchDef");
+
+                ResearchDef acidWormRes = DefCache.GetDef<ResearchDef>("PX_Alien_Acidworm_ResearchDef");
+                ResearchDef fireWormRes = DefCache.GetDef<ResearchDef>("PX_Alien_Fireworm_ResearchDef");
+                ResearchDef acidRes = DefCache.GetDef<ResearchDef>("PX_BlastResistanceVest_ResearchDef");
+
+                ResearchDef mutationTech = DefCache.GetDef<ResearchDef>("ANU_MutationTech_ResearchDef");
+
+                ResearchDef agileGLRes = DefCache.GetDef<ResearchDef>("PX_AGL_ResearchDef");
+
+                if (controller.PhoenixFaction.Research.HasCompleted("PX_Alien_Acidworm_ResearchDef") &&
+                    (!controller.PhoenixFaction.Research.HasCompleted(acidRes.name) &&
+                    !controller.PhoenixFaction.Research.Researchable.Any(re => re.ResearchDef == acidRes)))
+                {
+                    TFTVLogger.Always($"Player has completed acidworm research but didn't get acid res tech");
+                    ResearchElement researchElement = controller.PhoenixFaction.Research.GetResearchById(acidRes.name);
+                    researchElement.State = ResearchState.Unlocked;
+                    TFTVLogger.Always($"{acidRes.name} available to PX? {researchElement.IsAvailableToFaction(controller.PhoenixFaction)}");                
+                
+                }
+
+                if (controller.PhoenixFaction.Research.HasCompleted("PX_Alien_Fireworm_ResearchDef") &&
+                   (!controller.PhoenixFaction.Research.HasCompleted(agileGLRes.name) &&
+                   !controller.PhoenixFaction.Research.Researchable.Any(re => re.ResearchDef == agileGLRes)))
+                {
+                    TFTVLogger.Always($"Player has completed fireworm research but didn't get agile GL tech");
+                    ResearchElement researchElement = controller.PhoenixFaction.Research.GetResearchById(agileGLRes.name);
+                    researchElement.State = ResearchState.Unlocked;
+                    TFTVLogger.Always($"{agileGLRes.name} available to PX? {researchElement.IsAvailableToFaction(controller.PhoenixFaction)}");
+
+                }
+
+
+                if (controller.PhoenixFaction.Research.HasCompleted("PX_Mutoid_ResearchDef") &&
+                   (!controller.PhoenixFaction.Research.HasCompleted(mutationTech.name) &&
+                   !controller.PhoenixFaction.Research.Researchable.Any(re => re.ResearchDef == mutationTech)))
+
+                {
+
+                    TFTVLogger.Always($"Player has completed Mutoids research but didn't get Mutation tech");
+
+                    ResearchElement researchElement = controller.PhoenixFaction.Research.GetResearchById(mutationTech.name);
+                    researchElement.State = ResearchState.Unlocked;
+                    TFTVLogger.Always($"{mutationTech.name} available to PX? {researchElement.IsAvailableToFaction(controller.PhoenixFaction)}");
+
+                }
+
+              //  TFTVLogger.Always($"{controller.PhoenixFaction.Research.HasCompleted("ANU_MutationTech_ResearchDef")} {controller.PhoenixFaction.HarvestAliensForMutagensUnlocked}");
+
+                if(controller.PhoenixFaction.Research.HasCompleted("ANU_MutationTech_ResearchDef") && !controller.PhoenixFaction.HarvestAliensForMutagensUnlocked) 
+                {
+
+                    TFTVLogger.Always("Player researched Mutation, but hasn't unlocked Mutagen harvesting");
+                    controller.PhoenixFaction.HarvestAliensForMutagensUnlocked = true;
+                
+                
+                }
+                    
+            }
+            catch (Exception e)
+            {
+                TFTVLogger.Error(e);
+            }
+
+
+        }
 
         public static void SpecialFixForTesting(GeoLevelController controller)
         {
@@ -44,7 +154,7 @@ namespace TFTV
         {
             try
             {
-                CheckNewLOTA(controller);
+              //  CheckNewLOTA(controller);
                 FixScyllaCounter(controller);
                 FixInfestedBase(controller);
                 CheckSaveGameEventChoices(controller);
@@ -84,7 +194,7 @@ namespace TFTV
 
                         int destroyedCitadels = phoenixStatisticsManager.CurrentGameStats.GeoscapeStats.DestroyedCitadels;
 
-                        if (phoenixStatisticsManager == null) 
+                        if (phoenixStatisticsManager == null)
                         {
                             TFTVLogger.Always($"Failed to get stat manager");
                         }
@@ -171,8 +281,8 @@ namespace TFTV
 
 
 
-        //not yet deprecated, zig zag zog still playing with old LOTA
-        internal static void CheckNewLOTA(GeoLevelController controller)
+        //now deprecated
+       /* internal static void CheckNewLOTA(GeoLevelController controller)
         {
             try
             {
@@ -191,9 +301,9 @@ namespace TFTV
             {
                 TFTVLogger.Error(e);
             }
-        }
+        }*/
 
-        public static void CheckNewLOTASavegame()
+      /*  public static void CheckNewLOTASavegame()
         {
             try
             {
@@ -211,9 +321,9 @@ namespace TFTV
             {
                 TFTVLogger.Error(e);
             }
-        }
+        }*/
 
-        internal static void CheckIfLOTAReworkActive()
+     /*   internal static void CheckIfLOTAReworkActive()
         {
             try
             {
@@ -324,7 +434,7 @@ namespace TFTV
             }
 
 
-        }
+        }*/
 
 
         internal static void CheckSaveGameEventChoices(GeoLevelController controller)

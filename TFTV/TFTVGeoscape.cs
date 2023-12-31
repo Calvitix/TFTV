@@ -1,5 +1,5 @@
 using Base.Serialization.General;
-using PhoenixPoint.Common.Entities;
+using Epic.OnlineServices;
 using PhoenixPoint.Geoscape.Entities;
 using PhoenixPoint.Geoscape.Levels;
 using PhoenixPoint.Modding;
@@ -31,12 +31,31 @@ namespace TFTV
         public string infestedHavenOriginalOwnerSaveData = TFTVInfestationStory.OriginalOwner;
         public Dictionary<int, int[]> ProjectOsirisStatsSaveData = TFTVRevenantResearch.ProjectOsirisStats;
         //   public bool[] VoidOmensCheck = TFTVVoidOmens.VoidOmensCheck;
-        public bool GlobalLOTAReworkCheck = TFTVBetaSaveGamesFixes.LOTAReworkGlobalCheck;
+        //   public bool GlobalLOTAReworkCheck = TFTVBetaSaveGamesFixes.LOTAReworkGlobalCheck;
         public Dictionary<int, Dictionary<string, double>> PhoenixBasesUnderAttack = TFTVBaseDefenseGeoscape.PhoenixBasesUnderAttack;
-        public List<int> InfestedPhoenixBases = new List<int> ();
+        public Dictionary<int, int> PhoenixBasesContainmentBreach = TFTVBaseDefenseGeoscape.PhoenixBasesContainmentBreach;
+        public List<int> InfestedPhoenixBases = new List<int>();
         public int SpawnedScyllas = new int();
         public Dictionary<int, Dictionary<string, List<string>>> CharacterLoadouts;
         public Dictionary<int, int> CharactersDeliriumPerksAndMissions;
+     //   public int AircraftCaptureCapacity = TFTVCapturePandorans.AircraftCaptureCapacity;
+        public float SuppliesFromProcessedPandas;
+        public float ToxinsInFood;
+
+        public bool NewConfigUsedInstance;
+        public float AmountOfExoticResourcesSettingInstance;
+        public float ResourceMultiplierSettingInstance;
+        public bool DiplomaticPenaltiesSettingInstance;
+        public bool StaminaPenaltyFromInjurySettingInstance;
+        public bool MoreAmbushesSettingInstance;
+        public bool LimitedCaptureSettingInstance;
+        public bool LimitedHarvestingSettingInstance;
+        public bool StrongerPandoransSettingInstance;
+        public bool ImpossibleWeaponsAdjustmentsSettingInstance;
+
+        public bool Update35GeoscapeCheck;
+
+        //   public bool NewDifficulties;
         //  public Dictionary<int, List<string>> HiddenInventories; //TFTVUI.CurrentlyHiddenInv;
         //  public Dictionary<int, List<string>> AvailableInventories; //= TFTVUI.CurrentlyAvailableInv;
         //   public string PhoenixBaseUnderAttack = TFTVExperimental.PhoenixBaseUnderAttack;
@@ -44,6 +63,7 @@ namespace TFTV
         //  public PPFactionDef factionAttackingPheonixBase = TFTVExperimental.FactionAttackingPhoenixBase;
         // public List<string> TacticalHintsToShow = TFTVTutorialAndStory.TacticalHintsToShow;
     }
+
 
     /// <summary>
     /// Represents a mod instance specific for Geoscape game.
@@ -54,20 +74,25 @@ namespace TFTV
         private static readonly DefCache DefCache = TFTVMain.Main.DefCache;
 
 
+        //   internal static bool ConfigImplemented = false;
         /// <summary>
         /// Called when Geoscape starts.
         /// </summary>
         public override void OnGeoscapeStart()
         {
+            TFTVLogger.Always($"OnGeoscapeStart");
+
 
             /// Geoscape level controller is accessible at any time.
             GeoLevelController gsController = Controller;
+
+
             /// ModMain is accesible at any time
             DefCache.GetDef<TacticalTargetingDataDef>("E_TargetingData [PsychicWard_AbilityDef]").Origin.Range = 10; //Fix Dtony thing
-          //  TFTVBetaSaveGamesFixes.FixInfestedBase(gsController);
-          //  TFTVBetaSaveGamesFixes.CheckSaveGameEventChoices(gsController);
-          //  TFTVBetaSaveGamesFixes.CheckUmbraResearchVariable(gsController);
-
+                                                                                                                     //  TFTVBetaSaveGamesFixes.FixInfestedBase(gsController);
+                                                                                                                     //  TFTVBetaSaveGamesFixes.CheckSaveGameEventChoices(gsController);
+                                                                                                                     //  TFTVBetaSaveGamesFixes.CheckUmbraResearchVariable(gsController);
+            TFTVReleaseOnly.ConvertDifficulty(gsController, null);
             TFTVBetaSaveGamesFixes.OpenBetaSaveGameFixes(gsController);
 
             TFTVCommonMethods.CheckGeoUIfunctionality(gsController);
@@ -76,7 +101,7 @@ namespace TFTV
             TFTVVoidOmens.ImplementVoidOmens(gsController);
             TFTVUmbra.CheckForUmbraResearch(gsController);
             TFTVUmbra.SetUmbraEvolution(gsController);
-            TFTVThirdAct.SetBehemothOnRampageMod(gsController);
+            TFTVAirCombat.SetBehemothOnRampageMod(gsController);
             TFTVStamina.CheckBrokenLimbs(gsController.PhoenixFaction.Soldiers.ToList(), gsController);
             TFTVRevenant.UpdateRevenantTimer(gsController);
             if (TFTVRevenant.revenantID != 0 && TFTVRevenant.DeadSoldiersDelirium.ContainsKey(TFTVRevenant.revenantID))
@@ -88,33 +113,43 @@ namespace TFTV
             TFTVProjectOsiris.RunProjectOsiris(gsController);
             Main.Logger.LogInfo("UmbraEvolution variable is " + Controller.EventSystem.GetVariable(TFTVUmbra.TBTVVariableName));
             TFTVLogger.Always("UmbraEvolution variable is " + Controller.EventSystem.GetVariable(TFTVUmbra.TBTVVariableName));
-           // TFTVBetaSaveGamesFixes.CheckNewLOTA(gsController);
-            TFTVAncients.AncientsCheckResearchState(gsController);
-            TFTVAncients.CheckImpossibleWeaponsAdditionalRequirements(gsController);
-            TFTVExperimental.CheckForFireQuenchers(gsController);
+            // TFTVBetaSaveGamesFixes.CheckNewLOTA(gsController);
+            TFTVAncientsGeo.AncientsCheckResearchState(gsController);
+            TFTVAncientsGeo.CheckImpossibleWeaponsAdditionalRequirements(gsController);
+            TFTVAncientsGeo.EnsureNoHarvesting(gsController);
+            TFTVFire.CheckForFireQuenchers(gsController);
             TFTVSpecialDifficulties.CheckForSpecialDifficulties();
-            TFTVBetterEnemies.ImplementBetterEnemies();
+            //    TFTVBetterEnemies.ImplementBetterEnemies();
             TFTVPandoranProgress.ScyllaCount = 0;
             TFTVSDIandVoidOmenRoll.Calculate_ODI_Level(Controller);
-          //  TFTVDeliriumPerks.RemoveDeliriumPerks(Controller);
-           
-           // TFTVAirCombat.behemothScenicRoute.Clear();
+            TFTVBetaSaveGamesFixes.CheckResearches(Controller);
+            TFTVBetaSaveGamesFixes.CheckScyllaCaptureTechResearch(Controller);
+            TFTVPassengerModules.ImplementFarMConfig(Controller);
+            TFTVNewGameOptions.Change_Crossbows();
+
+            TFTVLogger.Always($"Difficulty level on Geoscape is {Controller.CurrentDifficultyLevel.name}");
+
+            //  TFTVCapturePandorans.SetMutagenOutput(Controller);
+            //  TFTVDeliriumPerks.RemoveDeliriumPerks(Controller);
+
+            // TFTVAirCombat.behemothScenicRoute.Clear();
         }
         /// <summary>
         /// Called when Geoscape ends.
         /// </summary>
         public override void OnGeoscapeEnd()
         {
+            TFTVLogger.Always($"OnGeoscapeEnd");
             GeoLevelController gsController = Controller;
 
             TFTVUmbra.CheckForUmbraResearch(gsController);
             TFTVUmbra.SetUmbraEvolution(gsController);
             TFTVVoidOmens.CheckForVoidOmensRequiringTacticalPatching(gsController);
-            TFTVUI.hookToCharacter = null;
+            //  TFTVUI.hookToCharacter = null;
             TFTVRevenant.CheckRevenantTime(gsController);
             TFTVRevenantResearch.CheckProjectOsiris(gsController);
             TFTVDiplomacyPenalties.VoidOmensImplemented = false;
-            TFTVAncients.CheckResearchStateOnGeoscapeEndAndOnTacticalStart(gsController);
+            TFTVAncientsGeo.CheckResearchStateOnGeoscapeEndAndOnTacticalStart(gsController);
 
         }
 
@@ -126,11 +161,11 @@ namespace TFTV
         {
             TFTVLogger.Always("Geoscape data will be saved");
 
-          /*  foreach (int i in TFTVBaseDefenseGeoscape.PhoenixBasesInfested)
-            {
-                TFTVLogger.Always($"On RecordInstance: infested base in temporary variable is {i}");
+            /*  foreach (int i in TFTVBaseDefenseGeoscape.PhoenixBasesInfested)
+              {
+                  TFTVLogger.Always($"On RecordInstance: infested base in temporary variable is {i}");
 
-            }*/
+              }*/
 
 
             //  TFTVLogger.Always($"Items currently available in Aircraft inventory {TFTVUI.CurrentlyAvailableInv.Values.Count}");
@@ -138,8 +173,8 @@ namespace TFTV
             TFTVRevenant.UpdateRevenantTimer(Controller);
             return new TFTVGSInstanceData()
             {
-               // HiddenInventories = TFTVUI.CurrentlyHiddenInv,
-              //  AvailableInventories = TFTVUI.CurrentlyAvailableInv,
+                // HiddenInventories = TFTVUI.CurrentlyHiddenInv,
+                //  AvailableInventories = TFTVUI.CurrentlyAvailableInv,
                 charactersWithDisabledBodyParts = TFTVStamina.charactersWithDisabledBodyParts,
                 targetsForBehemoth = TFTVAirCombat.targetsForBehemoth,
                 flyersAndHavens = TFTVAirCombat.flyersAndHavens,
@@ -153,13 +188,31 @@ namespace TFTV
                 infestedHavenPopulationSaveData = TFTVInfestationStory.HavenPopulation,
                 ProjectOsirisStatsSaveData = TFTVRevenantResearch.ProjectOsirisStats,
                 //  VoidOmensCheck = TFTVVoidOmens.VoidOmensCheck,
-             //   GlobalLOTAReworkCheck = TFTVBetaSaveGamesFixes.LOTAReworkGlobalCheck,
+                //   GlobalLOTAReworkCheck = TFTVBetaSaveGamesFixes.LOTAReworkGlobalCheck,
                 PhoenixBasesUnderAttack = TFTVBaseDefenseGeoscape.PhoenixBasesUnderAttack,
+                PhoenixBasesContainmentBreach = TFTVBaseDefenseGeoscape.PhoenixBasesContainmentBreach,
                 InfestedPhoenixBases = TFTVBaseDefenseGeoscape.PhoenixBasesInfested,
                 SpawnedScyllas = TFTVPandoranProgress.ScyllaCount,
                 CharacterLoadouts = TFTVUI.CharacterLoadouts,
-                CharactersDeliriumPerksAndMissions = TFTVDelirium.CharactersDeliriumPerksAndMissions
-             
+                CharactersDeliriumPerksAndMissions = TFTVDelirium.CharactersDeliriumPerksAndMissions,
+                SuppliesFromProcessedPandas = TFTVCapturePandoransGeoscape.PandasForFoodProcessing,
+                ToxinsInFood = TFTVCapturePandoransGeoscape.ToxinsInCirculation,
+                //AircraftCaptureCapacity = TFTVCapturePandorans.AircraftCaptureCapacity,
+                NewConfigUsedInstance = TFTVNewGameOptions.ConfigImplemented,
+                AmountOfExoticResourcesSettingInstance = TFTVNewGameOptions.AmountOfExoticResourcesSetting,
+                ResourceMultiplierSettingInstance = TFTVNewGameOptions.ResourceMultiplierSetting,
+                DiplomaticPenaltiesSettingInstance = TFTVNewGameOptions.DiplomaticPenaltiesSetting,
+                StaminaPenaltyFromInjurySettingInstance = TFTVNewGameOptions.StaminaPenaltyFromInjurySetting,
+                MoreAmbushesSettingInstance = TFTVNewGameOptions.MoreAmbushesSetting,
+                LimitedCaptureSettingInstance = TFTVNewGameOptions.LimitedCaptureSetting,
+                LimitedHarvestingSettingInstance = TFTVNewGameOptions.LimitedHarvestingSetting,
+                StrongerPandoransSettingInstance = TFTVNewGameOptions.StrongerPandoransSetting,
+                ImpossibleWeaponsAdjustmentsSettingInstance = TFTVNewGameOptions.ImpossibleWeaponsAdjustmentsSetting,
+
+                Update35GeoscapeCheck = TFTVNewGameOptions.Update35Check,
+
+                //   NewDifficulties = TFTVReleaseOnly.NewDifficultiesImplemented
+
 
 
                 //  PhoenixBaseUnderAttack = TFTVExperimental.PhoenixBaseUnderAttack,
@@ -178,22 +231,15 @@ namespace TFTV
             DateTime myDate = new DateTime(1, 1, 1);
 
             TFTVLogger.Always("Geoscape data will be processed");
-           
-           
+
+
             TFTVGSInstanceData data = (TFTVGSInstanceData)instanceData;
-          //  TFTVLogger.Always($"currently infested bases {data.InfestedPhoenixBases.Count}");
+            //  TFTVLogger.Always($"currently infested bases {data.InfestedPhoenixBases.Count}");
             TFTVCommonMethods.ClearInternalVariables();
-          //  TFTVLogger.Always($"currently infested bases {data.InfestedPhoenixBases.Count}");
-
-            foreach(int i in data.InfestedPhoenixBases) 
-            {
-                TFTVLogger.Always($"infested base is {i}");
-            
-            }
-
-           // TFTVLogger.Always($"Items currently hidden in Aircraft inventory {data.HiddenInventories.Values.Count}");
-          //  TFTVUI.CurrentlyAvailableInv = data.AvailableInventories;
-          //  TFTVUI.CurrentlyHiddenInv = data.HiddenInventories;
+            //  TFTVLogger.Always($"currently infested bases {data.InfestedPhoenixBases.Count}");
+            // TFTVLogger.Always($"Items currently hidden in Aircraft inventory {data.HiddenInventories.Values.Count}");
+            //  TFTVUI.CurrentlyAvailableInv = data.AvailableInventories;
+            //  TFTVUI.CurrentlyHiddenInv = data.HiddenInventories;
             TFTVStamina.charactersWithDisabledBodyParts = data.charactersWithDisabledBodyParts;
             TFTVAirCombat.targetsForBehemoth = data.targetsForBehemoth;
             TFTVAirCombat.flyersAndHavens = data.flyersAndHavens;
@@ -206,15 +252,43 @@ namespace TFTV
             TFTVInfestationStory.HavenPopulation = data.infestedHavenPopulationSaveData;
             TFTVInfestationStory.OriginalOwner = data.infestedHavenOriginalOwnerSaveData;
             TFTVRevenantResearch.ProjectOsirisStats = data.ProjectOsirisStatsSaveData;
+          //  TFTVCapturePandorans.AircraftCaptureCapacity = data.AircraftCaptureCapacity;
+           
             //  TFTVVoidOmens.VoidOmensCheck = data.VoidOmensCheck;
-            TFTVBetaSaveGamesFixes.LOTAReworkGlobalCheck = data.GlobalLOTAReworkCheck;
+            //   TFTVBetaSaveGamesFixes.LOTAReworkGlobalCheck = data.GlobalLOTAReworkCheck;
             TFTVBaseDefenseGeoscape.PhoenixBasesUnderAttack = data.PhoenixBasesUnderAttack;
+            TFTVBaseDefenseGeoscape.PhoenixBasesContainmentBreach = data.PhoenixBasesContainmentBreach;
             TFTVBaseDefenseGeoscape.PhoenixBasesInfested = data.InfestedPhoenixBases;
             TFTVPandoranProgress.ScyllaCount = data.SpawnedScyllas;
             TFTVUI.CharacterLoadouts = data.CharacterLoadouts;
             TFTVDelirium.CharactersDeliriumPerksAndMissions = data.CharactersDeliriumPerksAndMissions;
-           
-          //  TFTVBetaSaveGamesFixes.CheckNewLOTASavegame();
+            TFTVCapturePandoransGeoscape.PandasForFoodProcessing = data.SuppliesFromProcessedPandas;
+            TFTVCapturePandoransGeoscape.ToxinsInCirculation = data.ToxinsInFood;
+            TFTVNewGameOptions.ConfigImplemented = data.NewConfigUsedInstance;
+            if (TFTVNewGameOptions.ConfigImplemented)
+            {
+                TFTVNewGameOptions.AmountOfExoticResourcesSetting = data.AmountOfExoticResourcesSettingInstance;
+                TFTVNewGameOptions.ResourceMultiplierSetting = data.ResourceMultiplierSettingInstance;
+                TFTVNewGameOptions.DiplomaticPenaltiesSetting = data.DiplomaticPenaltiesSettingInstance;
+                TFTVNewGameOptions.StaminaPenaltyFromInjurySetting = data.StaminaPenaltyFromInjurySettingInstance;
+                TFTVNewGameOptions.MoreAmbushesSetting = data.MoreAmbushesSettingInstance;
+                TFTVNewGameOptions.LimitedCaptureSetting = data.LimitedCaptureSettingInstance;
+                TFTVNewGameOptions.LimitedHarvestingSetting = data.LimitedHarvestingSettingInstance;
+                TFTVNewGameOptions.StrongerPandoransSetting = data.StrongerPandoransSettingInstance;
+                TFTVNewGameOptions.ImpossibleWeaponsAdjustmentsSetting = data.ImpossibleWeaponsAdjustmentsSettingInstance;
+            }
+            TFTVNewGameOptions.Update35Check = data.Update35GeoscapeCheck;
+
+            //  if (!ConfigImplemented)
+            //  {
+            TFTVDefsWithConfigDependency.ImplementConfigChoices();
+            //     ConfigImplemented = true;
+            //  }
+
+
+            //  TFTVReleaseOnly.NewDifficultiesImplemented = data.NewDifficulties;
+
+            //  TFTVBetaSaveGamesFixes.CheckNewLOTASavegame();
             //TFTVExperimental.FactionAttackingPhoenixBase = data.factionAttackingPheonixBase;
             //TFTVExperimental.CheckIfFactionAttackingPhoenixBase();
 
@@ -232,14 +306,18 @@ namespace TFTV
             Main.Logger.LogInfo("Behemoth will wait for " + TFTVAirCombat.behemothWaitHours + " hours before moving");
             Main.Logger.LogInfo("Last time a Revenant was seen was on  " + myDate.Add(new TimeSpan(TFTVRevenant.daysRevenantLastSeen, 0, 0, 0)) + ", and now it is day " + myDate.Add(new TimeSpan(Controller.Timing.Now.TimeSpan.Ticks)));
             Main.Logger.LogInfo("Project Osiris stats count " + TFTVRevenantResearch.ProjectOsirisStats.Count);
-            Main.Logger.LogInfo("LOTAGlobalReworkCheck is " + TFTVBetaSaveGamesFixes.LOTAReworkGlobalCheck);
+            //  Main.Logger.LogInfo("LOTAGlobalReworkCheck is " + TFTVBetaSaveGamesFixes.LOTAReworkGlobalCheck);
             Main.Logger.LogInfo($"Bases under attack count {TFTVBaseDefenseGeoscape.PhoenixBasesUnderAttack.Count}");
             Main.Logger.LogInfo($"Infested Phoenix bases {TFTVBaseDefenseGeoscape.PhoenixBasesInfested.Count}");
-
+            Main.Logger.LogInfo($"Supplies from Pandas pending processing {TFTVCapturePandoransGeoscape.PandasForFoodProcessing}");
+            Main.Logger.LogInfo($"Toxins in food {TFTVCapturePandoransGeoscape.ToxinsInCirculation}");
             Main.Logger.LogInfo($"Scylla count {TFTVPandoranProgress.ScyllaCount}");
             Main.Logger.LogInfo($"infested haven population save data {TFTVInfestationStory.HavenPopulation}");
-        //    Main.Logger.LogInfo($"Items currently available in Aircraft inventory {TFTVUI.CurrentlyAvailableInv.Values.Count}");
-         //   Main.Logger.LogInfo($"Items currently hidden in Aircraft inventory {TFTVUI.CurrentlyAvailableInv.Values.Count}");
+            Main.Logger.LogInfo($"aircraft capacity {TFTVCapturePandorans.AircraftCaptureCapacity}");
+
+            // Main.Logger.LogInfo($"New Difficulties implemented {TFTVReleaseOnly.NewDifficultiesImplemented}");
+            //    Main.Logger.LogInfo($"Items currently available in Aircraft inventory {TFTVUI.CurrentlyAvailableInv.Values.Count}");
+            //   Main.Logger.LogInfo($"Items currently hidden in Aircraft inventory {TFTVUI.CurrentlyAvailableInv.Values.Count}");
             //  
             TFTVLogger.Always("# Characters with broken limbs: " + TFTVStamina.charactersWithDisabledBodyParts.Count);
             TFTVLogger.Always("# Behemoth targets for this emergence: " + TFTVAirCombat.targetsForBehemoth.Count);
@@ -252,12 +330,14 @@ namespace TFTV
             TFTVLogger.Always("Behemoth will wait for another  " + TFTVAirCombat.behemothWaitHours + " before moving");
             TFTVLogger.Always("Last time a Revenant was seen was on  " + myDate.Add(new TimeSpan(TFTVRevenant.daysRevenantLastSeen, 0, 0, 0)) + ", and now it is day " + myDate.Add(new TimeSpan(Controller.Timing.Now.TimeSpan.Ticks)));
             TFTVLogger.Always("Project Osiris stats count " + TFTVRevenantResearch.ProjectOsirisStats.Count);
-            TFTVLogger.Always("LOTAGlobalReworkCheck is " + TFTVBetaSaveGamesFixes.LOTAReworkGlobalCheck);
+            //   TFTVLogger.Always("LOTAGlobalReworkCheck is " + TFTVBetaSaveGamesFixes.LOTAReworkGlobalCheck);
             TFTVLogger.Always($"Bases under attack count {TFTVBaseDefenseGeoscape.PhoenixBasesUnderAttack.Count}");
             TFTVLogger.Always($"Infested Phoenix bases {TFTVBaseDefenseGeoscape.PhoenixBasesInfested.Count}");
+            TFTVLogger.Always($"Supplies from Pandas pending processing {TFTVCapturePandoransGeoscape.PandasForFoodProcessing}");
+            TFTVLogger.Always($"Toxins in food {TFTVCapturePandoransGeoscape.ToxinsInCirculation}");
             TFTVLogger.Always($"Scylla count {TFTVPandoranProgress.ScyllaCount}");
+            //  TFTVLogger.Always($"New Difficulties implemented {TFTVReleaseOnly.NewDifficultiesImplemented}");
 
-  
         }
 
 
@@ -272,10 +352,30 @@ namespace TFTV
             TFTVMain main = (TFTVMain)Main;
             GeoLevelController gsController = Controller;
             TFTVConfig config = TFTVMain.Main.Config;
-            TFTVCommonMethods.ClearInternalVariables();
+           
 
-            List<int> locations = new List<int>() { 0, 1, 165, 166, 167, 168, 169, 170, 171, 172, 584, 193, 191, 190, 189, 188, 186, 185, 192, 187 };
+            List<int> locations = new List<int>() { 0, 1, 584, 170, 191, 167, 169, 166, 187, 172, 165, 192, 185, 171, 189, 168, 193, 190, 188 };
 
+            /*
+        Vanilla,
+        Random, 
+        Antarctica, 
+        China,
+        Australia,
+        Honduras,
+        Ethiopia,
+        Ukraine,
+        Greenland,
+        Afghanistan,
+        Algeria,
+        Alaska,
+        Quebec,
+        Siberia,
+        Zimbabwe,
+        Bolivia,
+        Argentina,
+        Cambodia,
+        Ghana*/
 
 
             /*
@@ -301,7 +401,7 @@ namespace TFTV
 
             try
             {
-                if (config.startingBaseLocation == TFTVConfig.StartingBaseLocation.Vanilla && TFTVSpecialDifficulties.CheckGeoscapeSpecialDifficultySettings(gsController) == 0)
+                if (TFTVNewGameOptions.startingBaseLocation == TFTVNewGameOptions.StartingBaseLocation.Vanilla && TFTVSpecialDifficulties.CheckGeoscapeSpecialDifficultySettings(gsController) == 0)
                 {
 
                 }
@@ -309,10 +409,10 @@ namespace TFTV
                 {
                     foreach (GeoSiteSceneDef.SiteInfo siteInfo in worldSites.Where(ws => ws.SiteTags.Any(t => t.Contains("PhoenixBase"))))
                     {
-                        int index = (int)config.startingBaseLocation;
-                        TFTVLogger.Always($"index is {index}");
+                        int index = (int)TFTVNewGameOptions.startingBaseLocation;
+                      //  TFTVLogger.Always($"index is {index}");
 
-                        if (config.startingBaseLocation == TFTVConfig.StartingBaseLocation.Vanilla)
+                        if (TFTVNewGameOptions.startingBaseLocation == TFTVNewGameOptions.StartingBaseLocation.Vanilla)
                         {
                             if (TFTVSpecialDifficulties.CheckGeoscapeSpecialDifficultySettings(gsController) == 1)
                             {
@@ -331,16 +431,16 @@ namespace TFTV
                             {
                                 List<int> approvedBases = new List<int> { 584, 191 };
 
-                                if (approvedBases.Contains(siteInfo.SiteId)) 
+                                if (approvedBases.Contains(siteInfo.SiteId))
                                 {
                                     if (!siteInfo.SiteTags.Contains("StartingPhoenixBase"))
                                     {
                                         siteInfo.SiteTags.Add("StartingPhoenixBase");
-                                       
+
                                     }
 
                                 }
-                                else 
+                                else
                                 {
                                     if (siteInfo.SiteTags.Contains("StartingPhoenixBase"))
                                     {
@@ -352,7 +452,7 @@ namespace TFTV
                             }
 
                         }
-                        else if (config.startingBaseLocation == TFTVConfig.StartingBaseLocation.Random)
+                        else if (TFTVNewGameOptions.startingBaseLocation == TFTVNewGameOptions.StartingBaseLocation.Random)
                         {
                             if (!siteInfo.SiteTags.Contains("StartingPhoenixBase"))
                             {
@@ -392,7 +492,7 @@ namespace TFTV
 
 
 
-                setup.InitialScavengingSiteCount = (uint)main.Config.InitialScavSites;
+                setup.InitialScavengingSiteCount = (uint)TFTVNewGameOptions.initialScavSites;
 
                 // Generate only one LOTA site of each kind
                 foreach (GeoInitialWorldSetup.ArcheologyHasvestingConfiguration archeologyHasvestingConfiguration in setup.ArcheologyHasvestingSitesDistribution)
@@ -405,20 +505,19 @@ namespace TFTV
                 {
                     if (scavSiteConf.MissionTags.Any(mt => mt.name.Equals("Contains_ResourceCrates_MissionTagDef")))
                     {
-						//Calvitix Trad of High/Medium/Low enumeration needs all those changes
-                        if (main.Config.ChancesScavCrates == TFTVConfig.ScavengingWeight.Haut)
+                        if (TFTVNewGameOptions.chancesScavCrates == TFTVNewGameOptions.ScavengingWeight.High)
                         {
                             scavSiteConf.Weight = 6;
                         }
-                        else if (main.Config.ChancesScavCrates == TFTVConfig.ScavengingWeight.Moyen)
+                        else if (TFTVNewGameOptions.chancesScavCrates == TFTVNewGameOptions.ScavengingWeight.Medium)
                         {
                             scavSiteConf.Weight = 4;
                         }
-                        else if (main.Config.ChancesScavCrates == TFTVConfig.ScavengingWeight.Faible)
+                        else if (TFTVNewGameOptions.chancesScavCrates == TFTVNewGameOptions.ScavengingWeight.Low)
                         {
                             scavSiteConf.Weight = 1;
                         }
-                        else if (main.Config.ChancesScavCrates == TFTVConfig.ScavengingWeight.Aucun)
+                        else if (TFTVNewGameOptions.chancesScavCrates == TFTVNewGameOptions.ScavengingWeight.None)
                         {
                             scavSiteConf.Weight = 0;
                         }
@@ -426,19 +525,19 @@ namespace TFTV
 
                     if (scavSiteConf.MissionTags.Any(mt => mt.name.Equals("Contains_RescueSoldier_MissionTagDef")))
                     {
-                        if (main.Config.ChancesScavSoldiers == TFTVConfig.ScavengingWeight.Haut)
+                        if (TFTVNewGameOptions.chancesScavSoldiers == TFTVNewGameOptions.ScavengingWeight.High)
                         {
                             scavSiteConf.Weight = 6;
                         }
-                        else if (main.Config.ChancesScavSoldiers == TFTVConfig.ScavengingWeight.Moyen)
+                        else if (TFTVNewGameOptions.chancesScavSoldiers == TFTVNewGameOptions.ScavengingWeight.Medium)
                         {
                             scavSiteConf.Weight = 4;
                         }
-                        else if (main.Config.ChancesScavSoldiers == TFTVConfig.ScavengingWeight.Faible)
+                        else if (TFTVNewGameOptions.chancesScavSoldiers == TFTVNewGameOptions.ScavengingWeight.Low)
                         {
                             scavSiteConf.Weight = 1;
                         }
-                        else if (main.Config.ChancesScavSoldiers == TFTVConfig.ScavengingWeight.Aucun)
+                        else if (TFTVNewGameOptions.chancesScavSoldiers == TFTVNewGameOptions.ScavengingWeight.None)
                         {
                             scavSiteConf.Weight = 0;
                         }
@@ -448,19 +547,19 @@ namespace TFTV
 
                     if (scavSiteConf.MissionTags.Any(mt => mt.name.Equals("Contains_RescueVehicle_MissionTagDef")))
                     {
-                        if (main.Config.ChancesScavGroundVehicleRescue == TFTVConfig.ScavengingWeight.Haut)
+                        if (TFTVNewGameOptions.chancesScavGroundVehicleRescue == TFTVNewGameOptions.ScavengingWeight.High)
                         {
                             scavSiteConf.Weight = 6;
                         }
-                        else if (main.Config.ChancesScavGroundVehicleRescue == TFTVConfig.ScavengingWeight.Moyen)
+                        else if (TFTVNewGameOptions.chancesScavGroundVehicleRescue == TFTVNewGameOptions.ScavengingWeight.Medium)
                         {
                             scavSiteConf.Weight = 4;
                         }
-                        else if (main.Config.ChancesScavGroundVehicleRescue == TFTVConfig.ScavengingWeight.Faible)
+                        else if (TFTVNewGameOptions.chancesScavGroundVehicleRescue == TFTVNewGameOptions.ScavengingWeight.Low)
                         {
                             scavSiteConf.Weight = 1;
                         }
-                        else if (main.Config.ChancesScavGroundVehicleRescue == TFTVConfig.ScavengingWeight.Aucun)
+                        else if (TFTVNewGameOptions.chancesScavGroundVehicleRescue == TFTVNewGameOptions.ScavengingWeight.None)
                         {
                             scavSiteConf.Weight = 0;
                         }
@@ -492,7 +591,7 @@ namespace TFTV
 
 
 
-                setup.InitialScavengingSiteCount = (uint)main.Config.InitialScavSites;
+                setup.InitialScavengingSiteCount = (uint)TFTVNewGameOptions.initialScavSites;
 
                 // Generate only one LOTA site of each kind
                 foreach (GeoInitialWorldSetup.ArcheologyHasvestingConfiguration archeologyHasvestingConfiguration in setup.ArcheologyHasvestingSitesDistribution)
@@ -509,19 +608,19 @@ namespace TFTV
                 {
                     if (scavSiteConf.MissionTags.Any(mt => mt.name.Equals("Contains_ResourceCrates_MissionTagDef")))
                     {
-                        if (main.Config.ChancesScavCrates == TFTVConfig.ScavengingWeight.Haut)
+                        if (TFTVNewGameOptions.chancesScavCrates == TFTVNewGameOptions.ScavengingWeight.High)
                         {
                             scavSiteConf.Weight = 6;
                         }
-                        else if (main.Config.ChancesScavCrates == TFTVConfig.ScavengingWeight.Moyen)
+                        else if (TFTVNewGameOptions.chancesScavCrates == TFTVNewGameOptions.ScavengingWeight.Medium)
                         {
                             scavSiteConf.Weight = 4;
                         }
-                        else if (main.Config.ChancesScavCrates == TFTVConfig.ScavengingWeight.Faible)
+                        else if (TFTVNewGameOptions.chancesScavCrates == TFTVNewGameOptions.ScavengingWeight.Low)
                         {
                             scavSiteConf.Weight = 1;
                         }
-                        else if (main.Config.ChancesScavCrates == TFTVConfig.ScavengingWeight.Aucun)
+                        else if (TFTVNewGameOptions.chancesScavCrates == TFTVNewGameOptions.ScavengingWeight.None)
                         {
                             scavSiteConf.Weight = 0;
                         }
@@ -529,19 +628,19 @@ namespace TFTV
 
                     if (scavSiteConf.MissionTags.Any(mt => mt.name.Equals("Contains_RescueSoldier_MissionTagDef")))
                     {
-                        if (main.Config.ChancesScavSoldiers == TFTVConfig.ScavengingWeight.Haut)
+                        if (TFTVNewGameOptions.chancesScavSoldiers == TFTVNewGameOptions.ScavengingWeight.High)
                         {
                             scavSiteConf.Weight = 6;
                         }
-                        else if (main.Config.ChancesScavSoldiers == TFTVConfig.ScavengingWeight.Moyen)
+                        else if (TFTVNewGameOptions.chancesScavSoldiers == TFTVNewGameOptions.ScavengingWeight.Medium)
                         {
                             scavSiteConf.Weight = 4;
                         }
-                        else if (main.Config.ChancesScavSoldiers == TFTVConfig.ScavengingWeight.Faible)
+                        else if (TFTVNewGameOptions.chancesScavSoldiers == TFTVNewGameOptions.ScavengingWeight.Low)
                         {
                             scavSiteConf.Weight = 1;
                         }
-                        else if (main.Config.ChancesScavSoldiers == TFTVConfig.ScavengingWeight.Aucun)
+                        else if (TFTVNewGameOptions.chancesScavSoldiers == TFTVNewGameOptions.ScavengingWeight.None)
                         {
                             scavSiteConf.Weight = 0;
                         }
@@ -551,19 +650,19 @@ namespace TFTV
 
                     if (scavSiteConf.MissionTags.Any(mt => mt.name.Equals("Contains_RescueVehicle_MissionTagDef")))
                     {
-                        if (main.Config.ChancesScavGroundVehicleRescue == TFTVConfig.ScavengingWeight.Haut)
+                        if (TFTVNewGameOptions.chancesScavGroundVehicleRescue == TFTVNewGameOptions.ScavengingWeight.High)
                         {
                             scavSiteConf.Weight = 6;
                         }
-                        else if (main.Config.ChancesScavGroundVehicleRescue == TFTVConfig.ScavengingWeight.Moyen)
+                        else if (TFTVNewGameOptions.chancesScavGroundVehicleRescue == TFTVNewGameOptions.ScavengingWeight.Medium)
                         {
                             scavSiteConf.Weight = 4;
                         }
-                        else if (main.Config.ChancesScavGroundVehicleRescue == TFTVConfig.ScavengingWeight.Faible)
+                        else if (TFTVNewGameOptions.chancesScavGroundVehicleRescue == TFTVNewGameOptions.ScavengingWeight.Low)
                         {
                             scavSiteConf.Weight = 1;
                         }
-                        else if (main.Config.ChancesScavGroundVehicleRescue == TFTVConfig.ScavengingWeight.Aucun)
+                        else if (TFTVNewGameOptions.chancesScavGroundVehicleRescue == TFTVNewGameOptions.ScavengingWeight.None)
                         {
                             scavSiteConf.Weight = 0;
                         }
