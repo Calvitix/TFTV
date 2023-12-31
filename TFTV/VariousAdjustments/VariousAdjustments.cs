@@ -6,6 +6,8 @@ using HarmonyLib;
 using PhoenixPoint.Common.Core;
 using PhoenixPoint.Common.Entities;
 using PhoenixPoint.Common.Entities.GameTags;
+using PhoenixPoint.Common.Entities.Items;
+using PhoenixPoint.Common.Levels.Missions;
 using PhoenixPoint.Common.UI;
 using PhoenixPoint.Geoscape.Entities.Research;
 using PhoenixPoint.Geoscape.Entities.Research.Requirement;
@@ -85,7 +87,10 @@ namespace PRMBetterClasses.VariousAdjustments
 
         private static void Change_AccessLift()
         {
-            DefCache.GetDef<PhoenixFacilityDef>("AccessLift_PhoenixFacilityDef").CannotDemolish = true;
+            PhoenixFacilityDef accessLifts = DefCache.GetDef<PhoenixFacilityDef>("AccessLift_PhoenixFacilityDef");
+
+            accessLifts.CannotDemolish = true;
+            accessLifts.FacilityLimitPerBase = 1;
         }
 
         private static void Change_BashWeaponDamage()
@@ -231,12 +236,14 @@ namespace PRMBetterClasses.VariousAdjustments
             {
                 if (__instance.TacEffectStatusDef.name.Equals("Poison_DamageOverTimeStatusDef"))
                 {
-                    TacticalActor base_TacticalActor = (TacticalActor)AccessTools.Property(typeof(TacStatus), "TacticalActor").GetValue(__instance, null);
                     //StatMultiplierStatusDef trembling = Repo.GetAllDefs<StatMultiplierStatusDef>().FirstOrDefault(sms => sms.name.Equals("Trembling_StatusDef"));
-                    if (base_TacticalActor.Status.HasStatus(trembling))
+                    if (__instance.TacticalActor != null && __instance.TacticalActor.Status.HasStatus(trembling))
                     {
-                        StatMultiplierStatus status = base_TacticalActor.Status.GetStatus<StatMultiplierStatus>(trembling);
-                        status.RequestUnapply(status.StatusComponent);
+                        StatMultiplierStatus status = __instance.TacticalActor.Status.GetStatus<StatMultiplierStatus>(trembling);
+                        if (status != null)
+                        {
+                            status.RequestUnapply(status.StatusComponent);
+                        }
                         return;
                     }
                 }
@@ -591,22 +598,32 @@ namespace PRMBetterClasses.VariousAdjustments
         }
         public static void Change_VidarGL(SharedData shared)
         {
-            int vGLNormal = 50;
-            int vGLShred = 20;
-            int vGLAcid = 10;
+            //int vGLNormal = 50;
+            //int vGLShred = 20;
+            //int vGLAcid = 10;
             int vGlAPCost = 50;
 
             WeaponDef vGL = DefCache.GetDef<WeaponDef>("FS_AssaultGrenadeLauncher_WeaponDef");
 
-            vGL.DamagePayload.DamageKeywords = new List<DamageKeywordPair>
-            {
-                new DamageKeywordPair{DamageKeywordDef = shared.SharedDamageKeywords.BlastKeyword, Value = vGLNormal },
-                new DamageKeywordPair{DamageKeywordDef = shared.SharedDamageKeywords.ShreddingKeyword, Value = vGLShred },
-                new DamageKeywordPair{DamageKeywordDef = shared.SharedDamageKeywords.AcidKeyword, Value = vGLAcid },
-            };
+           
+            //vGL.DamagePayload.DamageKeywords = new List<DamageKeywordPair>
+            //{
+            //    new DamageKeywordPair{DamageKeywordDef = shared.SharedDamageKeywords.BlastKeyword, Value = vGLNormal },
+            //    new DamageKeywordPair{DamageKeywordDef = shared.SharedDamageKeywords.ShreddingKeyword, Value = vGLShred },
+            //    new DamageKeywordPair{DamageKeywordDef = shared.SharedDamageKeywords.AcidKeyword, Value = vGLAcid },
+            //};
 
             vGL.APToUsePerc = vGlAPCost;
+            vGL.ChargesMax = 3;
 
+            ItemDef vGLammo = DefCache.GetDef<ItemDef>("FS_AssaultGrenadeLauncher_AmmoClip_ItemDef");
+            vGLammo.ChargesMax = 3;
+
+            vGLammo.ManufactureMaterials = 34;
+            vGLammo.ManufactureTech = 4;
+            Sprite vGLammoIcon = Helper.CreateSpriteFromImageFile("Vidar_Ammo_3x_v3.png");
+            vGLammo.ViewElementDef.InventoryIcon = vGLammoIcon;
+            vGLammo.ViewElementDef.RosterIcon = vGLammoIcon;
         }
         public static void Change_Destiny()
         {

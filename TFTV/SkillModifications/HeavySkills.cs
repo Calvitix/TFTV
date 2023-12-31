@@ -125,7 +125,7 @@ namespace PRMBetterClasses.SkillModifications
                 "E_AbilityCostModifier [HunkerDown_AbilityDef]");
             hunkerDownApCostModifier.DurationTurns = 1;
             hunkerDownApCostModifier.ExpireOnEndOfTurn = true;
-            hunkerDownApCostModifier.SingleInstance = true;
+            hunkerDownApCostModifier.SingleInstance = false;
             //hunkerDownApCostModifier.AbilityCostModification.ActionPointModType = TacticalAbilityModificationType.Multiply;
             //hunkerDownApCostModifier.AbilityCostModification.ActionPointMod = 2f / 3;
 
@@ -335,7 +335,7 @@ namespace PRMBetterClasses.SkillModifications
             }
         }
         // Harmony Patch to calcualte shred resistance, vanilla has no implementation for this
-        [HarmonyPatch(typeof(ShreddingDamageKeywordData), "ProcessKeywordDataInternal")]
+      /*  [HarmonyPatch(typeof(ShreddingDamageKeywordData), "ProcessKeywordDataInternal")]
         internal static class BC_ShreddingDamageKeywordData_ProcessKeywordDataInternal_ShredResistant_patch
         {
             //public static DamageMultiplierAbilityDef shredResistanceAbilityDef = DefCache.GetDef<DamageMultiplierAbilityDef>("ShredResistant_DamageMultiplierAbilityDef");
@@ -348,7 +348,7 @@ namespace PRMBetterClasses.SkillModifications
                     data.DamageResult.ArmorDamage = Mathf.Floor(data.DamageResult.ArmorDamage * shredResistanceAbilityDef.Multiplier);
                 }
             }
-        }
+        }*/ //added to TFTVRevenant.cs for revenants
 
         private static void Change_RageBurst()
         {

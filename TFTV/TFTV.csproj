@@ -202,36 +202,45 @@
     <Compile Include="Tactical\Entities\Statuses\FumbleChanceStatusDef.cs" />
     <Compile Include="Tactical\Entities\Statuses\OnActorDazedEffectStatus.cs" />
     <Compile Include="Tactical\Entities\Statuses\OnActorDazedEffectStatusDef.cs" />
-    <Compile Include="TFTVAAExperiment.cs" />
+    <Compile Include="TFTVAAAgendaTracker.cs" />
     <Compile Include="TFTVAcid.cs" />
-    <Compile Include="TFTVAirCombat.cs" />
+    <Compile Include="TFTVBehemothAndRaids.cs" />
     <Compile Include="TFTVAmbushes.cs" />
     <Compile Include="TFTVAncients.cs" />
     <Compile Include="TFTVAncientsGeo.cs" />
     <Compile Include="TFTVArtOfCrab.cs" />
+    <Compile Include="TFTVAudio.cs" />
     <Compile Include="TFTVAugmentations.cs" />
     <Compile Include="TFTVBallistics.cs" />
     <Compile Include="TFTVBaseDefenseGeoscape.cs" />
+    <Compile Include="TFTVBaseDefenseNJ.cs" />
     <Compile Include="TFTVBaseDefenseTactical.cs" />
     <Compile Include="TFTVBetaSaveGamesFixes.cs" />
     <Compile Include="TFTVBetterEnemies.cs" />
     <Compile Include="TFTVCapturePandorans.cs" />
+    <Compile Include="TFTVCriticalStuff.cs" />
     <Compile Include="TFTVDefsWithConfigDependency.cs" />
     <Compile Include="TFTVCapturePandoransGeoscape.cs" />
     <Compile Include="TFTVChangesToDLC1andDLC2Events.cs" />
     <Compile Include="TFTVChangesToDLC3Events.cs" />
     <Compile Include="TFTVChangesToDLC4Events.cs" />
-    <Compile Include="TFTVChangesToDLC5Events.cs" />
+    <Compile Include="TFTVChangesToDLC5.cs" />
     <Compile Include="TFTVCommonMethods.cs" />
     <Compile Include="TFTVDefsInjectedOnlyOnce.cs" />
     <Compile Include="TFTVDefsRequiringReinjection.cs" />
     <Compile Include="TFTVDelirium.cs" />
     <Compile Include="TFTVDeliriumPerks.cs" />
     <Compile Include="TFTVDiplomacyPenalties.cs" />
-    <Compile Include="TFTVFire.cs" />
+    <Compile Include="TFTVVoxels.cs" />
+    <Compile Include="TFTVHarmonyGeoscape.cs" />
+    <Compile Include="TFTVHarmonyGeoscapeUI.cs" />
+    <Compile Include="TFTVHarmonyTactical.cs" />
     <Compile Include="TFTVHealing.cs" />
+    <Compile Include="TFTVEconomyExploitsFixes.cs" />
     <Compile Include="TFTVNewGameOptions.cs" />
+    <Compile Include="TFTVPalaceMission.cs" />
     <Compile Include="TFTVReleaseOnly.cs" />
+    <Compile Include="TFTVRescueVIPMissions.cs" />
     <Compile Include="TFTVSpecialDifficulties.cs" />
     <Compile Include="TFTVExperimental.cs" />
     <Compile Include="TFTVGeoscape.cs" />
@@ -240,49 +249,108 @@
     <Compile Include="TFTVHumanEnemies.cs" />
     <Compile Include="TFTVHumanEnemiesNames.cs" />
     <Compile Include="TFTVInfestation.cs" />
-    <Compile Include="TFTVInfestationStory.cs" />
     <Compile Include="TFTVLogger.cs" />
     <Compile Include="TFTVMain.cs" />
     <Compile Include="TFTVNewGameMenu.cs" />
-    <Compile Include="TFTVNewPXCharacters.cs" />
+    <Compile Include="TFTVBackgroundsAndCharacters.cs" />
     <Compile Include="TFTVPandoranProgress.cs" />
     <Compile Include="TFTVPassengerModules.cs" />
     <Compile Include="TFTVProjectOsiris.cs" />
     <Compile Include="TFTVRevenant.cs" />
     <Compile Include="TFTVRevenantResearch.cs" />
     <Compile Include="TFTVReverseEngineering.cs" />
-    <Compile Include="TFTVSDIandVoidOmenRoll.cs" />
+    <Compile Include="TFTVODIandVoidOmenRoll.cs" />
     <Compile Include="TFTVStamina.cs" />
     <Compile Include="TFTVStarts.cs" />
     <Compile Include="TFTVTactical.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TFTVThirdAct.cs" />
+    <Compile Include="TFTVTacticalUtils.cs" />
     <Compile Include="TFTVTradingRecruiting.cs" />
-    <Compile Include="TFTVTutorialAndStory.cs" />
+    <Compile Include="TFTVHints.cs" />
     <Compile Include="TFTVUI.cs" />
     <Compile Include="TFTVUIGeoMap.cs" />
-    <Compile Include="TFTVUmbra.cs" />
+    <Compile Include="TFTVUITactical.cs" />
+    <Compile Include="TFTVTouchedByTheVoid.cs" />
     <Compile Include="TFTVVanillaFixes.cs" />
     <Compile Include="TFTVVehicleInventory.cs" />
     <Compile Include="TFTVVoidOmens.cs" />
-    <Compile Include="VanillaPatches\TacticalAbility_EnqueueAction_FumbleFix.cs" />
     <Compile Include="VariousAdjustments\VariousAdjustments.cs" />
     <Compile Include="VariousAdjustments\VariousAdjustmentsMain.cs" />
     <Compile Include="VariousAdjustments\WeaponModifications.cs" />
+    <!-- Vehicle Rework Files -->
+    <Compile Include="Vehicles\Abilities\AdjustAccessCostStatus.cs" />
+    <Compile Include="Vehicles\Abilities\AdjustAccessCostStatusDef.cs" />
+    <Compile Include="Vehicles\Abilities\ApplyStatusAfterAbilityExecutedAbility.cs" />
+    <Compile Include="Vehicles\Abilities\ApplyStatusAfterAbilityExecutedAbilityDef.cs" />
+    <Compile Include="Vehicles\Abilities\ExtendedEnterVehicle.cs" />
+    <Compile Include="Vehicles\Abilities\ExtendedEnterVehicleDef.cs" />
+    <Compile Include="Vehicles\Abilities\ExtendedExitVehicle.cs" />
+    <Compile Include="Vehicles\Abilities\ExtendedExitVehicleDef.cs" />
+    <Compile Include="Vehicles\Abilities\FreeReloadAbility.cs" />
+    <Compile Include="Vehicles\Abilities\FreeReloadAbilityDef.cs" />
+    <Compile Include="Vehicles\Abilities\HealPassengersStatus.cs" />
+    <Compile Include="Vehicles\Abilities\HealPassengersStatusDef.cs" />
+    <Compile Include="Vehicles\Abilities\InvertedDamageMultiplierStatus.cs" />
+    <Compile Include="Vehicles\Abilities\InvertedDamageMultiplierStatusDef.cs" />
+    <Compile Include="Vehicles\Armadillo\Armadillo.cs" />
+    <Compile Include="Vehicles\Armadillo\GasTanks.cs" />
+    <Compile Include="Vehicles\Armadillo\GaussTurret.cs" />
+    <Compile Include="Vehicles\Armadillo\ImprovedTraction.cs" />
+    <Compile Include="Vehicles\Armadillo\LightweightAlloy.cs" />
+    <Compile Include="Vehicles\Armadillo\Mephistopheles.cs" />
+    <Compile Include="Vehicles\Armadillo\Purgatory.cs" />
+    <Compile Include="Vehicles\Armadillo\ReinforcedPlating.cs" />
+    <Compile Include="Vehicles\Aspida\Aspida.cs" />
+    <Compile Include="Vehicles\Aspida\ClericX2.cs" />
+    <Compile Include="Vehicles\Aspida\HermesX1.cs" />
+    <Compile Include="Vehicles\Aspida\PsychicJammer.cs" />
+    <Compile Include="Vehicles\Aspida\StasisChamber.cs" />
+    <Compile Include="Vehicles\Buggy\Deathproof.cs" />
+    <Compile Include="Vehicles\Buggy\Kamikaze.cs" />
+    <Compile Include="Vehicles\Buggy\KaosBuggy.cs" />
+    <Compile Include="Vehicles\Buggy\MannedGunner.cs" />
+    <Compile Include="Vehicles\Buggy\Slaughterhouse.cs" />
+    <Compile Include="Vehicles\Effects\ActorArmourThresholdEffectConditionDef.cs" />
+    <Compile Include="Vehicles\Effects\AddedRotationParticleEffect.cs" />
+    <Compile Include="Vehicles\Effects\AddedRotationParticleEffectDef.cs" />
+    <Compile Include="Vehicles\HarmonyPatches\GeoCharacter_Patches.cs" />
+    <Compile Include="Vehicles\HarmonyPatches\SwitchStanceAbility_Patches.cs" />
+    <Compile Include="Vehicles\HarmonyPatches\TacticalAbility_Patches.cs" />
+    <Compile Include="Vehicles\HarmonyPatches\TacticalActor_Patches.cs" />
+    <Compile Include="Vehicles\HarmonyPatches\UIItemToolTip_Patches.cs" />
+    <Compile Include="Vehicles\Misc\MarketplaceOptions.cs" />
+    <Compile Include="Vehicles\Misc\MiscChanges.cs" />
+    <Compile Include="Vehicles\Misc\NewTags.cs" />
+    <Compile Include="Vehicles\Misc\RescueMissions.cs" />
+    <Compile Include="Vehicles\Misc\SoldierMounting.cs" />
+    <Compile Include="Vehicles\Misc\VehicleStatusTags.cs" />
+    <Compile Include="Vehicles\Mutog\Mutog.cs" />
+    <Compile Include="Vehicles\Scarab\Scarab.cs" />
+    <Compile Include="Vehicles\Scarab\LazarusShield.cs" />
+    <Compile Include="Vehicles\Scarab\AmmunitionRacks.cs" />
+    <Compile Include="Vehicles\Scarab\DeploymentBay.cs" />
+    <Compile Include="Vehicles\Scarab\ReinforcedStabilisers.cs" />
+    <Compile Include="Vehicles\VehiclesMain.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Localization\PR_BC_Localization.csv">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Assets\Localization\PR_BG_Localization.csv">
+    <None Include="Assets\Localization\Vehicles.csv">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Assets\Localization\PR_CH_Story_Localization.csv">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Assets\Localization\PR_FS_Story_Localization.csv">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
+    <None Include="Assets\Localization\TFTV_AbilitiesEffectsStatusesTactical_Localization.csv" />
+    <None Include="Assets\Localization\TFTV_CharactersItemsFacilities_Localization.csv" />
+    <None Include="Assets\Localization\TFTV_Events_Localization.csv" />
+    <None Include="Assets\Localization\TFTV_GeoUIElements_Localization.csv" />
+    <None Include="Assets\Localization\TFTV_HintsGeo_Localization.csv" />
+    <None Include="Assets\Localization\TFTV_HintsTactical_Localization.csv" />
+    <None Include="Assets\Localization\TFTV_LoreAndTips_Localization.csv" />
+    <None Include="Assets\Localization\TFTV_MissionObjectives_Localization.csv" />
+    <None Include="Assets\Localization\TFTV_Options_Localization.csv" />
+    <None Include="Assets\Localization\TFTV_Research_Localization.csv" />
+    <None Include="Assets\Localization\TFTV_VoidOmensAndODI_Localization.csv" />
+    <!-- <None Include="Assets\Localization\Vehicles.csv" /> -->
     <None Include="Assets\Presets\AbilityDefToNameDict.json" />
     <None Include="Assets\Presets\NotLocalizedTextMap.json" />
     <None Include="meta.json">
@@ -290,16 +358,10 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Assets\Textures\alistair.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
     <Content Include="Assets\Textures\anu_squad.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Assets\Textures\ban_squad.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Assets\Textures\BG_alistair_small.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Assets\Textures\BG_HammerFall.jpg">
@@ -314,43 +376,16 @@
     <Content Include="Assets\Textures\BG_Hammerfall_impact2.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Assets\Textures\BG_Hint_Delirium.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
     <Content Include="Assets\Textures\BG_Intro_0.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Assets\Textures\BG_Intro_1.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Assets\Textures\BG_Olena_small.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Assets\Textures\broken_limb_stamina.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Assets\Textures\FesteringSkiesAfterHamerfall.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Assets\Textures\fo_squad.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
     <Content Include="Assets\Textures\Helena_fire2.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Assets\Textures\Helena_fire2_closeup.jpg">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Assets\Textures\Hint_PandoranEvolution.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Assets\Textures\Hint_Revenant.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Assets\Textures\Hint_Umbra.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Assets\Textures\makeshift_lab.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Assets\Textures\nj_squad.jpg">
@@ -365,7 +400,6 @@
     <Content Include="Assets\Textures\NodeAlt.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Assets\Textures\Olena.png" />
     <Content Include="Assets\Textures\pu_squad.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -579,15 +613,6 @@
     <Content Include="Assets\Textures\UI_StatusesIcons_CanBeRecruitedIntoPhoenix-2.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Assets\Textures\Umbra_family.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Assets\Textures\umbra_fishman.jpg">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Assets\Textures\Umbra_hint.jpg">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
     <Content Include="Assets\Textures\Void-04P.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -604,6 +629,12 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Assets\Textures\VO_15.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Textures\BlastVulnerability.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Textures\car_wheel.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

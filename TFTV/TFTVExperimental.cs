@@ -1,83 +1,123 @@
-﻿using Base.Defs;
+﻿using Base.Core;
+using Base.Defs;
+using Base.UI.MessageBox;
 using HarmonyLib;
 using PhoenixPoint.Common.Core;
-using PhoenixPoint.Common.Entities.GameTags;
+using PhoenixPoint.Common.Entities.Items;
+using PhoenixPoint.Common.Levels.Missions;
+using PhoenixPoint.Geoscape;
 using PhoenixPoint.Geoscape.Entities;
+using PhoenixPoint.Geoscape.Entities.Missions;
+using PhoenixPoint.Geoscape.Entities.Research;
+using PhoenixPoint.Geoscape.Entities.Research.Reward;
+using PhoenixPoint.Geoscape.Levels;
+using PhoenixPoint.Modding;
 using PhoenixPoint.Tactical.Entities;
-using PhoenixPoint.Tactical.Entities.Abilities;
-using PhoenixPoint.Tactical.Entities.Equipments;
-using PhoenixPoint.Tactical.Levels;
 using System;
+using System.Collections.Generic;
 using System.Reflection;
 using UnityEngine;
-using static PhoenixPoint.Geoscape.Entities.GeoHaven;
 
 namespace TFTV
 {
     internal class TFTVExperimental
     {
 
-        internal static Color purple = new Color32(149, 23, 151, 255);
+        //  internal static Color purple = new Color32(149, 23, 151, 255);
         private static readonly DefRepository Repo = TFTVMain.Repo;
         private static readonly SharedData Shared = TFTVMain.Shared;
         private static readonly DefCache DefCache = TFTVMain.Main.DefCache;
 
-        [HarmonyPatch(typeof(TacticalLevelController), "ActorEnteredPlay")]
-        public static class TacticalLevelController_ActorEnteredPlay_ReduceDrops_Patch
+        /*   [HarmonyPatch(typeof(GeoPhoenixpedia), "AddItemEntry")]
+           public static class GeoPhoenixpedia_ProcessGeoscapeInstanceData_patch
+           {
+
+               public static void Prefix(GeoPhoenixpedia __instance, ItemDef item)
+               {
+                   try
+                   {
+                       TFTVLogger.Always($"Running GeoPhoenixpedia.AddItemEntry");
+                       TFTVLogger.Always($"{item}");
+
+
+                   }
+                   catch (Exception e)
+                   {
+                       TFTVLogger.Error(e);
+                       throw;
+                   }
+               }
+           }*/
+
+       
+
+        public static void CheckAutomataResearch()
         {
-            public static void Postfix(TacticalActorBase actor, TacticalLevelController __instance)
+            try
+            {
+                ResearchDbDef researchDB = DefCache.GetDef<ResearchDbDef>("pp_ResearchDB");
+
+                foreach (ResearchDef researchDef in researchDB.Researches)
+                {
+                    TFTVLogger.Always($"{researchDef.name}");
+
+                }
+
+
+            }
+            catch (Exception e)
+            {
+                TFTVLogger.Error(e);
+
+            }
+        }
+
+
+
+        [HarmonyPatch(typeof(ModManager), "ProcessGeoscapeInstanceData")]
+        public static class ModManager_ProcessGeoscapeInstanceData_patch
+        {
+
+            public static void Prefix(ModManager __instance, GeoLevelController controller, GeoLevelInstanceData instanceData, List<ModGeoscape> ____gsMods)
             {
                 try
                 {
-                    TFTVConfig config = TFTVMain.Main.Config;
+                    TFTVLogger.Always($"Running ModManager.ProcessGeoscapeInstanceData. __instance.CanUseMods? {__instance.CanUseMods} ____gsMods.Count?{____gsMods.Count}");
 
-                    if (config.ReinforcementsNoDrops && __instance.TurnNumber > 1 && actor is TacticalActor tacticalActor)
+                    foreach (ModGeoscape mod in ____gsMods)
                     {
-                        if (tacticalActor.TacticalFaction != __instance.GetFactionByCommandName("PX"))
+                        TFTVLogger.Always($"looking at {mod.Main.Instance.Entry.LocalizedName}, version number: {mod.Main.Instance.Entry.MetaData.Version} ");
+
+                        if (!instanceData.ModData.TryGetValue(mod.Main.Instance.ID, out var value))
                         {
-                            GameTagDef reinforcementTag = DefCache.GetDef<GameTagDef>("ReinforcementTag_GameTagDef");
+                            TFTVLogger.Always($"if triggered for {mod.Main.Instance.Entry.LocalizedName} ");
+                            continue;
+                        }
 
-                          //  TFTVLogger.Always($"reinforcementTag is {reinforcementTag?.name}");
+                        MethodInfo deserializeMethod = typeof(ModManager).GetMethod("DeserializeModObject", BindingFlags.Instance | BindingFlags.NonPublic);
 
-                           // TFTVLogger.Always("The turn number is " + __instance.TurnNumber);
+                        // Invoke the DeserializeModObject method
+                        object[] parameters = { mod.Main, value };
+                        object modData = deserializeMethod.Invoke(__instance, parameters);
 
-                            if (!tacticalActor.HasGameTag(reinforcementTag))
+                        TFTVLogger.Always($"modData null? {modData == null}");
+
+                        if(modData==null && mod.Main.Instance.Entry.LocalizedName == "TFTV") 
+                        {
+                            string warning = "TFTV save data is null! This save is borked! Please load an earlier save.";
+
+                            GameUtl.GetMessageBox().ShowSimplePrompt(warning, MessageBoxIcon.Warning, MessageBoxButtons.OK, null);
+                        }
+
+                     /*   if (modData != null)
+                        {
+                            __instance.TryInvokeModMethod(mod, delegate
                             {
-                                tacticalActor?.GameTags?.Add(reinforcementTag);
-                                TFTVLogger.Always($"Reinforcement tag added to {actor?.name} {actor.HasGameTag(reinforcementTag)}");
-                               
-                            }
-                        }
+                                mod.ProcessGeoscapeInstanceData(modData);
+                            }, "ProcessGeoscapeInstanceData");
+                        }*/
+
                     }
-
-                }
-                catch (Exception e)
-                {
-                    TFTVLogger.Error(e);
-                }
-            }
-        }
-
-
-        [HarmonyPatch(typeof(DieAbility), "ShouldDestroyItem")]
-        public static class DieAbility_ShouldDestroyItem_patch
-        {
-
-            public static void Postfix(DieAbility __instance, TacticalItem item, ref bool __result)
-            {
-                try
-                {
-                    TFTVConfig config = TFTVMain.Main.Config;
-                    GameTagDef reinforcementTag = DefCache.GetDef<GameTagDef>("ReinforcementTag");
-
-                    if (config.ReinforcementsNoDrops && (__instance.TacticalActorBase.HasGameTag(reinforcementTag) || __instance.TacticalActor.DeathInfo.IsAlreadyResurrected))
-                    {
-                        TFTVLogger.Always($"{__instance?.TacticalActorBase?.name} has reinforcement tag, so should drop no items on death");
-                        __result = false;
-                    }
-
-
-
                 }
                 catch (Exception e)
                 {
@@ -87,36 +127,24 @@ namespace TFTV
             }
         }
 
-        
+        //   
 
-        [HarmonyPatch(typeof(GeoHaven), "IncreaseAlertness")]
-        public static class GeoHaven_IncreaseAlertness_patch
+
+        [HarmonyPatch(typeof(GeoLevelController), "GetAllPossibleEnemyMissionParticipants")]
+        public static class GeoLevelController_GetAllPossibleEnemyMissionParticipants_patch
         {
 
-            public static bool Prefix(GeoHaven __instance)
+            public static void Postfix(GeoLevelController __instance, List<Tuple<IGeoFactionMissionParticipant, int>> __result)
             {
                 try
                 {
-                    TFTVConfig config = TFTVMain.Main.Config;
+                    TFTVLogger.Always($"Running GeoLevelController.GetAllPossibleEnemyMissionParticipants");
 
-                    if (config.LimitedRaiding)
+                    foreach (Tuple<IGeoFactionMissionParticipant, int> tuple in __result)
                     {
-                        // Get the type of the GeoHaven class
-                        Type geoHavenType = typeof(GeoHaven);
-
-                        // Get the PropertyInfo object representing the AlertLevel property
-                        PropertyInfo alertLevelProperty = geoHavenType.GetProperty("AlertLevel", BindingFlags.Public | BindingFlags.Instance);
-
-                        // Set the value of the AlertLevel property using reflection
-                        if (alertLevelProperty != null && alertLevelProperty.CanWrite)
-                        {
-                            alertLevelProperty.SetValue(__instance, HavenAlertLevel.HighAlert);
-                        }
-
-                        __instance.AlertCooldownDaysLeft = 7;
+                        TFTVLogger.Always($"{tuple.Item1.ParticipantName.LocalizeEnglish()} scored {tuple.Item2}");
                     }
 
-                    return false;
                 }
                 catch (Exception e)
                 {
@@ -128,6 +156,50 @@ namespace TFTV
 
 
 
+
+
+        /*   [HarmonyPatch(typeof(EnterBaseAbility), "GetTargetDisabledStateInternal")]
+           public static class EnterBaseAbility_GetValidTargets_patch
+           {
+
+               public static void Postfix(EnterBaseAbility __instance, GeoAbilityTarget target, GeoAbilityTargetDisabledState __result)
+               {
+                   try
+                   {
+                       TFTVLogger.Always($"GetTargetDisabledStateInternal for ability {__instance.GeoscapeAbilityDef.name}");
+
+
+                       if (__result==GeoAbilityTargetDisabledState.NotDisabled && target.Actor is GeoSite site && site.ActiveMission != null && site.CharactersCount > 0)
+                       {
+                           UIModuleSiteContextualMenu uIModuleSiteContextualMenu = __instance.GeoLevel.View.GeoscapeModules.SiteContextualMenuModule;
+
+
+                           FieldInfo fieldInfoListSiteContextualMenuItem = typeof(UIModuleSiteContextualMenu).GetField("_menuItems", BindingFlags.NonPublic | BindingFlags.Instance);
+                           List<SiteContextualMenuItem> menuItems = fieldInfoListSiteContextualMenuItem.GetValue(uIModuleSiteContextualMenu) as List<SiteContextualMenuItem>;
+
+                           foreach(SiteContextualMenuItem menuItem in menuItems) 
+                           { 
+                           if(menuItem.ItemText.text == __instance.View.ViewElementDef.DisplayName1.Localize()) 
+                               {
+                                   menuItem.ItemText.text = "DEPLOY TO DEFEND BASE";
+
+
+                               }
+
+                           }
+
+
+                       }
+
+
+                   }
+                   catch (Exception e)
+                   {
+                       TFTVLogger.Error(e);
+                       throw;
+                   }
+               }
+           }*/
 
 
 
@@ -324,7 +396,7 @@ namespace TFTV
                         MethodInfo methodRefreshStorageLabel = typeof(UIStateInventory).GetMethod("RefreshStorageLabel", BindingFlags.Instance | BindingFlags.NonPublic);
 
                         MethodInfo methodInitInitialItems = typeof(UIStateInventory).GetMethod("InitInitialItems", BindingFlags.Instance | BindingFlags.NonPublic);
-                       
+
                         MethodInfo methodSetupGroundMarkers = typeof(UIStateInventory).GetMethod("SetupGroundMarkers", BindingFlags.Instance | BindingFlags.NonPublic);
 
 
@@ -334,7 +406,7 @@ namespace TFTV
                         methodSetupGroundMarkers.Invoke(__instance, null);
                         methodRefreshStorageLabel.Invoke(__instance, null);
                         methodInitInitialItems.Invoke(__instance, null);
-                  
+
 
                         //
                         // __instance.ResetInventoryQueries();
@@ -401,7 +473,7 @@ namespace TFTV
 
                        if (____selectedEquipment.EquipmentDef==repairKit) 
                        {
-                           TFTVLogger.Always("got here");
+                           TFTVLogger.Always("");
                            __instance.DamageTypeVisualsTemplate.DamageTypeIcon.gameObject.SetActive(false);
                            __instance.DamageTypeVisualsTemplate.DamageText.gameObject.SetActive(false);
 
@@ -1057,14 +1129,14 @@ namespace TFTV
                       {
                           if (parameter is TacticalAbilityTarget abilityTarget && abilityTarget.GetTargetActor() != null)
                           {
-                              TFTVLogger.Always($"got here, target is {abilityTarget.GetTargetActor()}");
+                              TFTVLogger.Always($", target is {abilityTarget.GetTargetActor()}");
 
                               TacticalActor tacticalActor = abilityTarget.GetTargetActor() as TacticalActor;
 
                               if (tacticalActor != null)
                               {
                                   tacticalActor.AddAbility(knockBackAbility, tacticalActor);
-                                     TFTVLogger.Always($"got here, added {knockBackAbility.name} to {tacticalActor.name}");
+                                     TFTVLogger.Always($", added {knockBackAbility.name} to {tacticalActor.name}");
                               }
                           }
                       }
@@ -1086,12 +1158,12 @@ namespace TFTV
 
                       if (ability.TacticalAbilityDef != null && ability.TacticalAbilityDef == strikeAbility)
                       {
-                             TFTVLogger.Always($"got here, ability is {ability.TacticalAbilityDef.name}");
+                             TFTVLogger.Always($", ability is {ability.TacticalAbilityDef.name}");
 
                           if (parameter is TacticalAbilityTarget abilityTarget && abilityTarget.GetTargetActor() != null)
                           {
 
-                              TFTVLogger.Always($"got here, target is {abilityTarget.GetTargetActor()}");
+                              TFTVLogger.Always($", target is {abilityTarget.GetTargetActor()}");
 
                               TacticalActor tacticalActor = abilityTarget.GetTargetActor() as TacticalActor;
 
@@ -1171,14 +1243,14 @@ namespace TFTV
                            if (parameter is TacticalAbilityTarget abilityTarget && abilityTarget.GetTargetActor() != null)
                            {
 
-                           //    TFTVLogger.Always($"got here, target is {abilityTarget.GetTargetActor()}");
+                           //    TFTVLogger.Always($", target is {abilityTarget.GetTargetActor()}");
 
                                TacticalActor tacticalActor = abilityTarget.GetTargetActor() as TacticalActor;
 
                                if (tacticalActor != null)
                                {
                                    tacticalActor.AddAbility(knockBackAbility, tacticalActor);
-                                //   TFTVLogger.Always($"got here, added {knockBackAbility.name} to {tacticalActor.name}");
+                                //   TFTVLogger.Always($", added {knockBackAbility.name} to {tacticalActor.name}");
                                }
                            }
                        }
@@ -1202,12 +1274,12 @@ namespace TFTV
 
                        if (ability.TacticalAbilityDef != null && ability.TacticalAbilityDef == strikeAbility)
                        {
-                        //   TFTVLogger.Always($"got here, ability is {ability.TacticalAbilityDef.name}");
+                        //   TFTVLogger.Always($", ability is {ability.TacticalAbilityDef.name}");
 
                            if (parameter is TacticalAbilityTarget abilityTarget && abilityTarget.GetTargetActor() != null)
                            {
 
-                              // TFTVLogger.Always($"got here, target is {abilityTarget.GetTargetActor()}");
+                              // TFTVLogger.Always($", target is {abilityTarget.GetTargetActor()}");
 
                                TacticalActor tacticalActor = abilityTarget.GetTargetActor() as TacticalActor;
 

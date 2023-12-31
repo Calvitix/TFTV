@@ -5,6 +5,7 @@ using Base.Entities.Effects;
 using Base.Entities.Effects.ApplicationConditions;
 using Base.Entities.Statuses;
 using Base.UI;
+using HarmonyLib;
 using PhoenixPoint.Common.ContextHelp;
 using PhoenixPoint.Common.Entities;
 using PhoenixPoint.Common.Entities.GameTags;
@@ -34,7 +35,7 @@ namespace TFTV
         private static readonly DefCache DefCache = TFTVMain.Main.DefCache;
         public static Sprite VoidIcon = Helper.CreateSpriteFromImageFile("Void-04P.png");
 
-        public static void InjectDefsRequiringReinjection()
+        public static void InjectDefsInjectedOnlyOnceBatch2()
         {
             try
             {
@@ -90,12 +91,13 @@ namespace TFTV
 
                 newAIStatusConsiderationTBTV.StatusDef = onTurnEndTBTV;
 
-                string nameAIStatusConsiderationTBTV_OnAttack = "AIConsiderationNoFleeOnAttack";
+                //counter-productive, if it has no weapons, player won't attack it
+             /*   string nameAIStatusConsiderationTBTV_OnAttack = "AIConsiderationNoFleeOnAttack";
                 string gUIDAIStatusConsiderationTBTV_OnAttack = "{908A99C2-AC90-4BC6-A812-9DC3953DAE00}";
 
                 AIStatusConsiderationDef newAIStatusConsiderationTBTVOnAttack = Helper.CreateDefFromClone(sourceStatusConsideration, gUIDAIStatusConsiderationTBTV_OnAttack, nameAIStatusConsiderationTBTV_OnAttack);
 
-                newAIStatusConsiderationTBTVOnAttack.StatusDef = onAttackTBTV;
+                newAIStatusConsiderationTBTVOnAttack.StatusDef = onAttackTBTV;*/
 
 
                 string nameAIStatusConsiderationOilCrab = "AIConsiderationNoFleeOilCrab";
@@ -124,7 +126,7 @@ namespace TFTV
 
                 AIAdjustedConsideration aIAdjustedConsiderationSelfRepair = new AIAdjustedConsideration() { Consideration = newAIStatusConsiderationSelfRepair, ScoreCurve = moveToRandomWP.EarlyExitConsiderations[0].ScoreCurve };
                 AIAdjustedConsideration aIAdjustedConsiderationTBTV = new AIAdjustedConsideration() { Consideration = newAIStatusConsiderationTBTV, ScoreCurve = moveToRandomWP.EarlyExitConsiderations[0].ScoreCurve };
-                AIAdjustedConsideration aIAdjustedConsiderationTBTVonAttack = new AIAdjustedConsideration() { Consideration = newAIStatusConsiderationTBTVOnAttack, ScoreCurve = moveToRandomWP.EarlyExitConsiderations[0].ScoreCurve };
+               // AIAdjustedConsideration aIAdjustedConsiderationTBTVonAttack = new AIAdjustedConsideration() { Consideration = newAIStatusConsiderationTBTVOnAttack, ScoreCurve = moveToRandomWP.EarlyExitConsiderations[0].ScoreCurve };
                 AIAdjustedConsideration aIAdjustedConsiderationOilCrab = new AIAdjustedConsideration() { Consideration = newAIStatusConsiderationOilCrab, ScoreCurve = moveToRandomWP.EarlyExitConsiderations[0].ScoreCurve };
                 AIAdjustedConsideration aIAdjustedConsiderationOilFish = new AIAdjustedConsideration() { Consideration = newAIStatusConsiderationOilFish, ScoreCurve = moveToRandomWP.EarlyExitConsiderations[0].ScoreCurve };
 
@@ -132,7 +134,7 @@ namespace TFTV
 
                 List<AIAdjustedConsideration> aIAdjustedConsiderationsHumanoidsFlee = new List<AIAdjustedConsideration>()
                 {
-                  aIAdjustedConsiderationSelfRepair, aIAdjustedConsiderationTBTV, aIAdjustedConsiderationTBTV, aIAdjustedConsiderationTBTVonAttack, aIAdjustedConsiderationOilCrab, aIAdjustedConsiderationOilFish
+                  aIAdjustedConsiderationSelfRepair, aIAdjustedConsiderationTBTV, aIAdjustedConsiderationTBTV, aIAdjustedConsiderationOilCrab, aIAdjustedConsiderationOilFish
                 };
 
                 /*   List<AIAdjustedConsideration> aIAdjustedConsiderationsCrabmenFlee = new List<AIAdjustedConsideration>()
@@ -417,7 +419,7 @@ namespace TFTV
                 TFTVLogger.Error(e);
             }
         }
-
+       
         public static void Create_Bloodthirsty()
         {
             try
@@ -819,6 +821,8 @@ namespace TFTV
         }
         public static void Create_AnxietyStatus()
         {
+            MindControlAbilityDef priestMindControlAbility = DefCache.GetDef<MindControlAbilityDef>("Priest_MindControl_AbilityDef");
+
             string skillName = "Anxiety_StatusDef";
             SilencedStatusDef source = DefCache.GetDef<SilencedStatusDef>("ActorSilenced_StatusDef");
             SilencedStatusDef hallucinatingStatus = Helper.CreateDefFromClone(
@@ -827,6 +831,8 @@ namespace TFTV
                 skillName);
 
             hallucinatingStatus.DurationTurns = 2;
+
+            priestMindControlAbility.DisablingStatuses = priestMindControlAbility.DisablingStatuses.AddToArray(hallucinatingStatus);
         }
 
 
@@ -886,28 +892,45 @@ namespace TFTV
 
         public static void Create_DerealizationIgnorePain()
         {
-            
-            string skillName = "DerealizationIgnorePain_AbilityDef";
-            ApplyStatusAbilityDef source = DefCache.GetDef<ApplyStatusAbilityDef>("IgnorePain_AbilityDef");
-            ApplyStatusAbilityDef derealizationIgnorePain = Helper.CreateDefFromClone(
-                source,
-                "eea26659-d54f-48d8-8025-cb7ca53c1749",
-                skillName);
-            derealizationIgnorePain.CharacterProgressionData = Helper.CreateDefFromClone(
-                source.CharacterProgressionData,
-                "d99c2d2f-0cff-412c-ad99-218b39158c88",
-                skillName);
-            derealizationIgnorePain.ViewElementDef = Helper.CreateDefFromClone(
-                source.ViewElementDef,
-                "3f8b13e1-70ff-4964-923d-1e2c73f66f4f",
-                skillName);
+            try
+            {
+                string statusName = "IgnoreDisabledLimbs_StatusDef";
 
-            derealizationIgnorePain.ViewElementDef.DisplayName1.LocalizationKey = "DELIRIUM_PERK_DEREALIZATION_NAME";
-            derealizationIgnorePain.ViewElementDef.Description.LocalizationKey = "DELIRIUM_PERK_DEREALIZATION_DESCRIPTION";
-            Sprite icon = Helper.CreateSpriteFromImageFile("TFTV_DeliriumPerks_Derealization.png");
-            derealizationIgnorePain.ViewElementDef.LargeIcon = icon;
-            derealizationIgnorePain.ViewElementDef.SmallIcon = icon;
+                FreezeAspectStatsStatusDef sourceStatus = DefCache.GetDef<FreezeAspectStatsStatusDef>("IgnorePain_StatusDef");
+                FreezeAspectStatsStatusDef newStatus = Helper.CreateDefFromClone(sourceStatus, "{B86D5C6C-C644-4B77-92DD-18E8C85D1F15}", statusName);
+
+
+                string skillName = "DerealizationIgnorePain_AbilityDef";
+                ApplyStatusAbilityDef source = DefCache.GetDef<ApplyStatusAbilityDef>("IgnorePain_AbilityDef");
+                ApplyStatusAbilityDef derealizationIgnorePain = Helper.CreateDefFromClone(
+                    source,
+                    "eea26659-d54f-48d8-8025-cb7ca53c1749",
+                    skillName);
+                derealizationIgnorePain.CharacterProgressionData = Helper.CreateDefFromClone(
+                    source.CharacterProgressionData,
+                    "d99c2d2f-0cff-412c-ad99-218b39158c88",
+                    skillName);
+                derealizationIgnorePain.ViewElementDef = Helper.CreateDefFromClone(
+                    source.ViewElementDef,
+                    "3f8b13e1-70ff-4964-923d-1e2c73f66f4f",
+                    skillName);
+
+                derealizationIgnorePain.StatusDef = newStatus;
+
+                derealizationIgnorePain.ViewElementDef.DisplayName1.LocalizationKey = "DELIRIUM_PERK_DEREALIZATION_NAME";
+                derealizationIgnorePain.ViewElementDef.Description.LocalizationKey = "DELIRIUM_PERK_DEREALIZATION_DESCRIPTION";
+                Sprite icon = Helper.CreateSpriteFromImageFile("TFTV_DeliriumPerks_Derealization.png");
+                derealizationIgnorePain.ViewElementDef.LargeIcon = icon;
+                derealizationIgnorePain.ViewElementDef.SmallIcon = icon;
+            }
+            catch (Exception e)
+            {
+                TFTVLogger.Error(e);
+            }
         }
+
+       
+
         public static void CreateRevenantDefs()
         {
             try
@@ -938,7 +961,6 @@ namespace TFTV
             {
                 CreateTouchedByTheVoidAbilities();
                 CreateTBTVStatuses();
-                CreateTBTVTag();
             }
             catch (Exception e)
             {
@@ -948,55 +970,7 @@ namespace TFTV
         }
 
         //Need the tag for the Hint
-        public static void CreateTBTVTag()
-        {
-            try
-            {
-                string tagTBTVName = "VoidTouched";
-                GameTagDef source = DefCache.GetDef<GameTagDef>("Takeshi_Tutorial3_GameTagDef");
-                Helper.CreateDefFromClone(
-                    source,
-                    "D7E21666-5953-4773-A0EE-D8646D278FE5",
-                    tagTBTVName + "_" + "GameTagDef");
-
-                TFTVTutorialAndStory.CreateNewTacticalHint("VoidTouchedSighted", HintTrigger.ActorSeen, "VoidTouched_GameTagDef", "VOID_TOUCHED_TITLE", "VOID_TOUCHED_TEXT", 1, true, "D3FC85FA-465C-4085-8A40-84B960DB5D25");
-
-                string tagTBTVOnAttackName = "VoidTouchedOnAttack";
-
-                Helper.CreateDefFromClone(
-                    source,
-                    "B715978B-0ABF-48C2-BEC5-1B72C5AC4389",
-                    tagTBTVOnAttackName + "_" + "GameTagDef");
-
-                TFTVTutorialAndStory.CreateNewTacticalHint(tagTBTVOnAttackName + "_Hint", HintTrigger.ActorHurt, "VoidTouchedOnAttack_GameTagDef", "TBTV_ON_ATTACK_TITLE_HINT", "TBTV_ON_ATTACK_TEXT_HINT", 1, true, "6B34678C-6C8F-4462-B1DB-ED6A4B236B3D");
-
-                string tagTBTVOnTurnEndName = "VoidTouchedOnTurnEnd";
-
-                Helper.CreateDefFromClone(
-                    source,
-                    "6620CBB3-D199-4A25-A10E-46F29359174F",
-                    tagTBTVOnTurnEndName + "_" + "GameTagDef");
-
-
-                TFTVTutorialAndStory.CreateNewTacticalHint(tagTBTVOnTurnEndName + "_Hint", HintTrigger.ActorHurt, "VoidTouchedOnTurnEnd_GameTagDef", "TBTV_ON_TURN_END_TITLE_HINT", "TBTV_ON_TURN_END_TEXT_HINT", 1, true, "E7365C33-7222-44E3-B397-77DA892E6D9F");
-
-                string tagVoidBlightName = "VoidBlight";
-
-                Helper.CreateDefFromClone(
-                    source,
-                    "D3276B4D-4A50-48AF-B21D-EB831287811B",
-                    tagVoidBlightName + "_GameTagDef");
-
-                TFTVTutorialAndStory.CreateNewTacticalHint(tagVoidBlightName, HintTrigger.StatusApplied, "TBTV_Target", "VOID_BLIGHT_NAME_HINT", "VOID_BLIGHT_DESCRIPTION_HINT", 2, true, "24D1EE1C-90A2-47FC-A999-FC0A4B63997C");
-
-            }
-            catch (Exception e)
-            {
-                TFTVLogger.Error(e);
-            }
-
-
-        }
+        
 
         public static void CreateTBTVStatuses()
         {
@@ -1359,8 +1333,8 @@ namespace TFTV
                     skillName);
                 revenantAbility.StatModifications = new ItemStatModification[0];
                 revenantAbility.ItemTagStatModifications = new EquipmentItemTagStatModification[0];
-                revenantAbility.ViewElementDef.DisplayName1 = new LocalizedTextBind("REVENANT", true);
-                revenantAbility.ViewElementDef.Description = new LocalizedTextBind("Nothing because fail", true);
+                revenantAbility.ViewElementDef.DisplayName1.LocalizationKey = "KEY_ABILITY_REVENANT";
+                revenantAbility.ViewElementDef.Description.LocalizationKey = "KEY_ABILITY_REVENANT_DESCRIPTION";
                 revenantAbility.ViewElementDef.LargeIcon = Helper.CreateSpriteFromImageFile("ODI_Skull.png");
                 revenantAbility.ViewElementDef.SmallIcon = Helper.CreateSpriteFromImageFile("ODI_Skull.png");
                 // revenantAbility.ViewElementDef.ShowInStatusScreen = false;
@@ -1397,8 +1371,8 @@ namespace TFTV
                     new ItemStatModification {TargetStat = StatModificationTarget.Speed, Modification = StatModificationType.Add, Value = 2},
                 };
                 revenantAssault.ItemTagStatModifications = new EquipmentItemTagStatModification[0];
-                revenantAssault.ViewElementDef.DisplayName1 = new LocalizedTextBind("Revenant Assaut", true);  //Calvitix Trad "Assault Revenant"
-                revenantAssault.ViewElementDef.Description = new LocalizedTextBind("+5% de dégâts", true);
+                revenantAssault.ViewElementDef.DisplayName1 = new LocalizedTextBind("Assault Revenant", true);
+                revenantAssault.ViewElementDef.Description = new LocalizedTextBind("+5% Damage", true);
 
                 revenantAssault.ViewElementDef.LargeIcon = VoidIcon;
                 revenantAssault.ViewElementDef.SmallIcon = VoidIcon;
@@ -1434,8 +1408,8 @@ namespace TFTV
                 new ItemStatModification {TargetStat = StatModificationTarget.Speed, Modification = StatModificationType.Add, Value = 4},
                 };
                 revenantBerserker.ItemTagStatModifications = new EquipmentItemTagStatModification[0];
-                revenantBerserker.ViewElementDef.DisplayName1 = new LocalizedTextBind("Revenant Berserker", true);
-                revenantBerserker.ViewElementDef.Description = new LocalizedTextBind("+4 Vitesse", true);
+                revenantBerserker.ViewElementDef.DisplayName1 = new LocalizedTextBind("Berserker Revenant", true);
+                revenantBerserker.ViewElementDef.Description = new LocalizedTextBind("+4 Speed", true);
 
                 revenantBerserker.ViewElementDef.LargeIcon = VoidIcon;
                 revenantBerserker.ViewElementDef.SmallIcon = VoidIcon;
@@ -1471,8 +1445,8 @@ namespace TFTV
                   new ItemStatModification {TargetStat = StatModificationTarget.Health, Modification = StatModificationType.Add, Value = 100},
                 };
                 heavy.ItemTagStatModifications = new EquipmentItemTagStatModification[0];
-                heavy.ViewElementDef.DisplayName1 = new LocalizedTextBind("Revenant Mastodonte", true);
-                heavy.ViewElementDef.Description = new LocalizedTextBind("+5 Puissance", true);
+                heavy.ViewElementDef.DisplayName1 = new LocalizedTextBind("Heavy Revenant", true);
+                heavy.ViewElementDef.Description = new LocalizedTextBind("+5 Strength", true);
 
                 heavy.ViewElementDef.LargeIcon = VoidIcon;
                 heavy.ViewElementDef.SmallIcon = VoidIcon;
@@ -1506,8 +1480,8 @@ namespace TFTV
                 { new ItemStatModification {TargetStat = StatModificationTarget.Stealth, Modification = StatModificationType.Add, Value = 0.15f},
                 };
                 infiltrator.ItemTagStatModifications = new EquipmentItemTagStatModification[0];
-                infiltrator.ViewElementDef.DisplayName1 = new LocalizedTextBind("Revenant Infiltrateur", true);
-                infiltrator.ViewElementDef.Description = new LocalizedTextBind("+15% de furtivité", true);
+                infiltrator.ViewElementDef.DisplayName1 = new LocalizedTextBind("Infiltrator Revenant", true);
+                infiltrator.ViewElementDef.Description = new LocalizedTextBind("+15% Stealth", true);
 
                 infiltrator.ViewElementDef.LargeIcon = VoidIcon;
                 infiltrator.ViewElementDef.SmallIcon = VoidIcon;
@@ -1542,8 +1516,8 @@ namespace TFTV
                 new ItemStatModification {TargetStat = StatModificationTarget.Willpower, Modification = StatModificationType.AddMax, Value = 10},
                 };
                 priest.ItemTagStatModifications = new EquipmentItemTagStatModification[0];
-                priest.ViewElementDef.DisplayName1 = new LocalizedTextBind("Revenant Prêtre", true);
-                priest.ViewElementDef.Description = new LocalizedTextBind("+10 de Volonté", true);
+                priest.ViewElementDef.DisplayName1 = new LocalizedTextBind("Priest Revenant", true);
+                priest.ViewElementDef.Description = new LocalizedTextBind("+10 Willpower", true);
 
                 priest.ViewElementDef.LargeIcon = VoidIcon;
                 priest.ViewElementDef.SmallIcon = VoidIcon;
@@ -1579,7 +1553,7 @@ namespace TFTV
                 { new ItemStatModification {TargetStat = StatModificationTarget.Perception, Modification = StatModificationType.Add, Value = 10},
                 };
                 sniper.ItemTagStatModifications = new EquipmentItemTagStatModification[0];
-                sniper.ViewElementDef.DisplayName1 = new LocalizedTextBind("Revenant Sniper", true);
+                sniper.ViewElementDef.DisplayName1 = new LocalizedTextBind("Sniper Revenant", true);
                 sniper.ViewElementDef.Description = new LocalizedTextBind("+10 Perception", true);
 
                 sniper.ViewElementDef.LargeIcon = VoidIcon;
@@ -1617,8 +1591,8 @@ namespace TFTV
                  new ItemStatModification {TargetStat = StatModificationTarget.Willpower, Modification = StatModificationType.AddMax, Value = 5}
                 };
                 technician.ItemTagStatModifications = new EquipmentItemTagStatModification[0];
-                technician.ViewElementDef.DisplayName1 = new LocalizedTextBind("Revenant Technicien", true);
-                technician.ViewElementDef.Description = new LocalizedTextBind("+5 Puissance, +5 Volonté", true);
+                technician.ViewElementDef.DisplayName1 = new LocalizedTextBind("Technician Revenant", true);
+                technician.ViewElementDef.Description = new LocalizedTextBind("+5 Strength, +5 Willpower", true);
 
                 technician.ViewElementDef.LargeIcon = VoidIcon;
                 technician.ViewElementDef.SmallIcon = VoidIcon;
@@ -1962,13 +1936,14 @@ namespace TFTV
                 { new ItemStatModification {TargetStat = StatModificationTarget.BonusAttackDamage, Modification = StatModificationType.Multiply, Value = 1.10f},
                 };
                 ambushAbility.ItemTagStatModifications = new EquipmentItemTagStatModification[0];
-                ambushAbility.ViewElementDef.DisplayName1 = new LocalizedTextBind("Embuscade (Tactiques)", true);
-                ambushAbility.ViewElementDef.Description = new LocalizedTextBind
-                    ("+10% de dégâts. Reçoit cette capacité lorsque le chef est en vie et qu'il n'y a pas d'ennemis en vue dans un rayon de 10 cases au début du tour.", true);
+                ambushAbility.ViewElementDef.DisplayName1.LocalizationKey = "HUMAN_ENEMIES_KEY_AMBUSH";
+                ambushAbility.ViewElementDef.Description.LocalizationKey = "HUMAN_ENEMIES_KEY_AMBUSH_DESCRIPTION";
+                   
                 Sprite icon = Helper.CreateSpriteFromImageFile("UI_AbilitiesIcon_PersonalTrack_TacticalAnalyst.png");
                 ambushAbility.ViewElementDef.LargeIcon = icon;
                 ambushAbility.ViewElementDef.SmallIcon = icon;
 
+                
             }
             catch (Exception e)
             {

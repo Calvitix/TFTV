@@ -8,7 +8,7 @@ https://www.youtube.com/playlist?list=PLzBnKdp58-0IS9AY-n3kVx6fUNz53r-_B
 
 REQUIRES ALL DLC
 
-IF YOU INSTALL THE MOD MANUALLY, AFTER ACTIVATING IT IN THE MODS TAB, QUIT TO DESKTOP AND LAUNCH PHOENIX POINT AGAIN BEFORE STARTING A NEW GAME
+DO NOT USE BETTER ENEMIES OR BETTER VEHICLES AS BOTH ARE ALREADY INTEGRATED IN THE MOD.
 
 This is an Open Beta/Early Access. Expect bugs and balance issues. More below.
 
@@ -33,10 +33,6 @@ Presentation/Changelog TftV: https://drive.google.com/file/d/1OHhNJDZJe9hRcxnnDC
 Presentation Better Classes: https://drive.google.com/file/d/19L8sXoFmxc2MsWlaHS_qMlxIQEpD5zmJ/
 TftV Discord Server: https://discord.gg/Ypt5p5trNx
 Wiki: http://wiki.phoenixpoint.com/Terror_from_the_Void
-
-RECOMMENDED MODS:
-PRM Better Enemies: https://steamcommunity.com/sharedfiles/filedetails/?id=2841735816
-PRM Better Vehicles: https://steamcommunity.com/sharedfiles/filedetails/?id=2842171493
 
 OPEN BETA
 

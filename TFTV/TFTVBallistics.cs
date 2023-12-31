@@ -13,13 +13,15 @@ using PhoenixPoint.Common.Entities.GameTagsTypes;
 using PhoenixPoint.Tactical.Entities.Abilities;
 using PhoenixPoint.Tactical.Levels;
 using System.Reflection;
+using PhoenixPoint.Common.Core;
+using PhoenixPoint.Geoscape.View.ViewControllers;
 
 namespace TFTV
 {
     internal class TFTVBallistics
     {
         private static readonly DefCache DefCache = TFTVMain.Main.DefCache;
-
+        private static readonly SharedData Shared = TFTVMain.Shared;
         //Make bullets go through Umbra and Decoy, method by Dimitar "Codemite" Evtimov from Snapshot Games
 
         public static IDamageReceiver GetDamageReceiver(DamagePredictor predictor, GameObject gameObject, Vector3 pos, Quaternion rot)
@@ -44,31 +46,51 @@ namespace TFTV
 
         //Also clear projectiles Dictionary, used to make bullets go through Umbra/Decoy
 
-        [HarmonyPatch(typeof(TacticalActor), "OnAbilityExecuteFinished")]
-
-        public static class TacticalActor_OnAbilityExecuteFinished_ClearBallistics_patch
+        public static void ClearBallisticInfoOnAbilityExecuteFinished() 
         {
-            public static void Postfix(TacticalAbility ability, TacticalActor __instance, object parameter)
+            try
+            {
+                ProjectileActor.Clear();
+                ProjectileSlotName.Clear();
+            }
+
+            catch (Exception e)
+            {
+                TFTVLogger.Error(e);
+            }
+        }
+
+
+
+        [HarmonyPatch(typeof(TacticalActor), "Die")]
+
+        public static class TacticalActor_Die_patch
+        {
+            public static bool Prefix(TacticalActor __instance)
             {
                 try
                 {
+                    TacticalActorDef dcoy = DefCache.GetDef<TacticalActorDef>("Decoy_ActorDef");
 
-
-                
-                    ProjectileActor.Clear();
-                    ProjectileSlotName.Clear();
-
-              
+                    if (!__instance.IsObject() && __instance.ActorDef == dcoy)
+                    {
+                        // TFTVLogger.Always("It's a decoy!");
+                        __instance.gameObject.SetActive(false);
+                        return false;
+                    }
+                    return true;
                 }
 
                 catch (Exception e)
                 {
                     TFTVLogger.Error(e);
+                    throw;
                 }
 
             }
         }
 
+        
 
 
         [HarmonyPatch(typeof(ProjectileLogic), "OnProjectileHit")]
@@ -225,15 +247,15 @@ namespace TFTV
             }
         }
 
-
         //D-Coy patch to remove if attacked by "smart" enemy
-        [HarmonyPatch(typeof(TacticalLevelController), "ActorDamageDealt")]
-        public static class TacticalLevelController_ActorDamageDealt_Decoy_Patch
+        public static void RemoveDCoy(TacticalActor actor, IDamageDealer damageDealer) 
         {
-            public static void Postfix(TacticalActor actor, IDamageDealer damageDealer)
+
+            try
             {
-                try
+                if (damageDealer != null)
                 {
+
                     TacticalActorDef dcoy = DefCache.GetDef<TacticalActorDef>("Decoy_ActorDef");
                     ClassTagDef sirenTag = DefCache.GetDef<ClassTagDef>("Siren_ClassTagDef");
                     ClassTagDef queenTag = DefCache.GetDef<ClassTagDef>("Queen_ClassTagDef");
@@ -244,10 +266,27 @@ namespace TFTV
 
                     GameTagDef humanTag = DefCache.GetDef<GameTagDef>("Human_TagDef");
 
+                    /* TFTVLogger.Always($"actor is null? {actor == null}");
+                     TFTVLogger.Always($"actor is {actor.name}");
+                     TFTVLogger.Always($"damagedealer null? {damageDealer == null}");
+                     TFTVLogger.Always($"damagePayload null? {damageDealer.GetDamagePayload() == null}");*/
+
+                    if (damageDealer.GetDamagePayload() == null || actor == null) //|| damageDealer.GetDamagePayload().DamageKeywords.Count==0) 
+                    {
+                        return;
+                    }
+
+                    if (damageDealer.GetDamagePayload().DamageKeywords.Count() == 0)
+                    {
+                        return;
+
+                    }
+
+                    //TFTVLogger.Always($"running ActorDamageDealt damage: {damageDealer.GetDamagePayload()?.DamageKeywords?.First()?.DamageKeywordDef.name}");
 
                     if (actor.IsAlive)
                     {
-                        if (actor.TacticalActorDef == dcoy && damageDealer != null && damageDealer.GetTacticalActorBase() != null)
+                        if (actor.TacticalActorDef == dcoy && damageDealer != null && damageDealer != null && !damageDealer.GetDamagePayload().DamageKeywords.First().DamageKeywordDef.Equals(Shared.SharedDamageKeywords.ShockKeyword) && damageDealer.GetTacticalActorBase() != null)
                         {
                             TacticalActorBase attackerBase = damageDealer.GetTacticalActorBase();
                             TacticalActor attacker = attackerBase as TacticalActor;
@@ -261,6 +300,7 @@ namespace TFTV
                                     actor.ApplyDamage(new DamageResult() { HealthDamage = actor.Health });
                                     //  TacContextHelpManager tacContextHelpManager = (TacContextHelpManager)UnityEngine.Object.FindObjectOfType(typeof(TacContextHelpManager));
                                     //  tacContextHelpManager.EventTypeTriggered(HintTrigger.ActorHurt, actor, actor);
+                                    TFTVHints.TacticalHints.ShowStoryPanel(actor.TacticalLevel, "HintDecoyDiscovered");
                                 }
                                 //Decoy despawned if attacked within 5 tiles by human, triton or acheron
                                 else if ((attacker.GameTags.Contains(tritonTag)
@@ -276,12 +316,20 @@ namespace TFTV
                         }
                     }
                 }
-                catch (Exception e)
-                {
-                    TFTVLogger.Error(e);
-                }
             }
+            catch (Exception e)
+            {
+                TFTVLogger.Error(e);
+            }
+
+
+
+
+
         }
+
+        
+       
 
 
     }

@@ -7,6 +7,7 @@ using PhoenixPoint.Common.Entities;
 using PhoenixPoint.Common.Entities.GameTags;
 using PhoenixPoint.Common.Entities.GameTagsTypes;
 using PhoenixPoint.Common.Entities.Items;
+using PhoenixPoint.Common.Game;
 using PhoenixPoint.Geoscape.Entities;
 using PhoenixPoint.Geoscape.Events;
 using PhoenixPoint.Geoscape.Events.Eventus;
@@ -15,6 +16,7 @@ using PhoenixPoint.Tactical.Entities;
 using PhoenixPoint.Tactical.Entities.Abilities;
 using PhoenixPoint.Tactical.Entities.ActorsInstance;
 using PhoenixPoint.Tactical.Entities.Equipments;
+using PhoenixPoint.Tactical.Levels.FactionObjectives;
 using PRMBetterClasses;
 using System;
 using System.Collections.Generic;
@@ -182,24 +184,36 @@ namespace TFTV
             try
             {
 
+                /*KEY_GRAMMAR_PRONOUNS_SHE
+KEY_GRAMMAR_PRONOUNS_HER
+KEY_GRAMMAR_PRONOUNS_HE
+KEY_GRAMMAR_PRONOUNS_HIM
+KEY_GRAMMAR_PRONOUNS_THEY
+KEY_GRAMMAR_PRONOUNS_THEM
+KEY_GRAMMAR_PLURAL_SUFFIX
+KEY_GRAMMAR_SINGLE_SUFFIX*/
+
+
                 string name = deadSoldierDescriptor.Identity.Name;
                 string pronoun = "";
                 string possesivePronoun = "";
                 if (deadSoldierDescriptor.Identity.Sex == GeoCharacterSex.Male)
                 {
-                    pronoun = "He";
-                    possesivePronoun = "him";
+                    pronoun = TFTVCommonMethods.ConvertKeyToString("KEY_GRAMMAR_PRONOUNS_HE");// He";
+                    possesivePronoun = TFTVCommonMethods.ConvertKeyToString("KEY_GRAMMAR_PRONOUNS_HIM"); //"him";
                 }
                 else if (deadSoldierDescriptor.Identity.Sex == GeoCharacterSex.Female)
                 {
-                    pronoun = "She";
-                    possesivePronoun = "her";
+                    pronoun = TFTVCommonMethods.ConvertKeyToString("KEY_GRAMMAR_PRONOUNS_SHE"); //"She";
+                    possesivePronoun = TFTVCommonMethods.ConvertKeyToString("KEY_GRAMMAR_PRONOUNS_HER"); //"She";"her";
                 }
                 else
                 {
-                    pronoun = "They";
-                    pronoun = "them";
+                    pronoun = TFTVCommonMethods.ConvertKeyToString("KEY_GRAMMAR_PRONOUNS_THEY"); //"They";
+                    pronoun = TFTVCommonMethods.ConvertKeyToString("KEY_GRAMMAR_PRONOUNS_THEM"); //"them";
                 }
+
+                pronoun = char.ToUpper(pronoun[0]) + pronoun.Substring(1);
 
                 string typeOfBodyAvailable = "";
                 string buildAdditionalLab = "";
@@ -208,17 +222,17 @@ namespace TFTV
 
                 if (CheckLabs(controller)[0] && CheckLabs(controller)[1])
                 {
-                    typeOfBodyAvailable = "made of titanium or of mutagen flesh";
+                    typeOfBodyAvailable = TFTVCommonMethods.ConvertKeyToString("KEY_OSIRIS_TITANIUM_OR_MUTAGEN"); //"made of titanium or of mutagen flesh";
                 }
                 else if (CheckLabs(controller)[0] && !CheckLabs(controller)[1])
                 {
-                    typeOfBodyAvailable = "made of titanium";
-                    buildAdditionalLab = " build a mutation lab ";
+                    typeOfBodyAvailable = TFTVCommonMethods.ConvertKeyToString("KEY_OSIRIS_ONLY_TITANIUM"); // "made of titanium";
+                    buildAdditionalLab = $" {TFTVCommonMethods.ConvertKeyToString("KEY_OSIRIS_BUILD_MUTA_LAB")} "; //" build a mutation lab ";
                 }
                 else if (!CheckLabs(controller)[0] && CheckLabs(controller)[1])
                 {
-                    typeOfBodyAvailable = "made of mutagen flesh";
-                    buildAdditionalLab = " build a bionics lab ";
+                    typeOfBodyAvailable = TFTVCommonMethods.ConvertKeyToString("KEY_OSIRIS_ONLY_MUTAGEN");// "made of mutagen flesh";
+                    buildAdditionalLab = $" {TFTVCommonMethods.ConvertKeyToString("KEY_OSIRIS_BUILD_BIO_LAB")}"; //" build a bionics lab ";
                 }
 
                 string increaseOptions = "";
@@ -230,38 +244,49 @@ namespace TFTV
 
                 if (!controller.PhoenixFaction.Research.HasCompleted("NJ_Bionics2_ResearchDef") || !controller.PhoenixFaction.Research.HasCompleted("SYN_Bionics3_ResearchDef"))
                 {
-                    researchAdditionalTech1 = "new bionic";
+                    researchAdditionalTech1 = TFTVCommonMethods.ConvertKeyToString("KEY_OSIRIS_NEW_BIONIC");// "new bionic";
                 }
 
                 if (!controller.PhoenixFaction.Research.HasCompleted("ANU_MutationTech2_ResearchDef") || !controller.PhoenixFaction.Research.HasCompleted("ANU_MutationTech3_ResearchDef"))
                 {
-                    researchAdditionalTech2 = "new mutation";
+                    researchAdditionalTech2 = TFTVCommonMethods.ConvertKeyToString("KEY_OSIRIS_NEW_MUTATION");//"new mutation";
                 }
 
                 if (buildAdditionalLab != "" || researchAdditionalTech1 != "" || researchAdditionalTech2 != "")
                 {
-                    increaseOptions = "\nTo enhance Project Osiris and increase our options we should ";
+                    increaseOptions = $"\n{TFTVCommonMethods.ConvertKeyToString("KEY_OSIRIS_TO_ENHANCE0")}";//}To enhance Project Osiris and increase our options we should ";
                 }
 
                 if ((researchAdditionalTech1 != "" || researchAdditionalTech2 != "") && buildAdditionalLab != "")
                 {
-                    and1 = "and";
+                    and1 = TFTVCommonMethods.ConvertKeyToString("KEY_GRAMMAR_AND"); //"and";
 
                 }
                 if (researchAdditionalTech1 != "" && researchAdditionalTech2 != "")
                 {
-                    and2 = " and ";
+                    and2 = $" {TFTVCommonMethods.ConvertKeyToString("KEY_GRAMMAR_AND")} ";
                 }
                 if (researchAdditionalTech1 != "" || researchAdditionalTech2 != "")
                 {
-                    anyAdditionalResearch = " acquire ";
-                    anyAdditionalResearch2 = " research.";
+                    anyAdditionalResearch = $" {TFTVCommonMethods.ConvertKeyToString("KEY_OSIRIS_ACQUIRE")} ";//acquire ";
+                    anyAdditionalResearch2 = $" {TFTVCommonMethods.ConvertKeyToString("KEY_OSIRIS_RESEARCH")}"; // " research.";
                 }
 
-                string modularEventText = "<i>-''I'm... a mess.''\n-''They will fix you. They fix everything.''</i>\n\nWe have recovered " + name + "(" + deadSoldierDescriptor.GetClassViewElementDefs().First().Name + ") from the battlefield. "
-                    + pronoun + " is clinically dead, but with the Project Osiris now operational we can bring " + possesivePronoun + " back with a new body " + typeOfBodyAvailable + ". " +
-                    increaseOptions + buildAdditionalLab + and1 + anyAdditionalResearch + researchAdditionalTech1 + and2 + researchAdditionalTech2 + anyAdditionalResearch2;
+                string osirisText0 = TFTVCommonMethods.ConvertKeyToString("KEY_OSIRIS_TEXT0");
+                string osirisText1 = TFTVCommonMethods.ConvertKeyToString("KEY_OSIRIS_TEXT1");
+                string osirisText2 = TFTVCommonMethods.ConvertKeyToString("KEY_OSIRIS_TEXT2");
+                string osirisText3 = TFTVCommonMethods.ConvertKeyToString("KEY_OSIRIS_TEXT3");
 
+
+                string modularEventText = $"{osirisText0} {name} ({deadSoldierDescriptor.GetClassViewElementDefs().First().Name}) {osirisText1} " +
+                    $"{pronoun} {osirisText2} {possesivePronoun} {osirisText3} {typeOfBodyAvailable}.";
+
+                if (increaseOptions != "")
+                {
+
+                    modularEventText +=$"{ increaseOptions} { buildAdditionalLab} " +
+                    $"{and1}{anyAdditionalResearch}{researchAdditionalTech1}{and2}{researchAdditionalTech2}{anyAdditionalResearch2}";
+                }
                 return modularEventText;
 
             }
@@ -344,7 +369,7 @@ namespace TFTV
                     deadTemplateDef.Data.BodypartItems = new ItemDef[] { shooterHead, shooterTorso, shooterLegs };
                 }
 
-                LocalizedTextBind projectOsirisDescription = new LocalizedTextBind(CreateDescriptionForEvent(controller, deadSoldierDescriptor) + "\n\nProject Osiris has given " + name + " a new body.", true);
+                LocalizedTextBind projectOsirisDescription = new LocalizedTextBind($"{CreateDescriptionForEvent(controller, deadSoldierDescriptor)} {TFTVCommonMethods.ConvertKeyToString("KEY_OSIRIS_NEW_BODY")} {name}.", true);
 
                 GeoscapeEventDef deliveryEvent = controller.EventSystem.GetEventByID(RoboCopDeliveryEvent);
                 GeoscapeEventDef scoutDeliveryEvent = controller.EventSystem.GetEventByID(ScoutDeliveryEvent);
@@ -387,20 +412,29 @@ namespace TFTV
                 if (TFTVRevenantResearch.ProjectOsirisStats.Count > 0 && (CheckLabs(controller)[0] || CheckLabs(controller)[1]))
                 {
                     TFTVLogger.Always("ProjectOsirisStats has people in it and player has a bionic or a mutation lab");
-                    PhoenixStatisticsManager statisticsManager = (PhoenixStatisticsManager)UnityEngine.Object.FindObjectOfType(typeof(PhoenixStatisticsManager));
+
+                    PhoenixStatisticsManager phoenixStatisticsManager = GameUtl.GameComponent<PhoenixGame>().GetComponent<PhoenixStatisticsManager>();
+
+                    if (phoenixStatisticsManager == null)
+                    {
+                        TFTVLogger.Always($"Failed to get stat manager in RunProjectOsiris");
+                        return;
+                    }
+
+                   // PhoenixStatisticsManager statisticsManager = (PhoenixStatisticsManager)UnityEngine.Object.FindObjectOfType(typeof(PhoenixStatisticsManager));
 
                     Dictionary<GeoTacUnitId, int> allProjectOsirisCandidates = new Dictionary<GeoTacUnitId, int>();
 
-                    foreach (GeoTacUnitId geoTacUnitId in statisticsManager.CurrentGameStats.DeadSoldiers.Keys)
+                    foreach (GeoTacUnitId geoTacUnitId in phoenixStatisticsManager.CurrentGameStats.DeadSoldiers.Keys)
                     {
 
                         foreach (int id in TFTVRevenantResearch.ProjectOsirisStats.Keys)
                         {
                             if (geoTacUnitId == id)
                             {
-                                SoldierStats deadSoldierStats = statisticsManager.CurrentGameStats.DeadSoldiers[geoTacUnitId];
+                                SoldierStats deadSoldierStats = phoenixStatisticsManager.CurrentGameStats.DeadSoldiers[geoTacUnitId];
                                 int numMissions = deadSoldierStats.MissionsParticipated;
-                                int enemiesKilled = deadSoldierStats.EnemiesKilled.Count;
+                                int enemiesKilled = Math.Min(deadSoldierStats.EnemiesKilled.Count, 25);
                                 int soldierLevel = deadSoldierStats.Level;
                                 int baseScore = 0;
                                 if (numMissions > 3)
@@ -580,31 +614,40 @@ namespace TFTV
                     {
 
                         GeoLevelController controller = GameUtl.CurrentLevel().GetComponent<GeoLevelController>();
-                        PhoenixStatisticsManager statisticsManager = (PhoenixStatisticsManager)UnityEngine.Object.FindObjectOfType(typeof(PhoenixStatisticsManager));
+
+                        PhoenixStatisticsManager phoenixStatisticsManager = GameUtl.GameComponent<PhoenixGame>().GetComponent<PhoenixStatisticsManager>();
+
+                        if (phoenixStatisticsManager == null)
+                        {
+                            TFTVLogger.Always($"Failed to get stat manager in TriggerGeoscapeEvent for ProjectOsiris");
+                            return;
+                        }
+
+                      //  PhoenixStatisticsManager statisticsManager = (PhoenixStatisticsManager)UnityEngine.Object.FindObjectOfType(typeof(PhoenixStatisticsManager));
                         GeoCharacter geoCharacterCloneFromDead = controller.DeadSoldiers[IdProjectOsirisCandidate].SpawnAsCharacter();
                         TacCharacterDef deadTemplateDef = geoCharacterCloneFromDead.TemplateDef;
 
 
                         GeoTacUnitId geoTacUnitNewCharacter = NewBodyGeoID;
-                        TFTVLogger.Always($"geoCharacterCloneFromDead.Id is {geoCharacterCloneFromDead.Id}, compared to last living soldier id: {statisticsManager.CurrentGameStats.LivingSoldiers.Last().Key}");
+                        TFTVLogger.Always($"geoCharacterCloneFromDead.Id is {geoCharacterCloneFromDead.Id}, compared to last living soldier id: {phoenixStatisticsManager.CurrentGameStats.LivingSoldiers.Last().Key}");
                         // statisticsManager.CurrentGameStats.LivingSoldiers.Last().Key;
 
 
-                        if (statisticsManager.CurrentGameStats.LivingSoldiers.ContainsKey(geoTacUnitNewCharacter))
+                        if (phoenixStatisticsManager.CurrentGameStats.LivingSoldiers.ContainsKey(geoTacUnitNewCharacter))
                         {
                           //  TFTVLogger.Always("tis true");
-                            statisticsManager.CurrentGameStats.LivingSoldiers[geoTacUnitNewCharacter] = statisticsManager.CurrentGameStats.DeadSoldiers[IdProjectOsirisCandidate];
+                            phoenixStatisticsManager.CurrentGameStats.LivingSoldiers[geoTacUnitNewCharacter] = phoenixStatisticsManager.CurrentGameStats.DeadSoldiers[IdProjectOsirisCandidate];
                         }
                         else
                         {
-                            statisticsManager.CurrentGameStats.LivingSoldiers.Add(geoTacUnitNewCharacter, statisticsManager.CurrentGameStats.DeadSoldiers[IdProjectOsirisCandidate]);
+                            phoenixStatisticsManager.CurrentGameStats.LivingSoldiers.Add(geoTacUnitNewCharacter, phoenixStatisticsManager.CurrentGameStats.DeadSoldiers[IdProjectOsirisCandidate]);
                         }
 
                         if (controller.DeadSoldiers.ContainsKey(IdProjectOsirisCandidate))
                         {
                             controller.DeadSoldiers.Remove(IdProjectOsirisCandidate);
 
-                            statisticsManager.CurrentGameStats.DeadSoldiers.Remove(IdProjectOsirisCandidate);
+                            phoenixStatisticsManager.CurrentGameStats.DeadSoldiers.Remove(IdProjectOsirisCandidate);
                         }
 
 

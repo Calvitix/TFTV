@@ -2,6 +2,7 @@
 using Base.Defs;
 using HarmonyLib;
 using PhoenixPoint.Common.Core;
+using PhoenixPoint.Common.Entities.Addons;
 using PhoenixPoint.Common.Entities.GameTags;
 using PhoenixPoint.Common.Entities.Items;
 using PhoenixPoint.Common.View.ViewModules;
@@ -14,6 +15,7 @@ using PhoenixPoint.Geoscape.Levels;
 using PhoenixPoint.Geoscape.Levels.Factions;
 using PhoenixPoint.Geoscape.View.ViewControllers.AugmentationScreen;
 using PhoenixPoint.Geoscape.View.ViewModules;
+using PhoenixPoint.Tactical.Entities.Abilities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,14 +25,129 @@ namespace TFTV
 {
     internal class TFTVAugmentations
     {
-        
 
+        private static readonly DefCache DefCache = TFTVMain.Main.DefCache;
         private static readonly DefRepository Repo = TFTVMain.Repo;
+        private static readonly SharedData Shared = TFTVMain.Shared;
+
+
+
+        [HarmonyPatch(typeof(UIModuleMutate), "OnNewCharacter")]//InitCharacterInfo")]
+        public static class UIModuleMutate_InitCharacterInfo_Patch
+        {
+            public static void Postfix(Dictionary<AddonSlotDef, UIModuleMutationSection> ____augmentSections, GeoCharacter newCharacter)
+            {
+                try
+                {
+                    if (newCharacter.TemplateDef != null && newCharacter.TemplateDef.GetGameTags().Contains(TFTVChangesToDLC5.MercenaryTag))
+                    {
+                       // TFTVLogger.Always($"current character is {newCharacter.DisplayName} and it has mercenary tag? {newCharacter.TemplateDef.GetGameTags().Contains(MercenaryTag)}");
+
+                        foreach (KeyValuePair<AddonSlotDef, UIModuleMutationSection> augmentSection in ____augmentSections)
+                        {
+                            augmentSection.Value.ResetContainer(AugumentSlotState.BlockedByPermenantAugument, "KEY_ABILITY_NOAUGMENTATONS");
+                        }
+
+                    }
+
+                }
+                catch (Exception e)
+                {
+                    TFTVLogger.Error(e);
+                }
+            }
+        }
+
+
+
+        [HarmonyPatch(typeof(UIModuleBionics), "OnNewCharacter")]//InitCharacterInfo")]
+        public static class UIModuleBionics_InitCharacterInfo_Patch
+        {
+            public static void Postfix(Dictionary<AddonSlotDef, UIModuleMutationSection> ____augmentSections, GeoCharacter newCharacter)
+            {
+                try
+                {
+                    if (newCharacter.TemplateDef != null && newCharacter.TemplateDef.GetGameTags().Contains(TFTVChangesToDLC5.MercenaryTag))
+                    {
+                       // TFTVLogger.Always($"current character is {newCharacter.DisplayName} and it has mercenary tag? {newCharacter.TemplateDef.GetGameTags().Contains(TFTVChangesToDLC5.MercenaryTag)}");
+
+                        foreach (KeyValuePair<AddonSlotDef, UIModuleMutationSection> augmentSection in ____augmentSections)
+                        {
+                            augmentSection.Value.ResetContainer(AugumentSlotState.BlockedByPermenantAugument, "KEY_ABILITY_NOAUGMENTATONS");
+                        }
+
+                    }
+
+                }
+                catch (Exception e)
+                {
+                    TFTVLogger.Error(e);
+                }
+            }
+        }
+
+
+
+
+        [HarmonyPatch(typeof(UIModuleBionics), "InitPossibleMutations")]
+        public static class UIModuleBionics_InitPossibleMutations_patch
+        {
+            public static bool Prefix(UIModuleBionics __instance, Dictionary<AddonSlotDef, UIModuleMutationSection> ____augmentSections)
+            {
+                try
+                {
+                    if (____augmentSections.Any())
+                    {
+                        ____augmentSections.Clear();
+                    }
+
+                    UIModuleMutationSection[] componentsInChildren = __instance.GetComponentsInChildren<UIModuleMutationSection>();
+                    UIModuleMutationSection[] array = componentsInChildren;
+                    foreach (UIModuleMutationSection uIModuleMutationSection in array)
+                    {
+                        ____augmentSections[uIModuleMutationSection.SlotForMutation] = uIModuleMutationSection;
+                        ____augmentSections[uIModuleMutationSection.SlotForMutation].PossibleMutations.Clear();
+                    }
+
+                    foreach (ItemDef item in (from p in GameUtl.GameComponent<DefRepository>().GetAllDefs<ItemDef>()
+                                              where p.Tags.Contains(Shared.SharedGameTags.BionicalTag) && (!p.Tags.Contains(TFTVChangesToDLC5.MercenaryTag)) && p.ViewElementDef != null
+                                              select p).ToList())
+                    {
+                        AddonDef.RequiredSlotBind[] requiredSlotBinds = item.RequiredSlotBinds;
+                        for (int i = 0; i < requiredSlotBinds.Length; i++)
+                        {
+                            AddonDef.RequiredSlotBind requiredSlotBind = requiredSlotBinds[i];
+                            if (____augmentSections.ContainsKey(requiredSlotBind.RequiredSlot))
+                            {
+                                ____augmentSections[requiredSlotBind.RequiredSlot].PossibleMutations.Add(item);
+                            }
+                        }
+                    }
+
+                    array = componentsInChildren;
+                    for (int i = 0; i < array.Length; i++)
+                    {
+                        array[i].InitView(__instance);
+                    }
+
+                    return false;
+                }
+
+                catch (Exception e)
+                {
+                    TFTVLogger.Error(e);
+                    throw;
+                }
+            }
+        }
+
+
 
         [HarmonyPatch(typeof(EditUnitButtonsController), "CheckIsBionicsIsAvailable")]
         public static class EditUnitButtonsController_CheckIsBionicsIsAvailable_Bionics_patch
         {
-            public static void Postfix(GeoPhoenixFaction phoenixFaction, ref bool ____bionicsAvailable, EditUnitButtonsController __instance)
+            public static void Postfix(GeoPhoenixFaction phoenixFaction, ref bool ____bionicsAvailable, 
+                EditUnitButtonsController __instance, UIModuleActorCycle ____parentModule)
             {
                 try
                 {
@@ -48,9 +165,11 @@ namespace TFTV
                         }
                     }
 
-                    if (flag)
-                    {
+                  //  PassiveModifierAbilityDef noAugAbility = DefCache.GetDef<PassiveModifierAbilityDef>("NoAug_AbilityDef");
 
+                    if (flag) //&& ____parentModule != null && ____parentModule.CurrentCharacter != null && !____parentModule.CurrentCharacter.GetTacticalAbilities().Contains(noAugAbility))
+                    {
+                        
 
                     }
                     else
@@ -74,7 +193,7 @@ namespace TFTV
         [HarmonyPatch(typeof(EditUnitButtonsController), "CheckIsMutationIsAvailable")]
         public static class EditUnitButtonsController_CheckIsMutationIsAvailable_Mutations_patch
         {                   
-            public static void Postfix(GeoPhoenixFaction phoenixFaction, ref bool ____mutationAvailable, EditUnitButtonsController __instance)
+            public static void Postfix(GeoPhoenixFaction phoenixFaction, ref bool ____mutationAvailable, EditUnitButtonsController __instance, UIModuleActorCycle ____parentModule)
             {
                 try
                 {
@@ -92,7 +211,9 @@ namespace TFTV
                         }
                     }
 
-                    if (flag)
+                   // PassiveModifierAbilityDef noAugAbility = DefCache.GetDef<PassiveModifierAbilityDef>("NoAug_AbilityDef");
+
+                    if (flag) //&& ____parentModule !=null && ____parentModule.CurrentCharacter!=null && !____parentModule.CurrentCharacter.GetTacticalAbilities().Contains(noAugAbility))
                     {
 
 
@@ -133,7 +254,7 @@ namespace TFTV
                     {
                         foreach (GeoItem bionic in geoCharacter.ArmourItems)
                         {
-                            if (bionic.ItemDef.Tags.Contains(bionicalTag))
+                            if (bionic.ItemDef.Tags.Contains(bionicalTag) && !bionic.ItemDef.Tags.Contains(TFTVChangesToDLC5.MercenaryTag))
 
                                 bionics += 1;
                         }
@@ -318,65 +439,7 @@ namespace TFTV
 
         }
 
-        /*
-        public static void AttackPhoenixBase(GeoLevelController level)
-        {
-            try
-            {
-                /*
-
-                List<GeoPhoenixFacility> list = GeoVehicle.CurrentSite.GetComponent<GeoPhoenixBase>().Layout.Facilities.Where((GeoPhoenixFacility z) => z.HealthPercentage > 0f).ToList();
-                if (list.Any())
-                {
-                    GeoPhoenixFacility randomElement = list.GetRandomElement();
-                    int damagePercent = _raidManager.RaidsSetup.LargeFlyeirDamage;
-                    if ((GeoVehicle.AircraftType & AircraftType.Small) != 0)
-                    {
-                        damagePercent = _raidManager.RaidsSetup.SmallFlyerDamage;
-                    }
-                    else if ((GeoVehicle.AircraftType & AircraftType.Medium) != 0)
-                    {
-                        damagePercent = _raidManager.RaidsSetup.MediumFlierDamage;
-                    }
-
-                    randomElement.DamageFacility(damagePercent);
-                }
-
-                */
-
-
-        /*
-                List<GeoSite> phoenixBases = level.PhoenixFaction.Sites.ToList();
-                TimeUnit timeUnit = TimeUnit.FromHours(6);
-
-                foreach (GeoSite site in phoenixBases)
-                {
-                    if (site.Type == GeoSiteType.PhoenixBase)
-                    {
-                        foreach (GeoHaven haven in level.SynedrionFaction.Havens)
-                        {
-                            //  if (Vector3.Distance(site.WorldPosition, haven.Site.WorldPosition) < 1)
-                            //  {
-                            foreach (GeoVehicle vehicle in level.SynedrionFaction.Vehicles.Where(vehicle => vehicle.CurrentSite.Type == GeoSiteType.Haven))
-
-                            {
-                                level.SynedrionFaction.ScheduleAttackOnSite(site, timeUnit);
-                                level.SynedrionFaction.AttackPhoenixBaseFromVehicle(vehicle, site);
-                            }
-
-                            //                            }
-                        }
-
-
-                    }
-                }
-            }
-            catch (Exception e)
-            {
-                TFTVLogger.Error(e);
-            }
-
-        }*/
+    
 
     }
 

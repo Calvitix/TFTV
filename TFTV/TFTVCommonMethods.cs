@@ -1,10 +1,12 @@
 ﻿using Base.Core;
 using Base.Entities.Statuses;
+using Base.Levels;
 using Base.UI;
 using HarmonyLib;
 using PhoenixPoint.Common.ContextHelp;
 using PhoenixPoint.Common.Entities.GameTags;
 using PhoenixPoint.Common.Entities.GameTagsTypes;
+using PhoenixPoint.Common.Entities.Items;
 using PhoenixPoint.Common.Saves;
 using PhoenixPoint.Common.UI;
 using PhoenixPoint.Common.View.ViewModules;
@@ -15,8 +17,10 @@ using PhoenixPoint.Geoscape.Entities.Sites;
 using PhoenixPoint.Geoscape.Events;
 using PhoenixPoint.Geoscape.Events.Eventus;
 using PhoenixPoint.Geoscape.Levels;
+using PhoenixPoint.Geoscape.Levels.Factions;
 using PhoenixPoint.Geoscape.Levels.Objectives;
 using PhoenixPoint.Tactical.Entities;
+using PhoenixPoint.Tactical.Entities.Abilities;
 using PhoenixPoint.Tactical.Entities.Effects.ApplicationConditions;
 using PhoenixPoint.Tactical.Entities.Effects.DamageTypes;
 using PhoenixPoint.Tactical.Entities.Statuses;
@@ -25,7 +29,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using UnityEngine;
+using TFTV.PortedAATweaks;
 using static PhoenixPoint.Tactical.Entities.Statuses.TacStatusDef;
 
 namespace TFTV
@@ -35,7 +39,22 @@ namespace TFTV
         private static readonly DefCache DefCache = TFTVMain.Main.DefCache;
         //  private static readonly DefRepository Repo = TFTVMain.Repo;
 
-        public static object View { get; private set; }
+
+        public static int D12DifficultyModifiedRoll(int unModifiedDifficultyOrder)
+        {
+            try
+            {
+                return UnityEngine.Random.Range(1, 13 - TFTVReleaseOnly.DifficultyOrderConverter(unModifiedDifficultyOrder));
+
+            }
+            catch (Exception e)
+            {
+                TFTVLogger.Error(e);
+                throw;
+            }
+
+        }
+
 
         public static void CheckGeoUIfunctionality(GeoLevelController controller)
         {
@@ -59,12 +78,12 @@ namespace TFTV
 
         public static string ConvertKeyToString(string key)
         {
-            try 
-            { 
+            try
+            {
 
                 return new LocalizedTextBind(key).Localize();
-            
-            
+
+
             }
             catch (Exception e)
             {
@@ -78,29 +97,28 @@ namespace TFTV
         {
             try
             {
-                TFTVAirCombat.targetsForBehemoth = new List<int>();
-                TFTVAirCombat.flyersAndHavens = new Dictionary<int, List<int>>();
-                TFTVAirCombat.checkHammerfall = false;
+                TFTVBehemothAndRaids.targetsForBehemoth = new List<int>();
+                TFTVBehemothAndRaids.flyersAndHavens = new Dictionary<int, List<int>>();
+                TFTVBehemothAndRaids.checkHammerfall = false;
                 TFTVRevenant.DeadSoldiersDelirium = new Dictionary<int, int>();
-                TFTVUmbra.TBTVVariable = 0;
+                TFTVTouchedByTheVoid.TBTVVariable = 0;
                 TFTVRevenant.daysRevenantLastSeen = 0;
                 TFTVStamina.charactersWithDisabledBodyParts = new Dictionary<int, List<string>>();
-                TFTVAirCombat.behemothScenicRoute = new List<int>();
-                TFTVAirCombat.behemothTarget = 0;
-                TFTVAirCombat.behemothWaitHours = 12;
+                TFTVBehemothAndRaids.behemothScenicRoute = new List<int>();
+                TFTVBehemothAndRaids.behemothTarget = 0;
+                TFTVBehemothAndRaids.behemothWaitHours = 12;
                 TFTVRevenant.revenantSpecialResistance = new List<string>();
                 TFTVRevenant.revenantCanSpawn = false;
                 TFTVHumanEnemies.HumanEnemiesAndTactics = new Dictionary<string, int>();
                 TFTVRevenantResearch.ProjectOsirisStats = new Dictionary<int, int[]>();
                 TFTVRevenantResearch.ProjectOsiris = false;
                 TFTVDiplomacyPenalties.VoidOmensImplemented = false;
-                TFTVUmbra.UmbraResearched = false;
+                TFTVTouchedByTheVoid.UmbraResearched = false;
                 TFTVHumanEnemiesNames.names.Clear();
                 TFTVHumanEnemiesNames.CreateNamesDictionary();
                 TFTVInfestation.InfestationMissionWon = false;
                 ClearHints();
-                TFTVUI.uIModuleSoldierCustomization = null;
-            //    TFTVBetaSaveGamesFixes.LOTAReworkGlobalCheck = false;
+                TFTVUI.ShowWithoutHelmet.uIModuleSoldierCustomization = null;
                 TFTVTactical.TurnZeroMethodsExecuted = false;
                 TFTVBaseDefenseGeoscape.PhoenixBasesUnderAttack = new Dictionary<int, Dictionary<string, double>>();
                 TFTVBaseDefenseGeoscape.PhoenixBasesInfested.Clear();
@@ -110,31 +128,83 @@ namespace TFTV
                 TFTVPandoranProgress.ScyllaCount = 0;
                 TFTVAncients.AutomataResearched = false;
                 TFTVAncients.AlertedHoplites.Clear();
-                TFTVUI.CharacterLoadouts?.Clear();
+                TFTVUI.EditScreen.LoadoutsAndHelmetToggle.CharacterLoadouts?.Clear();
                 TFTVCapturePandoransGeoscape.PandasForFoodProcessing = 0;
-              //  TFTVCapturePandorans.CachedACC = TFTVCapturePandorans.AircraftCaptureCapacity;
-                
                 TFTVCapturePandorans.ContainmentFacilityPresent = false;
                 TFTVNewGameOptions.ConfigImplemented = false;
-              /*  TFTVNewGameOptions.AmountOfExoticResourcesSetting;
-                TFTVNewGameOptions.ResourceMultiplierSetting;
-                TFTVNewGameOptions.DiplomaticPenaltiesSetting;
-                TFTVNewGameOptions.StaminaPenaltyFromInjurySetting;
-                TFTVNewGameOptions.MoreAmbushesSetting;
-                TFTVNewGameOptions.LimitedCaptureSetting;
-                TFTVNewGameOptions.LimitedHarvestingSetting;
-                TFTVNewGameOptions.StrongerPandoransSetting;
-                TFTVNewGameOptions.ImpossibleWeaponsAdjustmentsSetting;*/
+                TFTVNewGameOptions.InternalDifficultyCheck = 0;
+                TFTVCapturePandoransGeoscape.ToxinsInCirculation = 0;
+                TFTVNewGameMenu.NewGameOptionsSetUp = false;
+                TFTVNewGameMenu.EnterStateRun = false;
+             
 
-        //  TFTVUI.CurrentlyAvailableInv.Clear();
-        //  TFTVUI.CurrentlyHiddenInv.Clear();
-        TFTVLogger.Always($"Internal variables cleared");
+                /*  TFTVNewGameOptions.AmountOfExoticResourcesSetting;
+                  TFTVNewGameOptions.ResourceMultiplierSetting;
+                  TFTVNewGameOptions.DiplomaticPenaltiesSetting;
+                  TFTVNewGameOptions.StaminaPenaltyFromInjurySetting;
+                  TFTVNewGameOptions.MoreAmbushesSetting;
+                  TFTVNewGameOptions.LimitedCaptureSetting;
+                  TFTVNewGameOptions.LimitedHarvestingSetting;
+                  TFTVNewGameOptions.StrongerPandoransSetting;
+                  TFTVNewGameOptions.ImpossibleWeaponsAdjustmentsSetting;*/
+
+                //  TFTVUI.CurrentlyAvailableInv.Clear();
+                //  TFTVUI.CurrentlyHiddenInv.Clear();
+                TFTVLogger.Always($"Internal variables cleared");
             }
             catch (Exception e)
             {
                 TFTVLogger.Error(e);
             }
         }
+
+
+       
+
+     /*   public static void ModifyGeoCharacterDef(GeoCharacter character, string name, List<TacticalAbilityDef> abilities,
+            List<ItemDef> readySlots, List<ItemDef> armorSlots, List<ItemDef> inventorySlots, List<GameTagDef> customizationTags, int level, int[] stats) 
+        {
+            try
+            {
+                character.Rename(name);
+                
+                foreach(TacticalAbilityDef ab in abilities) 
+                {
+                    character.Progression.AddAbility(ab); 
+                }
+
+                character.Progression.LevelProgression.SetLevel(level);
+               
+              
+
+                newCharacter.Data.GameTags = new List<GameTagDef>(customizationTags) { classTagDef }.ToArray();
+                newCharacter.Data.Abilites = new List<TacticalAbilityDef>(abilities).ToArray();
+                newCharacter.Data.EquipmentItems = new List<ItemDef>(readySlots).ToArray();
+                newCharacter.Data.InventoryItems = new List<ItemDef>(inventorySlots).ToArray();
+                newCharacter.Data.BodypartItems = new List<ItemDef>(armorSlots).ToArray();
+                newCharacter.Data.LevelProgression.SetLevel(level);
+                newCharacter.Data.Strength = stats[0];
+                newCharacter.Data.Will = stats[1];
+                newCharacter.Data.Speed = stats[2];
+
+
+            }
+            catch (Exception e)
+            {
+                TFTVLogger.Error(e);
+                throw;
+            }
+
+
+
+
+
+
+
+        }*/
+
+
+
 
         public static void ClearHints()
         {
@@ -180,7 +250,8 @@ namespace TFTV
                 TFTVBaseDefenseTactical.StratToBeAnnounced = 0;
                 TFTVBaseDefenseTactical.StratToBeImplemented = 0;
                 TFTVAncients.CyclopsMolecularDamageBuff.Clear();
-             //   TFTVAncients.AlertedHoplites.Clear();
+                TFTVEconomyExploitsFixes.AttackedLairSites = new Dictionary<int, int>();
+                //   TFTVAncients.AlertedHoplites.Clear();
                 TFTVCapturePandorans.AircraftCaptureCapacity = 0;
                 //  TFTVBaseDefenseTactical.VentingHintShown = false;
             }
@@ -273,17 +344,17 @@ namespace TFTV
                 {
                     if (objective1.Title == null)
                     {
-                        TFTVLogger.Always("objective1.Title is missing!");
+                        // TFTVLogger.Always("objective1.Title is missing!");
                     }
                     else
                     {
                         if (objective1.Title.LocalizationKey == null)
                         {
-                            TFTVLogger.Always("objective1.Title.LocalizationKey is missing!");
+                            // TFTVLogger.Always("objective1.Title.LocalizationKey is missing!");
                         }
                         else
                         {
-                            TFTVLogger.Always("objective1.Title.LocalizationKey is " + objective1.Title.LocalizationKey);
+                            //  TFTVLogger.Always("objective1.Title.LocalizationKey is " + objective1.Title.LocalizationKey);
 
                             if (objective1.Title.LocalizationKey == title)
                             {
@@ -293,29 +364,59 @@ namespace TFTV
                     }
 
                 }
-
-
-
             }
             catch (Exception e)
             {
                 TFTVLogger.Error(e);
             }
-
-
         }
 
 
-        [HarmonyPatch(typeof(Research), "CompleteResearch")]
-        public static class Research_NewTurnEvent_CalculateDelirium_Patch
+        [HarmonyPatch(typeof(GeoFaction), "AddTag")]
+        public static class GeoPhoenix_AddTag_FavorForAFriend_Patch
         {
 
-            public static void Postfix(ResearchElement research)
+            public static void Postfix(GameTagDef tag, GeoFaction __instance)
             {
                 try
                 {
-                    TFTVLogger.Always("Research completed " + research.ResearchID);
+                    FactionFunctionalityTagDef alienContainmentFunctionality = DefCache.GetDef<FactionFunctionalityTagDef>("AlienContainment_FactionFunctionalityTagDef");
+
+                    if (tag == alienContainmentFunctionality && __instance.GeoLevel.PhoenixFaction.Research.HasCompleted("PX_Alien_Acheron_ResearchDef")
+                        && __instance.GeoLevel.EventSystem.GetEventRecord("PROG_CH0") == null)
+                    {
+
+
+                        TFTVLogger.Always($"Built containment facility and has completed PX_Alien_Acheron_ResearchDef, triggering CH0");
+
+                        //   __instance.GeoLevel.EventSystem.SetVariable("FavorForAFriend", 1);
+
+                        GeoscapeEventContext context = new GeoscapeEventContext(__instance.GeoLevel.PhoenixFaction.Bases.First().Site, __instance.GeoLevel.AlienFaction);
+                        __instance.GeoLevel.EventSystem.TriggerGeoscapeEvent("PROG_CH0", context);
+
+                    }
+                }
+                catch (Exception e)
+                {
+                    TFTVLogger.Error(e);
+                }
+            }
+        }
+
+
+
+        [HarmonyPatch(typeof(Research), "CompleteResearch")]
+        public static class Research_CompleteResearch_TFTV_Patch
+        {
+            public static void Postfix(ResearchElement research)
+            {
+
+                try
+                {
+                    TFTVLogger.Always($"{research.ResearchID} completed by {research.Faction}");
+
                     GeoLevelController controller = research.Faction.GeoLevel;
+                    GeoPhoenixFaction phoenixFaction = controller.PhoenixFaction;
                     ResearchDef mutationTech = DefCache.GetDef<ResearchDef>("ANU_MutationTech_ResearchDef");
                     ResearchElement mutationTechResearchElement = controller.PhoenixFaction.Research.GetResearchById(mutationTech.name);
 
@@ -324,18 +425,37 @@ namespace TFTV
                         research.Faction.GeoLevel.EventSystem.SetVariable("UmbraResearched", 1);
                         TFTVLogger.Always("Umbra Researched variable is set to " + research.Faction.GeoLevel.EventSystem.GetVariable("UmbraResearched"));
                     }
-                    else if (research.ResearchID == "ANU_AnuPriest_ResearchDef" && research.Faction.GeoLevel.EventSystem.GetVariable("BG_Start_Faction") == 1)
+                    else if (research.Faction != research.Faction.GeoLevel.PhoenixFaction && research.ResearchID == "ANU_AnuPriest_ResearchDef" && research.Faction.GeoLevel.EventSystem.GetVariable("BG_Start_Faction") == 1)
                     {
+
+                        TFTVLogger.Always("Research completed " + research.ResearchID + " and corresponding flag triggered");
+
                         research.Faction.GeoLevel.PhoenixFaction.Research.GiveResearch(research, true);
+
+                        ResearchElement phoenixResearch = controller.PhoenixFaction.Research.GetResearchById(research.ResearchID);
+                        phoenixFaction.Research.CompleteResearch(phoenixResearch);
                     }
-                    else if (research.ResearchID == "NJ_Technician_ResearchDef" && research.Faction.GeoLevel.EventSystem.GetVariable("BG_Start_Faction") == 2)
+
+                    else if (research.Faction != phoenixFaction && research.ResearchID == "NJ_Technician_ResearchDef" && research.Faction.GeoLevel.EventSystem.GetVariable("BG_Start_Faction") == 2)
                     {
                         TFTVLogger.Always("Research completed " + research.ResearchID + " and corresponding flag triggered");
+
                         research.Faction.GeoLevel.PhoenixFaction.Research.GiveResearch(research, true);
+
+                        ResearchElement phoenixResearch = controller.PhoenixFaction.Research.GetResearchById(research.ResearchID);
+                        controller.PhoenixFaction.Research.CompleteResearch(phoenixResearch);
                     }
-                    else if (research.ResearchID == "SYN_InfiltratorTech_ResearchDef" && research.Faction.GeoLevel.EventSystem.GetVariable("BG_Start_Faction") == 3)
+                    else if (research.Faction != phoenixFaction && research.ResearchID == "SYN_InfiltratorTech_ResearchDef" && controller.EventSystem.GetVariable("BG_Start_Faction") == 3)
                     {
+
+                        TFTVLogger.Always("Research completed " + research.ResearchID + " and corresponding flag triggered");
+
                         research.Faction.GeoLevel.PhoenixFaction.Research.GiveResearch(research, true);
+
+                        ResearchElement phoenixResearch = controller.PhoenixFaction.Research.GetResearchById(research.ResearchID);
+                        phoenixFaction.Research.CompleteResearch(phoenixResearch);
+
+
                     }
                     //To trigger change of rate in Pandoran Evolution
                     else if (research.ResearchID == "ALN_Citadel_ResearchDef")
@@ -387,12 +507,12 @@ namespace TFTV
                         research.Faction.GeoLevel.EventSystem.TriggerGeoscapeEvent("Helena_Oneiromancy", context);
                         // GeoscapeEventSystem eventSystem = research.Faction.GeoLevel.EventSystem;
                         // eventSystem.SetVariable("ProteanMutaneResearched", eventSystem.GetVariable("ProteanMutaneResearched") + 1);
-                        TFTVAncientsGeo.SetReactivateCyclopsObjective(controller);
+                        TFTVAncientsGeo.DefendCyclopsStoryMission.SetReactivateCyclopsObjective(controller);
                     }
                     else if (research.ResearchID == "ExoticMaterialsResearch")
                     {
-                        TFTVAncientsGeo.AncientsCheckResearchState(research.Faction.GeoLevel);
-                        TFTVAncientsGeo.SetObtainLCandPMSamplesObjective(controller);
+                        TFTVAncientsGeo.AncientsResearch.AncientsCheckResearchState(research.Faction.GeoLevel);
+                        TFTVAncientsGeo.AncientsResearch.SetObtainLCandPMSamplesObjective(controller);
 
                         //   ResearchElement livingCrystalsResearch = research.Faction.GeoLevel.PhoenixFaction.Research.GetResearchById("PX_LivingCrystalResearchDef");
                         //   GeoFactionObjective researchLC = research.Faction.GeoLevel.FactionObjectiveSystem.CreateResearchObjective(research.Faction.GeoLevel.PhoenixFaction, livingCrystalsResearch);
@@ -405,7 +525,7 @@ namespace TFTV
                     {
                         GeoscapeEventSystem eventSystem = controller.EventSystem;
                         //  eventSystem.SetVariable("ProteanMutaneResearched", eventSystem.GetVariable("ProteanMutaneResearched") + 1);
-                        TFTVAncientsGeo.SetReactivateCyclopsObjective(controller);
+                        TFTVAncientsGeo.DefendCyclopsStoryMission.SetReactivateCyclopsObjective(controller);
                     }
 
                     else if (research.ResearchID == "NJ_Bionics2_ResearchDef")
@@ -420,15 +540,36 @@ namespace TFTV
                     }
 
                     else if (research.ResearchID == "PX_Mutoid_ResearchDef" && !controller.PhoenixFaction.Research.HasCompleted(mutationTech.name) &&
-                   !controller.PhoenixFaction.Research.Researchable.Any(re => re.ResearchDef == mutationTech)) 
+                   !controller.PhoenixFaction.Research.Researchable.Any(re => re.ResearchDef == mutationTech))
                     {
-         
+
                         mutationTechResearchElement.State = ResearchState.Unlocked;
                         TFTVLogger.Always($"{mutationTech.name} available to PX? {mutationTechResearchElement.IsAvailableToFaction(controller.PhoenixFaction)}");
 
                     }
+
+
+                    FactionFunctionalityTagDef alienContainmentFunctionality = DefCache.GetDef<FactionFunctionalityTagDef>("AlienContainment_FactionFunctionalityTagDef");
+
+                    if (research.ResearchID == "PX_Alien_Acheron_ResearchDef" && controller.PhoenixFaction.GameTags.Contains(alienContainmentFunctionality)
+                        && controller.EventSystem.GetEventRecord("PROG_CH0") == null)
+                    {
+
+
+                        TFTVLogger.Always($"Built containment facility and has completed PX_Alien_Acheron_ResearchDef, triggering CH0");
+
+                        //     controller.EventSystem.SetVariable("FavorForAFriend", 1);
+
+
+                        GeoscapeEventContext context = new GeoscapeEventContext(controller.PhoenixFaction.Bases.First().Site, controller.AlienFaction);
+                        controller.EventSystem.TriggerGeoscapeEvent("PROG_CH0", context);
+
+                    }
+
+
+
                     TFTVCapturePandoransGeoscape.RefreshFoodAndMutagenProductionTooltupUI();
-                    TFTVAncientsGeo.CheckImpossibleWeaponsAdditionalRequirements(controller);
+                    TFTVAncientsGeo.ImpossibleWeapons.CheckImpossibleWeaponsAdditionalRequirements(controller);
 
 
                 }
@@ -438,7 +579,6 @@ namespace TFTV
                 }
             }
         }
-
 
 
         public static void SetStaminaToZero(GeoCharacter __instance)
@@ -680,8 +820,7 @@ namespace TFTV
         {
             try
             {
-                //string shouldNotAppear = "Should Not Appear";
-                string shouldNotAppear = "Ne devrait pas apparaître";  //Calvitix Trad
+                string shouldNotAppear = "Should Not Appear";
                 ResearchViewElementDef sourceResearchViewDef = DefCache.GetDef<ResearchViewElementDef>("PX_Alien_CorruptionNode_ViewElementDef");
                 ResearchViewElementDef researchViewDef = Helper.CreateDefFromClone(sourceResearchViewDef, gUID, def);
                 researchViewDef.DisplayName1.LocalizationKey = shouldNotAppear;
@@ -779,6 +918,29 @@ namespace TFTV
 
         }
 
+        internal static GameTagDef CreateNewMissionTag(string name, string guid)
+        {
+            try
+            {
+
+                MissionTypeTagDef source = DefCache.GetDef<MissionTypeTagDef>("MissionTypeStoryMissionPX_MissionTagDef");
+                return Helper.CreateDefFromClone(
+                    source,
+                    guid,
+                    name);
+
+
+
+            }
+
+            catch (Exception e)
+            {
+                TFTVLogger.Error(e);
+                throw;
+            }
+
+        }
+
 
         internal static GameTagDef CreateNewTag(string name, string guid)
         {
@@ -803,40 +965,38 @@ namespace TFTV
 
         }
 
-
-        [HarmonyPatch(typeof(GeoSite), "CreateHavenDefenseMission")]
-        public static class GeoSite_CreateHavenDefenseMission_RevealHD_Patch
+        public static void RevealHavenUnderAttack(GeoSite geoSite, GeoLevelController controller)
         {
-            public static bool Prepare()
+            try
             {
                 TFTVConfig config = TFTVMain.Main.Config;
-                return config.HavenSOS;
-            }
 
-            public static void Postfix(GeoSite __instance)
-            {
-                try
+                if (config.HavenSOS)
                 {
-                    // if (__instance.GetVisible(__instance.GeoLevel.PhoenixFaction)==false)
-                    // {
-                    __instance.RevealSite(__instance.GeoLevel.PhoenixFaction);
+                    string sOSBroadcast = new LocalizedTextBind() { LocalizationKey = "KEY_SOS_BROADCAST" }.Localize();
 
+                    geoSite.RevealSite(controller.PhoenixFaction);
                     GeoscapeLogEntry entry = new GeoscapeLogEntry
                     {
-                        //Text = new LocalizedTextBind(__instance.Owner + " " + __instance.LocalizedSiteName + " is broadcasting an SOS, they are under attack!", true)
-                        Text = new LocalizedTextBind(__instance.Owner + " " + __instance.LocalizedSiteName + " diffuse un SOS, ils sont attaqués !", true) 
+                        Text = new LocalizedTextBind($"{geoSite.Owner} {geoSite.LocalizedSiteName} {sOSBroadcast}", true)
                     };
-                    typeof(GeoscapeLog).GetMethod("AddEntry", BindingFlags.NonPublic | BindingFlags.Instance).Invoke(__instance.GeoLevel.Log, new object[] { entry, null });
-
-                    __instance.GeoLevel.View.SetGamePauseState(true);
-                    //  }
-                }
-                catch (Exception e)
-                {
-                    TFTVLogger.Error(e);
+                    typeof(GeoscapeLog).GetMethod("AddEntry", BindingFlags.NonPublic | BindingFlags.Instance).Invoke(controller.Log, new object[] { entry, null });
+                    controller.View.SetGamePauseState(true);
                 }
             }
+
+            catch (Exception e)
+            {
+                TFTVLogger.Error(e);
+                throw;
+            }
+
+
+
         }
+
+
+
         internal static int LocateSoldier(GeoCharacter geoCharacter)
         {
             try
