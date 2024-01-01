@@ -348,7 +348,7 @@ namespace PRMBetterClasses.VariousAdjustments
 
             {
 
-                TFTVLogger.Info("Calvitix_Change on FS_Autocannon_WeaponDef...");
+                TFTVLogger.Debug("Calvitix_Change on FS_Autocannon_WeaponDef...");
                 WeaponDef PhoenixAutocanon = DefCache.GetDef<WeaponDef>("FS_Autocannon_WeaponDef");
                 //ItemDef ErosCrb_Ammo = DefCache.GetDef<ItemDef>("SY_Crossbow_AmmoClip_ItemDef");
                 PhoenixAutocanon.APToUsePerc = 25;
@@ -388,7 +388,7 @@ namespace PRMBetterClasses.VariousAdjustments
                 ItemDef NJ_MachineGun_Ammo = DefCache.GetDef<ItemDef>("NJ_Gauss_MachineGun_AmmoClip_ItemDef");
                 NJ_MachineGun_Ammo.ChargesMax = 90;
 
-                TFTVLogger.Info("Calvitix_Change on PX_SniperRifle_WeaponDef...");
+                TFTVLogger.Debug("Calvitix_Change on PX_SniperRifle_WeaponDef...");
 
                 WeaponDef PX_SniperRifle = DefCache.GetDef<WeaponDef>("PX_SniperRifle_WeaponDef");
                 PX_SniperRifle.DamagePayload.DamageKeywords[0].Value = 150;
@@ -504,7 +504,7 @@ namespace PRMBetterClasses.VariousAdjustments
 
                     PX_Ammo.ManufactureMaterials = (Single)Math.Max(1,(Math.Round(PX_Ammo.ManufactureMaterials / multipleCostMaterial, 0)));
                     PX_Ammo.ManufactureTech = (Single)Math.Max(0,(Math.Round(PX_Ammo.ManufactureTech / multipleCostTech,0)));
-                    TFTVLogger.Info("Calvitix_Change all done...");
+                    TFTVLogger.Debug("Calvitix_Change all done...");
 
 
                 }
@@ -513,7 +513,7 @@ namespace PRMBetterClasses.VariousAdjustments
 
 
 
-                TFTVLogger.Info("Calvitix_Change all done...");
+                TFTVLogger.Debug("Calvitix_Change all done...");
             }
 
         }

@@ -336,8 +336,8 @@ namespace PRMBetterClasses
         //public bool ApplyCalvitixChanges = false;
 
 
-        // Flag if UI texts should be changed to default (Enlish) text or set by localization
-        public bool DoNotLocalizeChangedTexts = true;
+        // Flag if UI texts should be changed to default (English) text or set by localization
+        public bool DoNotLocalizeChangedTexts = false; //Calvitix  true
         // Create new ability dictionary as json file in mod directory
         internal bool CreateNewJsonFiles = false;
         // DebugLevel (0: nothing, 1: error, 2: debug, 3: info)

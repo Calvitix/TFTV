@@ -46,6 +46,7 @@ namespace TFTV
        // public bool LimitedCapture = true;
       //  public bool LimitedHarvesting = true;
         public bool NoBarks = false;
+        public bool ApplyCalvitixChanges = false;
 
 
 

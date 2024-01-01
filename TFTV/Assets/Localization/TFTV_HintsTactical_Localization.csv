@@ -1,204 +1,271 @@
 Key,Type,Desc,English,Chinese (Simplified),French,German,Italian,Polish,Russian,Spanish,UI_Tester
-UMBRA_SIGHTED_TITLE,Text,,Umbra!,,Ombre !,,,,,,
+UMBRA_SIGHTED_TITLE,Text,,Umbra!,,L'ombre!,,,,,,
 UMBRA_SIGHTED_TEXT,Text,,"<i>""They say an Umbra doesn't just kill you: it steals your soul""</i>
 
 In TFTV, the Umbra can spawn in place of a dead Arthron or Triton with the <b>Touched by the Void</b> ability, which they have a chance to roll at the start of each complete turn. The chance to roll is the total amount of Delirium of all your operatives on the mission divided by two.
 
-The Umbra can only attack characters with Delirium or characters in contact with the Mist, but they can be attacked by all characters.",,"<i>""On dit qu'une Ombre ne fait pas que vous tuer : elle vous vole votre âme.""</i>
+The Umbra can only attack characters with Delirium or characters in contact with the Mist, but they can be attacked by all characters.",,"<i>""On dit qu'une Umbra ne fait pas que vous tuer : elle vole votre âme""</i>
 
-Dans TFTV, l'Ombre apparaîtra à la place d'un Arthron ou d'un Triton avec la capacité <b>Touché par le Néant</b>, lorsque il meurt. Ils ont une chance au début de chaque tour complet, de faire un jet contre le montant total de Délire de tous vos agents engagés sur la mission divisé par deux.
+Dans TFTV, l'Umbra peut apparaître à la place d'un Arthron ou d'un Triton mort avec la capacité <b>Touché par le Vide</b>, qu'ils ont une chance de lancer au début de chaque tour complet. La chance de lancer est le montant total de Delirium de tous vos agents en mission divisé par deux.
 
-Les Ombres ne peuvent attaquer que les personnages ayant du Délire, mais elles peuvent être attaquées par tous les personnages.",,,,,,
+L'Umbra ne peut attaquer que les personnages atteints de Delirium ou les personnages en contact avec la Brume, mais ils peuvent être attaqués par tous les personnages.",,,,,,
 REVENANT_SIGHTED_TITLE,Text,,Revenant,,Revenant,,,,,,
 REVENANT_SIGHTED_TEXT,Text,,"<i>""The Pandorans were somehow stealing our dead and splicing them into new monstrosities. We would recognize them in the field because of some small, inconsequential detail - an involuntary spasm, betraying a familiar gesture, a terrifying scream, bearing the echo of a beloved voice.""</i>
 
-We should try capturing it.",,"<i>""Les Pandoriens volaient en quelque sorte nos morts et les épissaient dans de nouvelles monstruosités. Nous les reconnaissions sur le terrain grâce à un petit détail sans importance - un spasme involontaire, trahissant un geste familier, un cri terrifiant, portant l'écho d'une voix aimée.""</i>
+We should try capturing it.",,"<i>""Les Pandorans volaient nos morts et les transformaient en de nouvelles monstruosités. Nous les reconnaissions sur le terrain à cause d'un petit détail sans importance - un spasme involontaire, trahissant un geste familier, un cri terrifiant, portant l'écho de une voix bien-aimée.""</i>
 
-Nous devrions essayer de les capturer",,,,,,
-VOID_TOUCHED_TITLE,Text,,Touched by the Void,,,,,,,,
+Nous devrions essayer de le capturer.",,,,,,
+VOID_TOUCHED_TITLE,Text,,Touched by the Void,,Touché par le Néant,,,,,,
 VOID_TOUCHED_TEXT,Text,,"<i>""A purple fume emanated from its body, marking it as the bearer of a Terrible Purpose.”</i>
 
-This Pandoran is special. After it is attacked, it is very likely to gain a special ability (however, there is a small chance that it will be passed by the Void and lose its Touch, gaining nothing). At first, the only ability it may gain is to spawn an Umbra version of itself on death. However, as the Oneiric Delirium advances, Touched by the Void Pandorans will gain other effects when attacked for the first time.",,,,,,,,
-TBTV_ON_ATTACK_TITLE_HINT,Text,,Void Touched - Attacker is Marked for Death,,,,,,,,
+This Pandoran is special. After it is attacked, it is very likely to gain a special ability (however, there is a small chance that it will be passed by the Void and lose its Touch, gaining nothing). At first, the only ability it may gain is to spawn an Umbra version of itself on death. However, as the Oneiric Delirium advances, Touched by the Void Pandorans will gain other effects when attacked for the first time.",,"<i>""Une fumée violette émanait de son corps, le marquant comme porteur d'un terrible dessein.""</i>
+
+Ce Pandoran est spécial. Après avoir été attaqué, il est très probable qu'il acquière une capacité spéciale (cependant, il y a une petite chance qu'il passe par le Vide et perde son Toucher, sans rien gagner). Au début, la seule capacité qu'il peut acquérir est de générer une version Umbra de lui-même à sa mort. Cependant, à mesure que le délire onirique progresse, les Pandorans touchés par le Vide bénéficieront d'autres effets lorsqu'ils seront attaqués pour la première fois.",,,,,,
+TBTV_ON_ATTACK_TITLE_HINT,Text,,Void Touched - Attacker is Marked for Death,,Touché par le Néant - L'attaquant est marqué pour la mort,,,,,,
 TBTV_ON_ATTACK_TEXT_HINT,Text,,"<i>”There was the black plume, jetting from the crabbie’s head… I got the bastard, I thought… Next thing I know, they are all coming after me!""</i>
 
 The Pandorans have learned a new trick. From now on, any Touched by the Void Arthron or Triton can either:
 
 - Afflict its attacker with Marked for Death (all hits on the character do 10 extra damage)
-- Spawn Umbra on death",,,,,,,,
-TBTV_ON_TURN_END_TITLE_HINT,Text,,Void Touched - Calls reinforcements at turn's end,,,,,,,,
+- Spawn Umbra on death",,"<i>""Il y avait le panache noir qui jaillissait de la tête du crabbie... J'ai eu ce salaud, pensais-je... La prochaine chose que je sais, ils s'en prennent tous à moi !""</i>
+
+Les Pandorans ont appris un nouveau tour. Désormais, tout Arthron ou Triton touché par le Vide peut :
+
+- Affliger à son attaquant Marqué pour la mort (tous les coups sur le personnage font 10 dégâts supplémentaires)
+- Générer Umbra à la mort",,,,,,
+TBTV_ON_TURN_END_TITLE_HINT,Text,,Void Touched - Calls reinforcements at turn's end,,Touché par le Néant – Appelle des renforts à la fin du tour,,,,,,
 TBTV_ON_TURN_END_TEXT_HINT,Text,,"<i>""Pandorans, they always have 'friends' nearby.""</i>
 
 This Pandoran will call reinforcements if it <b>survives (in whatever shape)</b> until the end of your turn. From now on, any Touched by the Void Arthron or Triton can do one of the following:
 
 - Call reinforcements at the end of player’s turn
 - Afflict its attacker with Marked for Death (all hits on the character do 10 extra damage)
-- Spawn Umbra on death",,,,,,,,
-TFTV_STAMINAHINT_TEXT,Text,,"In TFTV, when one of your operatives gets a bodypart disabled in Tactical, once back in Geoscape its stamina will be reduced to 0. <b>Healing the injured bodypart in Tactical will not prevent this effect</b>. Stamina will also be set to 0 when the character gets a mutation or a bionic augmentation.",,"Dans TFTV, lorsque une partie du corps de vos agents est  désactivée lors d'une mission tactique, une fois de retour sur le Geoscape, son endurance sera réduite à 0. <b>La guérison de la partie du corps blessée lors de la mission tactique n'empêchera pas la perte d'endurance</b>. L'endurance sera également mise à 0 lorsque le personnage obtient une mutation ou une augmentation bionique.",,,,,,
-TFTV_STAMINAHINT_TITLE,Text,,STAMINA LOSS FROM DISABLED LIMBS,,PERTE D'ENDURANCE DUE À DES PARTIES DU CORPS HANDICAPES,,,,,,
+- Spawn Umbra on death",,"<i>""Les Pandorans, ils ont toujours des 'amis' à proximité.""</i>
+
+Ce Pandoran appellera des renforts s'il <b>survit (sous quelque forme que ce soit)</b> jusqu'à la fin de votre tour. À partir de maintenant, tout Arthron ou Triton touché par le Vide peut effectuer l'une des actions suivantes :
+
+- Appeler des renforts à la fin du tour du joueur
+- Affliger à son attaquant Marqué pour la mort (tous les coups sur le personnage font 10 dégâts supplémentaires)
+- Générer Umbra à la mort",,,,,,
+TFTV_STAMINAHINT_TEXT,Text,,"In TFTV, when one of your operatives gets a bodypart disabled in Tactical, once back in Geoscape its stamina will be reduced to 0. <b>Healing the injured bodypart in Tactical will not prevent this effect</b>. Stamina will also be set to 0 when the character gets a mutation or a bionic augmentation.",,"Dans TFTV, lorsqu'un de vos agents voit une partie du corps désactivée en Tactique, une fois de retour dans Geoscape, son endurance sera réduite à 0. <b>Guérir la partie du corps blessée en Tactique n'empêchera pas cet effet</b>. L'endurance sera également mise à 0 lorsque le personnage obtient une mutation ou une augmentation bionique.",,,,,,
+TFTV_STAMINAHINT_TITLE,Text,,STAMINA LOSS FROM DISABLED LIMBS,,PERTE D'ENDURANCE DES MEMBRES HANDICAPÉS,,,,,,
 HINT_ACHERON_PRIME_DESCRIPTION,Text,,"This Acheron is a direct evolution of the basic Acheron, its Delirium spray inflicting more <b>acid damage</b>. In addition to <b>""Harbinger of the Void"" passive ability</b> (<i>increases the chances that an Arthron or a Triton will be Touched by the Void</i>), it has the <b>""Co-Delirium"" passive ability</b> (<i>all Pandorans in battle deal Delirium damage</i>).
 
-Remember that characters or units caught in the Mist can always be targeted by Umbra.",,,,,,,,
-HINT_ACHERON_PRIME_TITLE,Text,,Acheron Prime ,,,,,,,,
+Remember that characters or units caught in the Mist can always be targeted by Umbra.",,"Cet Achéron est une évolution directe de l'Achéron de base, son spray Delirium infligeant davantage de <b>dégâts acides</b>. En plus de la capacité passive <b>""Harbinger of the Void""</b> (<i>augmente les chances qu'un Arthron ou un Triton soit touché par le Vide</i>), il possède le <b>"" Capacité passive ""Co-Delirium""</b> (<i>tous les Pandorans en combat infligent des dégâts de Delirium</i>).
+
+N'oubliez pas que les personnages ou unités pris dans la Brume peuvent toujours être ciblés par Umbra.",,,,,,
+HINT_ACHERON_PRIME_TITLE,Text,,Acheron Prime ,,Achéron Premier,,,,,,
 HINT_ACHERON_ASCLEPIUS_DESCRIPTION,Text,,"The Asclepius Acheron mutation has the <b>""Call Reinforcements"" active ability</b> (<i>instantly call a group of Arthrons and Tritons</i>) and the <b>""Co-Delirium"" passive ability</b> (<i>all Pandorans in battle deal Delirium damage</i>). 
 
-It specializes in healing and aiding other Pandorans and does not have any direct offensive capabilities.",,,,,,,,
-HINT_ACHERON_ASCLEPIUS_TITLE,Text,,Acheron Asclepius,,,,,,,,
-HINT_ACHERON_ASCLEPIUS_CHAMPION_DESCRIPTION,Text,,"This Acheron is a direct evolution of the Asclepius variant. In addition to the <b>""Call Reinforcements"" active ability</b> (<i>instantly call a group of Arthrons and Tritons</i>) and the <b>""Co-Delirium"" passive ability</b> (<i>all Pandorans in battle deal Delirium damage</i>), it has the <b>Neurotoxic Spray</b> (<i>disable a body part for 1 turn</i>).",,,,,,,,
-HINT_ACHERON_ASCLEPIUS_CHAMPION_TITLE,Text,,Acheron Asclepius Champion,,,,,,,,
-HINT_ACHERON_ACHLYS_DESCRIPTION,Text,,"The Achlys Acheron mutation has the <b>""Resurrect"" active ability</b> (<i>transform all human sized corpses within 10 tiles into Arthrons or Tritons</i>)",,,,,,,,
-HINT_ACHERON_ACHLYS_TITLE,Text,,Acheron Achlys,,,,,,,,
-HINT_ACHERON_ACHLYS_CHAMPION_DESCRIPTION,Text,,"This Acheron is a direct evolution of the Achlys variant. In addition to the <b>""Resurrect"" active ability</b> (<i>transform all human sized corpses within 10 tiles into Arthrons or Tritons</i>), it has the <b>""Tributary of the Void"" passive ability</b> (<i>all friendlies <b>of any type</b> within 10 tiles will be Touched by the Void if the character dies</i>).",,,,,,,,
-HINT_ACHERON_ACHLYS_CHAMPION_TITLE,Text,,Acheron Achlys Champion,,,,,,,,
-VOID_BLIGHT_NAME_HINT,Text,,Blight of the Void,,,,,,,,
+It specializes in healing and aiding other Pandorans and does not have any direct offensive capabilities.",,"La mutation Asclepius Achéron possède la capacité active <b>""Appel de renforts""</b> (<i>appelez instantanément un groupe d'Arthrons et de Tritons</i>) et la capacité passive <b>""Co-Délire""</ b> (<i>tous les Pandorans en combat infligent des dégâts de délire</i>).
+
+Il est spécialisé dans la guérison et l'aide aux autres Pandorans et n'a aucune capacité offensive directe.",,,,,,
+HINT_ACHERON_ASCLEPIUS_TITLE,Text,,Acheron Asclepius,,Achéron Asclépios,,,,,,
+HINT_ACHERON_ASCLEPIUS_CHAMPION_DESCRIPTION,Text,,"This Acheron is a direct evolution of the Asclepius variant. In addition to the <b>""Call Reinforcements"" active ability</b> (<i>instantly call a group of Arthrons and Tritons</i>) and the <b>""Co-Delirium"" passive ability</b> (<i>all Pandorans in battle deal Delirium damage</i>), it has the <b>Neurotoxic Spray</b> (<i>disable a body part for 1 turn</i>).",,"Cet Achéron est une évolution directe de la variante Asclépios. En plus de la capacité active <b>""Appel de Renforts""</b> (<i>appeler instantanément un groupe d'Arthrons et de Tritons</i>) et de la capacité passive <b>""Co-Délirium""</b> (<i>tous les Pandoriens en combat infligent des dégâts de délirium</i>), il possède le <b>Spray neurotoxique</b> (<i>désactivez une partie du corps pendant 1 tour</i>).",,,,,,
+HINT_ACHERON_ASCLEPIUS_CHAMPION_TITLE,Text,,Acheron Asclepius Champion,,Achéron Asclépios Champion,,,,,,
+HINT_ACHERON_ACHLYS_DESCRIPTION,Text,,"The Achlys Acheron mutation has the <b>""Resurrect"" active ability</b> (<i>transform all human sized corpses within 10 tiles into Arthrons or Tritons</i>)",,"La mutation Achlys Acheron a la capacité active <b>""Resurrecter""</b> (<i>transformer tous les cadavres à taille humaine dans un rayon de 10 cases en Arthrons ou Tritons</i>)",,,,,,
+HINT_ACHERON_ACHLYS_TITLE,Text,,Acheron Achlys,,Achéron Achlys,,,,,,
+HINT_ACHERON_ACHLYS_CHAMPION_DESCRIPTION,Text,,"This Acheron is a direct evolution of the Achlys variant. In addition to the <b>""Resurrect"" active ability</b> (<i>transform all human sized corpses within 10 tiles into Arthrons or Tritons</i>), it has the <b>""Tributary of the Void"" passive ability</b> (<i>all friendlies <b>of any type</b> within 10 tiles will be Touched by the Void if the character dies</i>).",,"Cet Achéron est une évolution directe de la variante Achlys. En plus de la capacité active <b>""Résusciter""</b> (<i>transformer tous les cadavres à taille humaine dans un rayon de 10 cases en Arthrons ou Tritons</i>), il possède le <b>""Tributaire du Néant"" capacité passive</b> (<i>tous les amis <b>de tout type</b> dans un rayon de 10 cases seront touchés par le Néant si le personnage meurt</i>).",,,,,,
+HINT_ACHERON_ACHLYS_CHAMPION_TITLE,Text,,Acheron Achlys Champion,,Achéron Achlys Champion,,,,,,
+VOID_BLIGHT_NAME_HINT,Text,,Blight of the Void,,Fléau du Néant,,,,,,
 VOID_BLIGHT_DESCRIPTION_HINT,Text,,"This character or unit can now be attacked by Umbra, regardless of Delirium.
 
-It has gained this status because it was attacked by an Acheron. All Acheron spray or cloud attacks afflict the victims with the <b>""Blight of the Void"" status</b>",,,,,,,,
+It has gained this status because it was attacked by an Acheron. All Acheron spray or cloud attacks afflict the victims with the <b>""Blight of the Void"" status</b>",,"Ce personnage ou cette unité peut désormais être attaqué par Umbra, quel que soit Delirium.
+
+Il a acquis ce statut parce qu'il a été attaqué par un Achéron. Toutes les attaques de pulvérisation ou de nuage d'Achéron affligent les victimes avec le statut <b>""Blight of the Void""</b>",,,,,,
 KEY_TUT3_STORY2_DESCRIPTION,Text,,"""Kill confirmed. Phoenix, welco-  Team, on your toes, possible hostiles!""
 
-",,,,,,,,
+",,"""Tuer confirmé. Phoenix, bienvenue à l'équipe, sur vos gardes, possibles hostiles !""",,,,,,
 KEY_TUT3_TFTV1_DESCRIPTION,Text,,"""Don't shoot, we surrender! I'm Alistair Ashby. Yes, the ""Mist Expert"". Thanks for watching my content back in the day, I guess... 
 
 A few of us managed to get to this bunker and activate the emergency beacon before we were overrun by the creatures that followed us here. 
 
-We've got this place mostly up and running... Thanks to Olena, she is quite the wunderkind.""",,,,,,,,
-KEY_TUT3_TFTV1_TITLE,Text,,Alistair Ashby,,,,,,,,
-KEY_TUT3_TFTV2_DESCRIPTION,Text,,"""<i>Oppa</i> Alistair is good with people. I'm good with machines and software. This facility runs on a limited AI called Bennu. Once Bennu verifies your credentials as duly appointed Director, all functionality should be restored and you should be able to interface with the system.""",,,,,,,,
-KEY_TUT3_TFTV2_TITLE,Text,,Olena Kim,,,,,,,,
-HINT_ANCIENTS_STORY1_TITLE,Text,,"<i>""There is something out there waiting for us, and it ain’t no human… ain’t no crab, neither”</i>",,,,,,,,
-HINT_ANCIENTS_STORY1_TEXT,Text,,"Your team has landed near the site where the exploration drones had previously detected the remains of ancient ruins, but on closer approach they started to experience comms malfunction, possibly due to electromagnetic interference. Proceed with caution.",,,,,,,,
-HINT_ANCIENTS_CYCLOPSDEFENSE_TITLE,Text,,"<i>“Target hit, no effect!”</i>",,,,,,,,
-HINT_ANCIENTS_CYCLOPSDEFENSE_TEXT,Text,,This Automata is protected by some sort of electromagnetic field that reduces the strength of incoming attacks. Maybe destroying some of the smaller Automata will dampen the effect?,,,,,,,,
+We've got this place mostly up and running... Thanks to Olena, she is quite the wunderkind.""",,"""Ne tirez pas, nous nous rendons ! Je m'appelle Alistair Ashby. Oui, le ""Mist Expert"". Merci d'avoir regardé mon contenu à l'époque, je suppose...
+
+Quelques-uns d'entre nous ont réussi à atteindre ce bunker et à activer la balise de secours avant d'être envahis par les créatures qui nous suivaient ici.
+
+Nous avons cet endroit pratiquement opérationnel... Grâce à Olena, elle est une sorte d'enfant prodige.""",,,,,,
+KEY_TUT3_TFTV1_TITLE,Text,,Alistair Ashby,,Alistair Ashby,,,,,,
+KEY_TUT3_TFTV2_DESCRIPTION,Text,,"""<i>Oppa</i> Alistair is good with people. I'm good with machines and software. This facility runs on a limited AI called Bennu. Once Bennu verifies your credentials as duly appointed Director, all functionality should be restored and you should be able to interface with the system.""",,"""<i>Oppa</i> Alistair est bon avec les gens. Je suis bon avec les machines et les logiciels. Cette installation fonctionne sur une IA limitée appelée Bennu. Une fois que Bennu a vérifié vos informations d'identification en tant que directeur dûment nommé, toutes les fonctionnalités doivent être restaurées et vous devriez pouvoir vous connecter au système.""",,,,,,
+KEY_TUT3_TFTV2_TITLE,Text,,Olena Kim,,Elena Kim,,,,,,
+HINT_ANCIENTS_STORY1_TITLE,Text,,"<i>""There is something out there waiting for us, and it ain’t no human… ain’t no crab, neither”</i>",,"<i>""Il y a quelque chose qui nous attend là-bas, et ce n'est pas un humain... ce n'est pas un crabe non plus""</i>",,,,,,
+HINT_ANCIENTS_STORY1_TEXT,Text,,"Your team has landed near the site where the exploration drones had previously detected the remains of ancient ruins, but on closer approach they started to experience comms malfunction, possibly due to electromagnetic interference. Proceed with caution.",,"Votre équipe a atterri près du site où les drones d'exploration avaient précédemment détecté les restes de ruines antiques, mais en s'approchant de plus près, ils ont commencé à rencontrer un dysfonctionnement des communications, probablement dû à des interférences électromagnétiques. Procéder avec prudence.",,,,,,
+HINT_ANCIENTS_CYCLOPSDEFENSE_TITLE,Text,,"<i>“Target hit, no effect!”</i>",,"<i>""Cible touchée, aucun effet !""</i>",,,,,,
+HINT_ANCIENTS_CYCLOPSDEFENSE_TEXT,Text,,This Automata is protected by some sort of electromagnetic field that reduces the strength of incoming attacks. Maybe destroying some of the smaller Automata will dampen the effect?,,Cet Automate est protégé par une sorte de champ électromagnétique qui réduit la force des attaques entrantes. Peut-être que détruire certains des plus petits automates atténuera l'effet ?,,,,,,
 HINT_ANCIENTS_CYCLOPS_TITLE,Text,,"<i> “Wake up not the beast that layeth in slumber.” </i>
-",,,,,,,,
-HINT_ANCIENTS_CYCLOPS_TEXT,Text,,Our operatives have located something that may be the source of the electromagnetic interferences that our exploration drones discovered. We should avoid alerting it for as long as possible.,,,,,,,,
-HINT_ANCIENTS_HOPLITS_TITLE,Text,,"<i>“Frag me, what is that thing? Is that a… drill?!”</i>",,,,,,,,
-HINT_ANCIENTS_HOPLITS_TEXT,Text,,"This Ancient Automata is reactivating! While we have no intel on their capabilities, it seems like they are dormant while buried in the ground, but once they emerge they become alerted and gradually reactivate their systems, becoming stronger. The Automata also seem to be in varying states of disrepair.",,,,,,,,
-HINT_ANCIENTS_HOPLITSREPAIR_TITLE,Text,,<i>”The broken remains floated towards the damaged Automata.”</i>,,,,,,,,
-HINT_ANCIENTS_HOPLITSREPAIR_TEXT,Text,,This Ancient Automata is trying to repair itself using the remains of the destroyed robot in its vicinity! It has also drained some of its power.,,,,,,,,
+",,<i> « Ne réveillez pas la bête qui sommeille. » </i>,,,,,,
+HINT_ANCIENTS_CYCLOPS_TEXT,Text,,Our operatives have located something that may be the source of the electromagnetic interferences that our exploration drones discovered. We should avoid alerting it for as long as possible.,,Nos agents ont localisé quelque chose qui pourrait être la source des interférences électromagnétiques découvertes par nos drones d'exploration. Il faut éviter de l'alerter le plus longtemps possible.,,,,,,
+HINT_ANCIENTS_HOPLITS_TITLE,Text,,"<i>“Frag me, what is that thing? Is that a… drill?!”</i>",,"<i>« Fragez-moi, c'est quoi ce truc ? Est-ce une... perceuse ?!""</i>",,,,,,
+HINT_ANCIENTS_HOPLITS_TEXT,Text,,"This Ancient Automata is reactivating! While we have no intel on their capabilities, it seems like they are dormant while buried in the ground, but once they emerge they become alerted and gradually reactivate their systems, becoming stronger. The Automata also seem to be in varying states of disrepair.",,"Cet Automate Ancien est en train de se réactiver ! Bien que nous n'ayons aucune information sur leurs capacités, il semble qu'ils dorment alors qu'ils sont enfouis dans le sol, mais une fois qu'ils émergent, ils sont alertés et réactivent progressivement leurs systèmes, devenant ainsi plus forts. Les Automates semblent également être dans différents états de délabrement.",,,,,,
+HINT_ANCIENTS_HOPLITSREPAIR_TITLE,Text,,<i>”The broken remains floated towards the damaged Automata.”</i>,,"<i>""Les restes brisés flottaient vers les automates endommagés.""</i>",,,,,,
+HINT_ANCIENTS_HOPLITSREPAIR_TEXT,Text,,This Ancient Automata is trying to repair itself using the remains of the destroyed robot in its vicinity! It has also drained some of its power.,,Cet automate antique tente de se réparer en utilisant les restes du robot détruit à proximité ! Il a également vidé une partie de son pouvoir.,,,,,,
 HINT_ANCIENTS_HOPLITSMAXPOWER_TITLE,Text,,"<i>”Whirl whirl whirl Vroom!”</i>
-",,,,,,,,
-HINT_ANCIENTS_HOPLITSMAXPOWER_TEXT,Text,,The Ancient Automata is now fully charged; damage increased significantly and damage resistance gained.,,,,,,,,
-HINT_HOSTILE_DEFENDERS_TITLE,Text,,Hostile haven defenders,,,,,,,,
+",,"<i>""Tourbillon, tourbillon, tourbillon, Vroom !""</i>",,,,,,
+HINT_ANCIENTS_HOPLITSMAXPOWER_TEXT,Text,,The Ancient Automata is now fully charged; damage increased significantly and damage resistance gained.,,Les Automates Anciens sont désormais complètement chargés ; les dégâts ont augmenté de manière significative et la résistance aux dégâts a gagné.,,,,,,
+HINT_HOSTILE_DEFENDERS_TITLE,Text,,Hostile haven defenders,,Défenseurs du refuge hostiles,,,,,,
 HINT_HOSTILE_DEFENDERS_TEXT,Text,,"<i>""Come to rescue us, have they? They are the ones who brought the damn critters on us in the first place! Fragging nerds…""</i>
 
 While this Void Omen is in effect, haven defenders will be hostile to you and attack your operatives on sight, but <b>killing them is not required to win the mission</b>.
 
 Gain XP by protecting structures or civilians as usual.
 
-You can loot crates with faction weapons, but only the equipment in your operatives or vehicles inventory will be recovered.",,,,,,,,
-HINT_FIRE_QUENCHER_TITLE,Text,,Fire Quencher,,,,,,,,
+You can loot crates with faction weapons, but only the equipment in your operatives or vehicles inventory will be recovered.",,"<i>""Ils sont venus nous sauver, n'est-ce pas ? Ce sont eux qui ont amené ces foutues créatures sur nous en premier lieu ! Des nerds qui se fragmentent…""</i>
+
+Pendant que ce Présage du Vide est en vigueur, les défenseurs du refuge vous seront hostiles et attaqueront vos agents à vue, mais <b>les tuer n'est pas nécessaire pour gagner la mission</b>.
+
+Gagnez de l'XP en protégeant les structures ou les civils comme d'habitude.
+
+Vous pouvez piller des caisses avec des armes de faction, mais seul l'équipement de votre inventaire d'agents ou de véhicules sera récupéré.",,,,,,
+HINT_FIRE_QUENCHER_TITLE,Text,,Fire Quencher,,Extincteur d'incendie,,,,,,
 HINT_FIRE_QUENCHER_TEXT,Text,,"<i>“There was nothing special about this one… Here comes the bisque, I thought… Boy was I wrong.”</i>
 
-Some Arthrons have evolved the ability to instantly quench the fire they come in contact with, replacing it with Mist. They are apparently doing this by spraying some biochemical compound  from their <b>heads</b>. Disabling their heads should remove both their immunity to fire and their ability to quench it.",,,,,,,,
-BASEDEFENSE_INFESTATION_TITLE ,Text,,Infested.,,,,,,,,
+Some Arthrons have evolved the ability to instantly quench the fire they come in contact with, replacing it with Mist. They are apparently doing this by spraying some biochemical compound  from their <b>heads</b>. Disabling their heads should remove both their immunity to fire and their ability to quench it.",,"<i>""Il n'y avait rien de spécial à propos de celui-ci... Voici la bisque, pensais-je... Bon sang, j'avais tort.""</i>
+
+Certains Arthrons ont développé la capacité d'éteindre instantanément le feu avec lequel ils entrent en contact, en le remplaçant par de la Brume. Apparemment, ils le font en pulvérisant un composé biochimique depuis leur <b>tête</b>. Désactiver leur tête devrait supprimer à la fois leur immunité au feu et leur capacité à l'éteindre.",,,,,,
+BASEDEFENSE_INFESTATION_TITLE ,Text,,Infested.,,Infesté.,,,,,,
 BASEDEFENSE_INFESTATION_DESCRIPTION,Text,,"<i>""They're coming out of the walls! They're coming out of the goddamn walls!""</i>
 
 Security footage shows the Pandorans taking over the base. 
 
 Director, they are colonizing it.
 
-We will deploy through maintenance access in the tunnels under the base facilities.",,,,,,,,
-BASEDEFENSE_NESTING_TITLE ,Text,,Infestation in progress...,,,,,,,,
+We will deploy through maintenance access in the tunnels under the base facilities.",,"<i>""Ils sortent des murs ! Ils sortent de ces foutus murs !""</i>
+
+Les images de sécurité montrent les Pandorans prenant le contrôle de la base.
+
+Directeur, ils le colonisent.
+
+Nous nous déploierons via un accès de maintenance dans les tunnels sous les installations de la base.",,,,,,
+BASEDEFENSE_NESTING_TITLE ,Text,,Infestation in progress...,,Infestation en cours...,,,,,,
 BASEDEFENSE_NESTING_DESCRIPTION,Text,,"<i>""Busy little creatures.""</i>
 
-The enemy has breached our defenses and has spread throughout the base. We will deploy through maintenance access in the tunnels under the base facilities. ",,,,,,,,
-BASEDEFENSE_TACTICAL_ADVANTAGE_TITLE ,Text,,Tactical Advantage!,,,,,,,,
+The enemy has breached our defenses and has spread throughout the base. We will deploy through maintenance access in the tunnels under the base facilities. ",,"<i>""Petites créatures occupées.""</i>
+
+L'ennemi a percé nos défenses et s'est répandu dans toute la base. Nous nous déploierons via un accès de maintenance dans les tunnels sous les installations de la base.",,,,,,
+BASEDEFENSE_TACTICAL_ADVANTAGE_TITLE ,Text,,Tactical Advantage!,,Avantage tactique !,,,,,,
 BASEDEFENSE_TACTICAL_ADVANTAGE_DESCRIPTION,Text,,"<i>""You're down there, we're up here! You walked into the wrong goddamn room...""</i>
 
-We have taken defensive positions around the main entrance. As long as we hold this choke point we should be fine. ",,,,,,,,
-BASEDEFENSE_UMBRASTRAT_TEXT,Text,,"Director, we are detecting something in the air vents. It's the Mist. Could be a Triton infiltration team. Could be something worse... ",,,,,,,,
-BASEDEFENSE_UMBRASTRAT_TITLE,Text,,Umbra or Tritons,,,,,,,,
-BASEDEFENSE_WORMSSTRAT_TEXT,Text,,"Director, there is something burrowing down towards your team. Small, multiple targets bearing on the hangar.",,,,,,,,
-BASEDEFENSE_WORMSSTRAT_TITLE,Text,,Worms or Myrmidons,,,,,,,,
-BASEDEFENSE_FORCE2STRAT_TEXT,Text,,"Director, be advised, we have detected a secondary strike force digging their way in. They can appear behind our backs any minute!",,,,,,,,
-BASEDEFENSE_FORCE2STRAT_TITLE,Text,,Secondary Strike Force,,,,,,,,
-BASEDEFENSE_VENTING_PROMPT,Text,,"Activate Emergency Venting? This will stop the incoming wave of Pandoran reinforcements, but it will damage your power generator and cause random fires and explosions around the base!",,,,,,,,
-BASEDEFENSE_VENTING_TITLE,Text,,Emergency venting,,,,,,,,
+We have taken defensive positions around the main entrance. As long as we hold this choke point we should be fine. ",,"<i>""Vous êtes là-bas, nous sommes ici ! Vous êtes entré dans la mauvaise pièce...""</i>
+
+Nous avons pris des positions défensives autour de l'entrée principale. Tant que nous maintenons ce point d’étranglement, tout devrait bien se passer.",,,,,,
+BASEDEFENSE_UMBRASTRAT_TEXT,Text,,"Director, we are detecting something in the air vents. It's the Mist. Could be a Triton infiltration team. Could be something worse... ",,"Directeur, nous détectons quelque chose dans les bouches d'aération. C'est la Brume. Ça pourrait être une équipe d'infiltration Triton. Cela pourrait être quelque chose de pire...",,,,,,
+BASEDEFENSE_UMBRASTRAT_TITLE,Text,,Umbra or Tritons,,Umbra ou Tritons,,,,,,
+BASEDEFENSE_WORMSSTRAT_TEXT,Text,,"Director, there is something burrowing down towards your team. Small, multiple targets bearing on the hangar.",,"Directeur, il y a quelque chose qui s'enfouit vers votre équipe. Petites cibles multiples portant sur le hangar.",,,,,,
+BASEDEFENSE_WORMSSTRAT_TITLE,Text,,Worms or Myrmidons,,Vers ou Myrmidons,,,,,,
+BASEDEFENSE_FORCE2STRAT_TEXT,Text,,"Director, be advised, we have detected a secondary strike force digging their way in. They can appear behind our backs any minute!",,"Directeur, soyez averti, nous avons détecté une force de frappe secondaire qui se fraye un chemin. Elle peut apparaître dans notre dos à tout moment !",,,,,,
+BASEDEFENSE_FORCE2STRAT_TITLE,Text,,Secondary Strike Force,,Force de frappe secondaire,,,,,,
+BASEDEFENSE_VENTING_PROMPT,Text,,"Activate Emergency Venting? This will stop the incoming wave of Pandoran reinforcements, but it will damage your power generator and cause random fires and explosions around the base!",,"Activer la ventilation d'urgence ? Cela arrêtera la vague entrante de renforts Pandoriens, mais cela endommagera votre générateur électrique et provoquera des incendies et des explosions aléatoires autour de la base !",,,,,,
+BASEDEFENSE_VENTING_TITLE,Text,,Emergency venting,,Ventilation d'urgence,,,,,,
 BASEDEFENSE_VENTING_TEXT,Text,,"<i>“Between a rock and a hard place, be water.”</i> 
 
 The geothermal plant that powers the base has an emergency steam vent that can scald the Pandorans that are trying to get into the base, removing the currently incoming wave of reinforcements. However, this will likely damage the generator and will cause the base systems to malfunction, resulting in fires and explosions. 
 
-There are several consoles around the base that can be activated; inbuilt safety measures prevent repeating the operation at the same console.",,,,,,,,
-HINT_DECOYPLACED_TITLE,Text,,D-Coy,,,,,,,,
+There are several consoles around the base that can be activated; inbuilt safety measures prevent repeating the operation at the same console.",,"<i>«Entre le marteau et l'enclume, soit l'eau.»</i>
+
+La centrale géothermique qui alimente la base dispose d'un évent de vapeur d'urgence qui peut ébouillanter les Pandorans qui tentent d'entrer dans la base, éliminant ainsi la vague de renforts actuellement entrante. Cependant, cela endommagerait probablement le générateur et entraînerait un dysfonctionnement des systèmes de base, entraînant des incendies et des explosions.
+
+Il y a plusieurs consoles autour de la base qui peuvent être activées ; les mesures de sécurité intégrées empêchent la répétition de l'opération sur la même console.",,,,,,
+HINT_DECOYPLACED_TITLE,Text,,D-Coy,,D-Coy,,,,,,
 HINT_DECOYPLACED_TEXT,Text,,"<i>""Best buddy I ever had.""</i>
 
-The Synedrion decoy is a complex multisensorial simulation that can deceive the senses of sight, sound and smell. However, smarter opponents will detect the illusion when attacking from a short distance; dumber opponents or those attacking from a longer distance may take a while to realize it's a trick. ",,,,,,,,
-HINT_DECOYDISCOVERED_TITLE,Text,,Game over,,,,,,,,
+The Synedrion decoy is a complex multisensorial simulation that can deceive the senses of sight, sound and smell. However, smarter opponents will detect the illusion when attacking from a short distance; dumber opponents or those attacking from a longer distance may take a while to realize it's a trick. ",,"<i>""Le meilleur ami que j'ai jamais eu.""</i>
+
+Le leurre Synedrion est une simulation multisensorielle complexe qui peut tromper les sens de la vue, de l'ouïe et de l'odorat. Cependant, les adversaires les plus intelligents détecteront l’illusion lorsqu’ils attaqueront à courte distance ; les adversaires plus stupides ou ceux qui attaquent à une plus longue distance peuvent mettre un certain temps à se rendre compte qu'il s'agit d'un piège.",,,,,,
+HINT_DECOYDISCOVERED_TITLE,Text,,Game over,,Jeu terminé,,,,,,
 HINT_DECOYDISCOVERED_TEXT,Text,,"<i> ""That one is smart, real smart""</i>
 
-The enemy has realized that D-Coy is not real.",,,,,,,,
-HINT_DECOYSCYLLA_TITLE,Text,,Terrifying intelligence,,,,,,,,
+The enemy has realized that D-Coy is not real.",,"<i> ""Celui-là est intelligent, vraiment intelligent""</i>
+
+L'ennemi a réalisé que D-Coy n'est pas réel.",,,,,,
+HINT_DECOYSCYLLA_TITLE,Text,,Terrifying intelligence,,Des renseignements terrifiants,,,,,,
 HINT_DECOYSCYLLA_TEXT,Text,,"<i> ""She is not falling for it twice!""</i>
 
-What did you expect of the Apex of Creation?",,,,,,,,
+What did you expect of the Apex of Creation?",,"<i> ""Elle ne se laissera pas avoir deux fois !""</i>
+
+Qu’attendiez-vous du Sommet de la Création ?",,,,,,
 KEY_TAC_HINT_MISSION_BASEDEFENSE_DESCRIPTION,Text,,"In TFTV, depending on how far along the attack is, you will face a somewhat different base defense mission; the earliest type is the easiest, and the latest type is the hardest. If this is your only currently operational base and you lose the mission, <b>you will lose the game</b>. If not, you will lose the base but will be able to recover it later. 
 
 Fulfill all the objectives to complete the mission. You don't have to kill every worm, egg, mindfragger or myrmidon to win. 
 
-Once you get a warning about reinforcements arriving, you will have a chance to stop them following the instructions from Olena. ",,,,,,,,
-KEY_DLC3_TAC_HINT_EILEEN_STORY_WIN_DESCRIPTION,Text,,"""Is everybody on board? I'm afraid we can't stay any longer. This was my home, until I brought that fragging egg here... Maybe if you had come earlier... forget it, I can't lay this on you. It's not your fault. Prepare for takeoff!""",,"""Est-ce que tout le monde est à bord? Je crains que nous ne puissions plus rester. C’était ma maison, jusqu’à ce que j’apporte cet oeuf de malheur ici... Peut-être que si vous étiez venu plus tôt... oubliez ça, je ne peux pas vous mettre ça sur le dos. Ce n’est pas de votre faute. Préparez-vous au décollage !""",,,,,,
-KEY_DLC3_TAC_HINT_MANTICORE_RUN_HURRY_DESCRIPTION,Text,,"""Phoenix? I'm almost done here, everyone else is... gone. More crabmen are approaching from all sides, so hurry up! I'm waiting for you inside the Manticore.""",,"""Phoenix ? j’ai presque fini ici, tout le monde est... parti. D’autres crabes s’approchent de tous les côtés, alors dépêchez-vous! Je vous attends dans le Manticore.""",,,,,,
-KEY_DLC3_TAC_HINT_MANTICORE_RUN_START_NAME,Text,,AURORA,,AURORA,,,,,,
-KEY_DLC3_TAC_HINT_MANTICORE_RUN_START_DESCRIPTION,Text,,"Your only chance is to reach the armed Manticore, Aurora, that Eileen and her friends were working on and hope that they had time to finish the job! Move, move, move!",,"Votre seule chance est d’atteindre le Manticore armé, Aurora, sur lequel Eileen et ses amis travaillaient et espèrent qu’ils auront le temps de finir le travail ! Go, go, go !",,,,,,
-KEY_DLC3_TAC_HINT_MANTICORE_RUN_STORY_DESCRIPTION,Text,,"Your team was on their way to the egg when the haven was attacked from all sides. You are cut off from the transport that you arrived in, and surrounded by mayhem and destruction.",,"Votre équipe était en route pour l’oeuf quand le refuge a été attaqué de tous les côtés. Vous êtes coupé du transport dans lequel vous êtes arrivé, et entouré par le chaos et la destruction.",,,,,,
+Once you get a warning about reinforcements arriving, you will have a chance to stop them following the instructions from Olena. ",,"Dans TFTV, selon l'avancée de l'attaque, vous serez confronté à une mission de défense de base quelque peu différente ; le type le plus ancien est le plus simple et le type le plus récent est le plus difficile. S'il s'agit de votre seule base actuellement opérationnelle et que vous perdez la mission, <b>vous perdrez la partie</b>. Dans le cas contraire, vous perdrez la base mais pourrez la récupérer plus tard.
+
+Remplissez tous les objectifs pour terminer la mission. Vous n'êtes pas obligé de tuer tous les vers, œufs, mindfraggers ou myrmidons pour gagner.
+
+Une fois que vous recevrez un avertissement concernant l'arrivée de renforts, vous aurez la possibilité de les arrêter en suivant les instructions d'Olena.",,,,,,
+KEY_DLC3_TAC_HINT_EILEEN_STORY_WIN_DESCRIPTION,Text,,"""Is everybody on board? I'm afraid we can't stay any longer. This was my home, until I brought that fragging egg here... Maybe if you had come earlier... forget it, I can't lay this on you. It's not your fault. Prepare for takeoff!""",,"""Est-ce que tout le monde est à bord ? J'ai bien peur que nous ne puissions pas rester plus longtemps. C'était ma maison, jusqu'à ce que j'apporte cet œuf fragile ici... Peut-être que si vous étiez venu plus tôt... oubliez ça, je ne peux pas pondre C'est de votre faute. Ce n'est pas de votre faute. Préparez-vous au décollage !""",,,,,,
+KEY_DLC3_TAC_HINT_MANTICORE_RUN_HURRY_DESCRIPTION,Text,,"""Phoenix? I'm almost done here, everyone else is... gone. More crabmen are approaching from all sides, so hurry up! I'm waiting for you inside the Manticore.""",,"""Phoenix ? J'ai presque fini ici, tout le monde est... parti. D'autres crabes approchent de tous les côtés, alors dépêchez-vous ! Je vous attends à l'intérieur de la Manticore.""",,,,,,
+KEY_DLC3_TAC_HINT_MANTICORE_RUN_START_NAME,Text,,AURORA,,AURORE,,,,,,
+KEY_DLC3_TAC_HINT_MANTICORE_RUN_START_DESCRIPTION,Text,,"Your only chance is to reach the armed Manticore, Aurora, that Eileen and her friends were working on and hope that they had time to finish the job! Move, move, move!",,"Votre seule chance est d'atteindre la Manticore armée, Aurora, sur laquelle Eileen et ses amis travaillaient et j'espère qu'ils auront eu le temps de terminer le travail ! Bouge bouge bouge!",,,,,,
+KEY_DLC3_TAC_HINT_MANTICORE_RUN_STORY_DESCRIPTION,Text,,"Your team was on their way to the egg when the haven was attacked from all sides. You are cut off from the transport that you arrived in, and surrounded by mayhem and destruction.",,Votre équipe était en route vers l'œuf lorsque le refuge a été attaqué de toutes parts. Vous êtes coupé du transport dans lequel vous êtes arrivé et entouré de chaos et de destruction.,,,,,,
 KEY_DLC3_TAC_HINT_MANTICORE_RUN_STORY_NAME,Text,,CHANGE OF PLANS,,CHANGEMENT DE PLAN,,,,,,
-KEY_DLC4_TAC_HINT_ACHERON_ESCAPED_DESCRIPTION,Text,,The Acheron escaped!,,,,,,,,
-KEY_DLC4_TAC_HINT_ACHERON_ESCAPED_NAME,Text,,TRANSMISSION,,,,,,,,
-KEY_TAC_HINT_ENEMY_SPECIAL_CO_CORRUPT_DESCRIPTION,Text,,This allows any other creature on the battlefield to be capable of dealing delirium damage.,,Cela permet à toute autre créature sur le champ de bataille d'être capable d'infliger des dégâts de délire.,,,,,,
-KEY_TAC_HINT_ENEMY_SPECIAL_CO_CORRUPT_NAME,Text,,PANDORAN SUPPLEMENTAL - CO-DELIRIUM,,SUPPLEMENT PANDORIEN – CO-DELIRIUM,,,,,,
-KEY_TAC_HINT_ENEMY_SPECIAL_CORRUPTION_DESCRIPTION,Text,,Delirium damage inflicts an operative with Oneiric Delirium or insanity.,,Les dégâts de Delirium infligent à un agent le délire onirique ou la folie.,,,,,,
-KEY_TAC_HINT_ENEMY_SPECIAL_CORRUPTION_NAME,Text,,PANDORAN SUPPLEMENTAL - DELIRIUM DAMAGE,,SUPPLEMENT PANDORIEN – DEGAT DE DELIRIUM,,,,,,
-DLC4 Hypnos/KEY_TAC_HINT_STATUS_CORRUPTED_NAME,Text,,Delirium,,Delirium,,,,,,
-YR_DEFENSE_BROKEN_NAME,Text,not used,Receptacle's shields are down!,,,,,,,,
-YR_DEFENSE_BROKEN_DESCRIPTION,Text,not used,Disabling the creatures eyes has disrupted it! Complete the objective before it recovers!,,,,,,,,
-PX_VICTORY_MISSION_START_TITLE,Text,,The Last Resort.,,,,,,,,
-PX_VICTORY_MISSION_START0,Text,,"This is where our road ends, one way or another. All of the research, all of the struggle and hardship, it all led us to a real, workable solution to the Pandoravirus and to the Yuggothian Entity that sent it down on us. There’s no time now to think about the costs, the ecological and societal damage, the casualties. Nothing can be done, nothing can be built while the Pandoravirus shares this planet with us, and today we have the chance to eradicate it utterly. The Receptacle must be located and destroyed. The nightmare must end.",,,,,,,,
-PX_VICTORY_MISSION_START1,Text,,"I can hardly believe that we’re finally here. It's important that we move on the receptacle as quickly as possible. We don't know what it’s capable of, and the time that we spend on approach is time that we spend vulnerable. It’s been an honour working together Director. Good hunting to you and your team.",,,,,,,,
-AN_VICTORY_MISSION_START_TITLE,Text,,Hack the Planet.,,,,,,,,
-AN_VICTORY_MISSION_START0,Text,,"We have walked the path that she laid down for us and it has lead us to this moment. The Dead God would take our future from us, would devour our world and flay our bodies, scatter us to dust. But she has shown us that another way is possible. We will no longer cower in the shadows of Gods, we will stand beside them and find ourselves uplifted. The Receptacle must be located and subdued, so that she may do her work. The nightmare must end.",,,,,,,,
+KEY_DLC4_TAC_HINT_ACHERON_ESCAPED_DESCRIPTION,Text,,The Acheron escaped!,,L'Achéron s'est échappé !,,,,,,
+KEY_DLC4_TAC_HINT_ACHERON_ESCAPED_NAME,Text,,TRANSMISSION,,TRANSMISSION,,,,,,
+KEY_TAC_HINT_ENEMY_SPECIAL_CO_CORRUPT_DESCRIPTION,Text,,This allows any other creature on the battlefield to be capable of dealing delirium damage.,,Cela permet à n'importe quelle autre créature sur le champ de bataille d'être capable d'infliger des dégâts de délirium.,,,,,,
+KEY_TAC_HINT_ENEMY_SPECIAL_CO_CORRUPT_NAME,Text,,PANDORAN SUPPLEMENTAL - CO-DELIRIUM,,SUPPLÉMENT PANDORIEN - CO-DÉLIRIUM,,,,,,
+KEY_TAC_HINT_ENEMY_SPECIAL_CORRUPTION_DESCRIPTION,Text,,Delirium damage inflicts an operative with Oneiric Delirium or insanity.,,Les dégâts de délirium infligent à un agent le délirium onirique ou la folie.,,,,,,
+KEY_TAC_HINT_ENEMY_SPECIAL_CORRUPTION_NAME,Text,,PANDORAN SUPPLEMENTAL - DELIRIUM DAMAGE,,SUPPLÉMENT PANDORIEN - DOMMAGES AU DÉLIRIUM,,,,,,
+DLC4 Hypnos/KEY_TAC_HINT_STATUS_CORRUPTED_NAME,Text,,Delirium,,Délirium,,,,,,
+YR_DEFENSE_BROKEN_NAME,Text,not used,Receptacle's shields are down!,,Les boucliers du réceptacle sont baissés !,,,,,,
+YR_DEFENSE_BROKEN_DESCRIPTION,Text,not used,Disabling the creatures eyes has disrupted it! Complete the objective before it recovers!,,La désactivation des yeux de la créature l'a perturbé ! Terminez l'objectif avant qu'il ne récupère !,,,,,,
+PX_VICTORY_MISSION_START_TITLE,Text,,The Last Resort.,,Le dernier recours.,,,,,,
+PX_VICTORY_MISSION_START0,Text,,"This is where our road ends, one way or another. All of the research, all of the struggle and hardship, it all led us to a real, workable solution to the Pandoravirus and to the Yuggothian Entity that sent it down on us. There’s no time now to think about the costs, the ecological and societal damage, the casualties. Nothing can be done, nothing can be built while the Pandoravirus shares this planet with us, and today we have the chance to eradicate it utterly. The Receptacle must be located and destroyed. The nightmare must end.",,"C’est ici que se termine notre route, d’une manière ou d’une autre. Toutes les recherches, toutes les luttes et les difficultés, tout cela nous a conduit à une solution réelle et réalisable au Pandoravirus et à l’Entité Yuggothienne qui nous l’a envoyé. Nous n’avons plus le temps de penser aux coûts, aux dégâts écologiques et sociétaux, aux victimes. Rien ne peut être fait, rien ne peut être construit tant que le Pandoravirus partage cette planète avec nous, et aujourd’hui nous avons la chance de l’éradiquer complètement. Le Réceptacle doit être localisé et détruit. Le cauchemar doit prendre fin.",,,,,,
+PX_VICTORY_MISSION_START1,Text,,"I can hardly believe that we’re finally here. It's important that we move on the receptacle as quickly as possible. We don't know what it’s capable of, and the time that we spend on approach is time that we spend vulnerable. It’s been an honour working together Director. Good hunting to you and your team.",,"J’ai du mal à croire que nous sommes enfin là. Il est important que nous avancions sur le réceptacle le plus rapidement possible. Nous ne savons pas de quoi il est capable, et le temps que nous passons à nous approcher est du temps que nous passons vulnérables. Ce fut un honneur de travailler ensemble, directeur. Bonne chasse à vous et à votre équipe.",,,,,,
+AN_VICTORY_MISSION_START_TITLE,Text,,Hack the Planet.,,Piratez la planète.,,,,,,
+AN_VICTORY_MISSION_START0,Text,,"We have walked the path that she laid down for us and it has lead us to this moment. The Dead God would take our future from us, would devour our world and flay our bodies, scatter us to dust. But she has shown us that another way is possible. We will no longer cower in the shadows of Gods, we will stand beside them and find ourselves uplifted. The Receptacle must be located and subdued, so that she may do her work. The nightmare must end.",,"Nous avons parcouru le chemin qu'elle nous a tracé et cela nous a conduit à ce moment. Le Dieu mort nous prendrait notre avenir, dévorerait notre monde et écorcherait nos corps, nous réduirait en poussière. Mais elle nous a montré qu’une autre voie est possible. Nous ne nous retrancherons plus dans l’ombre des Dieux, nous nous tiendrons à leurs côtés et nous retrouverons élevés. Le Réceptacle doit être localisé et maîtrisé, afin qu'elle puisse faire son travail. Le cauchemar doit prendre fin.",,,,,,
 AN_VICTORY_MISSION_START1,Text,,"Here is where we find ourselves, here is where our faith is rewarded. It's important that we move on the Dead God’s receptacle as quickly as possible. We don't know what it’s capable of, and the time that we spend on approach is time spent vulnerable.
 
 <i>He turns to the Exalted</i>
 
-It has been the honour of my brief life to serve beneath you. Let’s see this done.",,,,,,,,
-NJ_VICTORY_MISSION_START_TITLE,Text,,The Plan.,,,,,,,,
-NJ_VICTORY_MISSION_START0,Text,,"They said that a military solution was possible, and now here you are, boots on the ground, shoulder to shoulder, trying to put the theory into practice. The Receptacle must be located and destroyed. The nightmare must end.",,,,,,,,
-NJ_VICTORY_MISSION_START1,Text,,"Director, it's important that we move on our objective quickly. We don't have good intel on enemy capabilities down here, and time that we spend on approach is time spent vulnerable. Let’s do this thing.",,,,,,,,
-SY_POLY_VICTORY_MISSION_START_TITLE,Text,,Liberty or Death.,,,,,,,,
-SY_POLY_VICTORY_MISSION_START0,Text,,"The hour has finally arrived. The Entity represents coercion, cruelty, arrogance, control; everything that divides us, everything that makes us weak. We finally have the chance to break that coercion, to emancipate the beings that fight its wars and perpetuate its brutalities. We cannot know what this world will look like in the aftermath, but we do know that it will be one freed from psychic dominion. The receptacle must be located and destroyed. The nightmare must end.",,,,,,,,
-SY_POLY_VICTORY_MISSION_START1,Text,,"Director, it's important that we move to end this threat as quickly as possible. We don't know what this entity is capable of, and the time that we spend on approach is time that we spend vulnerable. Good luck to every one of you. Come home to us when it’s done.",,,,,,,,
-SY_TERRA_VICTORY_MISSION_START_TITLE,Text,,The Master's Tools.,,,,,,,,
-SY_TERRA_VICTORY_MISSION_START0,Text,,"The hour has finally arrived. The Entity thought that it could take our home from us; our soil, air, and water, our biosphere, even our minds. Everything that makes this world beautiful, everything that affirms our dignity as a species. No longer. Today we test our values in the crucible of direct action. The Receptacle must be located and destroyed. The nightmare must end.",,,,,,,,
-SY_TERRA_VICTORY_MISSION_START1,Text,,"Director, it's important that we move to end this threat as quickly as possible. We don't know what the entity is capable of, and the time that we spend on approach is time that we spend vulnerable. Good luck to every one of you. Come home to us when it’s done.",,,,,,,,
-VICTORY_MISSION_GATES_TITLE,Text,,At the Gates.,,,,,,,,
-VICTORY_MISSION_GATES0,Text,,"There is some kind of Pandoran organic structure barring our advance. The Receptacle should be behind this barrier, but the surface appears to be functionally indestructible - nothing man-portable would put a scratch on it. Curiously, there are what appear to be access points or machinery interfaces that emerge from the smooth casing at three separate points. We should move our operatives closer to investigate - but be aware that figuring out the operation of these devices may take some time.",,,,,,,,
-VICTORY_MISSION_GATES1,Text,,"Opening the Yuggothian Gate requires all three access points to be activated simultaneously by your operatives. The process will take two turns once begun, and can be interrupted. Once the Gate has been opened you should move quickly; there is no way of knowing how long it will remain so.",,,,,,,,
-VICTORY_MISSION_REVENANT_TO_PX_TITLE,Text,,Will beyond Reason.,,,,,,,,
+It has been the honour of my brief life to serve beneath you. Let’s see this done.",,"C'est ici que nous nous trouvons, c'est ici que notre foi est récompensée. Il est important que nous avancions le plus rapidement possible vers le réceptacle du Dieu Mort. Nous ne savons pas de quoi il est capable, et le temps que nous passons à nous approcher est du temps passé à être vulnérable.
+
+<i>Il se tourne vers les Exaltés</i>
+
+Ce fut l'honneur de ma brève vie de servir sous vos ordres. Voyons que cela soit fait.",,,,,,
+NJ_VICTORY_MISSION_START_TITLE,Text,,The Plan.,,Le plan.,,,,,,
+NJ_VICTORY_MISSION_START0,Text,,"They said that a military solution was possible, and now here you are, boots on the ground, shoulder to shoulder, trying to put the theory into practice. The Receptacle must be located and destroyed. The nightmare must end.",,"Ils disaient qu’une solution militaire était possible, et maintenant vous voilà, sur le terrain, côte à côte, essayant de mettre la théorie en pratique. Le Réceptacle doit être localisé et détruit. Le cauchemar doit prendre fin.",,,,,,
+NJ_VICTORY_MISSION_START1,Text,,"Director, it's important that we move on our objective quickly. We don't have good intel on enemy capabilities down here, and time that we spend on approach is time spent vulnerable. Let’s do this thing.",,"Directeur, il est important que nous avancions rapidement vers notre objectif. Nous ne disposons pas de bonnes informations sur les capacités ennemies ici, et le temps que nous passons en approche est du temps passé à être vulnérable. Faisons cette chose.",,,,,,
+SY_POLY_VICTORY_MISSION_START_TITLE,Text,,Liberty or Death.,,La liberté ou la mort.,,,,,,
+SY_POLY_VICTORY_MISSION_START0,Text,,"The hour has finally arrived. The Entity represents coercion, cruelty, arrogance, control; everything that divides us, everything that makes us weak. We finally have the chance to break that coercion, to emancipate the beings that fight its wars and perpetuate its brutalities. We cannot know what this world will look like in the aftermath, but we do know that it will be one freed from psychic dominion. The receptacle must be located and destroyed. The nightmare must end.",,"L'heure est enfin arrivée. L'Entité représente la coercition, la cruauté, l'arrogance, le contrôle ; tout ce qui nous divise, tout ce qui nous affaiblit. Nous avons enfin la chance de briser cette coercition, d’émanciper les êtres qui mènent ses guerres et perpétuent ses brutalités. Nous ne pouvons pas savoir à quoi ressemblera ce monde par la suite, mais nous savons qu’il sera libéré de la domination psychique. Le réceptacle doit être localisé et détruit. Le cauchemar doit prendre fin.",,,,,,
+SY_POLY_VICTORY_MISSION_START1,Text,,"Director, it's important that we move to end this threat as quickly as possible. We don't know what this entity is capable of, and the time that we spend on approach is time that we spend vulnerable. Good luck to every one of you. Come home to us when it’s done.",,"Directeur, il est important que nous agissions pour mettre fin à cette menace le plus rapidement possible. Nous ne savons pas de quoi cette entité est capable, et le temps que nous passons à nous approcher est du temps que nous passons vulnérables. Bonne chance à chacun d'entre vous. Revenez chez nous quand ce sera fait.",,,,,,
+SY_TERRA_VICTORY_MISSION_START_TITLE,Text,,The Master's Tools.,,Les outils du Maître.,,,,,,
+SY_TERRA_VICTORY_MISSION_START0,Text,,"The hour has finally arrived. The Entity thought that it could take our home from us; our soil, air, and water, our biosphere, even our minds. Everything that makes this world beautiful, everything that affirms our dignity as a species. No longer. Today we test our values in the crucible of direct action. The Receptacle must be located and destroyed. The nightmare must end.",,"L'heure est enfin arrivée. L'Entité pensait qu'elle pourrait nous prendre notre maison ; notre sol, notre air et notre eau, notre biosphère et même notre esprit. Tout ce qui rend ce monde beau, tout ce qui affirme notre dignité en tant qu'espèce. Plus maintenant. Aujourd’hui, nous testons nos valeurs dans le creuset de l’action directe. Le Réceptacle doit être localisé et détruit. Le cauchemar doit prendre fin.",,,,,,
+SY_TERRA_VICTORY_MISSION_START1,Text,,"Director, it's important that we move to end this threat as quickly as possible. We don't know what the entity is capable of, and the time that we spend on approach is time that we spend vulnerable. Good luck to every one of you. Come home to us when it’s done.",,"Directeur, il est important que nous agissions pour mettre fin à cette menace le plus rapidement possible. Nous ne savons pas de quoi l'entité est capable, et le temps que nous passons à l'approche est du temps que nous passons vulnérables. Bonne chance à chacun d'entre vous. Revenez chez nous quand ce sera fait.",,,,,,
+VICTORY_MISSION_GATES_TITLE,Text,,At the Gates.,,Aux portes.,,,,,,
+VICTORY_MISSION_GATES0,Text,,"There is some kind of Pandoran organic structure barring our advance. The Receptacle should be behind this barrier, but the surface appears to be functionally indestructible - nothing man-portable would put a scratch on it. Curiously, there are what appear to be access points or machinery interfaces that emerge from the smooth casing at three separate points. We should move our operatives closer to investigate - but be aware that figuring out the operation of these devices may take some time.",,"Il existe une sorte de structure organique pandorienne qui nous empêche d’avancer. Le Réceptacle devrait se trouver derrière cette barrière, mais la surface semble être fonctionnellement indestructible - rien de portable ne pourrait l'égratigner. Curieusement, il existe ce qui semble être des points d'accès ou des interfaces de machines qui émergent du boîtier lisse en trois points distincts. Nous devrions rapprocher nos agents pour enquêter, mais sachez que comprendre le fonctionnement de ces appareils peut prendre un certain temps.",,,,,,
+VICTORY_MISSION_GATES1,Text,,"Opening the Yuggothian Gate requires all three access points to be activated simultaneously by your operatives. The process will take two turns once begun, and can be interrupted. Once the Gate has been opened you should move quickly; there is no way of knowing how long it will remain so.",,"L'ouverture de la porte Yuggothian nécessite que les trois points d'accès soient activés simultanément par vos agents. Le processus prendra deux tours une fois commencé et pourra être interrompu. Une fois la porte ouverte, vous devez vous déplacer rapidement ; il n’y a aucun moyen de savoir combien de temps cela restera ainsi.",,,,,,
+VICTORY_MISSION_REVENANT_TO_PX_TITLE,Text,,Will beyond Reason.,,Volonté au-delà de la Raison.,,,,,,
 VICTORY_MISSION_REVENANT_TO_PX,Text,,"You’ve seen the revenants before, and it never gets any easier. They way they look at you with the eyes of old comrades, or scream in the voices of friends. You never allowed yourself to hope that there was anything left of the people you once knew inside those twisted, nightmare bodies - surely this fractal resemblance is just a byproduct of the hideous cruelty of the Entity’s methods?
 
-But here, at the end of things, you watch it happen for the first time. You watch one of them turn its weapons on the Pandorans that are pouring from the walls, you hear its deranged scream of defiance against the crushing will of its tormentor. You watch, and you push yourself to fight even harder. Their sacrifice cannot be in vain. There has been too much anguish, too much suffering. The nightmare must end.",,,,,,,,
-VICTORY_MISSION_REVENANT_TO_YR_TITLE,Text,,No Liberty Without Death.,,,,,,,,
-VICTORY_MISSION_REVENANT_TO_YR,Text,,"Just as you began to allow yourself to hope that some sort of resistance might be possible, the Entity reasserts control over its puppets. The revenant snaps back into its hostile posture and attacks your operatives, with a long howl of human despair that cuts through you. This is the territory of an alien mind so ancient that it defies human understanding. It will brook no opposition here.",,,,,,,,
-VICTORY_MISSION_HIS_MINIONS_TITLE,Text,,All Are Master's Minions.,,,,,,,,
+But here, at the end of things, you watch it happen for the first time. You watch one of them turn its weapons on the Pandorans that are pouring from the walls, you hear its deranged scream of defiance against the crushing will of its tormentor. You watch, and you push yourself to fight even harder. Their sacrifice cannot be in vain. There has been too much anguish, too much suffering. The nightmare must end.",,"Vous avez déjà vu les revenants, et cela n’a jamais été aussi simple. Leur façon de vous regarder avec les yeux de vieux camarades ou de crier avec la voix de leurs amis. Vous ne vous êtes jamais permis d'espérer qu'il restait quoi que ce soit des personnes que vous avez connues autrefois à l'intérieur de ces corps tordus et cauchemardesques - cette ressemblance fractale n'est-elle sûrement qu'un sous-produit de la cruauté hideuse des méthodes de l'Entité ?
+
+Mais ici, à la fin des choses, vous voyez cela se produire pour la première fois. Vous regardez l'un d'eux tourner ses armes sur les Pandorans qui se déversent des murs, vous entendez son cri de défi dérangé contre la volonté écrasante de son bourreau. Vous regardez et vous vous forcez à vous battre encore plus fort. Leur sacrifice ne peut pas être vain. Il y a eu trop d'angoisse, trop de souffrance. Le cauchemar doit prendre fin.",,,,,,
+VICTORY_MISSION_REVENANT_TO_YR_TITLE,Text,,No Liberty Without Death.,,Pas de liberté sans mort.,,,,,,
+VICTORY_MISSION_REVENANT_TO_YR,Text,,"Just as you began to allow yourself to hope that some sort of resistance might be possible, the Entity reasserts control over its puppets. The revenant snaps back into its hostile posture and attacks your operatives, with a long howl of human despair that cuts through you. This is the territory of an alien mind so ancient that it defies human understanding. It will brook no opposition here.",,"Alors que vous commencez à espérer qu’une certaine forme de résistance soit possible, l’Entité réaffirme le contrôle de ses marionnettes. Le revenant reprend sa posture hostile et attaque vos agents, avec un long hurlement de désespoir humain qui vous transperce. C’est le territoire d’un esprit extraterrestre si ancien qu’il défie la compréhension humaine. Ici, il ne tolérera aucune opposition.",,,,,,
+VICTORY_MISSION_HIS_MINIONS_TITLE,Text,,All Are Master's Minions.,,Tous sont les serviteurs du Maître.,,,,,,
 VICTORY_MISSION_HIS_MINIONS,Text,,"Over time you have become used to the strange psychic methods of the Anu priesthood, and the mental scrambling employed by Synedrion infiltrators. It has not been so strange, this late in the war, to see Pandoran lifeforms fighting alongside your operatives. Now, in this final contest, you see that your sense of safety was badly misplaced.
 
 As you watch, the Pandoran creature that seconds ago was fighting against your enemies begins to twitch and shake. Then it levels its weapons and attacks those who vainly thought they held its leash. We are too close to the Entity and to its smothering psychic control. It will brook no opposition here.
-",,,,,,,,
-VICTORY_MISSION_FOR_THE_EYES_TITLE,Text,,Go for the eyes!,,,,,,,,
+",,"Au fil du temps, vous vous êtes habitué aux étranges méthodes psychiques du sacerdoce Anu et au brouillage mental employé par les infiltrés Synedrion. Il n'a pas été si étrange, à cette fin de la guerre, de voir des formes de vie pandoriennes combattre aux côtés de vos agents. Maintenant, dans ce concours final, vous constatez que votre sentiment de sécurité a été gravement déplacé.
+
+Pendant que vous regardez, la créature Pandorienne qui se battait il y a quelques secondes contre vos ennemis commence à se contracter et à trembler. Puis il lève ses armes et attaque ceux qui pensaient vainement tenir sa laisse. Nous sommes trop proches de l’Entité et de son contrôle psychique étouffant. Ici, il ne tolérera aucune opposition.",,,,,,
+VICTORY_MISSION_FOR_THE_EYES_TITLE,Text,,Go for the eyes!,,Optez pour les yeux !,,,,,,
 VICTORY_MISSION_FOR_THE_EYES_TEXT,Text,,"<i>""This fragging thing won't die!""</i>
 
-Attack the Receptacle's eyes to stun it, so that your operatives can then complete the objective.",,,,,,,,
-KEY_INFESTATION_STORY_OUTRO_TITLE,Text,,Awakening,,,,,,,,
-KEY_INFESTATION_STORY_INTRO_TITLE,Text,,Search and Rescue,,,,,,,,
-KEY_INFESTATION_STORY0,Text,,reporting. We are at,,,,,,,,
-KEY_INFESTATION_STORY1,Text,,. Are you seeing this? The green shimmering…  I… I feel like I have been here before…,,,,,,,,
-KEY_INFESTATION_STORY2,Text,,snap out of it! We got a job to do. Scans show that there are survivors out there. Stay frosty and be ready for anything.,,,,,,,,
-KEY_INFESTATION_STORY3,Text,,out.,,,,,,,,
-KEY_INFESTATION_STORY4,Text,,"<i>”There were a few survivors here and there. The couple of soldiers who were lucky to get mindfragged during the initial attack; but also civilians, who were not fully taken by the creature. They came out of it, as if waking up from a nightmare. It was then that I understood what Alistair meant when he joked that we were waging a war for our place in the new food chain: the Pandorans didn’t want to exterminate us. That would have been too merciful. They wanted us for something else.”</i>",,,,,,,,
-KEY_INFESTATION_STORY5,Text,,", Phoenix Project.",,,,,,,,
+Attack the Receptacle's eyes to stun it, so that your operatives can then complete the objective.",,"<i>""Cette chose qui fragilise ne mourra pas !""</i>
+
+Attaquez les yeux du Réceptacle pour l'étourdir, afin que vos agents puissent ensuite atteindre l'objectif.",,,,,,
+KEY_INFESTATION_STORY_OUTRO_TITLE,Text,,Awakening,,Éveil,,,,,,
+KEY_INFESTATION_STORY_INTRO_TITLE,Text,,Search and Rescue,,Chercher et sauver,,,,,,
+KEY_INFESTATION_STORY0,Text,,reporting. We are at,,rapport. Nous sommes à,,,,,,
+KEY_INFESTATION_STORY1,Text,,. Are you seeing this? The green shimmering…  I… I feel like I have been here before…,,. Voyez-vous cela ? Le vert scintillant… Je… j'ai l'impression d'être déjà venu ici…,,,,,,
+KEY_INFESTATION_STORY2,Text,,snap out of it! We got a job to do. Scans show that there are survivors out there. Stay frosty and be ready for anything.,,reprendre ses esprits! Nous avons un travail à faire. Les scans montrent qu'il y a des survivants. Restez glacial et soyez prêt à tout.,,,,,,
+KEY_INFESTATION_STORY3,Text,,out.,,dehors.,,,,,,
+KEY_INFESTATION_STORY4,Text,,"<i>”There were a few survivors here and there. The couple of soldiers who were lucky to get mindfragged during the initial attack; but also civilians, who were not fully taken by the creature. They came out of it, as if waking up from a nightmare. It was then that I understood what Alistair meant when he joked that we were waging a war for our place in the new food chain: the Pandorans didn’t want to exterminate us. That would have been too merciful. They wanted us for something else.”</i>",,"<i>”Il y avait quelques survivants ici et là. Le couple de soldats qui ont eu la chance d’être fragilisés lors de l’attaque initiale ; mais aussi des civils, qui n'ont pas été totalement séduits par la créature. Ils en sont sortis, comme s’ils se réveillaient d’un cauchemar. C’est alors que j’ai compris ce qu’Alistair voulait dire lorsqu’il plaisantait en disant que nous menions une guerre pour notre place dans la nouvelle chaîne alimentaire : les Pandoriens ne voulaient pas nous exterminer. Cela aurait été trop miséricordieux. Ils nous voulaient pour autre chose. »</i>",,,,,,
+KEY_INFESTATION_STORY5,Text,,", Phoenix Project.",,", Projet Phénix.",,,,,,
 KEY_REVENANT_RESISTANCE_HINT,Text,,"Killing the Revenant will not remove this resistance from any Pandoran that already has it.
 
-Pandorans arriving as reinforcements will not receive the resistance.",,,,,,,,
-KEY_REVENANT_RESISTANCE_VO19_TITLE,Text,,Adaptive Resistance Void Omen,,,,,,,,
-KEY_REVENANT_RESISTANCE_TITLE,Text,,Revenant resistance,,,,,,,,
+Pandorans arriving as reinforcements will not receive the resistance.",,"Tuer le Revenant ne supprimera pas cette résistance d'un Pandoran qui la possède déjà.
+
+Les Pandorans arrivant en renfort ne recevront pas de résistance.",,,,,,
+KEY_REVENANT_RESISTANCE_VO19_TITLE,Text,,Adaptive Resistance Void Omen,,Présage du néant de résistance adaptative,,,,,,
+KEY_REVENANT_RESISTANCE_TITLE,Text,,Revenant resistance,,Résistance de Revenant,,,,,,
