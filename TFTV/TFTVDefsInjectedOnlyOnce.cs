@@ -7516,7 +7516,7 @@ namespace TFTV
                 {
 
                     CalvitixMoreSpace = 1;
-
+                    TFTVLogger.Always("Calvitix Adapt Mutag/Aspida Size, and +1 Slot in Aircrafts");
 
 
                     //TacCharacterDef Aspida = DefCache.GetDef<TacCharacterDef>("SY_Aspida_CharacterTemplateDef");

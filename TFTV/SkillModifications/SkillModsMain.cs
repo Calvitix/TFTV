@@ -92,6 +92,7 @@ namespace PRMBetterClasses.SkillModifications
                 if (TFTVMain.Main.Config.ApplyCalvitixChanges)
                 {
                     FacilityAdjustments.Apply();
+                    TFTVLogger.Always("Calvitix Adapt Squad Limit (16) Done");
                 }
             }
             catch (Exception e)
