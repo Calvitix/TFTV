@@ -6,48 +6,56 @@ can be found on Github at Voland163/TFTV
 Une Série de vidéo présentation Phoenix Point moddé avec Terror from the Void est disponible ici : 
 https://www.youtube.com/playlist?list=PLzBnKdp58-0IS9AY-n3kVx6fUNz53r-_B
 
-REQUIRES ALL DLC
+'Terror from the Void' est un mod de Conversion complète pour Phoenix Point. Si vous pensez à "Long War", vous avez raison.
 
-DO NOT USE BETTER ENEMIES OR BETTER VEHICLES AS BOTH ARE ALREADY INTEGRATED IN THE MOD.
+Cette version est un 'fork' pour la traduction française. 
+Tous les crédits pour ce mod sont pour la Phoenix Rising Team, et le mod original peut être trouvé sur Github à Voland163/TFTV
 
-This is an Open Beta/Early Access. Expect bugs and balance issues. More below.
+Une Série de vidéo présentation Phoenix Point moddé avec Terror from the Void est disponible ici : 
+https://www.youtube.com/playlist?list=PLzBnKdp58-0IS9AY-n3kVx6fUNz53r-_B
 
-Features
+NÉCESSITE TOUS LES DLC
 
-- Greatly enchances Lovecraft/Horror theme
-- Story rework, texts rewritten, new characters, new dialogue choices, new rewards
-- Oneiric Delirium is back
-- Dark Events (called Void Omens in the mod)
-- New threats, enemies, bosses and tactical modifiers
-- Complete Class overhaul and rebalance (Better Classes 2.0 are part of this mod)
-- Items, weapons and Skills rebalance (also part of Better Classes)
-- Major rework of almost every DLC
-- You can choose your starting team (see mod config)
-- Highly configurable. If you don't like something you can turn it off.
-- Legend Difficulty worthy of its name
+N'UTILISEZ PAS LES MOD 'BETTER ENNEMIS' OU 'BETTERS VÉHICULES' CAR ILS SONT DÉJÀ INTÉGRÉS DANS LE MOD.
 
-A lot of icons come from the most excellent https://game-icons.net/ Many thanks to the authors!
+Il s'agit d'un Open Beta/Early Access. Attendez-vous à des bugs et à des problèmes d'équilibre. Plus d'informations ci-dessous.
 
-Trailer: https://youtu.be/533Stk91HFY
-Presentation/Changelog TftV: https://drive.google.com/file/d/1OHhNJDZJe9hRcxnnDCIlSCLY9t5lwyvb/
-Presentation Better Classes: https://drive.google.com/file/d/19L8sXoFmxc2MsWlaHS_qMlxIQEpD5zmJ/
-TftV Discord Server: https://discord.gg/Ypt5p5trNx
-Wiki: http://wiki.phoenixpoint.com/Terror_from_the_Void
+Caractéristiques
 
-OPEN BETA
+- Améliore grandement le thème de Lovecraft/Horreur
+- Refonte de l'histoire, réécriture des textes, nouveaux personnages, nouveaux choix de dialogues, nouvelles récompenses.
+- Le délire onirique est de retour
+- Événements sombres (appelés Présages du Néant (Void Omens) dans le mod)
+- De Nouvelles menaces, nouveaux ennemis, nouveaux boss et nouveaux modificateurs tactiques
+- Révision complète des classes et rééquilibrage (Le Mod Better classes 2.0 fait partie de ce mod)
+- Rééquilibrage des objets, des armes et des compétences (faisant également partie de Better Classes)
+- Refonte majeure de presque tous les DLC
+- Vous pouvez choisir votre équipe de départ (voir configuration du mod)
+- Hautement configurable. Si vous n'aimez pas quelque chose, vous pouvez le désactiver.
+- Difficulté Légendaire digne de ce nom, et une version Etermes encore plus cauchemardesque
 
-The Beta is feature complete for version 1.0 of the development. But some features are still unfinished because we are not certain which direction to take them. As such we really need your feedback about everything.
+Beaucoup d'icônes proviennent des plus excellents https://game-icons.net/ Un grand merci aux auteurs !
 
-Take note, that this mod changes the game A LOT and we expect you to play one difficulty level below your preferred setting as you learn the ropes. If you play LEGEND do not complain the game is too difficult or unfair.
+Bande-annonce : https://youtu.be/533Stk91HFY
+Présentation/Changelog TftV : https://drive.google.com/file/d/1OHhNJDZJe9hRcxnnDCIlSCLY9t5lwyvb/
+Presentation Better Classes : https://drive.google.com/file/d/19L8sXoFmxc2MsWlaHS_qMlxIQEpD5zmJ/
+Serveur TftV Discord : https://discord.gg/Ypt5p5trNx
+Wiki : http://wiki.phoenixpoint.com/Terror_from_the_Void
 
-WARNING
+BETA OUVERTE
 
-TftV is NOT COMPATIBLE with any 3rd party mods that modify or meddle with: 
-- Skills and everything related to your soldier classes
-- UI, especially personel screen and geoscape objectives
-- Research
-- Aircraft cost, seats and everything related
-- DLCs (in any way)
-- Max # of augmentations 
+La bêta est complète pour la version 1.0 du développement. Mais certaines fonctionnalités sont encore inachevées car nous ne sommes pas certains de la direction à prendre. C'est pourquoi nous avons vraiment besoin de votre avis sur tout.
 
-TLDR: Any mods besides cosmetics are highly likely to cause problems.
+Notez que ce mod change BEAUCOUP le jeu et nous nous attendons à ce que vous jouiez à un niveau de difficulté inférieur à celui que vous préférez pendant que vous apprenez les ficelles du jeu. Si vous jouez à LEGEND, ne vous plaignez pas que le jeu est trop difficile ou injuste.
+
+ATTENTION
+
+TftV n'est PAS COMPATIBLE avec les mods de tierces parties qui modifient ou interfèrent avec : 
+- Les compétences et tout ce qui concerne vos classes de soldats
+- L'interface utilisateur, en particulier l'écran personnel et les objectifs du géopanorama
+- La recherche
+- Le coût des avions, les sièges et tout ce qui s'y rapporte
+- Les DLC (de quelque manière que ce soit)
+- Nombre maximum d'augmentations 
+
+TLDR : Tous les mods en dehors de ceux modifiant des aspects cosmétiques sont très susceptibles de causer des problèmes.
