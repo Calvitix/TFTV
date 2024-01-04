@@ -339,17 +339,17 @@
     <None Include="Assets\Localization\Vehicles.csv">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Assets\Localization\TFTV_AbilitiesEffectsStatusesTactical_Localization.csv" />
-    <None Include="Assets\Localization\TFTV_CharactersItemsFacilities_Localization.csv" />
-    <None Include="Assets\Localization\TFTV_Events_Localization.csv" />
-    <None Include="Assets\Localization\TFTV_GeoUIElements_Localization.csv" />
-    <None Include="Assets\Localization\TFTV_HintsGeo_Localization.csv" />
-    <None Include="Assets\Localization\TFTV_HintsTactical_Localization.csv" />
-    <None Include="Assets\Localization\TFTV_LoreAndTips_Localization.csv" />
-    <None Include="Assets\Localization\TFTV_MissionObjectives_Localization.csv" />
-    <None Include="Assets\Localization\TFTV_Options_Localization.csv" />
-    <None Include="Assets\Localization\TFTV_Research_Localization.csv" />
-    <None Include="Assets\Localization\TFTV_VoidOmensAndODI_Localization.csv" />
+    <None Include="Assets\Localization\TFTV_AbilitiesEffectsStatusesTactical_Localization.csv"> <CopyToOutputDirectory>Always</CopyToOutputDirectory></None>
+    <None Include="Assets\Localization\TFTV_CharactersItemsFacilities_Localization.csv"> <CopyToOutputDirectory>Always</CopyToOutputDirectory></None>
+    <None Include="Assets\Localization\TFTV_Events_Localization.csv"> <CopyToOutputDirectory>Always</CopyToOutputDirectory></None>
+    <None Include="Assets\Localization\TFTV_GeoUIElements_Localization.csv"> <CopyToOutputDirectory>Always</CopyToOutputDirectory></None>
+    <None Include="Assets\Localization\TFTV_HintsGeo_Localization.csv"> <CopyToOutputDirectory>Always</CopyToOutputDirectory></None>
+    <None Include="Assets\Localization\TFTV_HintsTactical_Localization.csv"> <CopyToOutputDirectory>Always</CopyToOutputDirectory></None>
+    <None Include="Assets\Localization\TFTV_LoreAndTips_Localization.csv"> <CopyToOutputDirectory>Always</CopyToOutputDirectory></None>
+    <None Include="Assets\Localization\TFTV_MissionObjectives_Localization.csv"> <CopyToOutputDirectory>Always</CopyToOutputDirectory></None>
+    <None Include="Assets\Localization\TFTV_Options_Localization.csv"> <CopyToOutputDirectory>Always</CopyToOutputDirectory></None>
+    <None Include="Assets\Localization\TFTV_Research_Localization.csv"> <CopyToOutputDirectory>Always</CopyToOutputDirectory></None>
+    <None Include="Assets\Localization\TFTV_VoidOmensAndODI_Localization.csv"> <CopyToOutputDirectory>Always</CopyToOutputDirectory></None>
     <!-- <None Include="Assets\Localization\Vehicles.csv" /> -->
     <None Include="Assets\Presets\AbilityDefToNameDict.json" />
     <None Include="Assets\Presets\NotLocalizedTextMap.json" />

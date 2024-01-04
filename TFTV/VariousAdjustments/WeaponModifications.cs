@@ -26,21 +26,28 @@ namespace PRMBetterClasses.VariousAdjustments
 
         public static void ApplyChanges()
         {
-            // Change Archangel RL to activate blast radius
-            Change_Archangel();
-            Change_Hera();
-            Change_KaosWeapons();
-            Change_Ragnarok();
-            Change_Iconoclast();
-            Change_NergalsWrath();
-          //  Change_Crossbows();
-            Change_PriestWeapons();
             if (TFTVMain.Main.Config.ApplyCalvitixChanges)
-
             {
-            
-	            Change_Phoenix_Autocanon();
-	     	}
+                TFTVLogger.Always("Apply Calvitix Changes for Weapons...");
+                Change_Phoenix_Autocanon();
+            }
+            // Change Archangel RL to activate blast radius
+            TFTVLogger.Always("Apply Archangel Changes...");
+            Change_Archangel();
+            TFTVLogger.Always("Apply Hera Changes...");
+            Change_Hera();
+            TFTVLogger.Always("Apply Archangel Changes...");
+            Change_KaosWeapons();
+            TFTVLogger.Always("Apply Ragnarok Changes...");
+            Change_Ragnarok();
+            TFTVLogger.Always("Apply Iconoclast Changes...");
+            Change_Iconoclast();
+            TFTVLogger.Always("Apply NergalsWrath Changes...");
+            Change_NergalsWrath();
+            TFTVLogger.Always("Apply Crossbows Changes...");
+            Change_Crossbows();
+            TFTVLogger.Always("Apply PriestWeapons Changes...");
+            Change_PriestWeapons();
         }
 
         /// <summary>
@@ -141,7 +148,7 @@ namespace PRMBetterClasses.VariousAdjustments
                 }
                 catch (Exception e)
                 {
-                    PRMLogger.Error(e);
+                    TFTVLogger.Error(e);
                     return true;
                 }
             }
@@ -493,7 +500,7 @@ namespace PRMBetterClasses.VariousAdjustments
                     "SY_Venombolt_AmmoClip_ItemDef"
 
 
-         };
+                };
 
                 foreach (String PX_AmmoStr in PX_ammoList)
                 {
@@ -504,7 +511,7 @@ namespace PRMBetterClasses.VariousAdjustments
 
                     PX_Ammo.ManufactureMaterials = (Single)Math.Max(1,(Math.Round(PX_Ammo.ManufactureMaterials / multipleCostMaterial, 0)));
                     PX_Ammo.ManufactureTech = (Single)Math.Max(0,(Math.Round(PX_Ammo.ManufactureTech / multipleCostTech,0)));
-                    TFTVLogger.Debug("Calvitix_Change all done...");
+                    //TFTVLogger.Always("Calvitix_Changing ammo ... Item " + PX_AmmoStr.ToString());
 
 
                 }
@@ -513,7 +520,7 @@ namespace PRMBetterClasses.VariousAdjustments
 
 
 
-                TFTVLogger.Debug("Calvitix_Change all done...");
+                TFTVLogger.Always("Calvitix_Change all done...");
             }
 
         }

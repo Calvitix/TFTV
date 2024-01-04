@@ -14,8 +14,8 @@ namespace PRMBetterClasses.VariousAdjustments
 {
     internal class VariousAdjustmentsMain
     {
-        private static readonly DefRepository Repo = TFTVMain.Repo;
-        private static readonly DefCache DefCache = TFTVMain.Main.DefCache;
+        private static DefRepository Repo = TFTVMain.Repo;
+        private static DefCache DefCache = TFTVMain.Main.DefCache;
 
         public static void ApplyChanges()
         {
@@ -23,24 +23,22 @@ namespace PRMBetterClasses.VariousAdjustments
             {
                 // Changes coding down from here
                 VariousAdjustments.ApplyChanges();
-
-                WeaponModifications.ApplyChanges();
-
-                // Marketplace settings
-                // All prices set to multiplier 1
-                //TheMarketplaceSettingsDef marketplaceSettings = Repo.GetAllDefs<TheMarketplaceSettingsDef>().FirstOrDefault(msd => msd.name.Equals("TheMarketplaceSettingsDef"));
-                //for (int i = 0; i < marketplaceSettings.TheMarketplaceItemPriceMultipliers.Length; i++)
-                //{
-                //    marketplaceSettings.TheMarketplaceItemPriceMultipliers[i].PriceMultiplier = 1;
-                //}
-                //// Change KE Buggy price
-                //GeoMarketplaceItemOptionDef geoMarketplaceBuggy = Repo.GetAllDefs<GeoMarketplaceItemOptionDef>().FirstOrDefault(mio => mio.name.Equals(""));
-                //geoMarketplaceBuggy.MinPrice = 600;
-                //geoMarketplaceBuggy.MaxPrice = 700;
             }
             catch (Exception e)
             {
-                PRMLogger.Error(e);
+                TFTVLogger.Error(e);
+            }
+            try
+            {
+                // Changes coding down from here
+                //VariousAdjustments.ApplyChanges();
+
+                WeaponModifications.ApplyChanges();
+
+            }
+            catch (Exception e)
+            {
+                TFTVLogger.Error(e);
             }
         }
 

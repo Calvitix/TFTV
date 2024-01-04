@@ -1427,12 +1427,13 @@ namespace TFTV
                     {
                         TFTVLogger.Always($"Base defense mission: setting max deployment to 9");
                         __result = 9;
+                        if (TFTVMain.Main.Config.ApplyCalvitixChanges)
+                        {
+
+                            __result += 8; //Calvitix added
+                        }
+
                     }
-						if (TFTVMain.Main.Config.ApplyCalvitixChanges)
-		                {
-		
-		                    __result += 8; //Calvitix added
-		            	}                    
                 }
 
                 catch (Exception e)

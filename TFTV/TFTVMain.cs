@@ -109,21 +109,21 @@ namespace TFTV
                 //This creates the Void Omen events
 
                 //BC stuff
-                Logger.LogInfo("BC stuff loading");
+                TFTVLogger.Always("BC stuff loading");
                 //  BCApplyInGameConfig();
                 BCApplyDefChanges();
-                Logger.LogInfo("BC stuff loaded");
+                TFTVLogger.Always("BC stuff loaded");
                 //TFTV 
-                Logger.LogInfo("TFTV stuff loading");
+                TFTVLogger.Always("TFTV stuff loading");
                 TFTVDefsInjectedOnlyOnce.InjectDefsInjectedOnlyOnceBatch1();
-                Logger.LogInfo("First batch of Defs injected");
+                TFTVLogger.Always("First batch of Defs injected");
                 TFTVDefsRequiringReinjection.InjectDefsInjectedOnlyOnceBatch2();
                 Logger.LogInfo("Second batch of Defs injected");
 
                 TFTVHumanEnemiesNames.CreateNamesDictionary();
-                Logger.LogInfo("Names for human enemies created");
+                TFTVLogger.Always("Names for human enemies created");
                 TFTVHumanEnemiesNames.CreateRanksDictionary();
-                Logger.LogInfo("Ranks for human enemies created");
+                TFTVLogger.Always("Ranks for human enemies created");
                 TFTVHumanEnemiesNames.CreateTierDescriptions();
                 TFTVAAAgendaTracker.ExtendedAgendaTracker.LocalizeExtendedAgendaUI();
 
@@ -389,6 +389,7 @@ namespace TFTV
             //}
 
             // Apply various adjustments
+
             VariousAdjustmentsMain.ApplyChanges();
         }
 

@@ -8322,6 +8322,8 @@ namespace TFTV
                     ResearchDef PX_ProjectGlory = DefCache.GetDef<ResearchDef>("PX_ProjectGlory_ResearchDef");
                     PX_ProjectGlory.ResearchCost = 700;
 
+                    TFTVLogger.Always("Apply Calvitix Changes for buildings...");
+
                     ////Calvitix Other Changes : Material and Tech x2 for Buildings 
                     float multipleCostMaterial = 2f;
                     float multipleCostTech = 1.4f;
