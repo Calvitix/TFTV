@@ -84,7 +84,7 @@ namespace TFTV
                 /// PhoenixGame is accessible at any time.
                 PhoenixGame game = GetGame();
 
-                string version = $"TFTV 29 Décembre 2023 release #1 FR (Update #47) v{MetaData.Version}";
+                string version = $"TFTV 20240104 release #1 (Hotfix 1 for Update #48) v{MetaData.Version}";
 
                 TFTVversion = version;
 
@@ -109,21 +109,21 @@ namespace TFTV
                 //This creates the Void Omen events
 
                 //BC stuff
-                TFTVLogger.Always("BC stuff loading");
+                Logger.LogInfo("BC stuff loading");
                 //  BCApplyInGameConfig();
                 BCApplyDefChanges();
-                TFTVLogger.Always("BC stuff loaded");
+                Logger.LogInfo("BC stuff loaded");
                 //TFTV 
-                TFTVLogger.Always("TFTV stuff loading");
+                Logger.LogInfo("TFTV stuff loading");
                 TFTVDefsInjectedOnlyOnce.InjectDefsInjectedOnlyOnceBatch1();
-                TFTVLogger.Always("First batch of Defs injected");
+                Logger.LogInfo("First batch of Defs injected");
                 TFTVDefsRequiringReinjection.InjectDefsInjectedOnlyOnceBatch2();
                 Logger.LogInfo("Second batch of Defs injected");
 
                 TFTVHumanEnemiesNames.CreateNamesDictionary();
-                TFTVLogger.Always("Names for human enemies created");
+                Logger.LogInfo("Names for human enemies created");
                 TFTVHumanEnemiesNames.CreateRanksDictionary();
-                TFTVLogger.Always("Ranks for human enemies created");
+                Logger.LogInfo("Ranks for human enemies created");
                 TFTVHumanEnemiesNames.CreateTierDescriptions();
                 TFTVAAAgendaTracker.ExtendedAgendaTracker.LocalizeExtendedAgendaUI();
 
@@ -133,7 +133,7 @@ namespace TFTV
 
 
                 TFTVRevenantResearch.CreateRevenantRewardsDefs();
-                TFTVProjectOsiris.CreateProjectOsirisDefs();
+                TFTVProjectOsiris.Defs.CreateProjectOsirisDefs();
 
                 //  TFTVAncients.CheckResearchesRequiringThings();
 
@@ -389,7 +389,6 @@ namespace TFTV
             //}
 
             // Apply various adjustments
-
             VariousAdjustmentsMain.ApplyChanges();
         }
 

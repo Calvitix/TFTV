@@ -1,5 +1,6 @@
 using Base.Serialization.General;
 using PhoenixPoint.Geoscape.Entities;
+using PhoenixPoint.Geoscape.Entities.Research;
 using PhoenixPoint.Geoscape.Levels;
 using PhoenixPoint.Modding;
 using System;
@@ -50,8 +51,10 @@ namespace TFTV
         public bool ImpossibleWeaponsAdjustmentsSettingInstance;
         public bool NoSecondChances;
 
-        public bool Update35GeoscapeCheck;
+       // public bool Update35GeoscapeCheck;
 
+        public List<int> PU_Hotspots;
+        public List<int> FO_Hotspots;
     }
 
 
@@ -109,8 +112,15 @@ namespace TFTV
             TFTVPassengerModules.ImplementFarMConfig(Controller);
           //  TFTVNewGameOptions.Change_Crossbows();
             TFTVBetaSaveGamesFixes.RemoveBadSlug(Controller);
+           // TFTVAmbushes.GetAllPureAndForsakenHotspots(Controller);
+           
+         /*   foreach(ResearchElement element in Controller.PhoenixFaction.Research.FactionResearches) 
+            {
+                TFTVLogger.Always($"{element.ResearchID}");
+            }*/
             
-           // TFTVBetaSaveGamesFixes.SpecialFixForNarvi();
+            // TFTVDefsInjectedOnlyOnce.Print();
+         //  TFTVBetaSaveGamesFixes.SpecialFixForNarvi();
         }
         /// <summary>
         /// Called when Geoscape ends.
@@ -184,6 +194,8 @@ namespace TFTV
                 StrongerPandoransSettingInstance = TFTVNewGameOptions.StrongerPandoransSetting,
                 ImpossibleWeaponsAdjustmentsSettingInstance = TFTVNewGameOptions.ImpossibleWeaponsAdjustmentsSetting,
                 NoSecondChances = TFTVNewGameOptions.NoSecondChances,
+                PU_Hotspots = TFTVAmbushes.NJ_Purists_Hotspots,
+                FO_Hotspots = TFTVAmbushes.AN_FallenOnes_Hotspots,
              //   Update35GeoscapeCheck = TFTVNewGameOptions.Update35Check,
 
             };
@@ -226,6 +238,8 @@ namespace TFTV
                 TFTVCapturePandoransGeoscape.PandasForFoodProcessing = data.SuppliesFromProcessedPandas;
                 TFTVCapturePandoransGeoscape.ToxinsInCirculation = data.ToxinsInFood;
                 TFTVNewGameOptions.ConfigImplemented = data.NewConfigUsedInstance;
+                TFTVAmbushes.AN_FallenOnes_Hotspots = data.FO_Hotspots;
+                TFTVAmbushes.NJ_Purists_Hotspots = data.PU_Hotspots;
 
                 TFTVLogger.Always($"ConfigImplemented? {TFTVNewGameOptions.ConfigImplemented}");
 
@@ -257,7 +271,7 @@ namespace TFTV
 
                 TFTVDefsWithConfigDependency.ImplementConfigChoices();
 
-                TFTVNewGameOptions.Update35Check = data.Update35GeoscapeCheck;
+               // TFTVNewGameOptions.Update35Check = data.Update35GeoscapeCheck;
 
                 //  Main.Logger.LogInfo("UmbraEvolution variable is " + Controller.EventSystem.GetVariable(TFTVUmbra.TBTVVariableName));
                 Main.Logger.LogInfo("# Characters with broken limbs: " + TFTVStamina.charactersWithDisabledBodyParts.Count);
@@ -302,6 +316,8 @@ namespace TFTV
                 TFTVLogger.Always($"Toxins in food {TFTVCapturePandoransGeoscape.ToxinsInCirculation}");
                 TFTVLogger.Always($"Scylla count {TFTVPandoranProgress.ScyllaCount}");
                 TFTVLogger.Always($"Internal difficulty check {TFTVNewGameOptions.InternalDifficultyCheck}");
+              //  TFTVLogger.Always($"Pure hotspots count {TFTVAmbushes.NJ_Purists_Hotspots.Count()>0}");
+              //  TFTVLogger.Always($"Forsaken hotspots count {TFTVAmbushes.AN_FallenOnes_Hotspots.Count()>0}");
             }
             catch (Exception e)
             {
