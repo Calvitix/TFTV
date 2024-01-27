@@ -1,14 +1,16 @@
 ﻿using Base;
 using Base.Core;
-using Base.Defs;
 using Base.Entities.Statuses;
 using Base.Levels;
 using Base.UI;
+using Base.UI.MessageBox;
 using Base.UI.VideoPlayback;
+using Code.PhoenixPoint.Tactical.Entities.Equipments;
 using HarmonyLib;
 using PhoenixPoint.Common.Core;
 using PhoenixPoint.Common.Entities;
 using PhoenixPoint.Common.Entities.Characters;
+using PhoenixPoint.Common.Entities.Equipments;
 using PhoenixPoint.Common.Entities.GameTags;
 using PhoenixPoint.Common.Entities.GameTagsTypes;
 using PhoenixPoint.Common.Entities.Items;
@@ -18,6 +20,7 @@ using PhoenixPoint.Common.View.ViewControllers;
 using PhoenixPoint.Common.View.ViewControllers.Inventory;
 using PhoenixPoint.Common.View.ViewModules;
 using PhoenixPoint.Geoscape.Entities;
+using PhoenixPoint.Geoscape.Entities.Interception.Equipments;
 using PhoenixPoint.Geoscape.Levels;
 using PhoenixPoint.Geoscape.Levels.Factions;
 using PhoenixPoint.Geoscape.View.DataObjects;
@@ -33,6 +36,7 @@ using PhoenixPoint.Tactical.Entities.Abilities;
 using PhoenixPoint.Tactical.Entities.DamageKeywords;
 using PhoenixPoint.Tactical.Entities.Effects.DamageTypes;
 using PhoenixPoint.Tactical.Entities.Equipments;
+using PhoenixPoint.Tactical.Levels.Mist;
 using PhoenixPoint.Tactical.View.ViewControllers;
 using PhoenixPoint.Tactical.View.ViewStates;
 using System;
@@ -41,7 +45,7 @@ using System.Linq;
 using System.Reflection;
 using UnityEngine;
 using UnityEngine.UI;
-using static PhoenixPoint.Common.Entities.Addons.AddonDef;
+using static PhoenixPoint.Tactical.View.ViewControllers.SoldierResultElement;
 
 namespace TFTV
 {
@@ -56,6 +60,84 @@ namespace TFTV
         internal static Color dark = new Color(52, 52, 61, 1.0f);
 
         public static bool HelmetsOff;
+
+        [HarmonyPatch(typeof(SoldierResultElement), "SetStatus", new Type[] { typeof(SoldierStatus), typeof(object[]) })]
+        public static class SoldierResultElement_SetStatus_patch
+        {
+
+            public static void Postfix(SoldierResultElement __instance)
+            {
+                try
+                {
+                    if (TFTVStamina.charactersWithDisabledBodyParts.ContainsKey(__instance.Actor.GeoUnitId))
+                    {
+                        string badlyInjuredText = TFTVCommonMethods.ConvertKeyToString("KEY_BADLY_INJURED_OPERATIVE");
+
+                        __instance.Status.text = badlyInjuredText;
+                    }
+                }
+                catch (Exception e)
+                {
+                    TFTVLogger.Error(e);
+                    throw;
+                }
+            }
+        }
+
+
+        [HarmonyPatch(typeof(UIItemTooltip), "SetTacItemStats")]
+        public static class UIItemTooltip_SetTacItemStats_patch
+        {
+
+            public static void Postfix(UIItemTooltip __instance, TacticalItemDef tacItemDef, bool secondObject, int subItemIndex = -1)
+            {
+                try
+                {
+                    if (tacItemDef == null)
+                    {
+                        return;
+                    }
+
+                    if (tacItemDef is GroundVehicleModuleDef || tacItemDef is ItemDef itemDef &&
+                        (itemDef is GeoVehicleEquipmentDef || itemDef is VehicleItemDef || itemDef is GroundVehicleWeaponDef))
+                    {
+                        //TFTVLogger.Always($"{tacItemDef.name}");
+                        return;
+
+                    }
+
+                    //  TFTVLogger.Always($"is not GroundVehicleModuleDef or GeoVehicleEquipmentDef");
+
+                    BodyPartAspectDef bodyPartAspectDef = tacItemDef.BodyPartAspectDef;
+                    if (bodyPartAspectDef != null)
+                    {
+                        if (bodyPartAspectDef.Endurance > 0)
+                        {
+                            MethodInfo methodInfo = typeof(UIItemTooltip).GetMethod("SetStat", BindingFlags.NonPublic | BindingFlags.Instance);
+                            object[] parameters = { new LocalizedTextBind("KEY_PROGRESSION_STRENGTH"), secondObject, UIUtil.StatsWithSign(bodyPartAspectDef.Endurance), bodyPartAspectDef.Endurance, null, subItemIndex };
+
+                            methodInfo.Invoke(__instance, parameters);
+                        }
+
+                        if (bodyPartAspectDef.WillPower > 0)
+                        {
+                            MethodInfo methodInfo = typeof(UIItemTooltip).GetMethod("SetStat", BindingFlags.NonPublic | BindingFlags.Instance);
+                            object[] parameters = { new LocalizedTextBind("KEY_PROGRESSION_WILLPOWER"), secondObject, UIUtil.StatsWithSign(bodyPartAspectDef.WillPower), bodyPartAspectDef.WillPower, null, subItemIndex };
+
+                            methodInfo.Invoke(__instance, parameters);
+                        }
+                    }
+
+                }
+                catch (Exception e)
+                {
+                    TFTVLogger.Error(e);
+                    throw;
+                }
+            }
+        }
+
+
         internal class EditScreen
         {
             internal class Stats
@@ -298,17 +380,57 @@ namespace TFTV
                                         __result = $"{currentAttributeValue} / {____character.Progression.GetMaxBaseStat(attribute)}";
                                     }
                                 }
-
-
-
                             }
-
                         }
                         catch (Exception e)
                         {
                             TFTVLogger.Error(e);
                         }
 
+                    }
+                }
+
+               
+
+                [HarmonyPatch(typeof(UIModuleSoldierEquip), "GetPrimaryWeight")]
+                internal static class TFTV_UIModuleSoldierEquip_GetPrimaryWeight_Patch
+                {
+
+                    private static void Postfix(UIModuleSoldierEquip __instance, ref int __result)
+                    {
+                        try
+                        {
+                            if (GameUtl.CurrentLevel().GetComponent<GeoLevelController>() != null)
+                            {
+                                UIModuleCharacterProgression uIModuleCharacterProgression = GameUtl.CurrentLevel().GetComponent<GeoLevelController>().View.GeoscapeModules.CharacterProgressionModule;
+
+                                FieldInfo characterField = typeof(UIModuleCharacterProgression).GetField("_character", BindingFlags.NonPublic | BindingFlags.Instance);
+
+                                if (characterField.GetValue(uIModuleCharacterProgression) is GeoCharacter geoCharacter && !__instance.IsVehicle && !geoCharacter.TemplateDef.IsMutog && uIModuleCharacterProgression != null)
+                                {
+                                   
+
+                                    int weightOfAugmentations = 0;
+
+                                    foreach (GeoItem armorpiece in geoCharacter.ArmourItems)
+                                    {
+                                        if (armorpiece.ItemDef.Tags.Contains(Shared.SharedGameTags.AnuMutationTag) || armorpiece.ItemDef.Tags.Contains(Shared.SharedGameTags.BionicalTag))
+                                        {
+                                            weightOfAugmentations += armorpiece.ItemDef.Weight;
+
+                                        }
+                                    }
+                                   
+                                    __result -= weightOfAugmentations;
+                                    
+                                }
+                            }
+                        }
+
+                        catch (Exception e)
+                        {
+                            TFTVLogger.Error(e);
+                        }
                     }
                 }
 
@@ -343,7 +465,7 @@ namespace TFTV
                                         if (!(tacticalItemDef == null) && !(tacticalItemDef.BodyPartAspectDef == null))
                                         {
                                             bonusStrength += tacticalItemDef.BodyPartAspectDef.Endurance;
-                                        }
+                                        }                                       
                                     }
 
                                     if (geoCharacter.Progression != null)
@@ -399,7 +521,6 @@ namespace TFTV
 
                                     maxWeight += (int)(bonusStrength * bonusToCarry);
 
-
                                     uIModuleCharacterProgression?.StatChanged();//   hookToProgressionModule.StatChanged();
                                                                                 //   hookToProgressionModule.RefreshStats();
 
@@ -445,6 +566,11 @@ namespace TFTV
 
 
             }
+
+           // PhoenixPoint.Geoscape.View.ViewStates.UIStateEditSoldier.SoldierSlotItemChangedHandler(PhoenixPoint.Common.View.ViewControllers.Inventory.UIInventorySlot slot)
+
+          //  PhoenixPoint.Common.View.ViewControllers.Inventory.UIInventorySlotSideButton.OnSideButtonPressed
+
 
             internal class LoadoutsAndHelmetToggle
             {
@@ -715,7 +841,7 @@ namespace TFTV
 
                                     if (item != null && uIModuleSoldierEquip.ArmorList.CanAddItem(item, uIModuleSoldierEquip.ArmorList.Slots[x]))
                                     {
-                                      //  TFTVLogger.Always($"found slot {uIModuleSoldierEquip.ArmorList.Slots[x].name} for armor item {item}");
+                                        //  TFTVLogger.Always($"found slot {uIModuleSoldierEquip.ArmorList.Slots[x].name} for armor item {item}");
                                         uIModuleSoldierEquip.ArmorList.AddItem(item.GetSingleItem(), uIModuleSoldierEquip.ArmorList.Slots[x], storage);
 
                                         storage.RemoveItem(item.GetSingleItem(), null);
@@ -879,7 +1005,7 @@ namespace TFTV
                                         {
                                             if (geoItem.ItemDef.RequiredSlotBinds[0].IsCompatibleWith(bionic.ItemDef))
                                             {
-                                               // TFTVLogger.Always($"{geoItem.ItemDef} can go on {bionic.ItemDef}");
+                                                // TFTVLogger.Always($"{geoItem.ItemDef} can go on {bionic.ItemDef}");
                                                 attachments.Add(geoItem);
 
                                             }
@@ -896,33 +1022,47 @@ namespace TFTV
                                                                                                                       //  Where(a => !a.ItemDef.RequiredSlotBinds[0].RequiredSlot.name.Contains("MechArm"))
                                     );
 
-                                    equipmentItems.AddRange(character.EquipmentItems);
-                                    inventoryItems.AddRange(character.InventoryItems);
+                                equipmentItems.AddRange(character.EquipmentItems);
+                                inventoryItems.AddRange(character.InventoryItems);
 
-                                    armorItems.AddRange(attachments);
+                                armorItems.AddRange(attachments);
 
-                                    foreach (GeoItem item in inventoryItems)
-                                    {
-                                        // TFTVLogger.Always($"{item.ItemDef.name} in Inventory");
-                                        uIModuleSoldierEquip.StorageList.AddItem(item);
-                                        uIModuleSoldierEquip.InventoryList.RemoveItem(item, null);
-                                    }
+                                GeoPhoenixFaction phoenixFaction = GameUtl.CurrentLevel().GetComponent<GeoLevelController>().PhoenixFaction;
 
-                                    foreach (GeoItem item in equipmentItems)
-                                    {
-                                        // TFTVLogger.Always($"{item.ItemDef.name} in Equipment");
-                                        uIModuleSoldierEquip.StorageList.AddItem(item);
-                                        uIModuleSoldierEquip.ReadyList.RemoveItem(item, null);
-                                    }
+                                int storageCapacity = phoenixFaction.GetTotalAvailableStorage();
+                                int storageUsed = phoenixFaction.ItemStorage.GetStorageUsed();
 
-                                    foreach (GeoItem item in armorItems)
-                                    {
-                                      //  TFTVLogger.Always($"{item.ItemDef.name} in Armor. {item.ItemDef?.RequiredSlotBinds[0].RequiredSlot?.name}");
-                                        uIModuleSoldierEquip.StorageList.AddItem(item);
-                                        uIModuleSoldierEquip.ArmorList.RemoveItem(item, null);
-                                    }
+                                if (equipmentItems.Count + inventoryItems.Count + armorItems.Count + storageUsed > storageCapacity)
+                                {
+                                    string warning = TFTVCommonMethods.ConvertKeyToString("KEY_WARNING_STORAGE_EXCEEDED");
+
+                                    GameUtl.GetMessageBox().ShowSimplePrompt(warning, MessageBoxIcon.Stop, MessageBoxButtons.OK, null);
+                                    return;
+                                }
+
+
+                                foreach (GeoItem item in inventoryItems)
+                                {
+                                    // TFTVLogger.Always($"{item.ItemDef.name} in Inventory");
+                                    uIModuleSoldierEquip.StorageList.AddItem(item);
+                                    uIModuleSoldierEquip.InventoryList.RemoveItem(item, null);
+                                }
+
+                                foreach (GeoItem item in equipmentItems)
+                                {
+                                    // TFTVLogger.Always($"{item.ItemDef.name} in Equipment");
+                                    uIModuleSoldierEquip.StorageList.AddItem(item);
+                                    uIModuleSoldierEquip.ReadyList.RemoveItem(item, null);
+                                }
+
+                                foreach (GeoItem item in armorItems)
+                                {
+                                    //  TFTVLogger.Always($"{item.ItemDef.name} in Armor. {item.ItemDef?.RequiredSlotBinds[0].RequiredSlot?.name}");
+                                    uIModuleSoldierEquip.StorageList.AddItem(item);
+                                    uIModuleSoldierEquip.ArmorList.RemoveItem(item, null);
                                 }
                             }
+                        }
                         catch (Exception e)
                         {
                             TFTVLogger.Error(e);
@@ -1895,7 +2035,7 @@ namespace TFTV
 
                         try
                         {
-                          //  TFTVLogger.Always($"Skip Movies check passed");
+                            //  TFTVLogger.Always($"Skip Movies check passed");
 
                             if (____sourcePlaybackDef == null)
                             {
@@ -1903,7 +2043,7 @@ namespace TFTV
                             }
                             if (____sourcePlaybackDef.ResourcePath.Contains("LandingSequences"))
                             {
-                               // TFTVLogger.Always($"LandingSequence getting canceled");
+                                // TFTVLogger.Always($"LandingSequence getting canceled");
                                 typeof(UIStateTacticalCutscene).GetMethod("OnCancel", BindingFlags.NonPublic | BindingFlags.Instance)?.Invoke(__instance, null);
                             }
                         }

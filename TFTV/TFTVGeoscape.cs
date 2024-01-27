@@ -112,9 +112,10 @@ namespace TFTV
             TFTVPassengerModules.ImplementFarMConfig(Controller);
           //  TFTVNewGameOptions.Change_Crossbows();
             TFTVBetaSaveGamesFixes.RemoveBadSlug(Controller);
+           // TFTVDefsInjectedOnlyOnce.Print();
            // TFTVAmbushes.GetAllPureAndForsakenHotspots(Controller);
            
-         /*   foreach(ResearchElement element in Controller.PhoenixFaction.Research.FactionResearches) 
+       /*  foreach(ResearchElement element in Controller.NewJerichoFaction.Research.Researchable) 
             {
                 TFTVLogger.Always($"{element.ResearchID}");
             }*/
@@ -316,6 +317,7 @@ namespace TFTV
                 TFTVLogger.Always($"Toxins in food {TFTVCapturePandoransGeoscape.ToxinsInCirculation}");
                 TFTVLogger.Always($"Scylla count {TFTVPandoranProgress.ScyllaCount}");
                 TFTVLogger.Always($"Internal difficulty check {TFTVNewGameOptions.InternalDifficultyCheck}");
+
               //  TFTVLogger.Always($"Pure hotspots count {TFTVAmbushes.NJ_Purists_Hotspots.Count()>0}");
               //  TFTVLogger.Always($"Forsaken hotspots count {TFTVAmbushes.AN_FallenOnes_Hotspots.Count()>0}");
             }

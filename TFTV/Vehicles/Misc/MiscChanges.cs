@@ -7,6 +7,8 @@ using PhoenixPoint.Tactical.Entities.Abilities;
 using PhoenixPoint.Tactical.Entities.Statuses;
 using PhoenixPoint.Tactical.Entities;
 using UnityEngine;
+using PhoenixPoint.Common.Entities.Equipments;
+using Code.PhoenixPoint.Tactical.Entities.Equipments;
 
 namespace TFTVVehicleRework.Misc
 {
@@ -19,6 +21,7 @@ namespace TFTVVehicleRework.Misc
             Change_VehicleInventory();
             Give_VehiclesTrample();
             Update_LaunchMissileInfo();
+            Prevent_CrateDrops();
             MarketplaceOptions.Remove_Options();
             RescueMissions.GenerateMissions();
             RescueMissions.Fix_BuggyDeploymentTemplate();
@@ -43,6 +46,20 @@ namespace TFTVVehicleRework.Misc
             // "E_ViewElement [LaunchMissiles_ShootAbilityDef]"
             TacticalAbilityViewElementDef LaunchMissilesVED = (TacticalAbilityViewElementDef)Repo.GetDef("72e07065-825f-b011-db35-30e4ec7e5a31");
             LaunchMissilesVED.Description = new LocalizedTextBind("UI_LAUNCHMISSILES_DESC");
+        }
+
+        private static void Prevent_CrateDrops()
+        {
+            foreach(GroundVehicleModuleDef ModuleDef in Repo.GetAllDefs<GroundVehicleModuleDef>())
+            {
+                ModuleDef.CrateSpawnWeight = 0;
+                ModuleDef.DropOnActorDeath = false;
+            }
+            foreach(GroundVehicleWeaponDef WeaponDef in Repo.GetAllDefs<GroundVehicleWeaponDef>())
+            {
+                WeaponDef.CrateSpawnWeight = 0;
+                WeaponDef.DropOnActorDeath = false;
+            }            
         }
 
         // All Vehicles now have the Caterpillar Tracks Utility
@@ -81,9 +98,27 @@ namespace TFTVVehicleRework.Misc
             TacticalDemolitionComponentDef ArmadilloDemoComponentDef = (TacticalDemolitionComponentDef)Repo.GetDef("ca58e419-1c40-fba4-2922-b03e787f96c9");
             ArmadilloDemoComponentDef.RectangleSize = new Vector3
             {
-                x = 2.5f,
-                y = 2.6f,
-                z = 2.9f,
+                x = 2.0f, //x=2.5f,
+                y = 2.6f, //y=2f
+                z = 2.5f, //z=2.8
+            };
+
+            //"PX_Scarab_DemolitionComponentDef"
+            TacticalDemolitionComponentDef ScarabDemoComponentDef = (TacticalDemolitionComponentDef)Repo.GetDef("93e5171b-8c61-c734-baa5-b534310c569c");
+            ScarabDemoComponentDef.RectangleSize = new Vector3
+            {
+                x = 2.0f, //x=2.2
+                y = 2.6f, //y=3.0
+                z = 2.5f, //z=2.8
+            };
+
+            //"KS_Kaos_Buggy_DemolitionComponentDef"
+            TacticalDemolitionComponentDef JunkerDemoComponentDef = (TacticalDemolitionComponentDef)Repo.GetDef("79e29d11-331b-9b34-0ab7-1ad8de2cba26");
+            JunkerDemoComponentDef.RectangleSize = new Vector3
+            {
+                x = 2.0f, //x=2.5,
+                y = 1.5f, 
+                z = 2.5f, //x=2.8
             };
 
             //"SY_Aspida_DemolitionComponentDef"

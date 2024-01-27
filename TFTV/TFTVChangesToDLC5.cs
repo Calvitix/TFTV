@@ -266,14 +266,8 @@ namespace TFTV
                         doomHelmet.BodyPartAspectDef.Perception = 0.0f;
 
                         doomTorso.BodyPartAspectDef.Accuracy = -0.04f;
-
                         doomLegs.BodyPartAspectDef.Speed = 0.0f;
-                        doomLegs.BodyPartAspectDef.Accuracy = -0.04f;
-
-                        foreach (TacticalItemDef doomArmorPiece in sectarianArmor)
-                        {
-                            doomArmorPiece.DropOnActorDeath = true;
-                        }
+                        doomLegs.BodyPartAspectDef.Accuracy = -0.04f;             
 
                         sectarianHelmet.Armor = 14;
                         sectarianHelmet.Weight = 1;
@@ -346,6 +340,7 @@ namespace TFTV
                         spyMasterHelmet.BodyPartAspectDef.Perception = 4;
 
                         spyMasterTorso.Weight = 2;
+                        spyMasterTorso.ForceShowInPortratis = true;
                         spyMasterTorso.BodyPartAspectDef.Speed = -1;
                         spyMasterTorso.ManufactureMaterials = 0;
                         spyMasterTorso.ManufactureTech = 0;
@@ -1296,8 +1291,6 @@ namespace TFTV
             {
                 try
                 {
-
-
                     _obliterator.ManufactureMaterials = 100;
                     _subjector.ManufactureMaterials = 100;
                     _redemptor.ManufactureMaterials = 100;

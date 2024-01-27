@@ -1,11 +1,14 @@
 using Assets.Code.PhoenixPoint.Geoscape.Entities.Sites.TheMarketplace;
+using Base.Core;
 using Base.Defs;
 using Base.Entities.Abilities;
 using Base.UI;
 using HarmonyLib;
 using PhoenixPoint.Common.Entities.Addons;
 using PhoenixPoint.Common.Entities.Equipments;
+using PhoenixPoint.Common.Entities.GameTags;
 using PhoenixPoint.Common.Entities.Items;
+using PhoenixPoint.Tactical.AI;
 using PhoenixPoint.Tactical.Entities;
 using PhoenixPoint.Tactical.Entities.Abilities;
 using PhoenixPoint.Tactical.Entities.DamageKeywords;
@@ -13,6 +16,7 @@ using PhoenixPoint.Tactical.Entities.Effects.DamageTypes;
 using PhoenixPoint.Tactical.Entities.Equipments;
 using PhoenixPoint.Tactical.Entities.Weapons;
 using PhoenixPoint.Tactical.Eventus;
+using System;
 using System.Collections.Generic;
 
 namespace TFTVVehicleRework.KaosBuggy
@@ -56,6 +60,8 @@ namespace TFTVVehicleRework.KaosBuggy
             Give_VehicleEntity();
             Adjust_WeaponPrices();
             Fix_WheelSlots();
+            Fix_WeaponSlots();
+            Replace_JunkerAI();
             Kamikaze.Change();
             Deathproof.Change();
             MannedGunner.Change();
@@ -68,6 +74,7 @@ namespace TFTVVehicleRework.KaosBuggy
             {
                 BuggyGuns[Module].BodyPartAspectDef.Endurance = 0; //Prevents random bonus HP because of weapons
                 WeaponDef Minigun = (WeaponDef)BuggyGuns[Module].SubAddons[0].SubAddon; //Reference to the three miniguns
+                Minigun.ViewElementDef.Description = new LocalizedTextBind("UI_JUNKER_MINIGUN");
                 Minigun.ShootingEvent = ShootShotEvent;
                 Minigun.MainSwitch = Yat.MainSwitch;
                 Minigun.ChargesMax = 80;
@@ -80,7 +87,9 @@ namespace TFTVVehicleRework.KaosBuggy
                     case KSWeapons.Fullstop:
                         BuggyGuns[Module].ViewElementDef.Description = new LocalizedTextBind("UI_JUNKER_GOOGUN");
                         WeaponDef GooGun = (WeaponDef)BuggyGuns[Module].SubAddons[1].SubAddon; 
+                        GooGun.ViewElementDef.Description = new LocalizedTextBind("UI_JUNKER_GOOGUN");
                         GooGun.ChargesMax = 6;
+                        // GooGun.ChargesMax = 8;
                         GooGun.Abilities = new AbilityDef[]
                         {
                             LaunchGrenade
@@ -91,7 +100,9 @@ namespace TFTVVehicleRework.KaosBuggy
                     case KSWeapons.Screamer:
                         BuggyGuns[Module].ViewElementDef.Description = new LocalizedTextBind("UI_JUNKER_SCREAMER");
                         WeaponDef Screamer = (WeaponDef)BuggyGuns[Module].SubAddons[1].SubAddon;
+                        Screamer.ViewElementDef.Description = new LocalizedTextBind("UI_JUNKER_SCREAMER");
                         Screamer.ChargesMax = 6;
+                        // Screamer.ChargesMax = 8;
                         Screamer.DamagePayload.DamageDeliveryType = DamageDeliveryType.Sphere;
                         Screamer.DamagePayload.ParabolaHeightToLengthRatio = 0.00000001f;
                         Screamer.DamagePayload.AoeRadius = 1.5f;
@@ -100,6 +111,8 @@ namespace TFTVVehicleRework.KaosBuggy
                     case KSWeapons.Vishnu:
                         BuggyGuns[Module].ViewElementDef.Description = new LocalizedTextBind("UI_JUNKER_TITAN");
                         WeaponDef TitanGL = (WeaponDef)BuggyGuns[Module].SubAddons[1].SubAddon;
+                        TitanGL.Tags.Add((GameTagDef)Repo.GetDef("d947049a-4e90-1804-1bdf-25d9acc7b11a")); //"ExplosiveWeapon_TagDef"
+                        TitanGL.ViewElementDef.Description = new LocalizedTextBind("UI_JUNKER_TITAN");
                         TitanGL.APToUsePerc = 50;
                         TitanGL.Abilities = new AbilityDef[]
                         {
@@ -149,11 +162,13 @@ namespace TFTVVehicleRework.KaosBuggy
                 {
                     BodyPart.HitPoints = 150f;
                     BodyPart.BodyPartAspectDef.Speed = 10f;
+                    BodyPart.ViewElementDef.Description = new LocalizedTextBind("UI_JUNKER_WHEEL");
                 }
                 else //Last case are the remaining two tyres:
                 {
                     BodyPart.HitPoints = 150f;
                     BodyPart.BodyPartAspectDef.Speed = 9f;
+                    BodyPart.ViewElementDef.Description = new LocalizedTextBind("UI_JUNKER_WHEEL");
                 }
             }
         }
@@ -199,13 +214,26 @@ namespace TFTVVehicleRework.KaosBuggy
         {
             //"Kaos_LeftBackWheel_SlotDef"
             ItemSlotDef BW = (ItemSlotDef)Repo.GetDef("00fa8a15-3b55-fc24-3834-3061c6abbd48");
+            BW.DisplayName = new LocalizedTextBind("UI_JUNKER_WHEEL");
             //"Kaos_LeftFrontWheel_SlotDef"
             ItemSlotDef LFW = (ItemSlotDef)Repo.GetDef("f5aa29b3-18fe-1554-9a3c-6b31683b1df4");
+            LFW.DisplayName = new LocalizedTextBind("UI_JUNKER_WHEEL");
             //"Kaos_RightFrontWheel_SlotDef"
             ItemSlotDef RFW = (ItemSlotDef)Repo.GetDef("d674a04a-7aac-d014-ab3f-b48ead1995c5");
+            RFW.DisplayName = new LocalizedTextBind("UI_JUNKER_WHEEL");
             
             //Setting to true means that armour is overridden by higher layers
             BW.DontStackArmorAndHealth = LFW.DontStackArmorAndHealth = RFW.DontStackArmorAndHealth = true;
+        }
+
+        private static void Fix_WeaponSlots()
+        {
+            //"KS_Cannon_SlotDef"
+            ItemSlotDef Cannon = (ItemSlotDef)Repo.GetDef("038c9014-5c6a-d804-9a76-e207e1de9a7b");
+            Cannon.DamageHandler = DamageHandler.AttachedItem;
+            //"KS_Minigun_SlotDef"
+            ItemSlotDef Minigun = (ItemSlotDef)Repo.GetDef("8eae5413-09d9-5e14-6a00-b445cb370e26");          
+            Minigun.DamageHandler = DamageHandler.AttachedItem;
         }
         
         private static void Change_ScreamerSceneView()
@@ -214,6 +242,17 @@ namespace TFTVVehicleRework.KaosBuggy
             ShootAbilityDef ScreamerShooting = (ShootAbilityDef)Repo.GetDef("e2dc5d29-f46b-ef62-f6bc-d8c15c42fa28");
             ScreamerShooting.SceneViewElementDef = LaunchGrenade.SceneViewElementDef;
             ScreamerShooting.UpdatePrediction = true;
+        }
+        
+        private static void Replace_JunkerAI()
+        {
+            TacAIActorDef ArmadilloAI = (TacAIActorDef)Repo.GetDef("67f797a7-611b-0df4-9876-9adb3c2d20ec"); //"Armadillo_AIActorDef"
+            TacAIActorDef NewAI = Repo.CreateDef<TacAIActorDef>("3b24e4e5-12da-4b85-8aac-16f6a76aed98", ArmadilloAI);
+            NewAI.name = "Junker_AIActorDef";
+
+            ComponentSetDef Buggy_CSD = (ComponentSetDef)Repo.GetDef("badec04c-b5f5-c834-4a43-f6fdda3e1f09"); //"KS_Kaos_Buggy_ComponentSetDef"
+            TacAIActorDef DefaultAI = (TacAIActorDef)Repo.GetDef("40fa77e4-078c-f224-4a13-961be07c561f"); //"AIActorDef"
+            Buggy_CSD.Components[Array.FindIndex(Buggy_CSD.Components, component => component == DefaultAI)] = NewAI;
         }
     }
 }

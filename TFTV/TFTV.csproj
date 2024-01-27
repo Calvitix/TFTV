@@ -231,6 +231,8 @@
     <Compile Include="TFTVDelirium.cs" />
     <Compile Include="TFTVDeliriumPerks.cs" />
     <Compile Include="TFTVDiplomacyPenalties.cs" />
+    <Compile Include="TFTVPureAndForsaken.cs" />
+    <Compile Include="TFTVRaiders.cs" />
     <Compile Include="TFTVVoxels.cs" />
     <Compile Include="TFTVHarmonyGeoscape.cs" />
     <Compile Include="TFTVHarmonyGeoscapeUI.cs" />
