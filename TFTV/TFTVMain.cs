@@ -2,6 +2,7 @@ using Base.Build;
 using Base.Core;
 using Base.Defs;
 using Base.Levels;
+using Base.Rendering.ObjectRendering;
 using HarmonyLib;
 using Newtonsoft.Json;
 using PhoenixPoint.Common.Core;
@@ -102,7 +103,7 @@ namespace TFTV
                 /// PhoenixGame is accessible at any time.
                 PhoenixGame game = GetGame();
 
-                string version = $"TFTV 20240123 release FR#1 (Hotfix 1 pour Màj #51) v{MetaData.Version}";
+                string version = $"TFTV 20240128 release #1 (Update #52) v{MetaData.Version}";
 
                 TFTVversion = version;
 
@@ -125,11 +126,6 @@ namespace TFTV
                 // Initialize Helper
                 Helper.Initialize();
                 //This creates the Void Omen events
-
-                Config.PopulateConfigFields();
-                if (Config.ApplyCalvitixChanges) { TFTVLogger.Always("Calvitix Option : True "); }
-                else { TFTVLogger.Always("Calvitix Option : False "); }//Calvitix 
-
 
                 //BC stuff
                 Logger.LogInfo("BC stuff loading");
@@ -160,7 +156,7 @@ namespace TFTV
 
                 //  TFTVAncients.CheckResearchesRequiringThings();
 
-                //Calvitix remove Config.PopulateConfigFields();
+                Config.PopulateConfigFields();
                 //  Config.RetrieveConfigOptions();
                 harmony.PatchAll();
 
@@ -174,9 +170,18 @@ namespace TFTV
                     TFTVNewGameMenu.TitleScreen.SetTFTVLogo(homeScreenView);
                 }
 
-               
 
-                
+           /*     Type renderingEnvironmentType = typeof(RenderingEnvironment);
+
+                // Get all public constructors
+                ConstructorInfo[] constructors = renderingEnvironmentType.GetConstructors();
+
+                // Print the names of constructors
+                foreach (ConstructorInfo constructor in constructors)
+                {
+                    TFTVLogger.Always("Constructor Name: " + constructor.FullDescription());
+                }*/
+
 
 
                 /*  if(GetLevel()!=null && GetLevel().name.Contains("HomeScreenLevel")) 
