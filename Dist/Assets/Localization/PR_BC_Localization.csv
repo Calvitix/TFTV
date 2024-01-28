@@ -106,17 +106,17 @@ PR_BC_SOWER_OF_CHANGE,Text,,SOWER OF CHANGE,,SEMEUR DE CHANGEMENT,,,,СЕЯТЕ�
 PR_BC_SOWER_OF_CHANGE_DESC,Text,,Returns 25% of damage as Viral to the attacker,,Renvoie 25 % des dégâts sous forme de dégât viral à l'attaquant.,,,,Возвращает атакующему 25% урона в виде вируса,,
 PR_BC_SURVIVOR,Text,,SURVIVOR,,SURVIVANT,,,,ВЫЖИВШИЙ,,
 PR_BC_SURVIVOR_DESC,Text,,"<b>WP +4, but -2 STR</b>
-<i>You have had it tougher than most, and that's saying a lot. Your body took a toll, but your mind grew stronger</i>",,"<b>WP +4, mais -2 STR</b>
+<i>You have had it tougher than most, and that's saying a lot. Your body took a toll, but your mind grew stronger</i>",,"<b>VOL +4, mais -2 FOR</b>
 <i>Vous avez vécu une situation plus difficile que la plupart des autres, et cela en dit long. Votre corps a fait des ravages, mais votre esprit est devenu plus fort</i>",,,,"<b>Воля +4, Сила -2</b>
 <i>Вам досталось больше других и это о многом говорит. Но все, что не убивает нас, делает сильнее</i>",,
 PR_BC_NURSE,Text,,NURSE,,INFIRMIÈRE,,,,СИДЕЛКА,,
 PR_BC_NURSE_DESC,Text,,"<b>WP +2. Healing +30%</b>
-<i>Yes, there is a gentler side to you. But people have to get hurt to experience it</i>",,"<b>WP +2. Guérison +30 %</b>
+<i>Yes, there is a gentler side to you. But people have to get hurt to experience it</i>",,"<b>VOL +2. Guérison +30 %</b>
 <i>Oui, il y a un côté plus doux chez vous. Mais les gens doivent être blessés pour en faire l'expérience.</i>",,,,"<b>Воля +2, Лечение +30%</b>
 <i>Да, в вас есть и мягкая сторона. Но знают о ней только те, кто познал боль</i>",,
 PR_BC_SCAV,Text,,SCAV,,CHAROGNARD,,,,ПАДАЛЬЩИК,,
 PR_BC_SCAV_DESC,Text,,"<b>WP +2, Perception +4</b>
-<i>The Old World left behind all sorts of interesting things. It takes patience and a keen eye to find them</i>",,"<b>WP +2, Perception +4</b>
+<i>The Old World left behind all sorts of interesting things. It takes patience and a keen eye to find them</i>",,"<b>VOL +2, Perception +4</b>
 <i>Le Vieux Monde a laissé derrière lui toutes sortes de choses intéressantes. Il faut de la patience et un œil vif pour les trouver</i>",,,,"<b>Воля +2, Восприятие +4</b>
 <i>Старый Мир оставил после себя множество вещей, чтобы разыскать их нужно терпение и зоркий глаз</i>",,
 PR_BC_CORPSE_DISPOSER,Text,,CORPSE DISPOSER,,DESTRUCTEUR DE CADAVRES,,,,СЖИГАТЕЛЬ ТРУПОВ,,
@@ -136,7 +136,7 @@ PR_BC_SQUATTER_DESC,Text,,"<b>STR +2, Carry Weight +25%</b>
 <i>В лагерях все приходилось держать при себе. А иногда отбирать вещи у других</i>",,
 PR_BC_VOLUNTEERED,Text,,VOLUNTEERED,,BÉNÉVOLE,,,,ДОБРОВОЛЕЦ,,
 PR_BC_VOLUNTEERED_DESC,Text,,"<b>Nightvision, +2 SPD, -2WP</b>
-<i>They gave you cat eyes and reflex enhancers, and nothing for the headaches that came after</i>",,"<b>Vision nocturne, +2 SPD, -2WP</b>
+<i>They gave you cat eyes and reflex enhancers, and nothing for the headaches that came after</i>",,"<b>Vision nocturne, +2 VIT, -2 VOL</b>
 <i>Ils vous ont donné des yeux de chat et des amplificateurs de réflexes, et rien pour les maux de tête qui ont suivi</i>",,,,"<b>Ночное видение. Скорость +2, Воля -2</b>
 <i>Они дали тебе глаза и рефлексы кошки. Но ничего, чтобы заглушить головные боли, которые пришли позже</i>",,
 PR_BC_CONDO_RAIDER,Text,,CONDO RAIDER,,YAMAKASI,,,,ФОРТОЧНИК,,

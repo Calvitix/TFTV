@@ -102,7 +102,7 @@ namespace TFTV
                 /// PhoenixGame is accessible at any time.
                 PhoenixGame game = GetGame();
 
-                string version = $"TFTV 20240123 release #1 (Hotfix 1 for Update #51) v{MetaData.Version}";
+                string version = $"TFTV 20240123 release FR#1 (Hotfix 1 pour Màj #51) v{MetaData.Version}";
 
                 TFTVversion = version;
 
@@ -125,6 +125,11 @@ namespace TFTV
                 // Initialize Helper
                 Helper.Initialize();
                 //This creates the Void Omen events
+
+                Config.PopulateConfigFields();
+                if (Config.ApplyCalvitixChanges) { TFTVLogger.Always("Calvitix Option : True "); }
+                else { TFTVLogger.Always("Calvitix Option : False "); }//Calvitix 
+
 
                 //BC stuff
                 Logger.LogInfo("BC stuff loading");
@@ -155,7 +160,7 @@ namespace TFTV
 
                 //  TFTVAncients.CheckResearchesRequiringThings();
 
-                Config.PopulateConfigFields();
+                //Calvitix remove Config.PopulateConfigFields();
                 //  Config.RetrieveConfigOptions();
                 harmony.PatchAll();
 
