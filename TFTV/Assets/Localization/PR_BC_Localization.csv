@@ -85,7 +85,7 @@ PR_BC_ENDURANCE_DESC,Text,,"Recover restores additional 25% Willpower and remove
 PR_BC_SABOTEUR,Text,,SABOTEUR,,SABOTEUR,,,,ДИВЕРСАНТ,,
 PR_BC_SABOTEUR_DESC,Text,,When you are hidden AP cost of non-weapon skills and spider drone skills decreased by 1 AP,,"Lorsque vous êtes caché, le coût en PA des compétences non liées aux armes et des compétences de drone-araignée est réduit de 1 PA.",,,,"Пока вы спрятаны, стоимость не атакующих навыков и паучьих дронов уменьшена на 1 ОД",,
 PR_BC_DIE_HARD,Text,,DIE HARD,,IRRÉDUCTIBLE,,,,,,
-PR_BC_DIE_HARD_DESC,Text,,When you take lethal damage there is a chance to survive with 1HP and have all negative effects cleared. Can only trigger once per mission.,,"Lorsque vous subissez des dégâts mortels, vous avez une chance de survivre avec 1 HP et de faire disparaître tous les effets négatifs. Ne peut se déclencher qu'une seule fois par mission.",,,,,,
+PR_BC_DIE_HARD_DESC,Text,,When you take lethal damage there is a chance to survive with 1HP and have all negative effects cleared. Can only trigger once per mission.,,"Lorsque vous subissez des dégâts mortels, vous avez une chance de survivre avec 1 PV et de faire disparaître tous les effets négatifs. Ne peut se déclencher qu'une seule fois par mission.",,,,,,
 PR_BC_DIE_HARD_TRIGGERED,Text,,DIE HARD,,IRRÉDUCTIBLE,,,,,,
 PR_BC_DIE_HARD_TRIGGERED_DESC,Text,,"Die Hard has saved your life once already, so there is no more chance for this mission!",,"Irréductible vous a déjà sauvé la vie une fois, il n'y a donc plus aucune chance pour cette mission !",,,,,,
 PR_BC_DIE_HARD_KEEPALIVE,Text,,DIE HARDER,,LE PLUS DUR,,,,,,
@@ -146,7 +146,7 @@ PR_BC_CONDO_RAIDER_DESC,Text,,"<b>Jump up or down one building level</b>
 <i>Мир полон сломанных лифтов и обвалившихся пролетов. И профи в нашем деле не пользуются лестницами</i>",,
 PR_BC_TUNNEL_RAT,Text,,TUNNEL RAT,,RAT DES TUNNELS,,,,ТУННЕЛЬНАЯ КРЫСА,,
 PR_BC_TUNNEL_RAT_DESC,Text,,"<b>Stealth +15%, SPD +1</b>
-<i>You spent a good spell in the sewers. You had to be quiet, real quiet... And then run like hell!</i>",,"<b>Furtivité +15 %, SPD +1</b>
+<i>You spent a good spell in the sewers. You had to be quiet, real quiet... And then run like hell!</i>",,"<b>Furtivité +15 %, VIT +1</b>
 <i>Vous avez passé un bon moment dans les égouts. Il fallait être silencieux, très silencieux... Et ensuite courir comme un diable !</i>",,,,"<b>Скрытность +15%, Скорость +1</b>
 <i>Вы много времени провели в канализации. Приходилось быть тихим, очень тихим... а затем бежать сломя голову</i>",,
 PR_BC_HUNTER,Text,,HUNTER,,CHASSEUR,,,,ОХОТНИК,,

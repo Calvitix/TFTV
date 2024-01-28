@@ -260,21 +260,21 @@ BG_INTRO_0_DESCRIPTION,Text,,"After all these years, you finally got the call. I
 
 The trek to Phoenix Point was long and dangerous, and when you finally reached it, somebody was already home...",,"Après toutes ces années, vous avez finalement reçu l’appel. Cela signifiait que Symes et ses adjoints étaient morts ou injoignables. Le projet Phoenix avait disparu.
 
-Le voyage jusqu’à Phoenix Point était long et dangereux, et quand vous y êtes finalement arrivé, quelqu’un était déjà à la maison...",,,,,,
+Le voyage jusqu’à Phoenix Point a été long et dangereux, et quand vous y êtes finalement arrivé, quelqu’un était déjà à la maison...",,,,,,
 BG_INTRO_1_TITLE,Text,,Homecoming,,Retour à la maison,,,,,,
 BG_INTRO_1_DESCRIPTION,Text,,"I'm Alistair Ashby. Yes, the ""Mist Expert"". Thanks for watching my content back in the day, I guess... 
 
 A few of us managed to get to this bunker and activate the emergency beacon before we were overrun by the creatures that followed us here. 
 
-We've got this place mostly up and running... Thanks to Olena, she is quite the wunderkind.",,"Je suis Alistair Ashby. Oui, ""l’expert de la brume"". Merci d’avoir regardé mon contenu à l’époque, je suppose...
+We've got this place mostly up and running... Thanks to Olena, she is quite the wunderkind.",,"Je suis Alistair Ashby. Oui, ""l’expert de la brume"". Merci d’avoir regardé mon contenu à l’époque, je suppose que vous l'avez fait...
 
 Certains d’entre nous ont réussi à atteindre ce bunker et à activer la balise de secours avant d’être envahis par les créatures qui nous ont suivis ici.
 
 Nous avons maintenu cet endroit en grande partie opérationnel... Grâce à Olena, c'est une vraie prodige.",,,,,,
 BG_INTRO1_CHOICE_1,Text,,"Yes, I remember you. Surprising to meet you here.",,"Oui, je me souviens de vous. C'est surprenant de vous rencontrer ici.",,,,,,
 BG_INTRO_2_TITLE,Text,,Olena Kim,,Olena Kim,,,,,,
-BG_INTRO_2_DESCRIPTION,Text,,"<i>Oppa</i> Alistair is good with people. I'm good with machines and software. This facility runs on a limited AI called Bennu. Once Bennu verifies your credentials as duly appointed Director, all functionality should be restored and you should be able to interface with the system.",,"<i>Oppa</i> Alistair est bon avec les gens. Je suis bon avec les machines et les logiciels. Cette installation fonctionne sur une IA limitée appelée Bennu. Une fois que Bennu aura vérifié vos identifiants en tant que Directeur dûment nommé, toutes les fonctionnalités devraient être restaurées et vous devriez être en mesure d’interagir avec le système.",,,,,,
-BG_INTRO_2_CHOICE_0,Text,,Identify yourself and present your credentials ,,Identifiez-vous et présentez vos références,,,,,,
+BG_INTRO_2_DESCRIPTION,Text,,"<i>Oppa</i> Alistair is good with people. I'm good with machines and software. This facility runs on a limited AI called Bennu. Once Bennu verifies your credentials as duly appointed Director, all functionality should be restored and you should be able to interface with the system.",,"<i>Oppa</i> Alistair est doué avec les gens. Je suis doué avec les machines et les logiciels. Cette installation est contrôlée par une IA limitée appelée <i>Bennu</i>. Une fois que <i>Bennu</i> aura vérifié vos identifiants en tant que Directeur dûment nommé, toutes les fonctionnalités devraient être restaurées et vous devriez être en mesure d’interagir avec le système.",,,,,,
+BG_INTRO_2_CHOICE_0,Text,,Identify yourself and present your credentials ,,S'Identifier et donner ses accréditations,,,,,,
 KEY_INDEPENDENCE_DAY_NAME,Text,,To Kill a Behemoth,,Pour tuer un béhémoth,,,,,,
 KEY_INDEPENDENCE_DAY_REVEAL,Text,,"The Virophage should be able to kill the Behemoth, but we still need a delivery system that would allow us to deploy it safely in sufficient quantities. Perhaps we can repurpose the injector designed by the Barnabas AI.",,"Le Virophage devrait être capable de tuer le Behemoth, mais nous avons encore besoin d'un système de livraison qui nous permettrait de le déployer en toute sécurité en quantité suffisante. Peut-être pouvons-nous réutiliser l'injecteur conçu par l'IA Barnabas.",,,,,,
 KEY_INDEPENDENCE_DAY_UNLOCK,Text,,,,,,,,,,

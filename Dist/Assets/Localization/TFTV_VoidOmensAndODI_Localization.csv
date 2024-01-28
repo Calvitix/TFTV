@@ -138,20 +138,20 @@ Jusqu’à présent, nous pouvons conclure ce qui suit :
 
 Nous avons appelé cet état « Délire onirique », à cause des sujets se plaignant de cauchemars, ou de « rêves fous », avec des thèmes similaires de dégénérescence monstrueuse et d'étouffement.
 
-<color=#ec9006><b>Nos agents peuvent désormais être affligés d'un statut de délire pouvant atteindre jusqu'à un tiers de leur volonté</b></color>",,,,,,
+<color=#ec9006><b>Nos agents peuvent désormais être affligés d'un statut de Délirium pouvant atteindre jusqu'à un tiers de leur volonté</b></color>",,,,,,
 SDI_01_TITLE,Text,,The Third Mist,,La troisième Brume,,,,,,
 SDI6_OUTCOME,Text,,"The Oneiric Delirium grows stronger.
 
 <color=#e8bcf0><b>Our operatives can now be afflicted with a Delirium status of up to half of their Willpower</b></color>",,"Le délire onirique se renforce.
 
-<color=#e8bcf0><b>Nos agents peuvent désormais être affligés d'un statut de délire jusqu'à la moitié de leur volonté</b></color>",,,,,,
+<color=#e8bcf0><b>Nos agents peuvent désormais être affligés d'un statut de Délirium jusqu'à la moitié de leur volonté</b></color>",,,,,,
 SDI7_OUTCOME,Text,,<color=#e8bcf0><b>Havens in the Mist can become infested instead of destroyed when attacked by Pandorans. Infested havens accelerate Pandoran evolution.</b></color>,,<color=#e8bcf0><b>Les Refuges dans la Brume peuvent être infestés au lieu d'être détruits lorsqu'ils sont attaqués par des Pandoriens. Les refuges infestés accélèrent l'évolution Pandorienne.</b></color>,,,,,,
 SDI09_OUTCOME,Text,,<color=#e8bcf0><b>The Umbra grow in strength</b></color>,,<color=#e8bcf0><b>L'Umbra gagne en force</b></color>,,,,,,
 SDI10_OUTCOME,Text,,"The Oneiric Delirium grows stronger.
 
 <color=#e8bcf0><b>Our operatives can now be afflicted with a Delirium status equal to their Willpower</b></color>",,"Le délire onirique se renforce.
 
-<color=#e8bcf0><b>Nos agents peuvent désormais être affligés d'un statut de Délire égal à leur Volonté</b></color>",,,,,,
+<color=#e8bcf0><b>Nos agents peuvent désormais être affligés d'un statut de Délirium égal à leur Volonté</b></color>",,,,,,
 SDI11_OUTCOME,Text,,<b> Berith are coming! </b>,,<b>Le Berith arrive ! </b>,,,,,,
 KEY_VOID_OMEN_NEW,Text,,NEW:,,NOUVEAU:,,,,,,
 KEY_VOID_OMEN_LUCKY_ROLL,Text,,"""Can you feel it? The weight lifting off your chest? These days we are lucky if we get any respite at all."" - Alistair Ashby",,"""Pouvez-vous le sentir ? Le poids qui s'enlève de votre poitrine ? Ces jours-ci, nous avons de la chance si nous obtenons un peu de répit."" -Alistair Ashby",,,,,,
