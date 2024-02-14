@@ -1227,7 +1227,20 @@ namespace TFTV
                     newAmmo.Tags.Add(classTagDef);
                     //  newAmmo.CombineWhenStacking = false;
                     newAmmo.ManufactureTech = 0;
-                    newAmmo.ManufactureMaterials = minPrice;
+
+                    ////Calvitix Other Changes 
+                    Single multipleCostMaterial = 2.5F;
+                    if (TFTVMain.Main.Config.ApplyCalvitixChanges)
+
+                    {
+                        newAmmo.ManufactureMaterials = (Single)Math.Max(1, (Math.Round(minPrice / multipleCostMaterial, 0)));
+                        TFTVLogger.Always("Calvitix_Change on Kaos Ammo Material : " + newAmmo.ViewElementDef.DisplayName1.LocalizationKey);
+                    }
+                    else
+                    {
+                        newAmmo.ManufactureMaterials = minPrice;
+                    }
+
                     weaponDef.ChargesMax = amount;
                     weaponDef.CompatibleAmmunition = new TacticalItemDef[] { newAmmo };
 
@@ -1236,8 +1249,8 @@ namespace TFTV
                     GeoMarketplaceItemOptionDef newMarketplaceItem = Helper.CreateDefFromClone
                          (DefCache.GetDef<GeoMarketplaceItemOptionDef>("Obliterator_MarketplaceItemOptionDef"), gUID2, name);
 
-                    newMarketplaceItem.MinPrice = minPrice;
-                    newMarketplaceItem.MaxPrice = minPrice + minPrice * 1.25f;
+                    newMarketplaceItem.MinPrice = newAmmo.ManufactureMaterials;
+                    newMarketplaceItem.MaxPrice = newAmmo.ManufactureMaterials + newAmmo.ManufactureMaterials * 1.25f;
                     newMarketplaceItem.ItemDef = newAmmo;
                     newMarketplaceItem.DisallowDuplicates = false;
 
@@ -2331,10 +2344,10 @@ namespace TFTV
                         PhoenixGeneralButton equipmentToggle = UnityEngine.Object.Instantiate(marketplaceUI.LocateMissionButton, marketplaceUI.MissionRewardDescriptionText.transform);
                         PhoenixGeneralButton otherToggle = UnityEngine.Object.Instantiate(marketplaceUI.LocateMissionButton, marketplaceUI.MissionRewardDescriptionText.transform);
 
-                        allToggle.gameObject.AddComponent<UITooltipText>().TipText = "ALL";
+                        allToggle.gameObject.AddComponent<UITooltipText>().TipText = "TOUT"; //ALL"; Calvitix
                         allToggle.gameObject.SetActive(true);
                         allToggle.PointerClicked += () => ToggleButtonClicked(0);
-                        allToggle.transform.GetComponentInChildren<Text>().text = "ALL";
+                        allToggle.transform.GetComponentInChildren<Text>().text = "TOUT"; //ALL"; Calvitix
                         //  allToggle.transform.localScale *= 0.6f;
 
                         if (!ultrawideresolution)
@@ -2346,10 +2359,10 @@ namespace TFTV
                         allToggle.GetComponent<RectTransform>().sizeDelta = new Vector2(allToggle.GetComponent<RectTransform>().sizeDelta.x * 0.65f, allToggle.GetComponent<RectTransform>().sizeDelta.y);
 
 
-                        vehicleToggle.gameObject.AddComponent<UITooltipText>().TipText = "VEHICLES";
+                        vehicleToggle.gameObject.AddComponent<UITooltipText>().TipText = "VEHICULES";  //Calvitix
                         vehicleToggle.gameObject.SetActive(true);
                         vehicleToggle.PointerClicked += () => ToggleButtonClicked(1);
-                        vehicleToggle.transform.GetComponentInChildren<Text>().text = "VEHICLES";
+                        vehicleToggle.transform.GetComponentInChildren<Text>().text = "VEHICULES"; //Calvitix
                         vehicleToggle.transform.GetComponentsInChildren<Image>().FirstOrDefault(c => c.name == "Icon").sprite = Helper.CreateSpriteFromImageFile("UI_Vehicle_FilterIcon.png");
 
                         if (!ultrawideresolution)
@@ -2360,10 +2373,10 @@ namespace TFTV
                         vehicleToggle.GetComponent<RectTransform>().sizeDelta = new Vector2(allToggle.GetComponent<RectTransform>().sizeDelta.x, allToggle.GetComponent<RectTransform>().sizeDelta.y);
 
 
-                        equipmentToggle.gameObject.AddComponent<UITooltipText>().TipText = "EQUIPMENT";
+                        equipmentToggle.gameObject.AddComponent<UITooltipText>().TipText = "EQUIPEMENT";
                         equipmentToggle.gameObject.SetActive(true);
                         equipmentToggle.PointerClicked += () => ToggleButtonClicked(2);
-                        equipmentToggle.transform.GetComponentInChildren<Text>().text = "EQUIPMENT";
+                        equipmentToggle.transform.GetComponentInChildren<Text>().text = "EQUIPEMENT";
                         //    equipmentToggle.transform.localScale *= 0.5f;
 
                         if (!ultrawideresolution)
@@ -2373,10 +2386,10 @@ namespace TFTV
                         equipmentToggle.GetComponent<RectTransform>().sizeDelta = new Vector2(allToggle.GetComponent<RectTransform>().sizeDelta.x, allToggle.GetComponent<RectTransform>().sizeDelta.y);
                         equipmentToggle.transform.GetComponentsInChildren<Image>().FirstOrDefault(c => c.name == "Icon").sprite = Helper.CreateSpriteFromImageFile("MP_UI_Choices_Equipment.png");
 
-                        otherToggle.gameObject.AddComponent<UITooltipText>().TipText = "OTHER";
+                        otherToggle.gameObject.AddComponent<UITooltipText>().TipText = "AUTRE"; //OTHER Calvitix
                         otherToggle.gameObject.SetActive(true);
                         otherToggle.PointerClicked += () => ToggleButtonClicked(3);
-                        otherToggle.transform.GetComponentInChildren<Text>().text = "OTHER";
+                        otherToggle.transform.GetComponentInChildren<Text>().text = "AUTRE";  //OTHER Calvitix
                         //   otherToggle.transform.localScale *= 0.5f;
                         if (!ultrawideresolution)
                         {

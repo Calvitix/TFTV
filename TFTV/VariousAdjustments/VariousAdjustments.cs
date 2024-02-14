@@ -40,49 +40,73 @@ namespace PRMBetterClasses.VariousAdjustments
             SharedData shared = GameUtl.GameComponent<SharedData>();
 
             // Deny to demmolish the Access Lift
+            TFTVLogger.Always("Change_AccessLift...");
             Change_AccessLift();
             // Bash: Increase damage to weapon from 0,45 to 0,6
+            TFTVLogger.Always("Change_BashWeaponDamage...");
             Change_BashWeaponDamage();
             // Fix Regen Torso to also regenerate health in vehicles
+            TFTVLogger.Always("Fix_RegenTorso...");
             Fix_RegenTorso();
             // Fix for Triton Elite bloodsucker arms
+            TFTVLogger.Always("Fix_TritonElite...");
             Fix_TritonElite();
             // Change Advanced Laser research to require advanced technician weapons
+            TFTVLogger.Always("Change_AdvancedResearches...");
             Change_AdvancedResearches();
             // Change Stimpack: Restores 2AP, Heal 1HP to every body part. Disabled Body Parts are restored.
+            TFTVLogger.Always("Change_Stimpack...");
             Change_Stimpack();
             // Change Poison: -50% accuracy and -3 WP per turn
+            TFTVLogger.Always("Change_Poison...");
             Change_Poison();
             // Change various bionics
+            TFTVLogger.Always("Change_VariousBionics...");
             Change_VariousBionics();
             // Turrets: Shoot at 1/2 burst but cost 2AP to shoot , maybe reduce armor of all by 10?
+            TFTVLogger.Always("Change_Turrets...");
             Change_Turrets();
             // Stomp: Gain 50 blast damage
+            TFTVLogger.Always("Change_Stomp...");
             Change_Stomp(shared);
             // Frenzy: Grant +8 SPD instead of 50% SPD
+            TFTVLogger.Always("Change_Frenzy...");
             Change_Frenzy();
             // Psychici resistance: fix effect and description to: Psychic Scream damage values are halved
+            TFTVLogger.Always("Change_PsychicResistance...");
             Change_PsychicResistance();
             // Mutoid Worms: limit each worm ability to 5 ammo (worms)
+            TFTVLogger.Always("Change_Mutoids...");
             Change_Mutoids();
             // Screaming Head: Mind Control Immunity
+            TFTVLogger.Always("Change_PriestsHeadMutations...");
             Change_PriestsHeadMutations();
             // Spider Drones: Armor down to 10 (from 30)
+            TFTVLogger.Always("Change_SpiderDrones...");
             Change_SpiderDrones();
             // Various weapon changes
+            TFTVLogger.Always("Change_VariousWeapons...");
             Change_VariousWeapons(shared);
             // Venom Torso: Add Weapon Tag to Poison Arm 
+            TFTVLogger.Always("Change_VenomTorso...");
             Change_VenomTorso();
             // Haven Recruits: Come with Armour and Weapons on all difficulties
+            TFTVLogger.Always("Change_HavenRecruits...");
             Change_HavenRecruits();
             // Mech Arms: 200 emp damage
+            TFTVLogger.Always("Change_MechArms...");
             Change_MechArms(shared);
             // Shadow Legs: Electric Kick replace shock damage with Sonic damage (value 20)
+            TFTVLogger.Always("Change_ShadowLegs...");
             Change_ShadowLegs(shared);
             // Vidar GL - Increase Shred to 20 (from 10), Add Acid 10. Increase AP cost to 2 (from 1)
+            TFTVLogger.Always("Change_VidarGL...");
             Change_VidarGL(shared);
             // Destiny III - Give chance to fumble when non-proficient
+            TFTVLogger.Always("Change_Destiny");
             Change_Destiny();
+            TFTVLogger.Always("All Changes in Various Adjustements Done");
+
         }
 
         private static void Change_AccessLift()
@@ -277,6 +301,10 @@ namespace PRMBetterClasses.VariousAdjustments
             PassiveModifierAbilityDef mountedItemsProficiency = DefCache.GetDef<PassiveModifierAbilityDef>("MountedWeaponTalent_AbilityDef");
             mountedItemsProficiency.ViewElementDef.DisplayName1.LocalizationKey = "PR_BC_MOUNTED_ITEMS_PROF";
             mountedItemsProficiency.ViewElementDef.Description = new LocalizedTextBind("PR_BC_MOUNTED_ITEMS_PROF_DESC");
+            //Calvitix Trad
+            PassiveModifierAbilityDef PistolItemsProficiency = DefCache.GetDef<PassiveModifierAbilityDef>("HandgunsTalent_AbilityDef");
+            PistolItemsProficiency.ViewElementDef.DisplayName1.LocalizationKey = "PR_BC_HANDGUN_ITEMS_PROF";
+            PistolItemsProficiency.ViewElementDef.Description = new LocalizedTextBind("PR_BC_HANDGUN_ITEMS_PROF_DESC"); //("Compétence permettant d'utiliser sans pénalités les Pistolets et armes de poings";// 
             //Sprite icon = Repo.GetAllDefs<ViewElementDef>().FirstOrDefault(ve => ve.name.Equals("E_View [NJ_Technician_MechArms_WeaponDef]")).LargeIcon;
             //mountedItemsProficiency.ViewElementDef.LargeIcon = icon;
             //mountedItemsProficiency.ViewElementDef.SmallIcon = icon;
@@ -531,6 +559,14 @@ namespace PRMBetterClasses.VariousAdjustments
         {
             bool hasArmor = true;
             bool hasWeapon = true;
+
+			if (TFTVMain.Main.Config.ApplyCalvitixChanges)
+            {
+                TFTVLogger.Always("No Armor for recruits (Calvitix change)...");
+                hasArmor = true; //Calvitix added, and reverted - otherwise, mercenaries don't get armors
+                hasWeapon = true; //Calvitix added
+	       	}
+
 
             GameDifficultyLevelDef easy = DefCache.GetDef<GameDifficultyLevelDef>("Easy_GameDifficultyLevelDef");
             GameDifficultyLevelDef standard = DefCache.GetDef<GameDifficultyLevelDef>("Standard_GameDifficultyLevelDef");

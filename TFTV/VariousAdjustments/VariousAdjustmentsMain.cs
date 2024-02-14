@@ -14,8 +14,8 @@ namespace PRMBetterClasses.VariousAdjustments
 {
     internal class VariousAdjustmentsMain
     {
-        private static readonly DefRepository Repo = TFTVMain.Repo;
-        private static readonly DefCache DefCache = TFTVMain.Main.DefCache;
+        private static DefRepository Repo = TFTVMain.Repo;
+        private static DefCache DefCache = TFTVMain.Main.DefCache;
 
         public static void ApplyChanges()
         {
@@ -23,6 +23,15 @@ namespace PRMBetterClasses.VariousAdjustments
             {
                 // Changes coding down from here
                 VariousAdjustments.ApplyChanges();
+            }
+            catch (Exception e)
+            {
+                TFTVLogger.Error(e);
+            }
+            try
+            {
+                // Changes coding down from here
+                //VariousAdjustments.ApplyChanges();
 
                 WeaponModifications.ApplyChanges();
 
@@ -40,7 +49,7 @@ namespace PRMBetterClasses.VariousAdjustments
             }
             catch (Exception e)
             {
-                PRMLogger.Error(e);
+                TFTVLogger.Error(e);
             }
         }
 

@@ -6979,7 +6979,7 @@ namespace TFTV
                 string nameDef = "Subject24_TacCharacerDef";
 
                 TacCharacterDef subject24 = Helper.CreateDefFromClone(DefCache.GetDef<TacCharacterDef>("NJ_Jugg_TacCharacterDef"), "A4F0335E-BF41-4175-8C28-7B0DE5352224", nameDef);
-                subject24.Data.Name = "Subject 24";
+                subject24.Data.Name = "Sujet 24"; //Calvitix Trad
 
 
                 TacticalItemDef juggBionicLeft = DefCache.GetDef<TacticalItemDef>("SY_Shinobi_BIO_LeftArm_BodyPartDef");
@@ -7750,16 +7750,50 @@ namespace TFTV
 
                 //Reduce all craft seating (except blimp) by 4 and create clones with previous seating
 
+                int CalvitixMoreSpace = 0;
+                if (TFTVMain.Main.Config.ApplyCalvitixChanges)
+                {
+
+                    CalvitixMoreSpace = 1;
+                    TFTVLogger.Always("Calvitix Adapt Mutag/Aspida Size, and +1 Slot in Aircrafts");
+
+
+                    //TacCharacterDef Aspida = DefCache.GetDef<TacCharacterDef>("SY_Aspida_CharacterTemplateDef");
+                    //Aspida.Volume = 2;
+
+
+                    foreach (TacCharacterDef tcDef in Repo.DefRepositoryDef.AllDefs.OfType<TacCharacterDef>().Where(d => d.IsMutog))
+                    {
+                        if (tcDef.name.Contains("CharacterTemplateDef"))
+                        {
+                            if (tcDef.name.Contains("Mutog"))
+                            {
+                                tcDef.Volume = 2;
+                            }
+                            else if (tcDef.name.Contains("Aspida"))
+                            {
+                                tcDef.Volume = 2;
+                            }
+
+                            TFTVLogger.Info($"[VehicleAdjustments_Apply] tcDef: {tcDef.name}, GUID: {tcDef.Guid}, Volume: {tcDef.Volume}");
+                        }
+                    }
+
+                }
+
                 GeoVehicleDef manticoreNew = Helper.CreateDefFromClone(manticore, "83A7FD03-DB85-4CEE-BAED-251F5415B82B", "PP_Manticore_Def_6_Slots");
-                manticore.BaseStats.SpaceForUnits = 2;
+                manticore.BaseStats.SpaceForUnits = 2+ CalvitixMoreSpace;
+                manticoreNew.BaseStats.SpaceForUnits = 6 + CalvitixMoreSpace;
                 GeoVehicleDef heliosNew = Helper.CreateDefFromClone(helios, "4F9026CB-EF42-44B8-B9C3-21181EC4E2AB", "SYN_Helios_Def_5_Slots");
-                helios.BaseStats.SpaceForUnits = 1;
+                helios.BaseStats.SpaceForUnits = 1+ CalvitixMoreSpace;
+                heliosNew.BaseStats.SpaceForUnits = 5 + CalvitixMoreSpace;
                 GeoVehicleDef thunderbirdNew = Helper.CreateDefFromClone(thunderbird, "FDE7F0C2-8BA7-4046-92EB-F3462F204B2B", "NJ_Thunderbird_Def_7_Slots");
-                thunderbird.BaseStats.SpaceForUnits = 3;
+                thunderbird.BaseStats.SpaceForUnits = 3+ CalvitixMoreSpace;
+                thunderbirdNew.BaseStats.SpaceForUnits = 7 + CalvitixMoreSpace;
                 GeoVehicleDef blimpNew = Helper.CreateDefFromClone(blimp, "B857B76D-BDDB-4CA9-A1CA-895A540B17C8", "ANU_Blimp_Def_12_Slots");
                 blimpNew.BaseStats.SpaceForUnits = 12;
                 GeoVehicleDef manticoreMaskedNew = Helper.CreateDefFromClone(manticoreMasked, "19B82FD8-67EE-4277-B982-F352A53ADE72", "PP_ManticoreMasked_Def_8_Slots");
-                manticoreMasked.BaseStats.SpaceForUnits = 4;
+                manticoreMasked.BaseStats.SpaceForUnits = 4 + CalvitixMoreSpace;
 
                 //Change Hibernation module
                 GeoVehicleModuleDef hibernationmodule = DefCache.GetDef<GeoVehicleModuleDef>("SY_HibernationPods_GeoVehicleModuleDef");
@@ -7886,7 +7920,12 @@ namespace TFTV
                 hard.RecruitCostPerLevelMultiplier = 0.3f;
 
                 //reducing evolution per day because there other sources of evolution points now
-                hard.EvolutionProgressPerDay = 50; //vanilla 70; moved from 60 in Update#6
+                hard.EvolutionProgressPerDay = 50; 
+                if (TFTVMain.Main.Config.ApplyCalvitixChanges)
+                {
+                	hard.EvolutionProgressPerDay = 40; 
+                	//Calvitix 50; //vanilla 70; moved from 60 in Update#6
+                } 
 
 
                 standard.NestLimitations.MaxNumber = 3; //vanilla 4
@@ -8564,6 +8603,11 @@ namespace TFTV
             {
                 HealFacilityComponentDef e_HealMedicalBay_PhoenixFacilityDe = DefCache.GetDef<HealFacilityComponentDef>("E_Heal [MedicalBay_PhoenixFacilityDef]");
                 e_HealMedicalBay_PhoenixFacilityDe.BaseHeal = 16;
+                if (TFTVMain.Main.Config.ApplyCalvitixChanges)
+                {
+                    e_HealMedicalBay_PhoenixFacilityDe.BaseHeal = 4; //Calvitix, to match 'reality', and a pool of soldiers more needed
+                }
+
                 PhoenixFacilityDef medbay = DefCache.GetDef<PhoenixFacilityDef>("MedicalBay_PhoenixFacilityDef");
                 medbay.ConstructionTimeDays = 1.5f;
                 medbay.ResourceCost = new ResourcePack
@@ -8571,6 +8615,54 @@ namespace TFTV
                     new ResourceUnit { Type = ResourceType.Materials, Value = 200 },
                     new ResourceUnit { Type = ResourceType.Tech, Value = 50 }
                 };
+
+                if (TFTVMain.Main.Config.ApplyCalvitixChanges)
+
+                {
+                    //Science
+                    ResearchDef PX_ProjectGlory = DefCache.GetDef<ResearchDef>("PX_ProjectGlory_ResearchDef");
+                    PX_ProjectGlory.ResearchCost = 700;
+
+                    TFTVLogger.Always("Apply Calvitix Changes for buildings...");
+
+                    ////Calvitix Other Changes : Material and Tech x2 for Buildings 
+                    float multipleCostMaterial = 2f;
+                    float multipleCostTech = 1.4f;
+
+                    List<String> PX_FacilityList = new List<String>
+                    {
+                        "FabricationPlant_PhoenixFacilityDef",
+                        "ArcheologyLab_PhoenixFacilityDef",
+                        "BionicsLab_PhoenixFacilityDef",
+                        "EnergyGenerator_PhoenixFacilityDef",
+                        "MedicalBay_PhoenixFacilityDef",
+                        "MutationLab_PhoenixFacilityDef",
+                        "ResearchLab_PhoenixFacilityDef",
+                        "VehicleBay_PhoenixFacilityDef",
+                        "SatelliteUplink_PhoenixFacilityDef",
+                        "MistRepeller_PhoenixFacilityDef"
+                    };
+
+                    foreach (String PX_FacilityStr in PX_FacilityList)
+                    {
+
+                        ////Plants Cost
+                        PhoenixFacilityDef PX_Facility = DefCache.GetDef<PhoenixFacilityDef>(PX_FacilityStr);
+                        ResourceUnit sav_resources0 = PX_Facility.ResourceCost[0];
+                        ResourceUnit sav_resources1 = PX_Facility.ResourceCost[1];
+                        //int savMaterialValue = PX_Facility.ResourceCost;
+                        PX_Facility.ResourceCost = new ResourcePack
+                        {
+                            new ResourceUnit { Type = sav_resources0.Type, Value = sav_resources0.Value * multipleCostMaterial },
+                            new ResourceUnit { Type = sav_resources1.Type, Value = (float)(Math.Round(sav_resources1.Value * multipleCostTech,0)) }
+                        };
+                        //PX_Facility.ResourceCost.Values[0].Value = PX_Facility.ResourceCost[0].Value * multipleCost;
+
+                    }
+                    //Medkit_EquipmentDef
+                    //      "field": "Weight",
+                    //"value": 1,
+                }
 
             }
             catch (Exception e)

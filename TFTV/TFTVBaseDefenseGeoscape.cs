@@ -1003,7 +1003,8 @@ namespace TFTV
                                     //    TFTVLogger.Always($"if {facility.Def.name} at {facility.GridPosition} is demolished, {baseFacility.Def.name} at {baseFacility.GridPosition} will lose connection to Hangar");
                                     __instance.DemolishFacilityBtn.SetInteractable(false);
                                     //  __instance.CanDemolish = false;
-                                    __instance.Description.text += "\n\n<b>Can't demolish this facility, as otherwise other facilities will be cut off from the Hangar!</b>";
+                                    __instance.Description.text += "\n\n<b>Cette installation ne peut être démolie, car elle fait le lien avec le Hangar !</b>";
+                                    //Calvitix __instance.Description.text += "\n\n<b>Can't demolish this facility, as otherwise other facilities will be cut off from the Hangar!</b>";
 
                                     return;
 

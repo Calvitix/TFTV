@@ -141,7 +141,8 @@ namespace TFTV
                 int adjectivesNumber = UnityEngine.Random.Range(0, TFTVHumanEnemiesNames.adjectives.Count());
                 UnityEngine.Random.InitState((int)Stopwatch.GetTimestamp());
                 int nounsNumber = UnityEngine.Random.Range(0, TFTVHumanEnemiesNames.nouns.Count());
-                string name = TFTVHumanEnemiesNames.adjectives[adjectivesNumber] + " " + TFTVHumanEnemiesNames.nouns[nounsNumber];
+                //Calvitix change string name = TFTVHumanEnemiesNames.adjectives[adjectivesNumber] + " " + TFTVHumanEnemiesNames.nouns[nounsNumber];
+                string name = TFTVHumanEnemiesNames.nouns[nounsNumber] + " " + TFTVHumanEnemiesNames.adjectives[adjectivesNumber];
                 TFTVLogger.Always("The gang names is" + name);
                 return name;
             }

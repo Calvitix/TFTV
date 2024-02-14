@@ -1394,13 +1394,30 @@ namespace TFTV
                 {
                     TFTVConfig config = TFTVMain.Main.Config;
 
+	                if 		(config.ApplyCalvitixChanges)
+	                {
+						//My way of playing
+	                    __result = 16; //Calvitix added
+	            	}
+	            	
                     if (VoidOmensCheck[7] && config.MoreMistVO)
                     {
                         __result += 1;
+						if (config.ApplyCalvitixChanges)
+		                {
+		
+		                    __result += 4; //Calvitix added
+		              }
                     }
                     if (VoidOmensCheck[4] && config.LimitedDeploymentVO)
                     {
                         __result -= 2;
+                        
+                        if (config.ApplyCalvitixChanges)
+                        {
+                            //My way of playing
+                            __result = 6; //Calvitix added
+                        }                        
                     }
                     if (__instance.Mission.MissionDef.name.Equals("StoryFS2_CustomMissionTypeDef"))
                     {
@@ -1410,6 +1427,12 @@ namespace TFTV
                     {
                         TFTVLogger.Always($"Base defense mission: setting max deployment to 9");
                         __result = 9;
+                        if (TFTVMain.Main.Config.ApplyCalvitixChanges)
+                        {
+
+                            __result += 8; //Calvitix added
+                        }
+
                     }
                 }
 
