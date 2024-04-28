@@ -22,6 +22,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Runtime.Remoting.Messaging;
 using UnityEngine;
 using static PhoenixPoint.Tactical.View.ViewModules.UIModuleCharacterStatus;
 using static PhoenixPoint.Tactical.View.ViewModules.UIModuleCharacterStatus.CharacterData;
@@ -343,7 +344,7 @@ namespace TFTV
 
             {
                 TacticalFaction phoenix = controller.GetFactionByCommandName("PX");
-                int difficultyLevel = TFTVReleaseOnly.DifficultyOrderConverter(controller.Difficulty.Order);
+                int difficultyLevel = TFTVSpecialDifficulties.DifficultyOrderConverter(controller.Difficulty.Order);
 
                 foreach (TacticalFaction faction in GetHumanEnemyFactions(controller))
                 {
@@ -492,7 +493,7 @@ namespace TFTV
             try
             {
                 TacticalFaction phoenix = controller.GetFactionByCommandName("PX");
-                int difficultyLevel = TFTVReleaseOnly.DifficultyOrderConverter(controller.Difficulty.Order);
+                int difficultyLevel = TFTVSpecialDifficulties.DifficultyOrderConverter(controller.Difficulty.Order);
 
                 foreach (TacticalFaction faction in GetHumanEnemyFactions(controller))
                 {
@@ -1047,7 +1048,7 @@ namespace TFTV
                 {
                     stats[0] = 0;
                     stats[1] = 0;
-                    stats[2] = difficulty + 1;
+                    stats[2] = Mathf.FloorToInt(difficulty / 2);
                 }
                 else if (classTagDef == priestTag || classTagDef == technicianTag)
                 {
@@ -1074,7 +1075,7 @@ namespace TFTV
 
         private static void AdjustStats(TacticalActor tacticalActor, GameTagDef classTagDef)
         {
-            int difficultyLevel = TFTVReleaseOnly.DifficultyOrderConverter(tacticalActor.TacticalLevel.Difficulty.Order);
+            int difficultyLevel = TFTVSpecialDifficulties.DifficultyOrderConverter(tacticalActor.TacticalLevel.Difficulty.Order);
 
             try
             {
@@ -1105,9 +1106,16 @@ namespace TFTV
                 tacticalActor.CharacterStats.Willpower.Set(5 + Mathf.FloorToInt(difficultyLevel / 2) + level + GetStatBuffForTier(tacticalActor) / 2 + classBuff[1] + equipmentBuff[1]);
 
 
-                //14+3+4+4 MAX SPD = 25 + armor
-                tacticalActor.CharacterStats.Speed.SetMax(14 + Mathf.CeilToInt(level / 2) + GetStatBuffForTier(tacticalActor) / 3 + classBuff[2] + equipmentBuff[2]);
-                tacticalActor.CharacterStats.Speed.Set(14 + Mathf.CeilToInt(level / 2) + GetStatBuffForTier(tacticalActor) / 3 + classBuff[2] + equipmentBuff[2]);
+                //14+3+4+4 MAX SPD = 25 + armor OLD
+                //NEW
+
+                //Rookie/Story Mode: 14 + 1 = 15 + armor
+                //Veteran: 14 + 2 + 1 = 17 + armor
+                //Hero: 14 + 3 + 1 = 18 + armor
+                //Legend: 14 + 4 + 2 = 20 + arnor
+                //ETERMES: 14 + 5 + 2 = 21 + armor
+                tacticalActor.CharacterStats.Speed.SetMax(14 + GetStatBuffForTier(tacticalActor) / 3 + classBuff[2] + equipmentBuff[2]);
+                tacticalActor.CharacterStats.Speed.Set(14 + GetStatBuffForTier(tacticalActor) / 3 + classBuff[2] + equipmentBuff[2]);
             }
 
             catch (Exception e)
@@ -1118,7 +1126,7 @@ namespace TFTV
 
         public static void AdjustStatsAndSkills(TacticalActor tacticalActor)
         {
-            int difficultyLevel = TFTVReleaseOnly.DifficultyOrderConverter(tacticalActor.TacticalLevel.Difficulty.Order);
+            int difficultyLevel = TFTVSpecialDifficulties.DifficultyOrderConverter(tacticalActor.TacticalLevel.Difficulty.Order);
 
             try
             {
@@ -1356,7 +1364,7 @@ namespace TFTV
 
         public static int GetStatBuffForTier(TacticalActor tacticalActor)
         {
-            int difficultyLevel = TFTVReleaseOnly.DifficultyOrderConverter(tacticalActor.TacticalLevel.Difficulty.Order);
+            int difficultyLevel = TFTVSpecialDifficulties.DifficultyOrderConverter(tacticalActor.TacticalLevel.Difficulty.Order);
 
             try
             {
@@ -1455,24 +1463,22 @@ namespace TFTV
                 {
                     foreach (TacticalFaction faction in enemyHumanFactions)
                     {
-                        foreach (TacticalActorBase tacticalActorBase in faction.Actors)
-                        {
-                            TacticalActor tacticalActor = tacticalActorBase as TacticalActor;
-
-                            if (tacticalActorBase.HasGameTag(HumanEnemyTier2GameTag))
+                        foreach (TacticalActor tacticalActor in faction.TacticalActors)
+                        { 
+                        
+                            if (tacticalActor.HasGameTag(HumanEnemyTier2GameTag) && tacticalActor.IsAlive && !tacticalActor.IsEvacuated)
                             {
-                                foreach (TacticalActorBase allyTacticalActorBase in faction.Actors)
+                                foreach (TacticalActor allyTacticalActor in faction.TacticalActors)
                                 {
-                                    if (allyTacticalActorBase.BaseDef.name == "Soldier_ActorDef" && allyTacticalActorBase.InPlay)
-                                    {
-                                        TacticalActor actor = allyTacticalActorBase as TacticalActor;
-                                        float magnitude = actor.GetAdjustedPerceptionValue();
+                                    if (allyTacticalActor.BaseDef.name == "Soldier_ActorDef" && allyTacticalActor.InPlay)
+                                    {                                    
+                                        float magnitude = allyTacticalActor.GetAdjustedPerceptionValue();
 
-                                        if ((allyTacticalActorBase.Pos - tacticalActorBase.Pos).magnitude < magnitude
-                                            && TacticalFactionVision.CheckVisibleLineBetweenActors(allyTacticalActorBase, allyTacticalActorBase.Pos, tacticalActor, true))
+                                        if ((allyTacticalActor.Pos - tacticalActor.Pos).magnitude < magnitude
+                                            && TacticalFactionVision.CheckVisibleLineBetweenActors(allyTacticalActor, allyTacticalActor.Pos, tacticalActor, true))
                                         {
                                             // TFTVLogger.Always("Actor in range and has LoS");
-                                            actor.CharacterStats.WillPoints.AddRestrictedToMax(1);
+                                            allyTacticalActor.CharacterStats.WillPoints.AddRestrictedToMax(1);
                                         }
                                     }
                                 }
@@ -1537,7 +1543,6 @@ namespace TFTV
             {
                 foreach (string faction in HumanEnemiesAndTactics.Keys)
                 {
-
                     if (HumanEnemiesAndTactics.GetValueSafe(faction) == 1)
                     {
                         TFTVLogger.Always("Applying tactic Terrifying Aura");
@@ -1818,7 +1823,20 @@ namespace TFTV
         {
             try
             {
-                return controller.Factions.FirstOrDefault(f => f.Faction.FactionDef.ShortNames.Contains(factionName)).TacticalActors.FirstOrDefault(ta => ta.HasGameTag(HumanEnemyTier1GameTag) && ta.IsAlive);
+                return controller.Factions.FirstOrDefault(f => f.Faction.FactionDef.ShortNames.Contains(factionName)).TacticalActors.FirstOrDefault(ta => ta.HasGameTag(HumanEnemyTier1GameTag) && ta.IsAlive && !ta.IsEvacuated);
+            }
+            catch (Exception e)
+            {
+                TFTVLogger.Error(e);
+                throw;
+            }
+        }
+
+        private static TacticalActor GetChampion(TacticalLevelController controller, string factionName)
+        {
+            try
+            {
+                return controller.Factions.FirstOrDefault(f => f.Faction.FactionDef.ShortNames.Contains(factionName)).TacticalActors.FirstOrDefault(ta => ta.HasGameTag(HumanEnemyTier2GameTag) && ta.IsAlive && !ta.IsEvacuated);
             }
             catch (Exception e)
             {

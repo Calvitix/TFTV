@@ -1,55 +1,70 @@
-Terror from the Void is an overhaul mod for Phoenix Point. If you think "Long War" you are right.
+Terror from the Void (TFTV)
 
-That Fork version is for the French Translation. All credits for the mod are for de Phoenix Rising Team, and the original mod
-can be found on Github at Voland163/TFTV
+Terror from the Void is an overhaul mod for Phoenix Point.
 
-'Terror from the Void' est un mod de Conversion complète pour Phoenix Point. Si vous pensez à "Long War", vous avez raison.
+REQUIRES ALL DLC
 
-Cette version est un 'fork' pour la traduction française. 
-Tous les crédits pour ce mod sont pour la Phoenix Rising Team, et le mod original peut être trouvé sur Github à Voland163/TFTV
+COMPATIBLE WITH SAVES FROM OPEN BETA
 
-NÉCESSITE TOUS LES DLC
+DO NOT USE BETTER ENEMIES OR BETTER VEHICLES AS BOTH ARE ALREADY INTEGRATED IN THE MOD.
 
-N'UTILISEZ PAS LES MOD 'BETTER ENNEMIS' OU 'BETTERS VÉHICULES' CAR ILS SONT DÉJÀ INTÉGRÉS DANS LE MOD.
+Installation
 
-Il s'agit d'un Open Beta/Early Access. Attendez-vous à des bugs et à des problèmes d'équilibre. Plus d'informations ci-dessous.
+Step 1: Get mod enabler https://github.com/SnapshotGames/PPModEnabler (Direct download link: https://github.com/SnapshotGames/PPModEnabler/releases/download/v.1.0/PPModEnabler.zip) 
 
-Caractéristiques
+Extract this PPModEnabler.zip file into the root folder of your Phoenix Point Installation. 
 
-- Améliore grandement le thème de Lovecraft/Horreur
-- Refonte de l'histoire, réécriture des textes, nouveaux personnages, nouveaux choix de dialogues, nouvelles récompenses.
-- Le délire onirique est de retour
-- Événements sombres (appelés Présages du Néant (Void Omens) dans le mod)
-- De Nouvelles menaces, nouveaux ennemis, nouveaux boss et nouveaux modificateurs tactiques
-- Révision complète des classes et rééquilibrage (Le Mod Better classes 2.0 fait partie de ce mod)
-- Rééquilibrage des objets, des armes et des compétences (faisant également partie de Better Classes)
-- Refonte majeure de presque tous les DLC
-- Vous pouvez choisir votre équipe de départ (voir configuration du mod)
-- Hautement configurable. Si vous n'aimez pas quelque chose, vous pouvez le désactiver.
-- Difficulté Légendaire digne de ce nom, et une version Etermes encore plus cauchemardesque
+Step 2: Get TFTV https://github.com/Voland163/TFTV/releases Get the latest release and extract TFTV.zip into the Mods folder in your Phoenix Point installation. 
 
-Beaucoup d'icônes proviennent des plus excellents https://game-icons.net/ Un grand merci aux auteurs !
+Step 3: Launch the game Launch Phoenix Point. There will be Mods option in the main menu. From there you can activate and customise TFTV. Then launch campaign in a usual way (New game from in-game main menu). 
 
-Bande-annonce : https://youtu.be/533Stk91HFY
-Présentation/Changelog TftV : https://drive.google.com/file/d/1OHhNJDZJe9hRcxnnDCIlSCLY9t5lwyvb/
-Presentation Better Classes : https://drive.google.com/file/d/19L8sXoFmxc2MsWlaHS_qMlxIQEpD5zmJ/
-Serveur TftV Discord : https://discord.gg/Ypt5p5trNx
-Wiki : http://wiki.phoenixpoint.com/Terror_from_the_Void
 
-BETA OUVERTE
+Common issues and how to solve them
 
-La bêta est complète pour la version 1.0 du développement. Mais certaines fonctionnalités sont encore inachevées car nous ne sommes pas certains de la direction à prendre. C'est pourquoi nous avons vraiment besoin de votre avis sur tout.
+- No Mods tab in Title page: If you have previously used Modnix, make sure it is reverted (run Modnix and click â€œRevertâ€). 
+- Error message on activating TFTV: exit the game to desktop and launch it again.
 
-Notez que ce mod change BEAUCOUP le jeu et nous nous attendons à ce que vous jouiez à un niveau de difficulté inférieur à celui que vous préférez pendant que vous apprenez les ficelles du jeu. Si vous jouez à LEGEND, ne vous plaignez pas que le jeu est trop difficile ou injuste.
+If you still have problems, or run into any bugs, please visit our Discord!
 
-ATTENTION
+Features
 
-TftV n'est PAS COMPATIBLE avec les mods de tierces parties qui modifient ou interfèrent avec : 
-- Les compétences et tout ce qui concerne vos classes de soldats
-- L'interface utilisateur, en particulier l'écran personnel et les objectifs du géopanorama
-- La recherche
-- Le coût des avions, les sièges et tout ce qui s'y rapporte
-- Les DLC (de quelque manière que ce soit)
-- Nombre maximum d'augmentations 
+- A complete reworking of the Phoenix Point campaign, with new characters, story, events and reports, and integrated and rationalised in-game lore, including a revamped Oneiric Delirium from the original release. Written by and for sci-fi horror fans!
+- Completely redesigned classes, focusing on sharply defined fighting roles and strong class identities, and on removing and rebalancing overpowered synergies from the vanilla classes.
+- Fight the nightmarish doubles and replicas of your deceased comrades! Revenants are special Pandoran combat forms invested with the mutilated consciousness of your fallen heroes â€“ they will hunt you relentlessly over the course of your campaign!
+- Modular campaign settings, with both very easy and nightmarishly difficult settings, and more than 20 toggles that allow you to fine tune your playthrough to your liking.
+- Total rework of Legacy of the Ancients; redesigned missions, automata, and ancient weapons, with unique mechanics and reworked lore integration.
+- Total rework of Kaos Engines; massively expanded marketplace that will now sell you faction research, rebalanced Kaos weaponry, and mercenary soldiers with unique gear and abilities! Vehicles and modules have undergone an extensive redesign, with a focus on expanding and specialising their roles over the course of a campaign.
+- All other DLCs have been rebalanced or reintegrated.
+- A series of UI changes and QOL improvements - loadable soldier loadouts, helmet visibility toggles, and more! 
+- A reworked final mission, with new mechanics and access to unique support troops depending on your factional alliances. 
+- Void Omens! Semi-randomised modifiers to your strategic campaign, that represent humanityâ€™s slide into a waking nightmare.
+- AI fixes, a stealth overhaul, over 50 vanilla bug fixes, and many, many more features. TERROR FROM THE VOID is a true reimagining of the vanilla experience from the ground up, made by fans who love Phoenix Point.
 
-TLDR : Tous les mods en dehors de ceux modifiant des aspects cosmétiques sont très susceptibles de causer des problèmes.
+
+Trailer:] https://youtu.be/C4zXqvap21U?si=N4q0mnOQZQYD8hT3
+TftV Discord Server: https://discord.gg/Ypt5p5trNx
+TftV Wiki: http://wiki.phoenixpoint.com/Terror_from_the_Void
+GitHubi: GitHub - Voland163/TFTV: Terror from the Void mod for Phoenix Point
+
+A lot of icons come from the most excellent https://game-icons.net/ Many thanks to the authors!
+
+ADVICE FOR NEW PLAYERS
+
+We have added 2 additional difficulties: STORY MODE (super easy mode) and ETERMES (impossibly hard). We have also re-balanced the difficulties in between so that LEGEND is very hard, and ROOKIE is very easy. If you are familiar with the base game and have beaten it on any difficulty level, for a first playthrough of TFTV we recommend playing one difficulty level below that. 
+
+If you are new to Phoenix Point then, 1) welcome!, and 2) try playing on Rookie or Veteran.
+
+You can also make for a more personalised difficulty setting by adjusting the different options on New Game start. Please note that while some options can be adjusted at any time in the Main Screen (Modsâ€”>TFTVâ€”>Settings), others can only be set when starting a new game.
+
+Please join our Discord to share and learn tactics, give feedback or submit bug-reports.
+
+THIRD PARTY MODS AND LOCALISATIONS
+
+TFTV is NOT COMPATIBLE with 3rd party mods; some of them will work, some wonâ€™t, sometimes it is possible to know if they do, sometimes it is not. 
+
+If you want to ensure that your mod is going to be compatible with TFTV, you can check our source code on GitHub (link above) and/or contact us on Discord (link above) if you need any help.
+
+Similarly, if you did a localisation for TFTV that you want to share, please also come over to our Discord and let us know about it so we can include it.
+
+
+If you feel like it, you can buy me a coffee at https://www.buymeacoffee.com/voland

@@ -1,14 +1,21 @@
 ﻿using Base.Core;
+using Base.UI.MessageBox;
 using HarmonyLib;
 using PhoenixPoint.Common.Core;
 using PhoenixPoint.Common.Entities;
 using PhoenixPoint.Common.Levels.Missions;
+using PhoenixPoint.Common.View.ViewModules;
 using PhoenixPoint.Geoscape.Core;
 using PhoenixPoint.Geoscape.Entities;
 using PhoenixPoint.Geoscape.Events;
 using PhoenixPoint.Geoscape.Events.Eventus;
 using PhoenixPoint.Geoscape.Levels;
+using PhoenixPoint.Geoscape.Levels.Factions;
+using PhoenixPoint.Geoscape.View.ViewModules;
+using PhoenixPoint.Geoscape.View.ViewStates;
 using System;
+using System.Collections.Generic;
+using System.Reflection;
 
 namespace TFTV
 {
@@ -23,11 +30,11 @@ namespace TFTV
                 try
                 {
                     TFTVLogger.Always($"GeoMission.ModifyMissionData invoked.");
-                   
+
                     TFTVCapturePandorans.CheckCaptureCapability(__instance);
-                    TFTVBaseDefenseTactical.Objectives.ModifyMissionDataBaseDefense(__instance, missionData);
+                    TFTVBaseDefenseGeoscape.Deployment.ModifyMissionDataBaseDefense(__instance, missionData);
                     TFTVVoidOmens.ModifyVoidOmenTacticalObjectives(missionData.MissionType);
-                    TFTVCapturePandorans.ModifyCapturePandoransTacticalObjectives(missionData.MissionType);          
+                    TFTVCapturePandorans.ModifyCapturePandoransTacticalObjectives(missionData.MissionType);
                     TFTVBaseDefenseTactical.Objectives.ModifyBaseDefenseTacticalObjectives(missionData.MissionType);
 
                     // __instance.GameController.SaveManager.IsSaveEnabled = true;
@@ -67,19 +74,8 @@ namespace TFTV
             {
                 try
                 {
-                 /*   TFTVLogger.Always($"trying to load event");
-                    TFTVLogger.Always($"event is {__instance.EventID} ");
-
-                    if (__instance.EventID.Contains("VoidOmen")) 
-                    {
-                        GeoLevelController component = GameUtl.CurrentLevel().GetComponent<GeoLevelController>();
-
-                        TFTVODIandVoidOmenRoll.GenerateVoidOmenEvent(component, TFTVODIandVoidOmenRoll.GenerateReportData(component), true, "", 15);   
-                    }*/
-
+                  
                     TFTVDiplomacyPenalties.ImplementDiplomaticPenalties(null, __instance);
-
-
                 }
 
                 catch (Exception e)
@@ -90,26 +86,16 @@ namespace TFTV
             }
         }
 
+
         [HarmonyPatch(typeof(GeoscapeEventSystem), "OnEventTriggered")]
         public static class GeoscapeEventSystem_OnGeoscapeEvent_patch
         {
-            public static bool Prefix(GeoscapeEventData @event, GeoscapeEventSystem __instance)// @event)
+            public static void Prefix(GeoscapeEventData @event, GeoscapeEventSystem __instance)// @event)
             {
                 try
                 {
-                    if (TFTVNewGameOptions.NoSecondChances && @event.EventID.Contains("FAIL") && @event.EventID!="PROG_FS1_FAIL")
-                    {
-
-                        TFTVLogger.Always($"Canceling event {@event.EventID} because No Second Chances is in effect!");
-
-                        return false;
-                    }
-
+                   
                     TFTVDiplomacyPenalties.ImplementDiplomaticPenalties(@event, null);
-
-
-                    return true; //TFTVInfestation.ScienceOfMadness.CancelProgFS3IfTrappedInMistAlreadyTriggered(@event, __instance);
-
                 }
 
 
@@ -124,12 +110,14 @@ namespace TFTV
         [HarmonyPatch(typeof(GeoscapeEvent), "CompleteEvent")]
         public static class GeoscapeEvent_CompleteEvent_patch
         {
-            public static void Postfix(GeoscapeEvent __instance, GeoFaction faction)
+            public static void Postfix(GeoscapeEvent __instance, GeoFaction faction, GeoEventChoice choice)
             {
                 try
                 {
+                    TFTVLogger.Always($"GeoscapeEvent.CompleteEvent for {__instance.EventID}");
+
                     TFTVDiplomacyPenalties.RestoreStateDiplomaticPenalties(__instance);
-                    
+                    TFTVBaseDefenseGeoscape.InitAttack.ContainmentBreach.CheckPurgeContainmentEvent(choice, __instance);
                 }
 
                 catch (Exception e)
@@ -141,6 +129,78 @@ namespace TFTV
             }
         }
 
+
+        [HarmonyPatch(typeof(GeoPhoenixFaction), "KillCapturedUnit")]
+        public static class GeoPhoenixFaction_KillCapturedUnit_patch
+        {
+            public static void Postfix(GeoPhoenixFaction __instance, GeoUnitDescriptor unit)
+            {
+                try
+                {
+                    //Removes from the list 
+                    TFTVBaseDefenseGeoscape.InitAttack.ContainmentBreach.CheckOnCaptiveDestroyed(unit);
+                    TFTVResearch.Vivisections.ResetResearch(unit, __instance);
+                }
+
+                catch (Exception e)
+                {
+                    TFTVLogger.Error(e);
+                    throw;
+                }
+
+            }
+        }
+
+
+        [HarmonyPatch(typeof(UIStateRosterAliens), "OnDismantleForFood")]
+        public static class UIStateRosterAliens_OnDismantleForFood_CapturePandorans_Patch
+        {
+            public static bool Prefix(UIStateRosterAliens __instance)
+            {
+                try
+                {
+                    GeoLevelController controller = GameUtl.CurrentLevel().GetComponent<GeoLevelController>();
+                    GeoPhoenixFaction phoenixFaction = controller.PhoenixFaction;
+
+
+                    UIModuleActorCycle actorCycleModule = controller.View.GeoscapeModules.ActorCycleModule;
+                    GeoUnitDescriptor unit = actorCycleModule.GetCurrent<GeoUnitDescriptor>();
+                    UIModuleGeneralPersonelRoster geoRosterModule = controller.View.GeoscapeModules.GeneralPersonelRosterModule;
+
+                    string warningText = "";
+
+                    if (TFTVNewGameOptions.LimitedHarvestingSetting)
+                    {
+                        warningText = TFTVCapturePandoransGeoscape.LimitedCapturingFoodHarvesting(__instance);
+                    }
+
+                    if (TFTVResearch.Vivisections.IsPandoranVivisectionRelevant(unit, phoenixFaction) && TFTVResearch.Vivisections.CountPandoranType(unit, phoenixFaction) == 1)
+                    {
+                        warningText = TFTVCommonMethods.ConvertKeyToString("KEY_VIVISECTION_WARNING");
+                    }
+
+                    if (warningText == "")
+                    {
+                        return true;
+                    }
+
+                    GameUtl.GetMessageBox().ShowSimplePrompt(warningText, MessageBoxIcon.Warning, MessageBoxButtons.YesNo, (msgResult) =>
+                    {
+                        // Invoke the callback method with the chosen result
+                        MethodInfo methodInfo = typeof(UIStateRosterAliens).GetMethod("OnDismantpleForFoodDialogCallback", BindingFlags.Instance | BindingFlags.NonPublic);
+                        methodInfo.Invoke(__instance, new object[] { msgResult });
+
+                    });
+
+                    return false;
+                }
+                catch (Exception e)
+                {
+                    TFTVLogger.Error(e);
+                    throw;
+                }
+            }
+        }
 
         [HarmonyPatch(typeof(GeoSite), "CreateHavenDefenseMission")]
         public static class GeoSite_CreateHavenDefenseMission_RevealHD_Patch
@@ -162,7 +222,7 @@ namespace TFTV
         }
 
         [HarmonyPatch(typeof(GeoFaction), "OnDiplomacyChanged")]
-        public static class GeoBehemothActor_OnDiplomacyChanged_patch
+        public static class GeoFaction_OnDiplomacyChanged_patch
         {
 
             public static void Postfix(GeoFaction __instance, PartyDiplomacy.Relation relation, int newValue)

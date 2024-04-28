@@ -56,7 +56,12 @@ namespace TFTV
         public bool NerfAncientsWeaponsTactical;
         public int ODILevel;
         public int internalDifficultyCheck;
-
+        public Dictionary<string, int> PandoransInContainment;
+        public Dictionary<string, int> PandoransInContainmentEscaped;
+        public bool ScyllaLoose;
+        public bool Breach;
+        public List<float> SecondaryStrikeForceCoordinates;
+        public int EtermesVulnerabilityResistanceTactical = TFTVNewGameOptions.EtermesResistanceAndVulnerability;
     }
 
     /// <summary>
@@ -73,7 +78,7 @@ namespace TFTV
                 TFTVBaseDefenseTactical.Map.Consoles.SpawnConsoles.PlaceObjectives(controller);
                 TFTVRescueVIPMissions.CheckAndImplementVIPRescueMIssions(controller);
                 TFTVPalaceMission.CheckPalaceMission();
-                TFTVAncients.CyclopsAbilities.CyclopsResistance.CheckCyclopsDefense();
+                TFTVAncients.CyclopsAbilities.CyclopsResistance.ResetCyclopsDefense();
                 TFTVAncientsGeo.AncientsResearch.CheckResearchStateOnGeoscapeEndAndOnTacticalStart(null);
             }
             catch (Exception e)
@@ -173,7 +178,8 @@ namespace TFTV
             ImplementConfigOptions(tacController);
             RunChecksForAllMissions(tacController);
             RunBetaTestChecks();
-          //  TFTVTacticalUtils.RevealAllSpawns(tacController);
+           
+           // TFTVTacticalUtils.RevealAllSpawns(tacController);
 
             TFTVLogger.Always("The count of Human tactics in play is " + TFTVHumanEnemies.HumanEnemiesAndTactics.Count);
             TFTVLogger.Always("VO3 Active " + TFTVVoidOmens.VoidOmensCheck[3]);
@@ -193,17 +199,9 @@ namespace TFTV
             TFTVLogger.Always($"Nerf ancients weapons {TFTVNewGameOptions.ImpossibleWeaponsAdjustmentsSetting}");
             TFTVLogger.Always($"Mission: {Controller.TacMission.MissionData.MissionType.name}");
             TFTVLogger.Always($"Current ODI level: {TFTVODIandVoidOmenRoll.CurrentODI_Level}");
-            TFTVLogger.Always($"Difficulty level is {tacController.Difficulty.name} and treated as {TFTVReleaseOnly.DifficultyOrderConverter(tacController.Difficulty.Order)} after TFTV conversion.");
+            TFTVLogger.Always($"Difficulty level is {tacController.Difficulty.name} and treated as {TFTVSpecialDifficulties.DifficultyOrderConverter(tacController.Difficulty.Order)} after TFTV conversion.");
+            TFTVLogger.Always($"Etermes vulnerability/resistance: {TFTVNewGameOptions.EtermesResistanceAndVulnerability}");
             TFTVLogger.Always("Tactical start completed");
-
-
-          /*  foreach(ActorComponent actorComponent in Controller.Map.FindAllActors()) 
-            {
-                TFTVLogger.Always($"{actorComponent.name} is TacticalActor? {actorComponent is TacticalActor}");
-            
-            
-            }*/
-
         }
 
         /// <summary>
@@ -272,6 +270,37 @@ namespace TFTV
                 TFTVNewGameOptions.StrongerPandoransSetting = data.StrongerPandoransTactical;
                 TFTVNewGameOptions.ImpossibleWeaponsAdjustmentsSetting = data.NerfAncientsWeaponsTactical;
                 TFTVNewGameOptions.InternalDifficultyCheckTactical = data.internalDifficultyCheck;
+                TFTVBaseDefenseTactical.Map.DeploymentZones.SecondaryStrikeForceVector = data.SecondaryStrikeForceCoordinates;
+
+                if (TFTVNewGameOptions.EtermesResistanceAndVulnerability == 0 && data.EtermesVulnerabilityResistanceTactical == 0 && TFTVNewGameOptions.InternalDifficultyCheckTactical == 6)
+                {
+                    TFTVLogger.Always($"Old Etermes game; setting TFTVNewGameOptions.EtermesResistanceAndVulnerability to 1");
+                    TFTVNewGameOptions.EtermesResistanceAndVulnerability = 1;
+                    data.EtermesVulnerabilityResistanceTactical = 1;
+                }
+                else if (TFTVNewGameOptions.EtermesResistanceAndVulnerability == 0 && data.EtermesVulnerabilityResistanceTactical == 0 && TFTVNewGameOptions.InternalDifficultyCheckTactical != 6)
+                {
+                    TFTVLogger.Always($"Old non-Etermes game; setting TFTVNewGameOptions.EtermesResistanceAndVulnerability to 2");
+                    TFTVNewGameOptions.EtermesResistanceAndVulnerability = 2;
+                    data.EtermesVulnerabilityResistanceTactical = 2;
+                }
+                else
+                {
+                    TFTVNewGameOptions.EtermesResistanceAndVulnerability = data.EtermesVulnerabilityResistanceTactical;
+                }
+
+                if (data.PandoransInContainment != null) 
+                {
+                    TFTVBaseDefenseTactical.PandoransInContainment = data.PandoransInContainment; 
+                }
+
+                if(data.PandoransInContainmentEscaped != null) 
+                {
+                    TFTVBaseDefenseTactical.PandoransInContainmentThatEscaoed = data.PandoransInContainmentEscaped;     
+                }
+
+                TFTVBaseDefenseTactical.Breach = data.Breach;
+                TFTVBaseDefenseTactical.ScyllaLoose = data.ScyllaLoose;
 
                 TFTVLogger.Always($"Config settings:" +                  
                     $"\nStrongerPandoransSetting {TFTVNewGameOptions.StrongerPandoransSetting}\nImpossibleWeaponsAdjustmentsSetting: {TFTVNewGameOptions.ImpossibleWeaponsAdjustmentsSetting}");
@@ -325,7 +354,14 @@ namespace TFTV
                 Update35TacticalCheck = TFTVNewGameOptions.Update35Check,
                 NerfAncientsWeaponsTactical = TFTVNewGameOptions.ImpossibleWeaponsAdjustmentsSetting,
                 StrongerPandoransTactical = TFTVNewGameOptions.StrongerPandoransSetting,
-                ODILevel = TFTVODIandVoidOmenRoll.CurrentODI_Level,    
+                ODILevel = TFTVODIandVoidOmenRoll.CurrentODI_Level,
+                PandoransInContainment = TFTVBaseDefenseTactical.PandoransInContainment,
+                PandoransInContainmentEscaped = TFTVBaseDefenseTactical.PandoransInContainmentThatEscaoed,
+                Breach = TFTVBaseDefenseTactical.Breach,
+                ScyllaLoose = TFTVBaseDefenseTactical.ScyllaLoose,
+                SecondaryStrikeForceCoordinates = TFTVBaseDefenseTactical.Map.DeploymentZones.SecondaryStrikeForceVector,
+                EtermesVulnerabilityResistanceTactical = TFTVNewGameOptions.EtermesResistanceAndVulnerability,
+
                 internalDifficultyCheck = Controller.Difficulty.Order,
 
                 TurnZeroMethodsExecuted = TurnZeroMethodsExecuted
@@ -377,6 +413,8 @@ namespace TFTV
                     }
 
                     
+                        TFTVTacticalUtils.RevealExfilPoint(Controller, turnNumber);
+                    
 
                     TFTVRevenant.revenantSpecialResistance.Clear();
                     TFTVTouchedByTheVoid.Umbra.UmbraTactical.SpawnUmbra(Controller);
@@ -387,8 +425,6 @@ namespace TFTV
                 else
                 {
                     TFTVLogger.Always($"Playing tutorial mission");
-
-
                 }
 
             }

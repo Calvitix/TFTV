@@ -12,6 +12,7 @@ using PhoenixPoint.Common.Entities.GameTagsTypes;
 using PhoenixPoint.Common.Levels.Missions;
 using PhoenixPoint.Geoscape.Core;
 using PhoenixPoint.Geoscape.Entities;
+using PhoenixPoint.Geoscape.Entities.Missions;
 using PhoenixPoint.Geoscape.Entities.Research;
 using PhoenixPoint.Geoscape.Entities.Sites;
 using PhoenixPoint.Geoscape.Levels;
@@ -46,6 +47,13 @@ namespace TFTV
         private static readonly TacticalFactionEffectDef defendersCanBeRecruited = DefCache.GetDef<TacticalFactionEffectDef>("CanBeRecruitedByPhoenix_FactionEffectDef");
         private static readonly GeoHavenZoneDef havenLab = DefCache.GetDef<GeoHavenZoneDef>("Research_GeoHavenZoneDef");
 
+
+        private static readonly GeoFactionDef nJFactionDef = DefCache.GetDef<GeoFactionDef>("NewJericho_GeoFactionDef");
+        private static readonly GeoFactionDef sYNFactionDef = DefCache.GetDef<GeoFactionDef>("Synedrion_GeoFactionDef");
+        private static readonly GeoFactionDef anuFactionDef = DefCache.GetDef<GeoFactionDef>("Anu_GeoFactionDef");
+
+        private static readonly PartyDiplomacySettingsDef partyDiplomacySettingsDef = DefCache.GetDef<PartyDiplomacySettingsDef>("PartyDiplomacySettingsDef");
+
         public static bool[] VoidOmensCheck = new bool[20];
 
         //VO#1 is harder ambushes
@@ -72,6 +80,8 @@ namespace TFTV
         {
             try
             {
+                TFTVLogger.Always($"ModifyVoidOmenTacticalObjectives invoked");
+
                 List<int> voidOmens = new List<int> { 3, 5, 7, 10, 14, 15, 16, 19 };
 
                 List<FactionObjectiveDef> listOfFactionObjectives = missionType.CustomObjectives.ToList();
@@ -85,12 +95,12 @@ namespace TFTV
                     if (objective.name.StartsWith("VOID_OMEN_TITLE_"))
                     {
                         int vo = int.Parse(objective.name.Substring("VOID_OMEN_TITLE_".Length));
-                        if (!TFTVVoidOmens.VoidOmensCheck[i])
+                        if (!VoidOmensCheck[i])
                         {
                             TFTVLogger.Always("Removing VO " + vo + " from faction objectives");
                             listOfFactionObjectives.RemoveAt(i);
                         }
-                        if (i == 5 && TFTVVoidOmens.VoidOmensCheck[i] && !missionType.Tags.Contains(havenDefense))
+                        if (i == 5 && VoidOmensCheck[i] && !missionType.Tags.Contains(havenDefense))
                         {
                             TFTVLogger.Always("Removing VO " + vo + " (hostile defenders) from faction objectives because not a haven defense mission");
                             listOfFactionObjectives.RemoveAt(i);
@@ -101,20 +111,20 @@ namespace TFTV
                 // Add faction objectives for void omens that are in play
                 foreach (int vo in voidOmens)
                 {
-                    if (TFTVVoidOmens.VoidOmensCheck[vo])
+                    if (VoidOmensCheck[vo])
                     {
                         if (vo != 5 || vo == 5 && missionType.Tags.Contains(havenDefense))
                         {
-
                             if (!listOfFactionObjectives.Any(o => o.name == "VOID_OMEN_TITLE_" + vo))
                             {
                                 TFTVLogger.Always("Adding VO " + vo + " to faction objectives");
                                 listOfFactionObjectives.Add(DefCache.GetDef<FactionObjectiveDef>("VOID_OMEN_TITLE_" + vo));
                             }
-
                         }
                     }
                 }
+
+                missionType.CustomObjectives = listOfFactionObjectives.ToArray();
 
             }
             catch (Exception e)
@@ -131,7 +141,7 @@ namespace TFTV
                 List<int> VoidOmensInPLay = new List<int>();
                 List<int> AlreadyRolledVoidOmens = new List<int>();
 
-                int difficulty = TFTVReleaseOnly.DifficultyOrderConverter(level.CurrentDifficultyLevel.Order);
+                int difficulty = TFTVSpecialDifficulties.DifficultyOrderConverter(level.CurrentDifficultyLevel.Order);
                 string voidOmen = "VoidOmen_";
 
                 for (int i = 0; i < CheckFordVoidOmensInPlay(level).Count(); i++)
@@ -302,16 +312,18 @@ namespace TFTV
                 }
                 if (CheckFordVoidOmensInPlay(controller).Contains(2))
                 {
-                    PartyDiplomacySettingsDef partyDiplomacySettingsDef = DefCache.GetDef<PartyDiplomacySettingsDef>("PartyDiplomacySettingsDef");
                     partyDiplomacySettingsDef.InfiltrationFactionMultiplier = 0.5f;
                     partyDiplomacySettingsDef.InfiltrationLeaderMultiplier = 0.75f;
+
+
                     VoidOmensCheck[2] = true;
                 }
                 else if (!CheckFordVoidOmensInPlay(controller).Contains(2) && VoidOmensCheck[2])
                 {
-                    PartyDiplomacySettingsDef partyDiplomacySettingsDef = DefCache.GetDef<PartyDiplomacySettingsDef>("PartyDiplomacySettingsDef");
+
                     partyDiplomacySettingsDef.InfiltrationFactionMultiplier = 1f;
                     partyDiplomacySettingsDef.InfiltrationLeaderMultiplier = 1.5f;
+
                     VoidOmensCheck[2] = false;
                     TFTVLogger.Always("The check for VO#2 went ok");
                 }
@@ -630,7 +642,7 @@ namespace TFTV
                     /*   GeoMarketplaceResearchOptionDef randomMarketResearch = DefCache.GetDef<GeoMarketplaceResearchOptionDef>("Random_MarketplaceResearchOptionDef");
                        randomMarketResearch.MaxPrice = 1200;
                        randomMarketResearch.MinPrice = 960;*/
-                    TFTVChangesToDLC5.ForceMarketPlaceUpdate();
+                  //  TFTVChangesToDLC5.ForceMarketPlaceUpdate();
                     // Logger.Always(voidOmen + j + " is now in effect, held in variable " + voidOmen + i);
                     VoidOmensCheck[19] = true;
                 }
@@ -641,7 +653,7 @@ namespace TFTV
                         randomMarketResearch.MinPrice = 1200;*/
 
                     VoidOmensCheck[19] = false;
-                    TFTVChangesToDLC5.ForceMarketPlaceUpdate();
+                  //  TFTVChangesToDLC5.ForceMarketPlaceUpdate();
                     TFTVLogger.Always("The check for VO#19 went ok");
 
 
@@ -650,7 +662,7 @@ namespace TFTV
                 List<int> VoidOmensInPLay = new List<int>();
                 List<int> AlreadyRolledVoidOmens = new List<int>();
 
-                int difficulty = TFTVReleaseOnly.DifficultyOrderConverter(controller.CurrentDifficultyLevel.Order);
+                int difficulty = TFTVSpecialDifficulties.DifficultyOrderConverter(controller.CurrentDifficultyLevel.Order);
 
                 for (int i = 0; i < CheckFordVoidOmensInPlay(controller).Count(); i++)
                 {
@@ -837,7 +849,7 @@ namespace TFTV
         {
             try
             {
-                int difficulty = TFTVReleaseOnly.DifficultyOrderConverter(geoLevelController.CurrentDifficultyLevel.Order);
+                int difficulty = TFTVSpecialDifficulties.DifficultyOrderConverter(geoLevelController.CurrentDifficultyLevel.Order);
                 string voidOmen = "VoidOmen_";
 
                 // An array to record which variables hold which Void Omens
@@ -878,7 +890,7 @@ namespace TFTV
                     string triggeredVoidOmensString = "TriggeredVoidOmen_";
                     string voidOmenTitleString = "VOID_OMEN_TITLE_";
                     string voidOmenString = "VoidOmen_";
-                    int difficulty = TFTVReleaseOnly.DifficultyOrderConverter(geoLevelController.CurrentDifficultyLevel.Order);
+                    int difficulty = TFTVSpecialDifficulties.DifficultyOrderConverter(geoLevelController.CurrentDifficultyLevel.Order);
 
                     GeoFactionObjective earliestVO = geoLevelController.PhoenixFaction.Objectives?.FirstOrDefault(o => o.Title.LocalizationKey.Contains(voidOmenTitleString));
 
@@ -963,7 +975,7 @@ namespace TFTV
                 string voidOmenTitleString = "VOID_OMEN_TITLE_";
                 string voidOmenString = "VoidOmen_";
                 int[] voidOmensinPlay = CheckFordVoidOmensInPlay(geoLevelController);
-                int difficulty = TFTVReleaseOnly.DifficultyOrderConverter(geoLevelController.CurrentDifficultyLevel.Order);
+                int difficulty = TFTVSpecialDifficulties.DifficultyOrderConverter(geoLevelController.CurrentDifficultyLevel.Order);
 
                 List<GeoFactionObjective> allVoidOmenObjectives = FindVoidOmenObjectives(geoLevelController);
 
@@ -1327,7 +1339,7 @@ namespace TFTV
 
                     if (VoidOmensCheck[7] && config.MoreMistVO)
                     {
-                        int difficultyLevel = TFTVReleaseOnly.DifficultyOrderConverter(__instance.TacticalLevel.Difficulty.Order);
+                        int difficultyLevel = TFTVSpecialDifficulties.DifficultyOrderConverter(__instance.TacticalLevel.Difficulty.Order);
 
                         MissionTagDef nestAssaultTag = DefCache.GetDef<MissionTagDef>("MissionTypeAlienNestAssault_MissionTagDef");
                         MissionTagDef lairAssaultTag = DefCache.GetDef<MissionTagDef>("MissionTypeAlienLairAssault_MissionTagDef");
@@ -1522,7 +1534,7 @@ namespace TFTV
                 {
                     TFTVLogger.Always("Lair or Citadal destroyed");
                     if (alienBase.AlienBaseTypeDef.Keyword == "lair" || alienBase.AlienBaseTypeDef.Keyword == "citadel"
-                        || (alienBase.AlienBaseTypeDef.Keyword == "nest" && TFTVReleaseOnly.DifficultyOrderConverter(__instance.GeoLevel.CurrentDifficultyLevel.Order) == 1))
+                        || (alienBase.AlienBaseTypeDef.Keyword == "nest" && TFTVSpecialDifficulties.DifficultyOrderConverter(__instance.GeoLevel.CurrentDifficultyLevel.Order) == 1))
                     {
                         TFTVLogger.Always("Lair or Citadal destroyed, Void Omen should be removed and Void Omen event triggered");
 
@@ -1540,6 +1552,32 @@ namespace TFTV
                 }
             }
         }
+
+        //VO2 apply penalty to diplo reward from sabotage missions
+        [HarmonyPatch(typeof(GeoSabotageZoneMission), "AddFactionRequestReward")]
+        public static class TFTV_GeoSabotageZoneMission_AddFactionRequestReward
+        {
+            public static void Postfix(GeoSabotageZoneMission __instance, ref MissionRewardDescription reward)
+            {
+                try
+                {
+                    if (TFTVVoidOmens.CheckFordVoidOmensInPlay(__instance.Level).Contains(2))
+                    {
+                        foreach (FactionAggressionRequest factionRequest in __instance.FactionRequests)
+                        {
+                            reward.SetDiplomacyChange(__instance.Site.GeoLevel.GetFaction(factionRequest.FromFaction), __instance.Site.GeoLevel.ViewerFaction, (int)(factionRequest.FactionDiplomacyReward * 0.5f));
+                        }
+                    }
+                }
+                catch (Exception e)
+                {
+                    TFTVLogger.Error(e);
+                    throw;
+                }
+            }
+        }
+
+
 
         //VO5 increase chance to spawn weapons in crates
         [HarmonyPatch(typeof(GeoMission), "PrepareTacticalGame")]
@@ -1710,10 +1748,7 @@ namespace TFTV
                             // TFTVLogger.Always("FactionObjective check passed");
                             __result = FactionObjectiveState.InProgress;
                         }
-
                     }
-
-
                 }
                 catch (Exception e)
                 {

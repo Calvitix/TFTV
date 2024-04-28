@@ -372,7 +372,7 @@ namespace TFTV
 
             internal class CyclopsResistance
             {
-                public static void CheckCyclopsDefense()
+                public static void ResetCyclopsDefense()
                 {
                     try
                     {
@@ -382,18 +382,26 @@ namespace TFTV
                         {
                             float baseMultiplier = 0.5f;
 
-                            if (TFTVSpecialDifficulties.CheckTacticalSpecialDifficultySettings(controller) == 2)
+                          /*  if (TFTVSpecialDifficulties.CheckTacticalSpecialDifficultySettings(controller) == 2)
                             {
                                 baseMultiplier = 0.25f; //adjusted on 22/12 from 0.0f
-                            }
+                            }*/
 
                             IEnumerable<TacticalActor> allHoplites = from x in controller.Map.GetActors<TacticalActor>()
                                                                      where x.HasGameTag(hopliteTag)
                                                                      where x.IsAlive
                                                                      select x;
 
+
+
                             int deadHoplites = allHoplites.Where(h => h.IsDead).Count();
                             float proportion = ((float)deadHoplites / (float)(allHoplites.Count()));
+
+                            if (allHoplites.Count() == 0) 
+                            {
+                                proportion = 1;                           
+                            }
+
                             CyclopsDefenseStatus.Multiplier = baseMultiplier + proportion * 0.5f; //+ HoplitesKilled * 0.1f;
                             TFTVLogger.Always($"There are {allHoplites.Count()} hoplites in total, {deadHoplites} are dead. Proportion is {proportion} and base multiplier is {baseMultiplier}. Cyclops Defense level is {CyclopsDefenseStatus.Multiplier}");
                         }
@@ -412,10 +420,10 @@ namespace TFTV
                         {
                             float baseMultiplier = 0.5f;
 
-                            if (TFTVSpecialDifficulties.CheckTacticalSpecialDifficultySettings(controller) == 2)
+                          /*  if (TFTVSpecialDifficulties.CheckTacticalSpecialDifficultySettings(controller) == 2)
                             {
-                                baseMultiplier = 0.0f;
-                            }
+                                baseMultiplier = 0.25f;
+                            }*/
 
                             List<TacticalActor> allHoplites = actor.TacticalFaction.TacticalActors.Where(ta => ta.HasGameTag(hopliteTag)).ToList();
                             int deadHoplites = allHoplites.Where(h => h.IsDead).Count();
@@ -1064,31 +1072,50 @@ namespace TFTV
 
                             TFTVLogger.Always($"{actor.name} has spare parts, making repairs");
 
-                            actor.Status.Statuses.Remove(actor.Status.GetStatusByName(AddAutoRepairStatusAbility.EffectName));
+                            actor.Status.Statuses.Remove(actor.Status.GetStatusByName(AddAutoRepairStatusAbility.EffectName));                       
 
                             if (Bodyparts[0] == null)
                             {
                                 actor.Equipments.AddItem(BeamHead);
+                                TFTVLogger.Always($"adding head to {actor.name}");
                             }
                             else if (Bodyparts[1] == null && Bodyparts[2] != null && Bodyparts[2].TacticalItemDef == LeftCrystalShield)
                             {
                                 actor.Equipments.AddItem(RightDrill);
+                                TFTVLogger.Always($"adding drill to {actor.name}");
                             }
                             else if (Bodyparts[1] == null && Bodyparts[2] != null && Bodyparts[2].TacticalItemDef == LeftShield)
                             {
                                 actor.Equipments.AddItem(RightShield);
+                                TFTVLogger.Always($"adding right shield to {actor.name}");
                             }
                             else if (Bodyparts[2] == null && Bodyparts[1] != null && Bodyparts[1].TacticalItemDef == RightDrill)
                             {
                                 actor.Equipments.AddItem(LeftCrystalShield);
+                                TFTVLogger.Always($"adding crystal shield to {actor.name}");
                             }
                             else if (Bodyparts[2] == null && Bodyparts[1] != null && Bodyparts[1].TacticalItemDef == RightShield)
                             {
+                                TFTVLogger.Always($"adding left shield to {actor.name}");
                                 actor.Equipments.AddItem(LeftShield);
                             }
+                            else if(Bodyparts[1] == null && Bodyparts[2] == null)
+                            {
+                                UnityEngine.Random.InitState((int)Stopwatch.GetTimestamp());
+                                int num = UnityEngine.Random.Range(0, 2);
 
+                                if (num == 0) 
+                                {
+                                    actor.Equipments.AddItem(LeftCrystalShield);
+                                    TFTVLogger.Always($"adding left crystal shield to {actor.name}");
+                                }
+                                else 
+                                {
+                                    actor.Equipments.AddItem(LeftShield);
+                                    TFTVLogger.Always($"adding left shield to {actor.name}");
+                                }                           
+                            }
                         }
-
                     }
 
                 }
@@ -1277,15 +1304,15 @@ namespace TFTV
                     if (controller.Factions.Any(f => f.Faction.FactionDef.MatchesShortName("anc")))
                     {
                         faction = controller.GetFactionByCommandName("anc");
-                        countUndamagedGuardians = AncientsEncounterCounter + TFTVReleaseOnly.DifficultyOrderConverter(controller.Difficulty.Order);
+                        countUndamagedGuardians = AncientsEncounterCounter + TFTVSpecialDifficulties.DifficultyOrderConverter(controller.Difficulty.Order);
                     }
                     else
                     {
                         faction = controller.GetFactionByCommandName("px");
-                        countUndamagedGuardians = 8 - TFTVReleaseOnly.DifficultyOrderConverter(controller.Difficulty.Order);
+                        countUndamagedGuardians = 8 - TFTVSpecialDifficulties.DifficultyOrderConverter(controller.Difficulty.Order);
                     }
 
-                    CyclopsAbilities.CyclopsResistance.CheckCyclopsDefense();
+                    CyclopsAbilities.CyclopsResistance.ResetCyclopsDefense();
                     //CyclopsDefenseStatus.Multiplier = 0.5f;
 
                     List<TacticalActor> damagedGuardians = new List<TacticalActor>();

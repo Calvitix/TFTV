@@ -72,7 +72,7 @@ namespace TFTV
                 KeepSoldiersAliveFactionObjectiveDef containmentPresent = DefCache.GetDef<KeepSoldiersAliveFactionObjectiveDef>("CAPTURE_CAPACITY_BASE");
                 KeepSoldiersAliveFactionObjectiveDef aircraftCapture = DefCache.GetDef<KeepSoldiersAliveFactionObjectiveDef>("CAPTURE_CAPACITY_AIRCRAFT");
 
-                if (TFTVCapturePandorans.ContainmentFacilityPresent)
+                if (ContainmentFacilityPresent)
                 {
                     if (!listOfFactionObjectives.Contains(containmentPresent))
                     {
@@ -86,9 +86,9 @@ namespace TFTV
                         listOfFactionObjectives.Remove(containmentPresent);
                     }
                 }
-                if (TFTVCapturePandorans.AircraftCaptureCapacity < 0)
+                if (AircraftCaptureCapacity < 0)
                 {
-                    TFTVLogger.Always($"AircraftCaptureCapacity is {TFTVCapturePandorans.AircraftCaptureCapacity}");
+                    TFTVLogger.Always($"AircraftCaptureCapacity is {AircraftCaptureCapacity}");
 
                     if (listOfFactionObjectives.Contains(aircraftCapture))
                     {
@@ -219,7 +219,6 @@ namespace TFTV
                                     pxBase.Layout.Facilities.
                                     Where(f => f.Def.Equals(containmentFacility)).
                                     Any(f => f.State == GeoPhoenixFacility.FacilityState.Functioning && f.State != GeoPhoenixFacility.FacilityState.Damaged))
-
                                 {
 
                                     TFTVLogger.Always($"This is a Phoenix base mission, and there is a functioning Containment Facility, so capture capacity is not limited");

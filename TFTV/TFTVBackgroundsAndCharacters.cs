@@ -101,7 +101,7 @@ namespace TFTV
 
                     if (__instance.Title != null && __instance.Title.LocalizationKey.Contains("VOID_OMEN_TITLE_"))
                     {
-                        __result = TFTVDefsRequiringReinjection.VoidIcon;
+                        __result = Helper.CreateSpriteFromImageFile("Void-04P.png");
                     }
 
                 }
@@ -206,6 +206,9 @@ namespace TFTV
                         TFTVVoidOmens.RemoveAllVoidOmens(context.Level);
                         __instance.TriggerGeoscapeEvent("AlistairRoads", context);
                         TFTVDelirium.RemoveDeliriumFromAllCharactersWithoutMutations(context.Level);
+                        TFTVBehemothAndRaids.behemothScenicRoute.Clear();
+                        TFTVBehemothAndRaids.targetsForBehemoth.Clear();
+                        TFTVBehemothAndRaids.flyersAndHavens.Clear();
                     }
                     else if (eventId == "Helena_Oneiromancy")
                     {
@@ -343,7 +346,11 @@ namespace TFTV
                     {
                         __result.EventLeader = GetRightPXCharacterPic(controller, "Helena");
                     }
-
+                    else if (geoEvent.EventID.Equals("OlenaLooseScylla"))
+                    {
+                        __result.EventLeader = GetRightPXCharacterPic(controller, "Olena");
+                        __result.EventBackground = Helper.CreateSpriteFromImageFile("BD_LooseScylla_hint.jpg");
+                    }
                     else if (geoEvent.EventID.Equals("SDI_02"))
                     {
                         __result.EventBackground = Helper.CreateSpriteFromImageFile("odi2.jpg");//AlistairOffice;
@@ -528,7 +535,7 @@ namespace TFTV
                     else if (geoEvent.EventID.Equals("Helena_Echoes") || geoEvent.EventID.Equals("Helena_Oneiromancy") || geoEvent.EventID.Equals("Helena_Can_Build_Cyclops"))
                     {
                         __result.EventLeader = GetRightPXCharacterPic(controller, "Helena");
-                        __result.EventBackground = Helper.CreateSpriteFromImageFile("background_office.jpg");//HelenaOffice;
+                        __result.EventBackground = Helper.CreateSpriteFromImageFile("helena_lab.jpg");//HelenaOffice;
                     }
                     else if (geoEvent.EventID.Equals("Helena_Beast"))
                     {
@@ -562,8 +569,9 @@ namespace TFTV
                     {
                         __result.EventLeader = GetRightPXCharacterPic(controller, "Alistair");
 
-                        __result.EventBackground = Helper.CreateSpriteFromImageFile("background_alistair_office.jpg");//AlistairOffice;
+                        __result.EventBackground = Helper.CreateSpriteFromImageFile("food_processing.jpg");//AlistairOffice;
                     }
+                    
 
                 }
                 catch (Exception e)

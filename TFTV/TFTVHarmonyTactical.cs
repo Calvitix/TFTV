@@ -3,11 +3,16 @@ using Base.Entities.Statuses;
 using HarmonyLib;
 using PhoenixPoint.Common.Entities.GameTags;
 using PhoenixPoint.Common.Entities.GameTagsTypes;
+using PhoenixPoint.Common.Levels.ActorDeployment;
 using PhoenixPoint.Tactical.Entities;
 using PhoenixPoint.Tactical.Entities.Abilities;
 using PhoenixPoint.Tactical.Entities.DamageKeywords;
+using PhoenixPoint.Tactical.Entities.Statuses;
 using PhoenixPoint.Tactical.Levels;
+using PhoenixPoint.Tactical.Levels.ActorDeployment;
+using PhoenixPoint.Tactical.Levels.Destruction;
 using PhoenixPoint.Tactical.Levels.Missions;
+using PhoenixPoint.Tactical.Levels.Mist;
 using PhoenixPoint.Tactical.View.ViewControllers;
 using System;
 using System.Collections.Generic;
@@ -61,10 +66,6 @@ namespace TFTV
                     }
 
                     TFTVBaseDefenseTactical.PandoranTurn.ImplementBaseDefenseVsAliensPostAISortingOut(__instance);
-                    //  TFTVPalaceMission.PalaceReinforcements(__instance);
-
-                    //   TFTVPalaceMission.PalaceTacticalNewTurn(__instance);
-
                 }
                 catch (Exception e)
                 {
@@ -170,6 +171,26 @@ namespace TFTV
         }
 
 
+        
+
+        [HarmonyPatch(typeof(TacticalActorBase), "ApplyDamage")]
+        public static class TFTV_TacticalActorBase_ApplyDamage_Patch
+        {
+            public static void Postfix(TacticalActorBase __instance)
+            {
+                try
+                {        
+                    TFTVBaseDefenseTactical.Map.Containment.CheckDamageContainment(__instance);
+                }
+                catch (Exception e)
+                {
+                    TFTVLogger.Error(e);
+                }
+            }
+        }
+
+
+
 
         [HarmonyPatch(typeof(TacticalLevelController), "ActorDamageDealt")]
         public static class TFTV_TacticalLevelController_ActorDamageDealt_Patch
@@ -259,7 +280,7 @@ namespace TFTV
                 //Postfix checks for relevant GameTags then saves and zeroes the WPWorth of the dying actor before main method is executed.
 
                 GameTagsList<GameTagDef> RelevantTags = new GameTagsList<GameTagDef> { cyclopsTag, hopliteTag, HumanEnemyTier4GameTag, HumanEnemyTier2GameTag, HumanEnemyTier1GameTag };
-                if (__instance.TacticalFaction == death.Actor.TacticalFaction && death.Actor.HasGameTags(RelevantTags, false))
+                if (__instance.TacticalFaction == death.Actor.TacticalFaction && (death.Actor.HasGameTags(RelevantTags, false)||death.Actor.Status.HasStatus<MindControlStatus>()))
                 {
                     __state = death.Actor.TacticalActorBaseDef.WillPointWorth;
                     death.Actor.TacticalActorBaseDef.WillPointWorth = 0;
@@ -275,16 +296,11 @@ namespace TFTV
                 {
                     foreach (GameTagDef Tag in death.Actor.GameTags)
                     {
-                        if (Tag == cyclopsTag || Tag == hopliteTag)
+                        if (Tag == cyclopsTag || Tag == hopliteTag || Tag == HumanEnemyTier4GameTag || death.Actor.Status.HasStatus<MindControlStatus>())
                         {
                             //Death has no effect on allies
                             death.Actor.TacticalActorBaseDef.WillPointWorth = __state;
-                        }
-                        else if (Tag == HumanEnemyTier4GameTag)
-                        {
-                            //Death has no effect on allies
-                            death.Actor.TacticalActorBaseDef.WillPointWorth = __state;
-                        }
+                        }       
                         else if (Tag == HumanEnemyTier2GameTag)
                         {
                             //Allies lose 3WP
@@ -300,14 +316,28 @@ namespace TFTV
 
                     }
                 }
+            }
+        }
 
 
+        [HarmonyPatch(typeof(TacParticipantSpawn), "GetEligibleDeployZones")]
+        public static class TFTV_TacParticipantSpawn_GetEligibleDeployZones_patch
+        {
+            public static IEnumerable<TacticalDeployZone> Postfix(IEnumerable<TacticalDeployZone> results, TacParticipantSpawn __instance, IEnumerable<TacticalDeployZone> zones, ActorDeployData deployData, int turnNumber, bool includeFutureTurns)
+            {
+               
+                results = TFTVBaseDefenseTactical.StartingDeployment.PlayerDeployment.CullPlayerDeployZonesBaseDefense(results, deployData, turnNumber, __instance.TacMission.MissionData.MissionType, __instance.TacticalFaction.TacticalLevel);
+                results = TFTVBehemothAndRaids.Behemoth.BehemothMission.CullPlayerDeployZonesBehemoth(results, deployData, turnNumber, __instance.TacMission.MissionData.MissionType);
+
+                foreach (TacticalDeployZone zone in results)
+                {
+                    yield return zone;
+                }
             }
         }
 
 
         [HarmonyPatch(typeof(TacMission), "InitDeployZones")]
-
         public static class TFTV_TacMission_InitDeployZones_patch
         {
             public static void Postfix(TacMission __instance)
@@ -342,6 +372,7 @@ namespace TFTV
                     TFTVPalaceMission.Gates.CheckIfPlayerCloseToGate(__instance);
                     TFTVChangesToDLC5.TFTVMercenaries.Tactical.SlugHealTraumaEffect(ability, __instance);
                     TFTVArtOfCrab.GetBestWeaponForOWRF(__instance);
+                    TFTVExperimental.CheckSquashing(ability, __instance);
                 }
 
                 catch (Exception e)
@@ -362,6 +393,7 @@ namespace TFTV
                 try
                 {
                     TFTVVoxels.TFTVFire.CheckFireQuencherTouchingFire(__instance);
+                    TFTVVoxels.TFTVGoo.CheckActorTouchingGoo(__instance);
                 }
 
                 catch (Exception e)
@@ -390,7 +422,34 @@ namespace TFTV
             }
         }
 
+        [HarmonyPatch(typeof(TacticalActorBase), "get_DisplayName")]
+        public static class TacticalActorBase_GetDisplayName_RevenantGenerator_Patch
+        {
+            public static void Postfix(TacticalActorBase __instance, ref string __result)
+            {
+                try
+                {
+                    string revenantName = TFTVRevenant.UIandFX.DisplayRevenantName(__instance);
 
+                    if (revenantName != "")
+                    {
+                        __result = revenantName;
+                    }
+
+                    string escapedPandoranName = TFTVBaseDefenseTactical.DisplayEscapedPandoranName(__instance);
+
+                    if (escapedPandoranName != "")
+                    {
+                        __result += escapedPandoranName;
+                    }
+                }
+
+                catch (Exception e)
+                {
+                    TFTVLogger.Error(e);
+                }
+            }
+        }
 
     }
 }

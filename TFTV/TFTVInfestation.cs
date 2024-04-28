@@ -127,7 +127,7 @@ namespace TFTV
                                 string infestationStory0 = TFTVCommonMethods.ConvertKeyToString("KEY_INFESTATION_STORY0");
                                 string infestationStory1 = TFTVCommonMethods.ConvertKeyToString("KEY_INFESTATION_STORY1");
 
-                                string text = $"{director} {characterName} {infestationStory0} {__instance.Site.LocalizedSiteName}{infestationStory1}";
+                                string text = $"{director}, {characterName} {infestationStory0} {__instance.Site.LocalizedSiteName}{infestationStory1}";
 
                                // _nameOfTopCharacter = characterName;
 
@@ -305,7 +305,7 @@ namespace TFTV
                             IGeoFactionMissionParticipant attacker = DefenseMission.GetEnemyFaction();
                             if (roll == 0)
                             {
-                                roll = UnityEngine.Random.Range(1, 7 + TFTVReleaseOnly.DifficultyOrderConverter(__instance.GeoLevel.CurrentDifficultyLevel.Order));
+                                roll = UnityEngine.Random.Range(1, 7 + TFTVSpecialDifficulties.DifficultyOrderConverter(__instance.GeoLevel.CurrentDifficultyLevel.Order));
                                 TFTVLogger.Always("Infestation roll is " + roll);
                             }
 

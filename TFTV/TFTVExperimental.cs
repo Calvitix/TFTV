@@ -1,25 +1,852 @@
 ﻿using Base;
+using Base.Core;
 using Base.Defs;
-using Base.Rendering.ObjectRendering;
+using Base.Entities.Statuses;
+using Code.PhoenixPoint.Tactical.Entities.Equipments;
 using HarmonyLib;
+using PhoenixPoint.Common.ContextHelp;
 using PhoenixPoint.Common.Core;
-using PhoenixPoint.Geoscape.Entities.Research;
+using PhoenixPoint.Common.Entities;
+using PhoenixPoint.Common.Entities.Addons;
+using PhoenixPoint.Common.Entities.Characters;
+using PhoenixPoint.Common.Entities.GameTags;
+using PhoenixPoint.Common.Entities.Items;
+using PhoenixPoint.Geoscape.Entities;
+using PhoenixPoint.Geoscape.Entities.Abilities;
+using PhoenixPoint.Geoscape.Entities.PhoenixBases;
+using PhoenixPoint.Geoscape.Entities.Research.Requirement;
+using PhoenixPoint.Geoscape.Levels;
+using PhoenixPoint.Tactical;
+using PhoenixPoint.Tactical.ContextHelp;
 using PhoenixPoint.Tactical.Entities;
-using PhoenixPoint.Tactical.UI.SoldierPortraits;
-using SETUtil.Common.Extend;
+using PhoenixPoint.Tactical.Entities.Abilities;
+using PhoenixPoint.Tactical.Entities.Equipments;
+using PhoenixPoint.Tactical.Entities.Statuses;
+using PhoenixPoint.Tactical.Entities.Weapons;
+using PhoenixPoint.Tactical.Levels;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using UnityEngine;
-using static PhoenixPoint.Tactical.Entities.SquadPortraitsDef;
+using static PhoenixPoint.Common.Entities.Items.ItemManufacturing;
+using static PhoenixPoint.Geoscape.Entities.PhoenixBases.GeoPhoenixBaseTemplate;
 
 namespace TFTV
 {
     internal class TFTVExperimental
     {
+        private static readonly DefRepository Repo = TFTVMain.Repo;
+        private static readonly SharedData Shared = TFTVMain.Shared;
+        private static readonly DefCache DefCache = TFTVMain.Main.DefCache;
+
+        private static bool _usingEchoHead = false;
+
+        [HarmonyPatch(typeof(TacticalActor), "GetDefaultShootAbility")]
+        public static class TFTV_TacticalActor_GetDefaultShootAbility
+        {
+            public static void Postfix(TacticalActor __instance, ref ShootAbility __result)
+            {
+                try
+                {
+                    ShootAbilityDef stabilityTaurusShootAbilityDef = (ShootAbilityDef)Repo.GetDef("76ae9352-1343-4b95-964c-036341b6a0eb");
+                    ShootAbilityDef stabilityMissileShootAbilityDef = (ShootAbilityDef)Repo.GetDef("df2e83d1-8688-4e47-8559-cc6a9f9906d1");
+
+                    if (__instance.GetAbilityWithDef<ShootAbility>(stabilityTaurusShootAbilityDef) != null) 
+                    {
+                        __result = __instance.GetAbilityWithDef<ShootAbility>(stabilityTaurusShootAbilityDef);
+                    }
+                    else if (__instance.GetAbilityWithDef<ShootAbility>(stabilityMissileShootAbilityDef) != null)
+                    {
+                        __result = __instance.GetAbilityWithDef<ShootAbility>(stabilityMissileShootAbilityDef);
+                    }
+                }
+                catch (Exception e)
+                {
+                    TFTVLogger.Error(e);
+                    throw;
+                }
+            }
+        }
+
+
+
+        [HarmonyPatch(typeof(TacContextHelpManager), "OnStatusApplied")]
+        public static class TFTV_TacContextHelpManager_OnApply
+        {
+            public static bool Prefix(TacContextHelpManager __instance, Status status)
+            {
+                try
+                {               
+                    if (!(status is TacStatus tacStatus) || tacStatus.StatusComponent == null)
+                    {
+                        TFTVLogger.Always($"status null! returning to avoid softlock");
+                        return false;
+                    }
+
+                    return true;
+
+                }
+                catch (Exception e)
+                {
+                    TFTVLogger.Error(e);
+                    throw;
+                }
+            }
+        }
+
+
+        [HarmonyPatch(typeof(SlotStateStatus), "OnApply")]
+        public static class TFTV_SlotStateStatus_OnApply
+        {
+            public static bool Prefix(SlotStateStatus __instance, StatusComponent statusComponent)
+            {
+                try
+                {
+               
+                    if (__instance.Applied)
+                    {
+                        return true;
+                    }
+
+                    string targetSlotName = TacUtil.GetStatusTargetSlotName(__instance);
+
+                    if (targetSlotName.IsNullOrEmpty())
+                    {
+                        TFTVLogger.Always($"{__instance.SlotStateStatusDef.name} status failed to apply to! Target slot not supplied! TFTV Kludge to prevent Softlock");
+                        return false;
+                    }
+
+                    return true;
+
+                }
+                catch (Exception e)
+                {
+                    TFTVLogger.Error(e);
+                    throw;
+                }
+            }
+        }
+
+
+
+
+        [HarmonyPatch(typeof(TacticalContribution), "AddContribution")]
+        public static class TFTV_TacticalContribution_AddContribution
+        {
+            public static void Postfix(TacticalContribution __instance, int cp, TacticalActorBase ____actor)
+            {
+                try
+                {
+
+                    if (cp <= 0)
+                    {
+                        return;
+                    }
+
+                    if (!____actor.Status.HasStatus<MindControlStatus>() || ____actor.Status.GetStatus<MindControlStatus>().ControllerActor == null)
+                    {
+                        return;
+                    }
+
+                    TacticalActor controllingActor = ____actor.Status.GetStatus<MindControlStatus>().ControllerActor;
+
+                    // TFTVLogger.Always($"{controllingActor.name} has {controllingActor.Contribution.Contribution} CP");
+
+                    FieldInfo contributionFieldInfo = typeof(TacticalContribution).GetField("_contribution", BindingFlags.NonPublic | BindingFlags.Instance);
+
+                    TacticalContribution controllingActorContribution = controllingActor.Contribution;
+
+                    int controllingActorContributionValue = controllingActorContribution.Contribution + cp / 2;
+
+                    contributionFieldInfo.SetValue(controllingActorContribution, controllingActorContributionValue);
+
+                    // TFTVLogger.Always($"{controllingActor.name} now has {controllingActor.Contribution.Contribution} CP");
+
+                    Debug.Log($"+{cp} cp for {controllingActor.name} (through Mind Controlled Unit).");
+
+
+                }
+                catch (Exception e)
+                {
+                    TFTVLogger.Error(e);
+                    throw;
+                }
+            }
+        }
+
+
+        [HarmonyPatch(typeof(TacticalItem), "SetToDisabled")]
+        public static class TFTV_TacticalItem_SetToDisabled
+        {
+            public static void Prefix(TacticalItem __instance)
+            {
+                try
+                {
+                    TacticalActor tacActor = __instance.TacticalActor;
+
+                    GroundVehicleWeaponDef meph = (GroundVehicleWeaponDef)Repo.GetDef("49723d28-b373-3bc4-7918-21e87a72c585");
+                    GroundVehicleWeaponDef obliterator = (GroundVehicleWeaponDef)Repo.GetDef("ffb34012-b1fd-4b24-8236-ba2eb23db0b7");
+
+                    if (__instance.ItemDef == obliterator && tacActor != null)
+                    {
+                        TFTVLogger.Always($"it's the obliterator");
+
+                        if (tacActor.Equipments.Equipments.Any(e => e.ItemDef == meph && e.Enabled))
+                        {
+                            TFTVLogger.Always($"Obliterator destroyed, removing meph");
+                            tacActor.Equipments.RemoveItem(meph).Destroy();
+                            TFTVLogger.Always($"should be destroyed");
+                        }
+                    }
+                }
+                catch (Exception e)
+                {
+                    TFTVLogger.Error(e);
+                    throw;
+                }
+            }
+        }
+
+
+
+        [HarmonyPatch(typeof(Addon), "Destroy")]
+        public static class TFTV_Addon_RemoveItem
+        {
+            public static bool Prefix(Addon __instance, ref List<Addon> __result)
+            {
+                try
+                {
+                    if (__instance == null)
+                    {
+                        __result = new List<Addon>();
+
+                        return false;
+                    }
+                    return true;
+
+                }
+                catch (Exception e)
+                {
+                    TFTVLogger.Error(e);
+                    throw;
+                }
+            }
+        }
+
+
+        [HarmonyPatch(typeof(InventoryComponent), "RemoveItem", new Type[] { typeof(ItemDef) })]
+        public static class TFTV_InventoryComponent_RemoveItem
+        {
+            public static bool Prefix(InventoryComponent __instance, ItemDef itemDef, ref Item __result)
+            {
+                try
+                {
+                    Item item = __instance.GetItem(itemDef);
+
+                    TFTVLogger.Always($"item null? {item == null} {item?.ItemDef?.name}");
+
+                    if (item != null)
+                    {
+                        __instance.RemoveItem(item);
+                    }
+
+                    __result = item;
+
+                    return false;
+
+                }
+                catch (Exception e)
+                {
+                    TFTVLogger.Error(e);
+                    throw;
+                }
+            }
+        }
+
+
+        [HarmonyPatch(typeof(TacticalAbility), "get_EquipmentWithTags")]
+        public static class TFTV_TacticalAbility_get_EquipmentWithTags
+        {
+            public static void Postfix(TacticalAbility __instance, ref Equipment __result)
+            {
+                try
+                {
+                    if (__instance.TacticalAbilityDef == DefCache.GetDef<ShootAbilityDef>("EchoHead_ShootAbilityDef"))
+                    {
+                        if (__instance.SelectedEquipment!=null && __instance.SelectedEquipment.GameTags.Contains(DefCache.GetDef<GameTagDef>("SilencedWeapon_TagDef")))
+                        {
+                            __result = null;
+                        }
+                    }
+                }
+                catch (Exception e)
+                {
+                    TFTVLogger.Error(e);
+                    throw;
+                }
+            }
+        }
+
+
+        [HarmonyPatch(typeof(ShootAbility), "Activate")]
+        public static class TFTV_ShootAbility_Activate
+        {
+            public static void Prefix(ShootAbility __instance)
+            {
+                try
+                {
+                    if (__instance.TacticalAbilityDef == DefCache.GetDef<ShootAbilityDef>("EchoHead_ShootAbilityDef"))
+                    {
+                        _usingEchoHead = true;
+                    }
+                }
+                catch (Exception e)
+                {
+                    TFTVLogger.Error(e);
+                    throw;
+                }
+            }
+        }
+
+        [HarmonyPatch(typeof(Weapon), "IsAttackSilent")]
+        public static class TFTV_Weapon_IsAttackSilent
+        {
+            public static void Postfix(Weapon __instance, ref bool __result)
+            {
+                try
+                {
+                    if (_usingEchoHead)
+                    {
+                        __result = true;
+                        _usingEchoHead = false;
+                    }
+                }
+                catch (Exception e)
+                {
+                    TFTVLogger.Error(e);
+                    throw;
+                }
+            }
+        }
+
+
+        [HarmonyPatch(typeof(TacticalFactionVision), "LocateRandomEnemyIfNeeded")]
+        public static class TFTV_TacticalFactionVision_LocateRandomEnemyIfNeeded
+        {
+            public static bool Prefix(TacticalFactionVision __instance)
+            {
+                try
+                {
+                    return false;
+                }
+                catch (Exception e)
+                {
+                    TFTVLogger.Error(e);
+                    throw;
+                }
+            }
+        }
+
+        public static void CheckSquashing(TacticalAbility ability, TacticalActor tacticalActor)
+        {
+            try
+            {
+
+                if (ability == null || tacticalActor == null)
+                {
+                    return;
+                }
+
+
+                if (ability is CaterpillarMoveAbility caterpillarMoveAbility
+                    && caterpillarMoveAbility.TacticalDemolition != null && caterpillarMoveAbility.TacticalDemolition.TacticalDemolitionComponentDef.DemolitionBodyShape == TacticalDemolitionComponentDef.DemolitionShape.Rectangle)
+                {
+
+                }
+                else
+                {
+                    return;
+                }
+
+
+                Vector3 direction = tacticalActor.NavigationComponent.Direction;
+
+                Vector3 frontcentre = tacticalActor.transform.position + direction;
+
+                Type type = typeof(CaterpillarMoveAbility);
+
+                // Get the field info for _actorBases
+                FieldInfo fieldInfo = type.GetField("_actorBases", BindingFlags.NonPublic | BindingFlags.Instance);
+
+                // Get the value of _actorBases
+                HashSet<TacticalActorBase> actorBases = (HashSet<TacticalActorBase>)fieldInfo.GetValue(caterpillarMoveAbility);
+
+                List<TacticalActor> nearbyActors = tacticalActor.TacticalLevel.Map.GetActors<TacticalActor>().
+                    Where(a => a.IsAlive && a.HasGameTag(DefCache.GetDef<GameTagDef>("DamageByCaterpillarTracks_TagDef"))
+                    && (a.Pos - frontcentre).sqrMagnitude < 1)
+                    .ToList();
+
+                foreach (TacticalActor actor in nearbyActors)
+                {
+                    if (actorBases.Contains(actor))
+                    {
+                        continue;
+                    }
+
+                    TFTVLogger.Always($"squashing {actor.name}");
+
+                    ApplyDamageEffectAbility ability1 = actor.GetAbility<ApplyDamageEffectAbility>();
+
+                    if (ability1 != null)
+                    {
+                        ability1.Activate();
+                        actorBases.Add(actor);
+                        fieldInfo.SetValue(caterpillarMoveAbility, actorBases);
+                    }
+                    else
+                    {
+                        actor.Health.SetToMin();
+                        actorBases.Add(actor);
+                        fieldInfo.SetValue(caterpillarMoveAbility, actorBases);
+                    }
+                }
+            }
+
+            catch (Exception e)
+            {
+                TFTVLogger.Error(e);
+                throw;
+            }
+        }
+
+
+
+
+
+
+
+
+        /* 
+
+         [HarmonyPatch(typeof(TacticalFactionVision), "IncrementKnownCounterToAll")]
+         public static class TFTV_TacticalFactionVision_IncrementKnownCounterToAll
+         {
+             public static void Prefix(TacticalFactionVision __instance, TacticalActorBase actor, KnownState type, int counterValue, bool notifyChange)
+             {
+                 try
+                 {
+                     TFTVLogger.Always($"IncrementKnownCounterToAll run {actor.DisplayName}, {type}, {counterValue}, {notifyChange}");
+
+                 }
+                 catch (Exception e)
+                 {
+                     TFTVLogger.Error(e);
+                     throw;
+                 }
+             }
+         }
+ */
+
+        /* [HarmonyPatch(typeof(CaptureActorResearchRequirement), "IsValidUnit", typeof(GeoUnitDescriptor))]
+         public static class TFTV_CaptureActorResearchRequirement_IsValidUnit
+         {
+             public static void Postfix(CaptureActorResearchRequirement __instance, GeoUnitDescriptor unit, bool __result)
+             {
+                 try
+                 {
+                     TFTVLogger.Always($"{__instance.CaptureRequirementDef.name} for {unit.GetName()}, valid? {__result}");
+
+
+                 }
+
+                 catch (Exception e)
+                 {
+                     TFTVLogger.Error(e);
+                     throw;
+                 }
+             }
+         }*/
+
+
+        /* [HarmonyPatch(typeof(MoveAbility), "GetTargetDataFor")]
+         public static class TFTV_MoveAbility_GetTargetDataFor
+         {
+             public static void Prefix(MoveAbility __instance, TacticalPathRequest pathRequest)
+             {
+                 try
+                 {
+                     TFTVLogger.Always($"MoveAbility.GetTargetDataFor {__instance.TacticalActor.DisplayName}, pathRequest null? {pathRequest==null}. " +
+                         $"Controlled by player? {__instance.TacticalActor.IsControlledByPlayer}. Is vehicle? {__instance.TacticalActor.HasGameTag(Shared.SharedGameTags.VehicleTag)}");
+
+                     if (pathRequest != null && __instance.TacticalActor.IsControlledByPlayer && __instance.TacticalActor.HasGameTag(Shared.SharedGameTags.VehicleTag))
+                     {
+                         TacticalNavigationComponent component = __instance.TacticalActor.TacticalNav;
+                         component.CurrentPath = component.CreatePathRequest();
+
+                         TFTVLogger.Always($"Creating path request for {__instance.TacticalActor.DisplayName}");
+                     }
+                 }
+                 catch (Exception e)
+                 {
+                     TFTVLogger.Error(e);
+                     throw;
+                 }
+             }
+         }*/
+
+
+        public static void CheckActorReserchRequirement()
+        {
+            try
+            {
+
+                TacticalActorDef actorDef = DefCache.GetDef<TacticalActorDef>("Crabman_ActorDef");
+                TacticalActorDef actorDef2 = DefCache.GetDef<TacticalActorDef>("Siren_ActorDef");
+                GameTagDef tagRequirement = DefCache.GetDef<GameTagDef>("ViralBodypart_TagDef");
+                TacCharacterDef tacCharacterDef = DefCache.GetDef<TacCharacterDef>("Crabman39_EliteViralCommando_AlienMutationVariationDef");
+                TacCharacterDef tacCharacterDef2 = DefCache.GetDef<TacCharacterDef>("Siren3_InjectorBuffer_AlienMutationVariationDef");
+                IEnumerable<TacticalItemDef> bodyparts = tacCharacterDef.GetTemplateBodyparts();
+                IEnumerable<TacticalItemDef> bodyparts2 = tacCharacterDef2.GetTemplateBodyparts();
+
+
+                bool valid = ActorResearchRequirementDef.IsValidActorForTag(actorDef, bodyparts, null, tagRequirement);
+                bool valid2 = ActorResearchRequirementDef.IsValidActorForTag(actorDef2, bodyparts2, null, tagRequirement);
+
+                TFTVLogger.Always($"is {actorDef.name} valid for {tagRequirement.name}? {valid}");
+                TFTVLogger.Always($"is {actorDef2.name} valid for {tagRequirement.name}? {valid2}");
+
+
+            }
+            catch (Exception e)
+            {
+                TFTVLogger.Error(e);
+                throw;
+            }
+        }
+
+
+        /*   bool IsValidActorForTag(TacticalActorDef actorDef, IEnumerable<TacticalItemDef> bodyparts, TacticalActorDef actorRequirement, GameTagDef tagRequirement)
+
+          // CaptureActorResearchRequirement
+
+                 [HarmonyPatch(typeof(ActorResearchRequirementDef), "GetDisabledStateText", typeof(GeoAbilityTarget))]
+           public static class TFTV_ActorResearchRequirementDef_GetDisabledStateText
+           {
+               public static void Postfix(ActorResearchRequirementDef __instance, ref string __result)
+               {
+                   try
+                   {
+                       if (__instance.GeoAbility is LaunchBehemothMissionAbility)
+                       {
+                           __result = "Behemoth is submerged!";
+                       }
+                   }
+
+                   catch (Exception e)
+                   {
+                       TFTVLogger.Error(e);
+                       throw;
+                   }
+               }
+           }*/
+
+
+        /*    public void WireResearchEvents()
+        {
+            GameUtl.GameComponent<DefRepository>().GetAllDefs<ResearchDbDef>();
+            IEnumerable<ResearchElement> completed = this.Completed;
+            foreach (ResearchElement researchElement in this.AllResearchesArray.GetEnumerator<ResearchElement>())
+            {
+                bool flag = true;
+                string[] invalidatedBy = researchElement.ResearchDef.InvalidatedBy;
+                for (int i = 0; i < invalidatedBy.Length; i++)
+                {
+                    string invalidateID = invalidatedBy[i];
+                    if (completed.Any((ResearchElement r) => string.Equals(r.ResearchID, invalidateID, StringComparison.OrdinalIgnoreCase)))
+                    {
+                        flag = false;
+                        researchElement.State = ResearchState.Hidden;
+                        break;
+                    }
+                }
+                if (flag)
+                {
+                    researchElement.InitializeRequirements(researchElement.ResearchDef.RequirementsDefs);
+                }
+            }
+        }*/
+
+        [HarmonyPatch(typeof(GeoAbilityView), "GetDisabledStateText", typeof(GeoAbilityTarget))]
+        public static class TFTV_GeoAbilityView_GetDisabledStateText
+        {
+            public static void Postfix(GeoAbilityView __instance, ref string __result)
+            {
+                try
+                {
+                    if (__instance.GeoAbility is LaunchBehemothMissionAbility)
+                    {
+                        __result = "Behemoth is submerged!";
+                    }
+                }
+
+                catch (Exception e)
+                {
+                    TFTVLogger.Error(e);
+                    throw;
+                }
+            }
+        }
+
+        [HarmonyPatch(typeof(ItemManufacturing), "FinishManufactureItem")]
+        public static class TFTV_ItemManufacturing_FinishManufactureItem
+        {
+            public static void Postfix(ItemManufacturing __instance, ManufactureQueueItem element)
+            {
+                try
+                {
+                    //  TFTVLogger.Always($"{element.ManufacturableItem.Name}, {element.ManufacturableItem.RelatedItemDef.name}");
+
+
+                    if (element.ManufacturableItem.RelatedItemDef.name.Equals("PP_MaskedManticore_VehicleItemDef"))
+                    {
+                        TFTVHints.GeoscapeHints.TriggerBehemothMissionHint(GameUtl.CurrentLevel().GetComponent<GeoLevelController>());
+
+                    }
+
+                }
+
+                catch (Exception e)
+                {
+                    TFTVLogger.Error(e);
+                    throw;
+                }
+            }
+        }
+
+
+
+
+
+
+        [HarmonyPatch(typeof(LaunchBehemothMissionAbility), "GetDisabledStateInternal")]
+        public static class TFTV_LaunchBehemothMissionAbility_GetDisabledStateInternal_patch
+        {
+
+            public static void Postfix(LaunchBehemothMissionAbility __instance, ref GeoAbilityDisabledState __result)
+            {
+                try
+                {
+                    if (__instance.GeoLevel.AlienFaction.Behemoth == null || __instance.GeoLevel.AlienFaction.Behemoth != null &&
+                        (__instance.GeoLevel.AlienFaction.Behemoth.CurrentBehemothStatus == GeoBehemothActor.BehemothStatus.Dormant))
+                    {
+                        __result = GeoAbilityDisabledState.RequirementsNotMet;
+                    }
+                }
+
+                catch (Exception e)
+                {
+                    TFTVLogger.Error(e);
+                    throw;
+                }
+            }
+        }
+
+
+
+
+        /*   [HarmonyPatch(typeof(BreachEntrance), "OnAllPlotParcelsLoaded")]
+           public static class TFTV_BreachEntrance_OnAllPlotParcelsLoaded_patch
+           {
+
+               public static void Prefix(BreachEntrance __instance, List<Transform> parcels, Transform myParcel, ref MapPlot plot)
+               {
+                   try
+                   {                 
+                       plot.RemainingBreachPoints = 1;
+                   }
+
+                   catch (Exception e)
+                   {
+                       TFTVLogger.Error(e);
+                       throw;
+                   }
+               }
+           }*/
+
+
+        [HarmonyPatch(typeof(LaunchBehemothMissionAbility), "ActivateInternal")]
+        public static class TFTV_LaunchBehemothMissionAbility_ActivateInternal_patch
+        {
+
+            public static void Prefix(LaunchBehemothMissionAbility __instance)
+            {
+                try
+                {
+                    TFTVHints.GeoscapeHints.TriggerBehemothDeployHint(__instance.GeoLevel);
+                }
+
+                catch (Exception e)
+                {
+                    TFTVLogger.Error(e);
+                    throw;
+                }
+            }
+        }
+
+
+
+        [HarmonyPatch(typeof(GeoPhoenixBaseTemplate), "CreateBaseLayout")]
+        public static class TFTV_GeoPhoenixBaseTemplate_CreateBaseLayout_patch
+        {
+
+            public static bool Prefix(GeoPhoenixBaseTemplate __instance, ref GeoPhoenixBaseLayout __result, GeoPhoenixBaseLayoutDef layoutDef, int randomSeed)
+            {
+                try
+                {
+                    PhoenixFacilityDef accessLift = DefCache.GetDef<PhoenixFacilityDef>("AccessLift_PhoenixFacilityDef");
+
+
+                    UnityEngine.Random.InitState(randomSeed);
+                    PhoenixBaseLayoutEdge entrance = PhoenixBaseLayoutEdge.Bottom;
+                    GeoPhoenixBaseLayout geoPhoenixBaseLayout = new GeoPhoenixBaseLayout(layoutDef, entrance);
+                    Vector2Int randomElement = geoPhoenixBaseLayout.GetBuildableTiles().GetRandomElement();
+                    geoPhoenixBaseLayout.PlaceBaseEntrance(randomElement);
+                    IList<PhoenixFacilityData> list = __instance.FacilityData.ToList().Shuffle();
+                    List<Vector2Int> list2 = new List<Vector2Int>();
+
+                    int facilitiesCount = list.Count;
+
+
+                    while (list.Count > 0)
+                    {
+                        PhoenixFacilityData phoenixFacilityData = null;
+
+                        if (list.Count == list.Count - 2) //place hangar 3rd
+                        {
+                            IEnumerable<PhoenixFacilityData> source = list.Where((PhoenixFacilityData f) => f.FacilityDef.Size == 2);
+                            phoenixFacilityData = ((!source.Any()) ? list.Last() : source.First());
+
+                        }
+                        else if (list.Count == list.Count - 4) //place access lift with at least one space to hangar
+                        {
+                            IEnumerable<PhoenixFacilityData> source = list.Where((PhoenixFacilityData f) => f.FacilityDef.Size == 1 && f.FacilityDef == accessLift);
+                            phoenixFacilityData = ((!source.Any()) ? list.Last() : source.First());
+
+                        }
+                        else //place anything except access lift or hangar in between
+                        {
+                            IEnumerable<PhoenixFacilityData> source = list.Where((PhoenixFacilityData f) => f.FacilityDef.Size == 1 && f.FacilityDef != accessLift);
+                            phoenixFacilityData = ((!source.Any()) ? list.Last() : source.First());
+                        }
+
+                        list2.Clear();
+                        geoPhoenixBaseLayout.GetBuildableTilesForFacility(phoenixFacilityData.FacilityDef, list2);
+                        if (list2.Count == 0)
+                        {
+                            Debug.LogError("No tiles available for placing facility " + phoenixFacilityData.FacilityDef.name + "!");
+                        }
+                        else
+                        {
+                            GeoPhoenixFacility geoPhoenixFacility = geoPhoenixBaseLayout.PlaceFacility(position: list2.GetRandomElement(), facilityDef: phoenixFacilityData.FacilityDef, dontPlaceCorridors: false);
+                            if (__instance.ApplyFullDamageOnFacilities)
+                            {
+                                geoPhoenixFacility.ApplyFullDamageOnFacility();
+                            }
+                            else if (phoenixFacilityData.StartingHealth < 100)
+                            {
+                                geoPhoenixFacility.DamageFacility(100 - phoenixFacilityData.StartingHealth);
+                            }
+                        }
+
+                        if (0 == 0)
+                        {
+                            list.Remove(phoenixFacilityData);
+                        }
+                    }
+
+                    int num = __instance.BlockedTiles.RandomValue();
+                    for (int i = 0; i < num; i++)
+                    {
+                        ICollection<Vector2Int> rockPlacableTiles = geoPhoenixBaseLayout.GetRockPlacableTiles();
+                        if (rockPlacableTiles.Count() == 0)
+                        {
+                            Debug.LogWarning("No place left to place rock in phoenix base!");
+                            break;
+                        }
+
+                        Vector2Int randomElement3 = rockPlacableTiles.GetRandomElement();
+                        geoPhoenixBaseLayout.PlaceRock(randomElement3);
+                    }
+
+                    __result = geoPhoenixBaseLayout;
+
+                    return false;
+                }
+
+                catch (Exception e)
+                {
+                    TFTVLogger.Error(e);
+                    throw;
+                }
+            }
+        }
+
         //.GetDamageModifierForDistance
 
+        // AmbushOutcomeDataBind
+
+        //GeoMission
 
 
+
+        /*   [HarmonyPatch(typeof(GeoscapeTutorial), "Map_SiteInspectedChanged")]
+           public static class TFTV_GeoscapeTutorial_Map_SiteInspectedChanged_patch
+           {
+
+               public static void Postfix(GeoscapeTutorial __instance, GeoSite inspectedSite, GeoFaction inspector)
+               {
+                   try
+                   {
+                      // if(inspectedSite.) { }
+
+
+                   }
+
+                   catch (Exception e)
+                   {
+                       TFTVLogger.Error(e);
+                       throw;
+                   }
+               }
+           }
+
+
+           public static void GeoTutorialStepTest(GeoLevelController controller)
+           {
+               try 
+               {
+                   UIModuleTutorialModal uIModuleTutorial = controller.View.GeoscapeModules.TutorialModule;
+
+                   controller.View.MainUILayer.SetActiveState("");
+
+                  uIModuleTutorial.
+
+
+
+               }
+               catch (Exception e)
+               {
+                   TFTVLogger.Error(e);
+                   throw;
+               }
+           }*/
+
+
+
+
+
+        //EffectDef.ConditionsMet
         /*     [HarmonyPatch(typeof(OptionsComponent), "StartSaveOptions")]
              public static class OptionsComponent_StartSaveOptions_patch
          {
@@ -41,115 +868,6 @@ namespace TFTV
              }
          }*/
 
-
-        //Codemite's solution to pink portrait backgrounds on Macs
-        [HarmonyPatch(typeof(RenderingEnvironment), MethodType.Constructor, new Type[]
-{
-    typeof(Vector2Int),
-    typeof(RenderingEnvironmentOption),
-    typeof(Color),
-    typeof(Camera)
-  })]
-        public static class RenderingEnvironmentPatch
-        {
-
-            public static bool Prefix(ref RenderingEnvironment __instance, ref Transform ____origin, ref bool ____isExternalCamera, ref Camera ____camera,
-                Vector2Int resolution, RenderingEnvironmentOption option, Color? backgroundColor, Camera cam)
-            {
-                try
-                {
-
-                    ____origin = new GameObject("_RenderingEnvironmentOrigin_").transform;
-                    ____origin.position = new Vector3(0f, 1500f, 0f);
-                    ____origin.gameObject.hideFlags = HideFlags.DontSave | HideFlags.NotEditable;
-
-                    ____isExternalCamera = cam != null;
-
-                    ____camera = cam != null ? cam : new GameObject("_RenderingCamera_").AddComponent<Camera>();
-                    ____camera.gameObject.SetActive(false);
-                    ____camera.clearFlags = option.ContainsFlag(RenderingEnvironmentOption.NoBackground) && backgroundColor == null
-                        ? CameraClearFlags.Depth
-                        : (backgroundColor != null ? CameraClearFlags.SolidColor : CameraClearFlags.Skybox);
-                    ____camera.fieldOfView = 60;
-                    ____camera.orthographicSize = 2;
-                    ____camera.orthographic = option.ContainsFlag(RenderingEnvironmentOption.Orthographic);
-                    ____camera.farClipPlane = 100;
-                    ____camera.renderingPath = RenderingPath.Forward;
-                    ____camera.enabled = false;
-                    ____camera.allowHDR = false;
-                    ____camera.allowDynamicResolution = false;
-                    ____camera.usePhysicalProperties = false;
-
-                    // Use reflection to set the value of RenderTexture
-                    var renderTextureField = typeof(RenderingEnvironment).GetField("RenderTexture", BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
-                    if (renderTextureField != null)
-                    {
-                        renderTextureField.SetValue(__instance, RenderTexture.GetTemporary(resolution.x, resolution.y, 1, RenderTextureFormat.ARGB32));
-                    }
-
-                    ____camera.targetTexture = (RenderTexture)renderTextureField.GetValue(__instance);
-
-                    if (backgroundColor != null)
-                    {
-                        ____camera.backgroundColor = (Color)backgroundColor;
-                    }
-
-                    return false;
-                }
-                catch (Exception e)
-                {
-                    TFTVLogger.Error(e);
-                    throw;
-                }
-            }
-        }
-
-
-        [HarmonyPatch(typeof(SoldierPortraitUtil), "RenderSoldierNoCopy")]
-        public static class SoldierPortraitUtil_RenderSoldierNoCopy_patch
-        {
-
-            public static bool Prefix(GameObject soldierToRender, RenderPortraitParams renderParams, Camera usedCamera, ref Texture2D __result)
-            {
-                try
-                {
-
-                    if (Application.platform == RuntimePlatform.OSXPlayer ||
-                 Application.platform == RuntimePlatform.OSXEditor)
-                    {
-
-                        var outputImage = new Texture2D(renderParams.RenderedPortraitsResolution.x, renderParams.RenderedPortraitsResolution.y, TextureFormat.RGBA32, true);
-                        using (var renderingEnvironment = new RenderingEnvironment(renderParams.RenderedPortraitsResolution, RenderingEnvironmentOption.NoBackground, Color.black, usedCamera))
-                        {
-                            Transform headTransform = soldierToRender.transform.FindTransformInChildren(renderParams.TargetBoneName) ?? soldierToRender.transform;
-                            var t = soldierToRender.transform;
-                            var initialPosition = t.position;
-                            var initialRotation = t.rotation;
-                            t.position = renderingEnvironment.OriginPosition;
-                            t.rotation = renderingEnvironment.OriginRotation;
-
-                            SoldierFrame soldierFrame = new SoldierFrame(headTransform,
-                                renderParams.CameraFoV, renderParams.CameraDistance, renderParams.CameraHeight, renderParams.CameraSide);
-                            renderingEnvironment.Render(soldierFrame, false);
-                            renderingEnvironment.WriteResultsToTexture(outputImage);
-
-                            t.position = initialPosition;
-                            t.rotation = initialRotation;
-                        }
-
-                        __result = outputImage;
-
-                        return false;
-                    }
-                    return true;
-                }
-                catch (Exception e)
-                {
-                    TFTVLogger.Error(e);
-                    throw;
-                }
-            }
-        }
 
 
 
@@ -300,9 +1018,7 @@ namespace TFTV
           */
 
         //  internal static Color purple = new Color32(149, 23, 151, 255);
-        private static readonly DefRepository Repo = TFTVMain.Repo;
-        private static readonly SharedData Shared = TFTVMain.Shared;
-        private static readonly DefCache DefCache = TFTVMain.Main.DefCache;
+
 
 
 
@@ -488,32 +1204,6 @@ namespace TFTV
            }*/
 
 
-
-
-
-
-
-
-        public static void CheckAutomataResearch()
-        {
-            try
-            {
-                ResearchDbDef researchDB = DefCache.GetDef<ResearchDbDef>("pp_ResearchDB");
-
-                foreach (ResearchDef researchDef in researchDB.Researches)
-                {
-                    TFTVLogger.Always($"{researchDef.name}");
-
-                }
-
-
-            }
-            catch (Exception e)
-            {
-                TFTVLogger.Error(e);
-
-            }
-        }
 
 
 

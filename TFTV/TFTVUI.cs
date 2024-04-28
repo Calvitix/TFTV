@@ -21,6 +21,7 @@ using PhoenixPoint.Common.View.ViewControllers.Inventory;
 using PhoenixPoint.Common.View.ViewModules;
 using PhoenixPoint.Geoscape.Entities;
 using PhoenixPoint.Geoscape.Entities.Interception.Equipments;
+using PhoenixPoint.Geoscape.Entities.Sites;
 using PhoenixPoint.Geoscape.Levels;
 using PhoenixPoint.Geoscape.Levels.Factions;
 using PhoenixPoint.Geoscape.View.DataObjects;
@@ -36,7 +37,6 @@ using PhoenixPoint.Tactical.Entities.Abilities;
 using PhoenixPoint.Tactical.Entities.DamageKeywords;
 using PhoenixPoint.Tactical.Entities.Effects.DamageTypes;
 using PhoenixPoint.Tactical.Entities.Equipments;
-using PhoenixPoint.Tactical.Levels.Mist;
 using PhoenixPoint.Tactical.View.ViewControllers;
 using PhoenixPoint.Tactical.View.ViewStates;
 using System;
@@ -390,7 +390,7 @@ namespace TFTV
                     }
                 }
 
-               
+
 
                 [HarmonyPatch(typeof(UIModuleSoldierEquip), "GetPrimaryWeight")]
                 internal static class TFTV_UIModuleSoldierEquip_GetPrimaryWeight_Patch
@@ -408,7 +408,7 @@ namespace TFTV
 
                                 if (characterField.GetValue(uIModuleCharacterProgression) is GeoCharacter geoCharacter && !__instance.IsVehicle && !geoCharacter.TemplateDef.IsMutog && uIModuleCharacterProgression != null)
                                 {
-                                   
+
 
                                     int weightOfAugmentations = 0;
 
@@ -420,9 +420,9 @@ namespace TFTV
 
                                         }
                                     }
-                                   
+
                                     __result -= weightOfAugmentations;
-                                    
+
                                 }
                             }
                         }
@@ -465,7 +465,7 @@ namespace TFTV
                                         if (!(tacticalItemDef == null) && !(tacticalItemDef.BodyPartAspectDef == null))
                                         {
                                             bonusStrength += tacticalItemDef.BodyPartAspectDef.Endurance;
-                                        }                                       
+                                        }
                                     }
 
                                     if (geoCharacter.Progression != null)
@@ -567,9 +567,9 @@ namespace TFTV
 
             }
 
-           // PhoenixPoint.Geoscape.View.ViewStates.UIStateEditSoldier.SoldierSlotItemChangedHandler(PhoenixPoint.Common.View.ViewControllers.Inventory.UIInventorySlot slot)
+            // PhoenixPoint.Geoscape.View.ViewStates.UIStateEditSoldier.SoldierSlotItemChangedHandler(PhoenixPoint.Common.View.ViewControllers.Inventory.UIInventorySlot slot)
 
-          //  PhoenixPoint.Common.View.ViewControllers.Inventory.UIInventorySlotSideButton.OnSideButtonPressed
+            //  PhoenixPoint.Common.View.ViewControllers.Inventory.UIInventorySlotSideButton.OnSideButtonPressed
 
 
             internal class LoadoutsAndHelmetToggle
@@ -1070,13 +1070,13 @@ namespace TFTV
                     }
                 }
 
-
             }
 
         }
 
         internal class MissionDeployment
         {
+
             ///Patches to show mission light conditions
             [HarmonyPatch(typeof(UIStateRosterDeployment), "EnterState")]
             public static class TFTV_UIStateRosterDeployment_EnterState_patch
@@ -1086,16 +1086,20 @@ namespace TFTV
                     try
                     {
                         GeoLevelController controller = GameUtl.CurrentLevel().GetComponent<GeoLevelController>();
+
                         GeoSite geoSite = null;
 
                         UIModuleActorCycle uIModuleActorCycle = controller.View.GeoscapeModules.ActorCycleModule;
                         UIModuleDeploymentMissionBriefing uIModuleDeploymentMissionBriefing = controller.View.GeoscapeModules.DeploymentMissionBriefingModule;
 
-                        if (uIModuleActorCycle.CurrentCharacter != null && !uIModuleActorCycle.CurrentCharacter.GameTags.Contains(Shared.SharedGameTags.VehicleClassTag))
+                        GeoCharacter geoCharacter = uIModuleActorCycle.CurrentCharacter;
+
+                        if (geoCharacter != null)
                         {
                             foreach (GeoVehicle geoVehicle in controller.PhoenixFaction.Vehicles)
                             {
-                                if (geoVehicle.Soldiers.Contains(uIModuleActorCycle.CurrentCharacter))
+                                if (geoCharacter.GameTags.Contains(Shared.SharedGameTags.VehicleClassTag) && geoVehicle.GroundVehicles.Contains(geoCharacter)
+                                    || geoVehicle.Soldiers.Contains(uIModuleActorCycle.CurrentCharacter))
                                 {
                                     geoSite = geoVehicle.CurrentSite;
                                     break;
@@ -1127,6 +1131,8 @@ namespace TFTV
 
                             }
                         }
+
+                       
                     }
                     catch (Exception e)
                     {

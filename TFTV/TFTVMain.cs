@@ -2,8 +2,8 @@ using Base.Build;
 using Base.Core;
 using Base.Defs;
 using Base.Levels;
-using Base.Rendering.ObjectRendering;
 using HarmonyLib;
+using Microsoft.CSharp;
 using Newtonsoft.Json;
 using PhoenixPoint.Common.Core;
 using PhoenixPoint.Common.Game;
@@ -65,22 +65,7 @@ namespace TFTV
         /// Unsafely disabled mods usually cannot revert thier changes in OnModDisabled
         public override bool CanSafelyDisable => false;
 
-
-      /*  private static void ChangeTitleScreen(PhoenixGame game)
-        {
-            try 
-            { 
-            
-                
-            
-            
-            
-            }
-            catch (Exception e)
-            {
-                TFTVLogger.Error(e);
-            }
-        }*/
+       
 
         /// <summary>
         /// Callback for when mod is enabled. Called even on game starup.
@@ -103,7 +88,7 @@ namespace TFTV
                 /// PhoenixGame is accessible at any time.
                 PhoenixGame game = GetGame();
 
-                string version = $"TFTV 20240214 version #1 (M‡J #52) v{MetaData.Version} FR";
+                string version = $"TFTV 1.0 20240426 release #1 v{MetaData.Version}";
 
                 TFTVversion = version;
 
@@ -126,11 +111,6 @@ namespace TFTV
                 // Initialize Helper
                 Helper.Initialize();
                 //This creates the Void Omen events
-
-                Config.PopulateConfigFields();
-                if (Config.ApplyCalvitixChanges) { TFTVLogger.Always("Calvitix Option : True "); }
-                else { TFTVLogger.Always("Calvitix Option : False "); }//Calvitix 
-
 
                 //BC stuff
                 Logger.LogInfo("BC stuff loading");
@@ -158,14 +138,16 @@ namespace TFTV
 
                 TFTVRevenantResearch.CreateRevenantRewardsDefs();
                 TFTVProjectOsiris.Defs.CreateProjectOsirisDefs();
-
+                //  NoSecondChances.ImplementNoSecondChances();
                 //  TFTVAncients.CheckResearchesRequiringThings();
 
-                //Calvitix remove Config.PopulateConfigFields();
+                Config.PopulateConfigFields();
                 //  Config.RetrieveConfigOptions();
                 harmony.PatchAll();
+                TFTVVanillaFixes.FixSurveillanceAbilityGroundMarker(harmony);
+                
 
-                if(GameUtl.CurrentLevel()!=null && GameUtl.CurrentLevel().GetComponent<HomeScreenView>() != null) 
+                if (GameUtl.CurrentLevel() != null && GameUtl.CurrentLevel().GetComponent<HomeScreenView>() != null)
                 {
                     TFTVLogger.Always($"enabling TFTV for the first time!");
                     HomeScreenView homeScreenView = GameUtl.CurrentLevel().GetComponent<HomeScreenView>();
@@ -176,35 +158,37 @@ namespace TFTV
                 }
 
 
-           /*     Type renderingEnvironmentType = typeof(RenderingEnvironment);
+              
 
-                // Get all public constructors
-                ConstructorInfo[] constructors = renderingEnvironmentType.GetConstructors();
+                    /*     Type renderingEnvironmentType = typeof(RenderingEnvironment);
 
-                // Print the names of constructors
-                foreach (ConstructorInfo constructor in constructors)
-                {
-                    TFTVLogger.Always("Constructor Name: " + constructor.FullDescription());
-                }*/
+                         // Get all public constructors
+                         ConstructorInfo[] constructors = renderingEnvironmentType.GetConstructors();
 
-
-
-                /*  if(GetLevel()!=null && GetLevel().name.Contains("HomeScreenLevel")) 
-                  {
-                      TFTVLogger.Always($"TFTV is enabled!");
-                      string warning = $"Terror from the Void is now enabled! PLEASE QUIT TO DESKTOP BEFORE STARTING OR LOADING A GAME";
-
-                      GameUtl.GetMessageBox().ShowSimplePrompt(warning, MessageBoxIcon.Warning, MessageBoxButtons.OK, null);
+                         // Print the names of constructors
+                         foreach (ConstructorInfo constructor in constructors)
+                         {
+                             TFTVLogger.Always("Constructor Name: " + constructor.FullDescription());
+                         }*/
 
 
-                  }*/
-                // if (!injectionComplete)
-                // {
+
+                    /*  if(GetLevel()!=null && GetLevel().name.Contains("HomeScreenLevel")) 
+                      {
+                          TFTVLogger.Always($"TFTV is enabled!");
+                          string warning = $"Terror from the Void is now enabled! PLEASE QUIT TO DESKTOP BEFORE STARTING OR LOADING A GAME";
+
+                          GameUtl.GetMessageBox().ShowSimplePrompt(warning, MessageBoxIcon.Warning, MessageBoxButtons.OK, null);
 
 
-                //       injectionComplete = true;
-                //  }
-            }
+                      }*/
+                    // if (!injectionComplete)
+                    // {
+
+
+                    //       injectionComplete = true;
+                    //  }
+                }
             catch (Exception e)
             {
                 TFTVLogger.Error(e);
@@ -232,7 +216,7 @@ namespace TFTV
         /// </summary>
         public override void OnConfigChanged()
         {
-           
+
 
             // Config.RetrieveConfigOptions();
             //  TFTVLogger.Always($"Config changed. Skip movies is now {Config.SkipMovies}");
@@ -380,7 +364,7 @@ namespace TFTV
                 Harmony harmony = (Harmony)HarmonyInstance;
                 harmony.UnpatchAll();
                 harmony.PatchAll();
-
+                TFTVVanillaFixes.FixSurveillanceAbilityGroundMarker(harmony);
             }
         }
 

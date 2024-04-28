@@ -1,27 +1,26 @@
 ﻿using Assets.Code.PhoenixPoint.Geoscape.Entities.Sites.TheMarketplace;
 using Base;
 using Base.Core;
-using Base.UI.MessageBox;
 using HarmonyLib;
 using PhoenixPoint.Common.Core;
 using PhoenixPoint.Common.Entities.GameTagsTypes;
 using PhoenixPoint.Common.Entities.Items;
 using PhoenixPoint.Common.Game;
+using PhoenixPoint.Common.Levels.Missions;
 using PhoenixPoint.Common.Saves;
 using PhoenixPoint.Geoscape.Entities;
+using PhoenixPoint.Geoscape.Entities.Missions;
 using PhoenixPoint.Geoscape.Entities.Research;
 using PhoenixPoint.Geoscape.Entities.Sites;
 using PhoenixPoint.Geoscape.Events;
 using PhoenixPoint.Geoscape.Levels;
 using PhoenixPoint.Geoscape.Levels.Factions;
-using PhoenixPoint.Tactical.Entities.Abilities;
-using PhoenixPoint.Tactical.Entities.Equipments;
 using PhoenixPoint.Tactical.Entities.Weapons;
-using PhoenixPoint.Tactical.Levels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Security.Policy;
 
 
 
@@ -33,27 +32,68 @@ namespace TFTV
         private static readonly DefCache DefCache = TFTVMain.Main.DefCache;
         // public static bool LOTAReworkGlobalCheck = false;
 
-     //   private static readonly SharedData Shared = TFTVMain.Shared;
+        //   private static readonly SharedData Shared = TFTVMain.Shared;
 
-        public static void SpecialFixForNarvi() 
+        public static void Fix(GeoLevelController controller)
         {
-            try 
+            try
             {
-              /*  TFTVRevenant.DeadSoldiersDelirium.Add(30, 9);
-                TFTVRevenant.DeadSoldiersDelirium.Add(17, 11);
-                TFTVRevenant.DeadSoldiersDelirium.Add(5, 16);      
-                 TFTVRevenant.DeadSoldiersDelirium.Add(27, 5);
-                 TFTVRevenant.DeadSoldiersDelirium.Add(28, 2);          
-                TFTVRevenant.DeadSoldiersDelirium.Add(40, 10);
+                TFTVBehemothAndRaids.behemothScenicRoute.Clear();
+
+                /*   FieldInfo basesField = AccessTools.Field(typeof(GeoPhoenixFaction), "_bases");
+                   List<GeoPhoenixBase> bases = (List<GeoPhoenixBase>)basesField.GetValue(controller.PhoenixFaction);
+                   bases.Add(geoPhoenixBase.GetComponent<GeoPhoenixBase>());
+                   geoPhoenixBase.RefreshVisuals();
+                   TFTVVanillaFixes.CheckFacilitesNotWorking(geoPhoenixBase.GetComponent<GeoPhoenixBase>());*/
+
+            }
+            catch (Exception e)
+            {
+                TFTVLogger.Error(e);
+                throw;
+            }
+        }
+
+        public static void SpecialFixForCatGuy(GeoLevelController controller)
+        {
+            try
+            {
+                {
+                    controller.EventSystem.SetVariable(TFTVAncientsGeo.CyclopsBuiltVariable, 0);
+                    TFTVLogger.Always($"Player failed the Cyclops mission, need to clean up");
+                    controller.Map.AllSites.FirstOrDefault(s => (s.Type == GeoSiteType.AncientHarvest || s.Type == GeoSiteType.AncientRefinery) && s.Owner == controller.AlienFaction).Owner = controller.PhoenixFaction;
+                }
+
+                TFTVCommonMethods.RemoveManuallySetObjective(controller, "PROTECT_THE_CYCLOPS_OBJECTIVE_GEO_TITLE");
+            }
+            catch (Exception e)
+            {
+                TFTVLogger.Error(e);
+                throw;
+            }
+
+        }
 
 
-                TFTVBehemothAndRaids.checkHammerfall = true;
+        public static void SpecialFixForNarvi()
+        {
+            try
+            {
+                /*  TFTVRevenant.DeadSoldiersDelirium.Add(30, 9);
+                  TFTVRevenant.DeadSoldiersDelirium.Add(17, 11);
+                  TFTVRevenant.DeadSoldiersDelirium.Add(5, 16);      
+                   TFTVRevenant.DeadSoldiersDelirium.Add(27, 5);
+                   TFTVRevenant.DeadSoldiersDelirium.Add(28, 2);          
+                  TFTVRevenant.DeadSoldiersDelirium.Add(40, 10);
 
-                TFTVDelirium.CharactersDeliriumPerksAndMissions.Add(6, 9);
 
-                TFTVDelirium.CharactersDeliriumPerksAndMissions.Add(1, 10);*/
+                  TFTVBehemothAndRaids.checkHammerfall = true;
 
-                foreach (int id in TFTVRevenant.DeadSoldiersDelirium.Keys) 
+                  TFTVDelirium.CharactersDeliriumPerksAndMissions.Add(6, 9);
+
+                  TFTVDelirium.CharactersDeliriumPerksAndMissions.Add(1, 10);*/
+
+                foreach (int id in TFTVRevenant.DeadSoldiersDelirium.Keys)
                 {
                     TFTVLogger.Always($"{id} {TFTVRevenant.DeadSoldiersDelirium[id]}");
                 }
@@ -108,7 +148,7 @@ namespace TFTV
 
 
                     GeoLevelController geoLevelController = GameUtl.CurrentLevel().GetComponent<GeoLevelController>();
-                 
+
                     if (geoLevelController != null)
                     {
 
@@ -118,25 +158,25 @@ namespace TFTV
                         phoenixSaveManager.LatestLoad.DifficultyDef = newDifficulty;
 
                         TFTVLogger.Always($"Current difficulty set to {newDifficulty?.name} via geo controller");
-                    }                   
+                    }
                     else
                     {
                         GameDifficultyLevelDef gameDifficultyLevelDef = null;
 
                         int internalDifficultyCheck = 0;
 
-                        if (TFTVNewGameOptions.InternalDifficultyCheck != 0) 
+                        if (TFTVNewGameOptions.InternalDifficultyCheck != 0)
                         {
                             internalDifficultyCheck = TFTVNewGameOptions.InternalDifficultyCheck;
                         }
-                        else 
+                        else
                         {
                             internalDifficultyCheck = TFTVNewGameOptions.InternalDifficultyCheckTactical;
                         }
                         TFTVLogger.Always($"internalDifficultyCheck is {internalDifficultyCheck}");
                         if (internalDifficultyCheck != 0)
                         {
-                           // TFTVLogger.Always($"so got here internalDifficultyCheck is {internalDifficultyCheck}");
+                            // TFTVLogger.Always($"so got here internalDifficultyCheck is {internalDifficultyCheck}");
 
                             DefCache.GetDef<GameDifficultyLevelDef>("Easy_GameDifficultyLevelDef").Order = 2;
                             DefCache.GetDef<GameDifficultyLevelDef>("Standard_GameDifficultyLevelDef").Order = 3;
@@ -169,7 +209,7 @@ namespace TFTV
                                     gameDifficultyLevelDef = DefCache.GetDef<GameDifficultyLevelDef>("Etermes_DifficultyLevelDef");
                                     break;
                             }
-                            currentDifficultyField.SetValue(phoenixSaveManager, gameDifficultyLevelDef);  
+                            currentDifficultyField.SetValue(phoenixSaveManager, gameDifficultyLevelDef);
                             phoenixSaveManager.LatestLoad.DifficultyDef = gameDifficultyLevelDef;
 
                             TFTVLogger.Always($"Current difficulty set to {gameDifficultyLevelDef?.name}");
@@ -180,9 +220,9 @@ namespace TFTV
                             currentDifficultyField.SetValue(phoenixSaveManager, etermesDifficulty);
                             TFTVLogger.Always($"Could not find difficulty! setting difficulty to Etermes");
 
-                          /*  string warning = $"Could not find difficulty! This is a tactical save made before Update# 36. Please load a Geoscape save before this mission; this save is doomed!";
+                            /*  string warning = $"Could not find difficulty! This is a tactical save made before Update# 36. Please load a Geoscape save before this mission; this save is doomed!";
 
-                            GameUtl.GetMessageBox().ShowSimplePrompt(warning, MessageBoxIcon.Warning, MessageBoxButtons.OK, null);*/
+                              GameUtl.GetMessageBox().ShowSimplePrompt(warning, MessageBoxIcon.Warning, MessageBoxButtons.OK, null);*/
                         }
                     }
 
@@ -208,7 +248,7 @@ namespace TFTV
                 ItemDef slugArmsDef = DefCache.GetDef<ItemDef>("NJ_Technician_MechArms_ALN_WeaponDef");
                 ItemDef slugHelmet = DefCache.GetDef<ItemDef>("NJ_Technician_Helmet_ALN_BodyPartDef");
                 ItemDef slugLegs = DefCache.GetDef<ItemDef>("NJ_Technician_Legs_ALN_ItemDef");
-                ItemDef slugTorso = DefCache.GetDef<ItemDef>("NJ_Technician_Torso_ALN_BodyPartDef");     
+                ItemDef slugTorso = DefCache.GetDef<ItemDef>("NJ_Technician_Torso_ALN_BodyPartDef");
 
                 foreach (ItemDef itemDef in controller.PhoenixFaction.ItemStorage.Items.Keys)
                 {

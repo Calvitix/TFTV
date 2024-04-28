@@ -37,6 +37,245 @@ namespace TFTV
 
         public static int CounterSpawned = 0;
 
+        [HarmonyPatch(typeof(GeoMission), "ApplyTacticalMissionResult")]
+        public class ApplyTacticalMissionResult
+        {
+            static bool Prefix(GeoMission __instance, out int __state)
+            {
+                try
+                {
+                    TFTVConfig config = TFTVMain.Main.Config;
+                    GeoLevelController controller = __instance.Level;
+                    __state = controller.CurrentDifficultyLevel.Order;
+
+                    if (config.difficultyOnTactical != TFTVConfig.DifficultyOnTactical.GEOSCAPE)
+                    {
+                        TFTVLogger.Always($"difficulty order level: {__state}");
+                        controller.CurrentDifficultyLevel = GetTacticalDifficulty();
+                        //  TFTVLogger.Always($"Checking that difficulty order level did not change: {__state}");
+                    }
+
+                    return true;
+                }
+
+                catch (Exception e)
+                {
+                    TFTVLogger.Error(e);
+                    throw;
+                }
+
+            }
+
+            static void Postfix(GeoMission __instance, int __state)
+
+            {
+                try
+                {
+                    GeoLevelController controller = __instance.Level;
+                    controller.CurrentDifficultyLevel = GetDifficultyFromOrder(__state);
+                    TFTVPureAndForsaken.CheckMissionVSPure(__instance);
+
+                }
+                catch (Exception e)
+                {
+                    TFTVLogger.Error(e);
+                    throw;
+                }
+            }
+
+
+
+
+        }
+
+        [HarmonyPatch(typeof(GeoMission), "PrepareTacticalGame")]
+        public class PrepareTacticalGame
+        {
+            static bool Prefix(GeoMission __instance, out int __state)
+            {
+
+                try
+                {
+                    TFTVConfig config = TFTVMain.Main.Config;
+                    GeoLevelController controller = __instance.Level;
+                    __state = controller.CurrentDifficultyLevel.Order;
+
+                    if (config.difficultyOnTactical != TFTVConfig.DifficultyOnTactical.GEOSCAPE)
+                    {
+                        TFTVLogger.Always($"difficulty order level: {__state}");
+                        controller.CurrentDifficultyLevel = GetTacticalDifficulty();
+                        //  TFTVLogger.Always($"Checking that difficulty order level did not change: {__state}");
+                    }
+
+                  //  TFTVBaseDefenseGeoscape.ImplementSecurityStation(__instance.Site);
+
+                    return true;
+                }
+
+                catch (Exception e)
+                {
+                    TFTVLogger.Error(e);
+                    throw;
+                }
+
+            }
+
+            static void Postfix(GeoMission __instance, int __state)
+            {
+                try
+                {
+                    GeoLevelController controller = __instance.Level;
+                    controller.CurrentDifficultyLevel = GetDifficultyFromOrder(__state);
+
+                  // TFTVBaseDefenseGeoscape.CleanUpSecurityStation(__instance.Site);
+                }
+                catch (Exception e)
+                {
+                    TFTVLogger.Error(e);
+                    throw;
+                }
+            }
+        }
+
+        public static GameDifficultyLevelDef GetDifficultyFromOrder(int order)
+        {
+            try
+            {
+                switch (order)
+                {
+                    case 1:
+
+                        return DefCache.GetDef<GameDifficultyLevelDef>("StoryMode_DifficultyLevelDef");
+
+                    case 2:
+
+                        return DefCache.GetDef<GameDifficultyLevelDef>("Easy_GameDifficultyLevelDef");
+
+                    case 3:
+
+                        return DefCache.GetDef<GameDifficultyLevelDef>("Standard_GameDifficultyLevelDef");
+
+                    case 4:
+
+                        return DefCache.GetDef<GameDifficultyLevelDef>("Hard_GameDifficultyLevelDef");
+
+                    case 5:
+
+                        return DefCache.GetDef<GameDifficultyLevelDef>("VeryHard_GameDifficultyLevelDef");
+
+                    case 6:
+
+                        return DefCache.GetDef<GameDifficultyLevelDef>("Etermes_DifficultyLevelDef");
+
+                }
+
+                return null;
+            }
+
+            catch (Exception e)
+            {
+                TFTVLogger.Error(e);
+                throw;
+            }
+        }
+
+
+        public static GameDifficultyLevelDef GetTacticalDifficulty()
+        {
+            try
+            {
+                TFTVConfig config = TFTVMain.Main.Config;
+
+                if (config.difficultyOnTactical != TFTVConfig.DifficultyOnTactical.GEOSCAPE)
+                {
+                    //  TFTVLogger.Always($"Difficulty level on Tactical is {config.difficultyOnTactical}");
+
+                    switch (config.difficultyOnTactical)
+                    {
+                        case TFTVConfig.DifficultyOnTactical.STORY:
+                            return DefCache.GetDef<GameDifficultyLevelDef>("StoryMode_DifficultyLevelDef");
+
+                        case TFTVConfig.DifficultyOnTactical.ROOKIE:
+                            return DefCache.GetDef<GameDifficultyLevelDef>("Easy_GameDifficultyLevelDef");
+
+                        case TFTVConfig.DifficultyOnTactical.VETERAN:
+                            return DefCache.GetDef<GameDifficultyLevelDef>("Standard_GameDifficultyLevelDef");
+
+                        case TFTVConfig.DifficultyOnTactical.HERO:
+                            return DefCache.GetDef<GameDifficultyLevelDef>("Hard_GameDifficultyLevelDef");
+
+                        case TFTVConfig.DifficultyOnTactical.LEGEND:
+                            return DefCache.GetDef<GameDifficultyLevelDef>("VeryHard_GameDifficultyLevelDef");
+
+                        case TFTVConfig.DifficultyOnTactical.ETERMES:
+                            return DefCache.GetDef<GameDifficultyLevelDef>("Etermes_DifficultyLevelDef");
+                    }
+                }
+
+                return null;
+            }
+
+            catch (Exception e)
+            {
+                TFTVLogger.Error(e);
+                throw;
+            }
+
+
+
+        }
+
+
+        public static int DifficultyOrderConverter(int order)
+        {
+            try
+            {
+
+                TFTVConfig config = TFTVMain.Main.Config;
+
+                TacticalLevelController tacticalLevelController = GameUtl.CurrentLevel()?.GetComponent<TacticalLevelController>();
+
+                if (tacticalLevelController != null && config.difficultyOnTactical != TFTVConfig.DifficultyOnTactical.GEOSCAPE)
+                {
+                    switch (config.difficultyOnTactical)
+                    {
+                        case TFTVConfig.DifficultyOnTactical.STORY:
+                            return 1;
+
+                        case TFTVConfig.DifficultyOnTactical.ROOKIE:
+                            return 1;
+
+                        case TFTVConfig.DifficultyOnTactical.VETERAN:
+                            return 2;
+
+                        case TFTVConfig.DifficultyOnTactical.HERO:
+                            return 3;
+
+                        case TFTVConfig.DifficultyOnTactical.LEGEND:
+                            return 4;
+
+                        case TFTVConfig.DifficultyOnTactical.ETERMES:
+                            return 5;
+
+                    }
+                }
+
+                if (order >= 2)
+                {
+                    return order - 1;
+                }
+
+
+                return order;
+            }
+            catch (Exception e)
+            {
+                TFTVLogger.Error(e);
+                throw;
+            }
+        }
+
+
         internal class OnGeoscape
         {
 
@@ -244,157 +483,8 @@ namespace TFTV
 
                         }
 
-
                         outcomeDiplomacyChanges.Clear();
 
-                        /*  if (eventID == "PROG_PU12NewNJOption" && controller.EventSystem.GetEventRecord("PROG_PU12_MISS")?.SelectedChoice == 0 && __instance.Diplomacy.Count() == 2)
-                          {
-                              GeoFactionDef PhoenixPoint = DefCache.GetDef<GeoFactionDef>("Phoenix_GeoPhoenixFactionDef");
-                              GeoFactionDef Synedrion = DefCache.GetDef<GeoFactionDef>("Synedrion_GeoFactionDef");
-
-                              __instance.Diplomacy.RemoveLast();
-                              TFTVLogger.Always($"the postfix triggered");
-                          }*/
-
-
-                        /*       if (TFTVNewGameOptions.DiplomaticPenaltiesSetting)
-                               {
-                                   if (!ExcludedEventsDiplomacyPenalty.Contains(eventID) && __instance.Diplomacy.Count > 0)
-                                   {
-                                       for (int i = 0; i < __instance.Diplomacy.Count; i++)
-                                       {
-                                           if (__instance.Diplomacy[i].TargetFaction == PhoenixFaction && __instance.Diplomacy[i].Value <= 0)
-                                           {
-                                               TFTVLogger.Always($"Harder diplomacy. The event is {eventID} Original diplo penalty is  {__instance.Diplomacy[i].Value}. Original diplomacy value is {__instance.Diplomacy[i].Value / 2}");
-                                               OutcomeDiplomacyChange diplomacyChange = __instance.Diplomacy[i];
-                                               diplomacyChange.Value /= 2;
-                                               __instance.Diplomacy[i] = diplomacyChange;
-
-                                           }
-                                       }
-                                   }
-                               }
-                               if (CheckGeoscapeSpecialDifficultySettings(controller) == 1)
-                               {
-                                   if (__instance.Diplomacy.Count > 0)
-                                   {
-                                       for (int i = 0; i < __instance.Diplomacy.Count; i++)
-                                       {
-                                           if (__instance.Diplomacy[i].TargetFaction == PhoenixFaction && __instance.Diplomacy[i].Value >= 0)
-                                           {
-                                               TFTVLogger.Always($"Apply Easy Geoscape diplomacy. Reverting to original value for event {eventID}. Current diplo reward is {__instance.Diplomacy[i].Value}. Original diplomacy value is {__instance.Diplomacy[i].Value / 2}");
-                                               OutcomeDiplomacyChange diplomacyChange = __instance.Diplomacy[i];
-                                               diplomacyChange.Value /= 2;
-                                               __instance.Diplomacy[i] = diplomacyChange;
-
-                                           }
-                                       }
-                                   }
-                               }*/
-
-                        /*  else if (CheckGeoscapeSpecialDifficultySettings(controller) == 2)
-                          {
-                              if (__instance.Diplomacy.Count > 0)
-                              {
-                                  for (int i = 0; i < __instance.Diplomacy.Count; i++)
-                                  {
-                                      if (__instance.Diplomacy[i].TargetFaction == PhoenixFaction && __instance.Diplomacy[i].Value >= 0)
-                                      {
-                                          TFTVLogger.Always("Applying Etermes difficulty.  Reverting to original value for event " + eventID + ". Current diplo reward is " + __instance.Diplomacy[i].Value +
-                                              ". Original diplomacy value is " + __instance.Diplomacy[i].Value * 2);
-                                          OutcomeDiplomacyChange diplomacyChange = __instance.Diplomacy[i];
-                                          diplomacyChange.Value *= 2;
-                                          __instance.Diplomacy[i] = diplomacyChange;
-
-                                      }
-                                  }
-                              }
-                          }*/
-
-
-                        /*    if (TFTVVoidOmens.CheckFordVoidOmensInPlay(controller).Contains(2))
-                            {
-                                TFTVLogger.Always("VoidOmen2 check passed");
-                                if (__instance.Diplomacy.Count > 0)
-                                {
-                                    for (int t = 0; t < __instance.Diplomacy.Count; t++)
-                                    {
-                                        if (__instance.Diplomacy[t].Value != 0)
-                                        {
-                                            OutcomeDiplomacyChange diplomacyChange = __instance.Diplomacy[t];
-                                            TFTVLogger.Always("VO#2. Reverting to original value, from  " + diplomacyChange.Value + ", to former value " + diplomacyChange.Value * 2f);
-                                            diplomacyChange.Value = Mathf.CeilToInt(diplomacyChange.Value * 2f);
-                                            __instance.Diplomacy[t] = diplomacyChange;
-
-                                        }
-                                    }
-                                }
-                            }
-                            if (TFTVVoidOmens.CheckFordVoidOmensInPlay(controller).Contains(8))
-                            {
-                                if (__instance.Diplomacy.Count > 0)
-                                {
-                                    for (int t = 0; t < __instance.Diplomacy.Count; t++)
-                                    {
-                                        if (__instance.Diplomacy[t].Value <= 0 && __instance.Diplomacy[t].TargetFaction != PhoenixFaction)
-                                        {
-                                            OutcomeDiplomacyChange diplomacyChange = __instance.Diplomacy[t];
-                                            TFTVLogger.Always("VO#8. Reverting to original value, from " + diplomacyChange.Value + ", to former value " + diplomacyChange.Value * (2 / 3));
-                                            diplomacyChange.Value = Mathf.RoundToInt(diplomacyChange.Value * (2 / 3));
-                                            __instance.Diplomacy[t] = diplomacyChange;
-
-                                        }
-                                    }
-                                }
-                            }
-
-                            for (int i = 0; i < __instance.Resources.Count; i++)
-                            {
-                                ResourceUnit resources = __instance.Resources[i];
-                                TFTVLogger.Always($"reverting from Pre_Azozoth_base level, from {__instance.Resources[i].Value} to {__instance.Resources[i].Value / 0.8f}");
-                                resources.Value *= 0.8f;
-                                __instance.Resources[i] = resources;
-
-                            }
-
-
-                            if (config.ResourceMultiplier != 1)
-                            {
-                                for (int i = 0; i < __instance.Resources.Count; i++)
-                                {
-                                    ResourceUnit resources = __instance.Resources[i];
-                                    TFTVLogger.Always($"Resource Multiplier, reverting resource reward from {__instance.Resources[i].Value} to {__instance.Resources[i].Value / TFTVNewGameOptions.ResourceMultiplierSetting}");
-                                    resources.Value /= TFTVNewGameOptions.ResourceMultiplierSetting;
-                                    __instance.Resources[i] = resources;
-
-                                }
-                            }*/
-                        /*   if (CheckGeoscapeSpecialDifficultySettings(controller) == 1)
-                           {
-                               for (int i = 0; i < __instance.Resources.Count; i++)
-                               {
-                                   ResourceUnit resources = __instance.Resources[i];
-                                   TFTVLogger.Always("Apply Easty Geo difficulty. Resource Multiplier, reverting resource reward from " + __instance.Resources[i].Value + " back to "
-                                       + __instance.Resources[i].Value * 0.5f);
-                                   resources.Value *= 0.5f;
-                                   __instance.Resources[i] = resources;
-
-                               }
-
-                           }
-                           else if (CheckGeoscapeSpecialDifficultySettings(controller) == 2)
-                           {
-                               for (int i = 0; i < __instance.Resources.Count; i++)
-                               {
-                                   ResourceUnit resources = __instance.Resources[i];
-                                   TFTVLogger.Always("Applying Etermes difficulty. Resource Multiplier, reverting resource reward from " + __instance.Resources[i].Value + " back to "
-                                       + __instance.Resources[i].Value * 2f);
-                                   resources.Value *= 2f;
-                                   __instance.Resources[i] = resources;
-
-                               }
-
-                           }*/
                     }
                     catch (Exception e)
                     {
@@ -595,7 +685,6 @@ namespace TFTV
                 }
             }
 
-
             //Patches to modify diplo rewards based on special difficulties or VO#2
             [HarmonyPatch(typeof(DiplomacyMissionOutcomeDef), "FillPotentialReward")]
 
@@ -629,29 +718,6 @@ namespace TFTV
                                     $"{__instance.DiplomacyToFaction.Min} now it is at the least {__instance.DiplomacyToFaction.Min * 0.5f}");
                             }
                         }
-
-                        //removing the /2 on Etermes
-                        /*  if (CheckGeoscapeSpecialDifficultySettings(geoLevel) == 2)
-                          {
-                              if (__instance.DiplomacyToFaction.Min > 0)
-                              {
-                                  GeoFaction viewerFaction = mission.Site.GeoLevel.ViewerFaction;
-                                  GeoFaction faction = geoLevel.GetFaction(__instance.ToFaction);
-                                  rewardDescription.SetDiplomacyChange(faction, viewerFaction, Mathf.RoundToInt(__instance.DiplomacyToFaction.RandomValue() * 0.5f));
-                                  TFTVLogger.Always("In preview, applying Etermes settings. Original diplo reward from mission " + mission.MissionName.LocalizeEnglish() + " was at the least " + __instance.DiplomacyToFaction.Min
-                                     + "; now it is at the least  " + __instance.DiplomacyToFaction.Min * 0.5f);
-                              }
-                              else
-                              {
-                                  GeoFaction viewerFaction = mission.Site.GeoLevel.ViewerFaction;
-                                  GeoFaction faction = geoLevel.GetFaction(__instance.ToFaction);
-                                  rewardDescription.SetDiplomacyChange(faction, viewerFaction, Mathf.RoundToInt(__instance.DiplomacyToFaction.RandomValue() * 2f));
-                                  TFTVLogger.Always("In preview, applying Etermes settings. Original diplo reward from mission " + mission.MissionName.LocalizeEnglish() + " was at the least " + __instance.DiplomacyToFaction.Min
-                                     + "; now it is at the least  " + __instance.DiplomacyToFaction.Min * 2f);
-                              }
-                          }*/
-
-
 
                         if (TFTVVoidOmens.CheckFordVoidOmensInPlay(geoLevel).Contains(2))
                         {
@@ -795,8 +861,6 @@ namespace TFTV
 
                             }
                         }
-
-
                     }
                     catch (Exception e)
                     {
@@ -804,10 +868,6 @@ namespace TFTV
                     }
                 }
             }
-
-
-
-
         }
 
         internal class OnTactical
@@ -822,6 +882,7 @@ namespace TFTV
                 {
                     try
                     {
+                        
                         CounterSpawned++;
 
                         if (CheckTacticalSpecialDifficultySettings(tacticalLevel)==2 && CounterSpawned < 2)
@@ -892,7 +953,7 @@ namespace TFTV
                             }
                         }
 
-                        if (CheckTacticalSpecialDifficultySettings(__instance) == 2)
+                        if (TFTVNewGameOptions.EtermesResistanceAndVulnerability==1)
                         {
                             if (__instance.GetFactionByCommandName("PX") != null)
                             {
@@ -1206,8 +1267,6 @@ namespace TFTV
                     TFTVLogger.Error(e);
                 }
             }
-
-
         }
 
 
@@ -1253,7 +1312,7 @@ namespace TFTV
 
                 //   TFTVLogger.Always($"controller.CurrentDifficultyLevel.Order {controller?.CurrentDifficultyLevel?.Order}");
 
-                if (controller.CurrentDifficultyLevel.Order == 1 || TFTVReleaseOnly.GetTacticalDifficulty() != null && TFTVReleaseOnly.GetTacticalDifficulty().Order == 1)
+                if (controller.CurrentDifficultyLevel.Order == 1 || GetTacticalDifficulty() != null && GetTacticalDifficulty().Order == 1)
                 {
                     // TFTVLogger.Always($"Geoscape check re Tactical returns that it's Rookie!");
                     return 1;
@@ -1286,13 +1345,15 @@ namespace TFTV
             {
                 TFTVConfig config = TFTVMain.Main.Config;
 
-                if (TFTVReleaseOnly.GetTacticalDifficulty() != null)
+                if (GetTacticalDifficulty() != null)
                 {
-                    if (TFTVReleaseOnly.GetTacticalDifficulty().Order == 1)
+                   // TFTVLogger.Always($"tactical difficulty not null; {GetTacticalDifficulty().Order}");
+
+                    if (GetTacticalDifficulty().Order == 1)
                     {
                         return 1;
                     }
-                    else if (TFTVReleaseOnly.GetTacticalDifficulty().Order == 6)
+                    else if (GetTacticalDifficulty().Order == 6)
                     {
                         return 2;
 
@@ -1300,12 +1361,14 @@ namespace TFTV
                 }
                 else
                 {
-                    if (controller.Difficulty.Order == 1)
+                  // TFTVLogger.Always($"tactical difficulty is {TFTVNewGameOptions.InternalDifficultyCheckTactical}");
+
+                    if (TFTVNewGameOptions.InternalDifficultyCheckTactical == 1)
                     {
                         return 1;
 
                     }
-                    else if (controller.Difficulty.Order == 6)
+                    else if (TFTVNewGameOptions.InternalDifficultyCheckTactical == 6)
                     {
                         return 2;
 

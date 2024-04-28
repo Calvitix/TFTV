@@ -1,23 +1,38 @@
-﻿using Base;
+﻿using Assets.Code.PhoenixPoint.Geoscape.Entities.Sites.TheMarketplace;
+using Base;
 using Base.Core;
+using Base.Entities;
+using Base.Rendering.ObjectRendering;
+using Base.Utils.Maths;
 using HarmonyLib;
 using PhoenixPoint.Common.Core;
-using PhoenixPoint.Common.Entities.Items;
 using PhoenixPoint.Common.Entities;
+using PhoenixPoint.Common.Entities.Items;
 using PhoenixPoint.Common.Levels.Missions;
 using PhoenixPoint.Common.View.ViewControllers.Inventory;
+using PhoenixPoint.Geoscape.Core;
 using PhoenixPoint.Geoscape.Entities;
 using PhoenixPoint.Geoscape.Entities.PhoenixBases;
 using PhoenixPoint.Geoscape.Entities.PhoenixBases.FacilityComponents;
+using PhoenixPoint.Geoscape.Entities.Research.Requirement;
 using PhoenixPoint.Geoscape.Entities.Sites;
 using PhoenixPoint.Geoscape.Events;
 using PhoenixPoint.Geoscape.Levels;
 using PhoenixPoint.Geoscape.View.ViewControllers.HavenDetails;
+using PhoenixPoint.Geoscape.View.ViewControllers.SiteEncounters;
+using PhoenixPoint.Geoscape.View.ViewModules;
+using PhoenixPoint.Geoscape.View.ViewStates;
+using PhoenixPoint.Tactical.AI;
 using PhoenixPoint.Tactical.Entities;
+using PhoenixPoint.Tactical.Entities.Abilities;
 using PhoenixPoint.Tactical.Entities.Equipments;
 using PhoenixPoint.Tactical.Entities.Weapons;
+using PhoenixPoint.Tactical.Levels;
 using PhoenixPoint.Tactical.Levels.Missions;
+using PhoenixPoint.Tactical.UI.SoldierPortraits;
 using PhoenixPoint.Tactical.View;
+using PhoenixPoint.Tactical.View.ViewModules;
+using SETUtil.Common.Extend;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,14 +40,7 @@ using System.Reflection;
 using System.Reflection.Emit;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using Assets.Code.PhoenixPoint.Geoscape.Entities.Sites.TheMarketplace;
-using PhoenixPoint.Geoscape.View.ViewControllers.SiteEncounters;
-using PhoenixPoint.Geoscape.View.ViewModules;
-using PhoenixPoint.Geoscape.Core;
-using Base.Utils.Maths;
-using PhoenixPoint.Tactical.Entities.Abilities;
-using Base.Entities;
-using PhoenixPoint.Geoscape.View.ViewStates;
+using static PhoenixPoint.Tactical.Entities.SquadPortraitsDef;
 
 namespace TFTV
 {
@@ -40,6 +48,420 @@ namespace TFTV
     {
         private static readonly DefCache DefCache = TFTVMain.Main.DefCache;
         private static readonly SharedData Shared = TFTVMain.Shared;
+
+        //Prevents items with 0HP from manifesting themselves in tactical
+
+        /*  [HarmonyPatch(typeof(TacticalItem), "get_IsHealthAboveMinThreshold")]
+          public static class TFTV_TacticalItem_get_IsHealthAboveMinThreshold
+          {
+              public static void Postfix(TacticalItem __instance, ref bool __result)
+              {
+                  try
+                  {
+                      if (!((float)__instance.GetHealth() >= 1))
+                      {
+                          __result = (float)__instance.GetHealth().Max < 1E-05f;
+                      }
+
+                      __result = true;
+                  }
+
+                  catch (Exception e)
+                  {
+                      TFTVLogger.Error(e);
+                      throw;
+                  }
+              }
+          }*/
+
+
+        //Fixes size of ground marker for eggs/sentinels etc.
+        public static void FixSurveillanceAbilityGroundMarker(Harmony harmony)
+        {
+            try
+            {
+                Assembly[] assemblies = AppDomain.CurrentDomain.GetAssemblies();
+                Assembly assembly = null;
+                foreach (Assembly a in assemblies)
+                {
+                    if (a.GetName().Name.Contains("Assembly-CSharp"))
+                    {
+                        assembly = a;
+                    }
+                }
+                Type internalType = assembly.GetType("PhoenixPoint.Tactical.View.ViewStates.UIStateCharacterSelected");
+
+                if (internalType != null)
+                {
+                    MethodInfo zoneOfControlMarkerCreatorMethod = internalType.GetMethod("ZoneOfControlMarkerCreator", BindingFlags.NonPublic | BindingFlags.Instance);
+                    MethodInfo prepareShortActorInfoMethod = internalType.GetMethod("PrepareShortActorInfo", BindingFlags.NonPublic | BindingFlags.Instance);
+
+                    if (zoneOfControlMarkerCreatorMethod != null)
+                    {
+                        harmony.Patch(zoneOfControlMarkerCreatorMethod, postfix: new HarmonyMethod(typeof(TFTVVanillaFixes), nameof(PatchResizeGroundMarker)));
+                    }
+                    if (prepareShortActorInfoMethod != null)
+                    {
+                       // TFTVLogger.Always($"patch should be running");
+                        harmony.Patch(prepareShortActorInfoMethod, postfix: new HarmonyMethod(typeof(TFTVVanillaFixes), nameof(PrepareShortActorInfo)));
+                    }
+                }
+                else
+                {
+
+                }
+            }
+            catch (Exception e)
+            {
+                TFTVLogger.Error(e);
+                throw;
+            }
+
+        }
+
+        public static void PatchResizeGroundMarker(MethodBase __originalMethod, object context, ref GroundMarker __result)
+        {
+            try
+            {
+                if (__result != null)
+                {
+                    __result.StartScale /= 2.05f;
+                    __result.StartScale *= 1.6f;
+                }
+            }
+            catch (Exception e)
+            {
+                TFTVLogger.Error(e);
+                throw;
+            }
+        }
+
+        public static void PrepareShortActorInfo(MethodBase __originalMethod, TacticalActor actor, ref ShortActorInfoTooltipData __result)
+        {
+            try
+            {        
+                string movement = TFTVCommonMethods.ConvertKeyToString("KEY_MOVEMENT");
+
+                string value = string.Format("{0}/{1}", actor.CharacterStats.ActionPoints.IntMax, actor.CharacterStats.ActionPoints.IntMax);
+
+                if(actor.TacticalLevel.CurrentFaction == actor.TacticalFaction) 
+                {
+                    value = string.Format("{0}/{1}", actor.CharacterStats.ActionPoints.IntValue, actor.CharacterStats.ActionPoints.IntMax);
+                }
+
+                ShortActorInfoTooltipDataEntry newMovement = new ShortActorInfoTooltipDataEntry()
+                {
+                    TextContent = movement,
+                    ValueContent = value
+                };
+
+                __result.Entries[3] = newMovement;
+
+            }
+            catch (Exception e)
+            {
+                TFTVLogger.Error(e);
+                throw;
+            }
+        }
+
+
+        //Prevents AI from consindering unseen enemies when evaluating attacks with explosives/cone weapons
+        private static bool CheckVisibility(TacticalActorBase tacticalActorBase, TacticalActor tacticalActor, DamagePayload damagePayload)
+        {
+            try
+            {
+                if (damagePayload.DamageDeliveryType == DamageDeliveryType.Sphere || damagePayload.DamageDeliveryType == DamageDeliveryType.Cone)
+                {
+                    if (tacticalActor.TacticalFaction == tacticalActorBase.TacticalFaction)
+                    {
+                        return true;
+                    }
+
+                    if (tacticalActor.TacticalFaction.GetAllAliveFriendlyActors<TacticalActorBase>(tacticalActor).Contains(tacticalActorBase))
+                    {
+                        return true;
+                    }
+
+                    if (tacticalActor.TacticalFaction.AIBlackboard.GetEnemies(ActorType.All, true).Contains(tacticalActorBase))
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+
+                return true;
+            }
+            catch (Exception e)
+            {
+                TFTVLogger.Error(e);
+                throw;
+            }
+        }
+
+
+        [HarmonyPatch(typeof(AIUtil), "GetAffectedTargetsByShooting")]
+        public static class TFTV_AIUtil_GetAffectedTargetsByShooting_patch
+        {
+            private static IEnumerable<TacticalActorBase> Postfix(IEnumerable<TacticalActorBase> results, Vector3 shootPos, TacticalActor sourceActor, Weapon sourceWeapon, TacticalAbilityTarget target, ShootAbilityDef shootAbility = null)
+            {
+
+                DamagePayload damagePayload = sourceWeapon.GetDamagePayload();
+
+                foreach (TacticalActorBase actorBase in results)
+                {
+                    if (CheckVisibility(actorBase, sourceActor, damagePayload))
+                    {
+                        yield return actorBase;
+                    }
+
+                }
+            }
+
+        }
+
+
+
+        //Prevents evacuated characters from spotting enemies
+
+        [HarmonyPatch(typeof(TacticalFactionVision), "ReUpdateVisibilityTowardsActorImpl")]
+        public static class TFTV_TacticalFactionVision_ReUpdateVisibilityTowardsActorImpl_patch
+        {
+            private static bool Prefix(TacticalActorBase fromActor, TacticalActorBase targetActor, float basePerceptionRange, ref bool __result)
+            {
+                try
+                {
+                    if (fromActor is TacticalActor tacticalActor && tacticalActor.IsEvacuated)
+                    {
+                        __result = false;
+                        return false;
+                    }
+
+                    return true;
+                }
+                catch (Exception e)
+                {
+                    TFTVLogger.Error(e);
+                    throw;
+                }
+            }
+        }
+
+        //fixes requiring killing actor required for research even when it is already captured
+
+        [HarmonyPatch(typeof(ActorResearchRequirement), "OnMissionEnd")]
+        public static class TFTV_ActorResearchRequirement_OnMissionEnd
+        {
+            public static bool Prefix(ActorResearchRequirement __instance, GeoFaction faction, GeoMission mission, GeoSite site, GeoFaction ____faction)
+            {
+                try
+                {
+                    _ = site.GeoLevel;
+                    ActorResearchRequirementDef actorResearchRequirementDef = __instance.ActorResearchRequirementDef;
+                    foreach (FactionResult factionResult in mission.Result.FactionResults)
+                    {
+                        if (factionResult.FactionDef == ____faction.Def.PPFactionDef || (__instance.ActorResearchRequirementDef.Faction != null && factionResult.FactionDef != actorResearchRequirementDef.Faction))
+                        {
+                            continue;
+                        }
+
+                        foreach (TacActorUnitResult item in from t in factionResult.UnitResults.Select((UnitResult s) => s.Data).OfType<TacActorUnitResult>()
+                                                            where !t.IsAlive || t.Statuses.Any(s => s.Def.EffectName == "Paralysed")
+                                                            select t)
+                        {
+
+                            //  if(item.Statuses.Any(s => s.Def.EffectName == "Paralysed") && )
+
+                            // TFTVLogger.Always($"considering {item.SourceTemplate.name}");
+
+                            if (__instance.IsValidUnit(item))
+                            {
+                                MethodInfo updateProgressMethod = typeof(ResearchRequirement).GetMethod("UpdateProgress", BindingFlags.Instance | BindingFlags.NonPublic);
+
+                                updateProgressMethod.Invoke(__instance, new object[] { 1 });
+
+                                if (__instance.IsCompleted)
+                                {
+                                    break;
+                                }
+                            }
+                        }
+                    }
+
+                    return false;
+                }
+
+                catch (Exception e)
+                {
+                    TFTVLogger.Error(e);
+                    throw;
+                }
+            }
+        }
+
+
+        //fixes events reducing health to 0 and killing soldiers
+        [HarmonyPatch(typeof(GeoFactionReward), "AddInjuriesToAllSoldiers")]
+        public static class TFTV_GeoFactionReward_AddInjuriesToAllSoldiers
+        {
+            public static bool Prefix(GeoFactionReward __instance, GeoFaction faction)
+            {
+                try
+                {
+                    if (__instance.AddAllSoldiersTiredness != 0)
+                    {
+                        foreach (GeoCharacter character in faction.Characters)
+                        {
+                            if (character.Fatigue != null)
+                            {
+                                character.Fatigue.Stamina.AddRestrictedToMax(-__instance.AddAllSoldiersTiredness);
+                            }
+                        }
+
+                        __instance.ApplyResult.AllSoldiersTiredness += __instance.AddAllSoldiersTiredness;
+                    }
+
+                    if (__instance.AddAllSoldiersDamage == 0)
+                    {
+                        return false;
+                    }
+
+                    foreach (GeoCharacter character2 in faction.Characters)
+                    {
+                        if ((float)character2.Health > 1f && character2.TemplateDef.IsHuman)
+                        {
+                            int addAllSoldiersDamage = Math.Min(__instance.AddAllSoldiersDamage, (int)character2.Health - 1);
+                            character2.Health.AddRestrictedToMax(-addAllSoldiersDamage);
+                            TFTVLogger.Always($"applied {addAllSoldiersDamage} damage to {character2.DisplayName}");
+                        }
+                    }
+
+                    __instance.ApplyResult.AllSoldiersDamage += __instance.AddAllSoldiersDamage;
+
+                    return false;
+                }
+
+                catch (Exception e)
+                {
+                    TFTVLogger.Error(e);
+                    throw;
+                }
+            }
+        }
+
+
+
+        //Codemite's solution to pink portrait backgrounds on Macs
+        [HarmonyPatch(typeof(RenderingEnvironment), MethodType.Constructor, new Type[]
+{
+    typeof(Vector2Int),
+    typeof(RenderingEnvironmentOption),
+    typeof(Color),
+    typeof(Camera)
+  })]
+        public static class RenderingEnvironmentPatch
+        {
+
+            public static bool Prefix(ref RenderingEnvironment __instance, ref Transform ____origin, ref bool ____isExternalCamera, ref Camera ____camera,
+                Vector2Int resolution, RenderingEnvironmentOption option, Color? backgroundColor, Camera cam)
+            {
+                try
+                {
+
+                    ____origin = new GameObject("_RenderingEnvironmentOrigin_").transform;
+                    ____origin.position = new Vector3(0f, 1500f, 0f);
+                    ____origin.gameObject.hideFlags = HideFlags.DontSave | HideFlags.NotEditable;
+
+                    ____isExternalCamera = cam != null;
+
+                    ____camera = cam != null ? cam : new GameObject("_RenderingCamera_").AddComponent<Camera>();
+                    ____camera.gameObject.SetActive(false);
+                    ____camera.clearFlags = option.ContainsFlag(RenderingEnvironmentOption.NoBackground) && backgroundColor == null
+                        ? CameraClearFlags.Depth
+                        : (backgroundColor != null ? CameraClearFlags.SolidColor : CameraClearFlags.Skybox);
+                    ____camera.fieldOfView = 60;
+                    ____camera.orthographicSize = 2;
+                    ____camera.orthographic = option.ContainsFlag(RenderingEnvironmentOption.Orthographic);
+                    ____camera.farClipPlane = 100;
+                    ____camera.renderingPath = RenderingPath.Forward;
+                    ____camera.enabled = false;
+                    ____camera.allowHDR = false;
+                    ____camera.allowDynamicResolution = false;
+                    ____camera.usePhysicalProperties = false;
+
+                    // Use reflection to set the value of RenderTexture
+                    var renderTextureField = typeof(RenderingEnvironment).GetField("RenderTexture", BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
+                    if (renderTextureField != null)
+                    {
+                        renderTextureField.SetValue(__instance, RenderTexture.GetTemporary(resolution.x, resolution.y, 1, RenderTextureFormat.ARGB32));
+                    }
+
+                    ____camera.targetTexture = (RenderTexture)renderTextureField.GetValue(__instance);
+
+                    if (backgroundColor != null)
+                    {
+                        ____camera.backgroundColor = (Color)backgroundColor;
+                    }
+
+                    return false;
+                }
+                catch (Exception e)
+                {
+                    TFTVLogger.Error(e);
+                    throw;
+                }
+            }
+        }
+
+
+        [HarmonyPatch(typeof(SoldierPortraitUtil), "RenderSoldierNoCopy")]
+        public static class SoldierPortraitUtil_RenderSoldierNoCopy_patch
+        {
+
+            public static bool Prefix(GameObject soldierToRender, RenderPortraitParams renderParams, Camera usedCamera, ref Texture2D __result)
+            {
+                try
+                {
+
+                    if (Application.platform == RuntimePlatform.OSXPlayer ||
+                 Application.platform == RuntimePlatform.OSXEditor)
+                    {
+
+                        var outputImage = new Texture2D(renderParams.RenderedPortraitsResolution.x, renderParams.RenderedPortraitsResolution.y, TextureFormat.RGBA32, true);
+                        using (var renderingEnvironment = new RenderingEnvironment(renderParams.RenderedPortraitsResolution, RenderingEnvironmentOption.NoBackground, Color.black, usedCamera))
+                        {
+                            Transform headTransform = soldierToRender.transform.FindTransformInChildren(renderParams.TargetBoneName) ?? soldierToRender.transform;
+                            var t = soldierToRender.transform;
+                            var initialPosition = t.position;
+                            var initialRotation = t.rotation;
+                            t.position = renderingEnvironment.OriginPosition;
+                            t.rotation = renderingEnvironment.OriginRotation;
+
+                            SoldierFrame soldierFrame = new SoldierFrame(headTransform,
+                                renderParams.CameraFoV, renderParams.CameraDistance, renderParams.CameraHeight, renderParams.CameraSide);
+                            renderingEnvironment.Render(soldierFrame, false);
+                            renderingEnvironment.WriteResultsToTexture(outputImage);
+
+                            t.position = initialPosition;
+                            t.rotation = initialRotation;
+                        }
+
+                        __result = outputImage;
+
+                        return false;
+                    }
+                    return true;
+                }
+                catch (Exception e)
+                {
+                    TFTVLogger.Error(e);
+                    throw;
+                }
+            }
+        }
 
 
         //Madskunky's replacement of a trig function to reduce AI processing time 
@@ -105,7 +527,7 @@ namespace TFTV
         [HarmonyPatch(typeof(ShootAbility), "GetShootTarget")]
         public static class ShootAbility_GetShootTarget_Patch
         {
-            public static void Postfix(ShootAbility __instance, 
+            public static void Postfix(ShootAbility __instance,
                 TacticalAbilityTarget target, ref TacticalAbilityTarget __result)// Vector3? sourcePosition = null, TacticalTargetData targetData = null, )
             {
                 try
@@ -116,7 +538,7 @@ namespace TFTV
                         if (tacticalActor != null && !tacticalActor.IsRevealedToViewer)
                         {
                             __result = null;
-                            
+
                         }
                     }
                 }
@@ -128,7 +550,7 @@ namespace TFTV
             }
         }
 
-       
+
         //MadSkunky's OW, fumble and Throwing range fix copied over from BC
 
         /// <summary> 
@@ -317,44 +739,44 @@ namespace TFTV
             public static bool Prefix(UIModuleTheMarketplace __instance, GeoscapeEvent geoEvent, bool ____isInit,
                 List<TheMarketplaceChoiceButton> ____marketplaceChoiceButtons, GeoMarketplace ____geoMarketplace)
             {
-              //  try
-              //  {
-                    MethodInfo setChoiceMethod = typeof(TheMarketplaceChoicesController).GetMethod("SetChoice", BindingFlags.NonPublic | BindingFlags.Instance);
+                //  try
+                //  {
+                MethodInfo setChoiceMethod = typeof(TheMarketplaceChoicesController).GetMethod("SetChoice", BindingFlags.NonPublic | BindingFlags.Instance);
 
-                    if (____isInit)
-                    {
-                        __instance.ListScrollRect.Scroll.verticalNormalizedPosition = 1f;
-                    }
+                if (____isInit)
+                {
+                    __instance.ListScrollRect.Scroll.verticalNormalizedPosition = 1f;
+                }
 
-                    ____marketplaceChoiceButtons.Clear();
+                ____marketplaceChoiceButtons.Clear();
 
                 //    TFTVLogger.Always($"____geoMarketplace.MarketplaceChoices.Count {____geoMarketplace.MarketplaceChoices.Count}");
 
-                    int count = ____geoMarketplace.MarketplaceChoices.Count;
+                int count = ____geoMarketplace.MarketplaceChoices.Count;
 
-                    if (____geoMarketplace.MarketplaceChoices.Count > 7) //&& !TFTVChangesToDLC5.TFTVMarketPlaceUI.MarketplaceOfferListAdjustedOnce)
-                    {
-                        count = ____geoMarketplace.MarketplaceChoices.Count + 1;
-                    }
-
-
-
-                    __instance.ListScrollRect.InitVertical(__instance.MarketplaceChoiceButtonPrefab.GetComponent<TheMarketplaceChoiceButton>(), count, delegate (int index, Component element)
-                    {
-                        TheMarketplaceChoiceButton component = element.GetComponent<TheMarketplaceChoiceButton>();
-                        setChoiceMethod.Invoke(__instance.TheMarketplaceChoicesController, new object[] { __instance.Context.ViewerFaction, ____geoMarketplace.MarketplaceChoices[index], component, geoEvent.Context });
-                        ____marketplaceChoiceButtons.Add(component);
-                    });
-
-                   // TFTVLogger.Always($"____marketplaceChoiceButtons.Count {____marketplaceChoiceButtons.Count}");
-
-                    return false;
-              //  }
-              /*  catch (Exception e)
+                if (____geoMarketplace.MarketplaceChoices.Count > 7) //&& !TFTVChangesToDLC5.TFTVMarketPlaceUI.MarketplaceOfferListAdjustedOnce)
                 {
-                    TFTVLogger.Error(e);
-                    throw;
-                }*/
+                    count = ____geoMarketplace.MarketplaceChoices.Count + 1;
+                }
+
+
+
+                __instance.ListScrollRect.InitVertical(__instance.MarketplaceChoiceButtonPrefab.GetComponent<TheMarketplaceChoiceButton>(), count, delegate (int index, Component element)
+                {
+                    TheMarketplaceChoiceButton component = element.GetComponent<TheMarketplaceChoiceButton>();
+                    setChoiceMethod.Invoke(__instance.TheMarketplaceChoicesController, new object[] { __instance.Context.ViewerFaction, ____geoMarketplace.MarketplaceChoices[index], component, geoEvent.Context });
+                    ____marketplaceChoiceButtons.Add(component);
+                });
+
+                // TFTVLogger.Always($"____marketplaceChoiceButtons.Count {____marketplaceChoiceButtons.Count}");
+
+                return false;
+                //  }
+                /*  catch (Exception e)
+                  {
+                      TFTVLogger.Error(e);
+                      throw;
+                  }*/
             }
         }
 
@@ -378,11 +800,11 @@ namespace TFTV
 
                         WeaponDef weaponDef = (WeaponDef)AmmoWeaponDatabase.AmmoToWeaponDictionary[tacticalItemDef][0];
 
-                        float costMultiplier = Math.Max(__instance.ChargesMax/Math.Max(weaponDef.DamagePayload.AutoFireShotCount, weaponDef.DamagePayload.ProjectilesPerShot), 2);
-                        
-                        
+                        float costMultiplier = Math.Max(__instance.ChargesMax / Math.Max(weaponDef.DamagePayload.AutoFireShotCount, weaponDef.DamagePayload.ProjectilesPerShot), 2);
 
-                        
+
+
+
                         __result = new ResourcePack(new ResourceUnit[]
                              {
                         new ResourceUnit(ResourceType.Tech, Mathf.Max(Mathf.FloorToInt(__instance.ManufactureTech / costMultiplier), Mathf.FloorToInt(__instance.ManufactureTech/10))),
@@ -469,59 +891,7 @@ namespace TFTV
 
 
 
-        /// <summary>
-        /// Fixes money spent no purchase made at Marketplace if 2 or more aircraft at Marketplace
-        /// </summary>
-        [HarmonyPatch(typeof(GeoscapeEvent), "CompleteMarketplaceEvent")]
-        public static class GeoscapeEvent_CompleteMarketplaceEvent_patch
-        {
 
-            public static bool Prefix(GeoscapeEvent __instance, GeoEventChoice choice, GeoFaction faction)
-            {
-                try
-                {
-                   // TFTVLogger.Always($"CompleteMarketplaceEvent triggered for choice {choice.Outcome.Items[0].ItemDef?.name}");
-
-                    if (__instance.Context.Site.Vehicles.Count() > 1)
-                    {
-                        TFTVLogger.Always($"There is a more than one vehicle at {__instance.Context.Site.LocalizedSiteName}! Need to execute alternative code");
-
-                        PropertyInfo propertyInfo = typeof(GeoscapeEvent).GetProperty("ChoiceReward", BindingFlags.Instance | BindingFlags.Public);
-
-
-
-
-                        GeoLevelController component = GameUtl.CurrentLevel().GetComponent<GeoLevelController>();
-                        GeoscapeEventContext geoscapeEventContext = new GeoscapeEventContext(component.PhoenixFaction.StartingBase, component.PhoenixFaction, __instance.Context.Site.Vehicles.First());
-                        // TFTVLogger.Always($"geoscapeEventContext is null? {geoscapeEventContext==null} is faction null? {faction==null}");
-
-                        propertyInfo?.SetValue(__instance, choice.Outcome.GenerateFactionReward(faction, geoscapeEventContext, __instance.EventID));
-
-                        // TFTVLogger.Always($". is propertyInfo null? {propertyInfo==null} is choiceReward null? {__instance.ChoiceReward==null}");
-
-                        // __instance.ChoiceReward = choice.Outcome.GenerateFactionReward(faction, geoscapeEventContext, __instance.EventID);
-                        __instance.ChoiceReward.Apply(faction, geoscapeEventContext.Site, geoscapeEventContext.Vehicle);
-                        // TFTVLogger.Always($"2");
-
-                        if (choice.Outcome.ReEneableEvent)
-                        {
-                            //   TFTVLogger.Always($"");
-                            GameUtl.CurrentLevel().GetComponent<GeoscapeEventSystem>().EnableGeoscapeEvent(__instance.EventID);
-                        }
-
-
-                        return false;
-                    }
-                    return true;
-
-                }
-                catch (Exception e)
-                {
-                    TFTVLogger.Error(e);
-                    throw;
-                }
-            }
-        }
 
 
 
@@ -733,24 +1103,16 @@ namespace TFTV
         {
             try
             {
-
-
                 foreach (GeoPhoenixFacility baseFacility in phoenixBase.Layout.Facilities)
                 {
 
-                    if (baseFacility.IsPowered)
+                    if (baseFacility.IsPowered && baseFacility.GetComponent<PrisonFacilityComponent>() == null)
                     {
                         baseFacility.SetPowered(false);
                         baseFacility.SetPowered(true);
                     }
                     // TFTVLogger.Always($"{baseFacility.ViewElementDef.name} at {phoenixBase.name} is working? {baseFacility.IsWorking}. is it powered? {baseFacility.IsPowered} ");
-
-
-
                 }
-
-
-
             }
             catch (Exception e)
             {
