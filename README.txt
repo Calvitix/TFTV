@@ -89,4 +89,4 @@ Si vous voulez vous assurer que votre mod sera compatible avec TFTV, vous pouvez
 
 De même, si vous avez réalisé une localisation pour TFTV et que vous souhaitez la partager, n'hésitez pas à venir sur notre Discord et à nous en faire part afin que nous puissions l'inclure.
 
-Si vous le souhaitez, vous pouvez m'offrir un café sur https://www.buymeacoffee.com/voland.
+Si vous le souhaitez, vous pouvez offrir un café à l'auteur du Mod, sur https://www.buymeacoffee.com/voland.
