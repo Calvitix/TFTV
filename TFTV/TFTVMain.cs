@@ -88,7 +88,7 @@ namespace TFTV
                 /// PhoenixGame is accessible at any time.
                 PhoenixGame game = GetGame();
 
-                string version = $"TFTV 1.0 20240426 release #1 v{MetaData.Version}";
+                string version = $"TFTV 1.0 20240426 version #1 v{MetaData.Version} FR";
 
                 TFTVversion = version;
 
@@ -111,6 +111,11 @@ namespace TFTV
                 // Initialize Helper
                 Helper.Initialize();
                 //This creates the Void Omen events
+
+                Config.PopulateConfigFields();
+                if (Config.ApplyCalvitixChanges) { TFTVLogger.Always("Calvitix Option : True "); }
+                else { TFTVLogger.Always("Calvitix Option : False "); }//Calvitix 
+
 
                 //BC stuff
                 Logger.LogInfo("BC stuff loading");
@@ -138,10 +143,10 @@ namespace TFTV
 
                 TFTVRevenantResearch.CreateRevenantRewardsDefs();
                 TFTVProjectOsiris.Defs.CreateProjectOsirisDefs();
-                //  NoSecondChances.ImplementNoSecondChances();
+
                 //  TFTVAncients.CheckResearchesRequiringThings();
 
-                Config.PopulateConfigFields();
+                //Calvitix remove Config.PopulateConfigFields();
                 //  Config.RetrieveConfigOptions();
                 harmony.PatchAll();
                 TFTVVanillaFixes.FixSurveillanceAbilityGroundMarker(harmony);
@@ -364,7 +369,7 @@ namespace TFTV
                 Harmony harmony = (Harmony)HarmonyInstance;
                 harmony.UnpatchAll();
                 harmony.PatchAll();
-                TFTVVanillaFixes.FixSurveillanceAbilityGroundMarker(harmony);
+
             }
         }
 

@@ -1,209 +1,211 @@
 Key,Type,Desc,English,Chinese (Simplified),French,German,Italian,Polish,Russian,,UI_Tester
 PR_BC_MOUNTED_ITEMS_PROF,Text,,MOUNTED ITEM PROFICIENCY,,MAÎTRISE DES OBJETS MONTÉS,,,,ОБРАЩЕНИЕ С НЕЙРО-ИНТЕРФЕЙСОМ,,
-PR_BC_MOUNTED_ITEMS_PROF_DESC,Text,,Proficiency with Robotic Arms and Mounted Weapons.,,Compétence avec les bras robotiques et les armes montées.,,,,Умение пользоваться механизированными манипуляторами техника и пусковыми установками,,
-PR_BC_STIMPACK_ITEM_DESC,Text,,A potent stimulant that regenerates body parts and instils Frenzy.,,Un stimulant puissant qui régénère les parties du corps et instille la frénésie.,,,,"Мощный стимулятор, который залечивает травмы и вводит цель в Буйство",,
-PR_BC_STIMPACK_ABILITY_DESC,Text,,"Re-enables and restores 20 Hit Points on Body Parts, also instills Frenzy on target, increasing movement by 33% for 2 turns, with panic immunity.",,"Réactive et restaure 20 points de vie sur les parties du corps, instille également la frénésie sur la cible, augmentant le mouvement de 33% pendant 2 tours, avec une immunité à la panique.",,,,"Лечит 20 ОЗ поврежденным конечностям и восстанавливает их, также внушает Буйство, увеличивая скорость на 33% и дает иммунитет к панике на 2 хода",,
-PR_BC_PSYCHIC_WARD_DESC,Text,,Allies within 10 tiles are immune to panic and psychic scream damage.,,Les alliés situés dans un rayon de 10 cases sont immunisés contre la panique et les dégâts des cris psychiques.,,,,Союзники в радиусе 10 клеток иммунны к панике и психическому урону,,
-PR_BC_POISON_STATUS_DESC,Text,,"At start of turn poison is subtracted from Hit Points and Willpoints reduced by 3, then poison value is reduced by 10. Poison causes trembling (-50% Accuracy).",,"Au début du tour, le poison est soustrait des points de vie et les points de volonté sont réduits de 3, puis la puissance du poison est réduite de 10. Le poison provoque des tremblements (-50% de précision).",,,,"В начале хода значение яда вычитается из ОЗ а воля уменьшается на 3, затем значение яда снижается на 10. Яд вызывает Трепет (-50% точности)",,
-PR_BC_RECOVER_DESC,Text,,Recover Will Points equal to half Willpower. Divide any Viral damage by 2 and become immune to Panic for 1 turn. End the actor's current turn.,,Récupérer des points de Volonté égaux à la moitié de la Volonté. Diviser tout dommage viral par 2 et devenir immunisé contre la panique pendant 1 tour. Termine le tour actuel du personnage,,,,Восстанавливает Очки Воли равные половине максимальной Воли. Сокращает значение Вируса наполовину и дает иммунитет к панике на 1 ход. Заканчивает ход.,,
+PR_BC_MOUNTED_ITEMS_PROF_DESC,Text,,Proficiency with Robotic Arms and Mounted Weapons.,,Maîtrise des bras robotiques et des armes montées.,,,,Умение пользоваться механизированными манипуляторами техника и пусковыми установками,,
+PR_BC_HANDGUN_ITEMS_PROF,Text,,MOUNTED ITEM PROFICIENCY,,MAÎTRISE DES PISTOLETS,,,,ОБРАЩЕНИЕ С НЕЙРО-ИНТЕРФЕЙСОМ,,
+PR_BC_HANDGUN_ITEMS_PROF_DESC,Text,,Proficiency with Robotic Arms and Mounted Weapons.,,Maîtrise des pistolets et armes de poings.,,,,Умение пользоваться механизированными манипуляторами техника и пусковыми установками,,
+PR_BC_STIMPACK_ITEM_DESC,Text,,A potent stimulant that regnerate body parts and instils Frenzy.,,Un puissant stimulant qui régénère les parties du corps et instille la frénésie.,,,,"Мощный стимулятор, который залечивает травмы и вводит цель в Буйство",,
+PR_BC_STIMPACK_ABILITY_DESC,Text,,"Re-enables and restores 20 Hit Points on Body Parts, also instills Frenzy on target, increasing movement by 33% for 2 turns, with panic immunity.",,"Réactive et restaure 20 points de vie sur les parties du corps, instille également Frénésie sur la cible, augmentant le mouvement de 33 % pendant 2 tours, avec immunité à la panique.",,,,"Лечит 20 ОЗ поврежденным конечностям и восстанавливает их, также внушает Буйство, увеличивая скорость на 33% и дает иммунитет к панике на 2 хода",,
+PR_BC_PSYCHIC_WARD_DESC,Text,,Allies within 10 tiles are immune to panic and psychic scream damage.,,Les alliés dans un rayon de 10 cases sont immunisés contre les dégâts de panique et de cri psychique.,,,,Союзники в радиусе 10 клеток иммунны к панике и психическому урону,,
+PR_BC_POISON_STATUS_DESC,Text,,"At start of turn poison is subtracted from Hit Points and Willpoints reduced by 3, then poison value is reduced by 10. Poison causes trembling (-50% Accuracy).",,"Au début du tour, le poison est soustrait des points de vie et les points de volonté sont réduits de 3, puis la valeur du poison est réduite de 10. Le poison provoque des tremblements (-50% de précision).",,,,"В начале хода значение яда вычитается из ОЗ а воля уменьшается на 3, затем значение яда снижается на 10. Яд вызывает Трепет (-50% точности)",,
+PR_BC_RECOVER_DESC,Text,,Recover Will Points equal to half Willpower. Divide any Viral damage by 2 and become immune to Panic for 1 turn. End the actor's current turn.,,Récupère des points de volonté égaux à la moitié de la volonté. Divise les dégâts viraux par 2 et immunise contre la panique pendant 1 tour. Termine le tour actuel du personnage.,,,,Восстанавливает Очки Воли равные половине максимальной Воли. Сокращает значение Вируса наполовину и дает иммунитет к панике на 1 ход. Заканчивает ход.,,
 PR_BC_HIDDEN,Text,,UNREVEALED,,NON RÉVÉLÉ,,,,СПРЯТАН,,
-PR_BC_HIDDEN_DESC,Text,,Indicates when the character is unrevealed and not spotted.,,Indique quand le personnage est non révélé et non repéré.,,,,Персонаж не раскрыт и не замечен,,
-PR_BC_INFILTRATOR_HIDDEN,Text,,HIDDEN: +25% stealth and completely undetected.,,CACHÉ : +25% de furtivité et complètement indétectable.,,,,СПРЯТАН: +25% скрытности и полностью не замечен врагом,,
-PR_BC_INFILTRATOR_LOCATED,Text,,"LOCATED: +25% stealth and still invisible, but enemies know the characters position and can target him.",,"LOCALISÉ : +25% de furtivité et toujours invisible, mais les ennemis connaissent la position du personnage et peuvent le cibler.",,,,"УСЛЫШАН: +25% скрытности и все еще невидим, но враги знают ваше расположение и могут пытаться попасть по вам",,
-PR_BC_INFILTRATOR_REVEALED,Text,,REVEALED: No Stealth bonus!,,RÉVÉLÉ : Pas de bonus de furtivité !,,,,РАСКРЫТ: Нет бонуса скрытности,,
-PR_BC_BATTLE_FOCUS,Text,,BATTLE FOCUS,,FOCUS DE BATAILLE,,,,БОЕВАЯ КОНЦЕНТРАЦИЯ,,
-PR_BC_BATTLE_FOCUS_DESC,Text,,If there are enemies within 10 tiles your attacks gain +20% damage,,"Si des ennemis se trouvent dans un rayon de 10 cases, vos attaques subissent +20% de dégâts.",,,,"Если в 10 клетках от вас есть враги, ваши атаки наносят +20% урона",,
-PR_BC_QUICK_AIM,Text,,QUICK AIM,,VISEE RAPIDE,,,,Выстрел навскидку,,
-PR_BC_QUICK_AIM_DESC,Text,,The action point cost of the next shot with proficient weapon is reduced by 1 with -30% accuracy. Limited to 2 uses per turn.,,Le coût en points d'action du prochain tir avec une arme maîtrisée est réduit de 1 avec une précision de -30%. Limité à 2 utilisations par tour.,,,,"Следующий выстрел стоит -1 ОД, но имеет штраф к точности -30%. Два использования в ход.",,
+PR_BC_HIDDEN_DESC,Text,,Indicates when the character is unrevealed and not spotted.,,Indique quand le personnage n'est pas révélé et n'est pas repéré.,,,,Персонаж не раскрыт и не замечен,,
+PR_BC_INFILTRATOR_HIDDEN,Text,,HIDDEN: +25% stealth and completely undetected.,,CACHÉ : +25 % de furtivité et complètement indétectable.,,,,СПРЯТАН: +25% скрытности и полностью не замечен врагом,,
+PR_BC_INFILTRATOR_LOCATED,Text,,"LOCATED: +25% stealth and still invisible, but enemies know the characters position and can target him.",,"LOCALISÉ : +25 % de furtivité et toujours invisible, mais les ennemis connaissent la position du personnage et peuvent le cibler.",,,,"УСЛЫШАН: +25% скрытности и все еще невидим, но враги знают ваше расположение и могут пытаться попасть по вам",,
+PR_BC_INFILTRATOR_REVEALED,Text,,REVEALED: No Stealth bonus!,,RÉVÉLÉ : Pas de bonus de furtivité !,,,,РАСКРЫТ: Нет бонуса скрытности,,
+PR_BC_BATTLE_FOCUS,Text,,BATTLE FOCUS,,AU COEUR DU COMBAT,,,,БОЕВАЯ КОНЦЕНТРАЦИЯ,,
+PR_BC_BATTLE_FOCUS_DESC,Text,,If there are enemies within 10 tiles your attacks gain +20% damage,,"S'il y a des ennemis dans un rayon de 10 cases, vos attaques gagnent +20 % de dégâts",,,,"Если в 10 клетках от вас есть враги, ваши атаки наносят +20% урона",,
+PR_BC_QUICK_AIM,Text,,QUICK AIM,,VISÉE RAPIDE,,,,Выстрел навскидку,,
+PR_BC_QUICK_AIM_DESC,Text,,The action point cost of the next shot with proficient weapon is reduced by 1 with -30% accuracy. Limited to 2 uses per turn.,,Le coût en points d'action du prochain tir avec une arme maîtrisée est réduit de 1 avec une précision de -30 %. Limité à 2 utilisations par tour.,,,,"Следующий выстрел стоит -1 ОД, но имеет штраф к точности -30%. Два использования в ход.",,
 PR_BC_KILL_N_RUN,Text,,KILL'N'RUN,,TUER ET COURIR,,,,УБЕЙ И БЕГИ,,
-PR_BC_KILL_N_RUN_DESC,Text,,"Once per turn, take a free move after killing an enemy",,"Une fois par tour, faire un mouvement gratuit après avoir tué un ennemi.",,,,"Если вы убили противника, то переместитесь на 7 клеток. Один раз в ход.",,
+PR_BC_KILL_N_RUN_DESC,Text,,"Once per turn, take a free move after killing an enemy",,"Une fois par tour, permet de faire un mouvement gratuit après avoir tué un ennemi.",,,,"Если вы убили противника, то переместитесь на 7 клеток. Один раз в ход.",,
 PR_BC_RAPID_CLEARANCE,Text,,RAPID CLEARANCE,,NETTOYAGE RAPIDE,,,,БЫСТРАЯ ЗАЧИСТКА,,
 PR_BC_RAPID_CLEARANCE_DESC,Text,,"Until end of turn, after killing an enemy next attack cost -2 AP",,"Jusqu'à la fin du tour, après avoir tué un ennemi, la prochaine attaque coûte -2 PA.",,,,Эффект до конца хода: после убийства соперника следующая атака стоит на 2 ОД меньше.,,
-PR_BC_AIMED_BURST,Text,,AIMED BURST,,RAFALE VISEE,,,,ПРИЦЕЛЬНАЯ ОЧЕРЕДЬ,,
-PR_BC_AIMED_BURST_DESC,Text,,Next shot with Assault Rifle uses double burst and gains +30% accuracy,,Le prochain tir avec le fusil d'assaut utilise une double rafale et gagne +30% de précision.,,,,Двойной выстрел из штурмовой винтовки с бонусом точности +30%,,
-PR_BC_EXTREME_FOCUS,Text,,EXTREME FOCUS,,CONCENTRATION EXTREME,,,,ПРЕДЕЛЬНАЯ КОНЦЕНТРАЦИЯ,,
-PR_BC_EXTREME_FOCUS_DESC,Text,,Overwatch cost is set to 1 Action Point for all weapons,,Le coût de la vigilance est fixé à 1 point d'action pour toutes les armes.,,,,Режим наблюдения стоит 1 ОД для любого оружия,,
+PR_BC_AIMED_BURST,Text,,AIMED BURST,,RAFALE PRÉCISE,,,,ПРИЦЕЛЬНАЯ ОЧЕРЕДЬ,,
+PR_BC_AIMED_BURST_DESC,Text,,Next shot with Assault Rifle uses double burst and gains +30% accuracy,,Le prochain tir avec le fusil d'assaut utilise une double rafale et gagne +30 % de précision,,,,Двойной выстрел из штурмовой винтовки с бонусом точности +30%,,
+PR_BC_EXTREME_FOCUS,Text,,EXTREME FOCUS,,CONCENTRATION EXTRÊME,,,,ПРЕДЕЛЬНАЯ КОНЦЕНТРАЦИЯ,,
+PR_BC_EXTREME_FOCUS_DESC,Text,,Overwatch cost is set to 1 Action Point for all weapons,,Le coût de vigilance est fixé à 1 point d'action pour toutes les armes.,,,,Режим наблюдения стоит 1 ОД для любого оружия,,
 PR_BC_ARMOR_BREAK,Text,,ARMOR BREAK,,BRISE-ARMURE,,,,РАЗЛОМ БРОНИ,,
-PR_BC_ARMOR_BREAK_DESC,Text,,"Gain +15 shred for the next attack with direct-fire projectile weapon, divided and rounded down by the amount of projectiles for burst weapons and shotguns.",,,,,,,,
+PR_BC_ARMOR_BREAK_DESC,Text,,"Gain +15 shred for the next attack with direct-fire projectile weapon, divided and rounded down by the amount of projectiles for burst weapons and shotguns.",,"Gagne +15 en déchiquettage pour la prochaine attaque avec une arme à projectile à tir direct (divisé et arrondi par le nombre de projectiles pour les armes à rafale et les fusils de chasse).",,,,,,
 PR_BC_GUNSLINGER,Text,,GUNSLINGER,,BANDIT ARME,,,,СТРЕЛОК,,
-PR_BC_GUNSLINGER_DESC,Text,,Shoot handgun 3 times at -50% accuracy. Uses AP cost of the weapon.,,Tirez 3 fois avec votre arme de poing avec une précision de -50%. Utilise le coût en PA de l'arme.,,,,Три выстрела из пистолета со штрафом точности -50%. Использует ОД оружия.,,
+PR_BC_GUNSLINGER_DESC,Text,,Shoot handgun 3 times at -50% accuracy. Uses AP cost of the weapon.,,Tire 3 fois avec une arme de poing avec une précision de -50 %. Utilise le coût en PA de l'arme.,,,,Три выстрела из пистолета со штрафом точности -50%. Использует ОД оружия.,,
 PR_BC_KILL_ZONE,Text,,KILL ZONE,,ZONE DE MORT,,,,СМЕРТЕЛЬНАЯ ЗОНА,,
 PR_BC_KILL_ZONE_DESC,Text,,When you take an Overwatch shot you fire twice at the target,,"Lorsque vous effectuez un tir de vigilance, vous tirez deux fois sur la cible.",,,,"Когда вы стреляете в режиме наблюдения, совершите два выстрела по цели",,
-PR_BC_HUNKER_DOWN,Text,,HUNKER DOWN,,,,,,,,
-PR_BC_HUNKER_DOWN_DESC,Text,,Gain 10 armor until your next turn. Ends turn. Your next attack cost -1 AP.,,,,,,,,
-PR_BC_HUNKER_DOWN_ARMOR_STATUS,Text,,HUNKER DOWN ARMOUR BUFF,,,,,,,,
-PR_BC_HUNKER_DOWN_ARMOR_STATUS_DESC,Text,,Added 10 Armour to each body part.,,,,,,,,
-PR_BC_HUNKER_DOWN_AP_STATUS,Text,,HUNKER DOWN ATTACK BOOST,,,,,,,,
-PR_BC_HUNKER_DOWN_AP_STATUS_DESC,Text,,Next attack with proficient weapon cost -1 AP.,,,,,,,,
-PR_BC_SKIRMISHER,Text,,SKIRMISHER,,ESCARMOUCHEUR,,,,НА ПЕРЕДОВОЙ,,
-PR_BC_SKIRMISHER_DESC,Text,,If you take damage during enemy turn your attacks deal 25% more damage until end of turn,,"Si vous subissez des dégâts pendant le tour de l'ennemi, vos attaques infligent 25% de dégâts supplémentaires jusqu'à la fin du tour.",,,,"При получении урона во время вражеского хода, получите +25% бонус урона на свой следующий ход",,
+PR_BC_HUNKER_DOWN,Text,,HUNKER DOWN,,S'ACCROUPIR,,,,,,
+PR_BC_HUNKER_DOWN_DESC,Text,,Gain 10 armor until your next turn. Ends turn. Your next attack cost -1 AP.,,Gagne 10 points d'armure jusqu'à votre prochain tour. Termine le tour. Votre prochaine attaque coûtera -1 PA.,,,,,,
+PR_BC_HUNKER_DOWN_ARMOR_STATUS,Text,,HUNKER DOWN ARMOUR BUFF,,BUFF D'ARMURE - ACCROUPI,,,,,,
+PR_BC_HUNKER_DOWN_ARMOR_STATUS_DESC,Text,,Added 10 Armour to each body part.,,Ajout de 10 points d'armure à chaque partie du corps.,,,,,,
+PR_BC_HUNKER_DOWN_AP_STATUS,Text,,HUNKER DOWN ATTACK BOOST,,BOOST D'ATTAQUE - ACCROUPI,,,,,,
+PR_BC_HUNKER_DOWN_AP_STATUS_DESC,Text,,Next attack with proficient weapon cost -1 AP.,,La prochaine attaque avec une arme maîtrisée coûte -1 PA.,,,,,,
+PR_BC_SKIRMISHER,Text,,SKIRMISHER,,TIRAILLEUR,,,,НА ПЕРЕДОВОЙ,,
+PR_BC_SKIRMISHER_DESC,Text,,If you take damage during enemy turn your attacks deal 25% more damage until end of turn,,"Si vous subissez des dégâts pendant le tour de l'ennemi, vos attaques infligent 25 % de dégâts supplémentaires jusqu'à la fin du tour.",,,,"При получении урона во время вражеского хода, получите +25% бонус урона на свой следующий ход",,
 PR_BC_SHRED_RESISTANCE,Text,,SHRED RESISTANCE,,RÉSISTANCE PARE-BALLE,,,,УСИЛЕННАЯ БРОНЯ,,
 PR_BC_SHRED_RESISTANCE_DESC,Text,,Shred Damage is reduced by half,,Les dégâts à l'armure sont réduits de moitié,,,,Урон от атак истончающих броню снижен вдвое,,
-PR_BC_RAGE_BURST,Text,,RAGE BURST,,ENRAGEE,,,,ЯРОСТНАЯ ОЧЕРЕДЬ,,
-PR_BC_RAGE_BURST_DESC,Text,,Shoot 5 times across a wide arc with increased accuracy. Uses AP cost of the weapon.,,Tirez 5 fois dans un large arc avec une précision accrue. Utilise le coût en PA de l'arme.,,,,Совершите 5 выстрелов по площади с повышенной точностью. Использует ОД оружия.,,
-PR_BC_JETPACK_CONTROL,Text,,JETPACK CONTROL,,CONTRÔLE DU JETPACK,,,,КОНТРОЛЬ ТЯГИ,,
-PR_BC_JETPACK_CONTROL_DESC,Text,,Jump to a location within 14 tiles. Limited to one use per turn,,Sauter à un endroit situé dans un rayon de 12 cases,,,,Совершите прыжок на 12 клеток (требуется реактивный ранец),,
+PR_BC_RAGE_BURST,Text,,RAGE BURST,,ENRAGÉ,,,,ЯРОСТНАЯ ОЧЕРЕДЬ,,
+PR_BC_RAGE_BURST_DESC,Text,,Shoot 5 times across a wide arc with increased accuracy. Uses AP cost of the weapon.,,Tire 5 fois sur un arc large avec une précision accrue. Utilise le coût en PA de l'arme.,,,,Совершите 5 выстрелов по площади с повышенной точностью. Использует ОД оружия.,,
+PR_BC_JETPACK_CONTROL,Text,,JETPACK CONTROL,,JETPACK CONTRÔLÉ,,,,КОНТРОЛЬ ТЯГИ,,
+PR_BC_JETPACK_CONTROL_DESC,Text,,Jump to a location within 14 tiles. Limited to one use per turn,,Se propulse vers un emplacement dans les 14 cases. Limité à une utilisation par tour,,,,Совершите прыжок на 12 клеток (требуется реактивный ранец),,
 PR_BC_BOOM_BLAST,Text,,BOOM BLAST,,EXPLOSION,,,,БОЛЬШОЙ БАБАХ,,
-PR_BC_BOOM_BLAST_DESC,Text,,Until end of turn your Explosives gain +50% range. The AP cost of handheld Rocket and Grenade Launchers are reduced by 1.,,"""Jusqu'à la fin du tour, vos explosifs gagnent +50% de portée. Le coût en PA de l'arme, de la grenade et du lance-roquettes est réduit de 1.""",,,,До конца хода дальность ваших атак взрывным оружие повышена на +50%. Использует ОД оружия. ОД ракетных установок и гранатометов снижены на 1.,,
-PR_BC_ADRENALINE,Text,,ADRENALINE,,ADRENALINE,,,,АДРЕНАЛИН,,
-PR_BC_ADRENALINE_DESC,Text,,"Until end of turn one-handed weapons and all non-weapon skills cost 1AP, except Recover",,"Jusqu'à la fin du tour, les armes à une main et toutes les compétences sans arme coûtent 1AP, sauf Récupération.",,,,"Одноручное вооружение и не стрелковые навыки стоят 1 ОД. Не действует на ""восстановление""",,
-PR_BC_BLOODLUST_DESC,Text,,Gain up to 25% Speed and Damage based on lost Health.,,Gagnez jusqu'à 25% de vitesse et de dégâts en fonction des points de vie perdus.,,,,,,
+PR_BC_BOOM_BLAST_DESC,Text,,Until end of turn your Explosives gain +50% range. The AP cost of handheld Rocket and Grenade Launchers are reduced by 1.,,"Jusqu'à la fin du tour, vos explosifs gagnent +50% de portée. Le coût en PA des lance-roquettes et lance-grenades portables est réduit de 1.",,,,До конца хода дальность ваших атак взрывным оружие повышена на +50%. Использует ОД оружия. ОД ракетных установок и гранатометов снижены на 1.,,
+PR_BC_ADRENALINE,Text,,ADRENALINE,,ADRÉNALINE,,,,АДРЕНАЛИН,,
+PR_BC_ADRENALINE_DESC,Text,,"Until end of turn one-handed weapons and all non-weapon skills cost 1AP, except Recover",,"Jusqu'à la fin du tour, les armes à une main et toutes les compétences non liées aux armes coûtent 1 PA, sauf la Récupération.",,,,"Одноручное вооружение и не стрелковые навыки стоят 1 ОД. Не действует на ""восстановление""",,
+PR_BC_BLOODLUST_DESC,Text,,Gain up to 25% Speed and Damage based on lost Health.,,Gagne jusqu'à 25 % de vitesse et de dégâts en fonction des points de vie perdus.,,,,,,
 PR_BC_GUN_KATA,Text,,GUN KATA,,KATA D’ARME,,,,ПИСТОЛЕТНЫЙ БОЙ,,
-PR_BC_GUN_KATA_DESC,Text,,Shoot with your handgun for free. Limited to 2 uses per turn.,,Tirez avec votre arme de poing gratuitement. Limité à 2 utilisations par tour.,,,,Выстрелите из пистолета за 0 ОД. 2 раза в ход.,,
+PR_BC_GUN_KATA_DESC,Text,,Shoot with your handgun for free. Limited to 2 uses per turn.,,Tire avec votre arme de poing gratuitement. Limité à 2 utilisations par tour.,,,,Выстрелите из пистолета за 0 ОД. 2 раза в ход.,,
 PR_BC_EXERTION,Text,,EXERTION,,EFFORT PHYSIQUE,,,,НАПРЯЖЕНИЕ,,
-PR_BC_EXERTION_DESC,Text,,Recover 2AP. Limited to 1 use per turn.,,Récupérer 2 points d’action. Limité à 1 utilisation par tour.,,,,Восстановите 2 ОД. Один раз в ход.,,
-PR_BC_KILLER_INSTINCT,Text,,KILLER INSTINCT,,,,,,,,
-PR_BC_KILLER_INSTINCT_DESC,Text,,"At the beginning of your turn, if there is an enemy within 5 tiles your next attack costs -2AP",,,,,,,,
-PR_BC_KILLER_INSTINCT_STATUS,Text,,KILLER INSTINCT TRIGGERED,,,,,,,,
-PR_BC_KILLER_INSTINCT_STATUS_DESC,Text,,"There is an enemy within 5 tiles, your next attack costs -2AP.",,,,,,,,
+PR_BC_EXERTION_DESC,Text,,Recover 2AP. Limited to 1 use per turn.,,Récupérer 2 PA. Limité à 1 utilisation par tour.,,,,Восстановите 2 ОД. Один раз в ход.,,
+PR_BC_KILLER_INSTINCT,Text,,KILLER INSTINCT,,INSTINCT DE TUEUR,,,,,,
+PR_BC_KILLER_INSTINCT_DESC,Text,,"At the beginning of your turn, if there is an enemy within 5 tiles your next attack costs -2AP",,"Au début de votre tour, s'il y a un ennemi à moins de 5 cases, votre prochaine attaque coûte -2 PA.",,,,,,
+PR_BC_KILLER_INSTINCT_STATUS,Text,,KILLER INSTINCT TRIGGERED,,INSTINCT DE TUEUR DÉCLENCHÉ,,,,,,
+PR_BC_KILLER_INSTINCT_STATUS_DESC,Text,,"There is an enemy within 5 tiles, your next attack costs -2AP.",,"S'il y a un ennemi à moins de 5 cases, votre prochaine attaque coûte -2 PA.",,,,,,
 PR_BC_SNEAK_ATTACK,Text,,SNEAK ATTACK,,ATTAQUE SURPRISE,,,,СКРЫТАЯ АТАКА,,
-PR_BC_SNEAK_ATTACK_DESC,Text,,Attacks while hidden deal +50% and while located +25% damage,,Les attaques lorsque vous êtes caché infligent +50% de dégâts et lorsque vous êtes localisé +25% de dégâts.,,,,"Если вы спрятаны, ваши атаки наносят +50% урона. Если вас услышали, но не раскрыли, то лишь +25% урона",,
-PR_BC_SA_HIDDEN_DESC,Text,,HIDDEN: Deal +50% damage,,CACHÉ : inflige +50% de dégâts.,,,,СПРЯТАН: Урон увеличен на 50%,,
-PR_BC_SA_LOCATED_DESC,Text,,LOCATED: Deal +25% damage,,LOCALISÉ : inflige +25% de dégâts,,,,УСЛЫШАН: Урон увеличен на 25%,,
+PR_BC_SNEAK_ATTACK_DESC,Text,,Attacks while hidden deal +50% and while located +25% damage,,Les attaques lorsque vous êtes caché infligent +50 % de dégâts,,,,"Если вы спрятаны, ваши атаки наносят +50% урона. Если вас услышали, но не раскрыли, то лишь +25% урона",,
+PR_BC_SA_HIDDEN_DESC,Text,,HIDDEN: Deal +50% damage,,CACHÉ : Inflige +50 % de dégâts,,,,СПРЯТАН: Урон увеличен на 50%,,
+PR_BC_SA_LOCATED_DESC,Text,,LOCATED: Deal +25% damage,,LOCALISÉ : Inflige +25 % de dégâts,,,,УСЛЫШАН: Урон увеличен на 25%,,
 PR_BC_HOMING_DRONE,Text,,HOMING DRONE,,DRONE AUTOGUIDÉ,,,,,,
-PR_BC_HOMING_DRONE_DESC,Text,,Shoot your Spider Drone at the target. Next time the target takes damage the drone will explode causing blast damage in the area,,"Tirez sur la cible avec votre drone araignée. La prochaine fois que la cible subira des dégâts, le drone explosera, causant des dégâts d'explosion dans la zone.",,,,,,
+PR_BC_HOMING_DRONE_DESC,Text,,Shoot your Spider Drone at the target. Next time the target takes damage the drone will explode causing blast damage in the area,,"Tire sur la cible avec votre drone araignée. La prochaine fois que la cible subira des dégâts, le drone explosera, provoquant des dégâts d'explosion dans la zone.",,,,,,
 PR_BC_CAUTIOUS,Text,,CAUTIOUS,,PRUDENT,,,,,,
-PR_BC_CAUTIOUS_DESC,Text,,Gain +20% accuracy and +10% stealth,,"""Gagnez +20% de précision et +10% de furtivité""",,,,,,
-PR_BC_NEURAL_FEEDBACK,Text,,NEURAL FEEDBACK,,,,,,,,
-PR_BC_NEURAL_FEEDBACK_DESC,Text,,Gain 2AP the first time you daze an enemy during the turn,,,,,,,,
-PR_BC_JAMMING_FIELD,Text,,JAMMING FIELD,,,,,,,,
-PR_BC_JAMMING_FIELD_DESC,Text,,Enemies within 10 tiles have 50% fumble chance with firearms,,,,,,,,
-PR_BC_PARAPSYCHOSIS,Text,,PARAPSYCHOSIS,,,,,,,,
-PR_BC_PARAPSYCHOSIS_DESC,Text,,Target human-sized enemy within 12 tiles becomes Wild,,,,,,,,
+PR_BC_CAUTIOUS_DESC,Text,,Gain +20% accuracy and +10% stealth,,"""Gagne +20 % de précision et +10 % de furtivité""",,,,,,
+PR_BC_NEURAL_FEEDBACK,Text,,NEURAL FEEDBACK,,RÉTROACTION NEURONALE,,,,,,
+PR_BC_NEURAL_FEEDBACK_DESC,Text,,Gain 2AP the first time you daze an enemy during the turn,,Gagne 2 PA la première fois que vous étourdissez un ennemi pendant le tour,,,,,,
+PR_BC_JAMMING_FIELD,Text,,JAMMING FIELD,,CHAMP DE BROUILLAGE,,,,,,
+PR_BC_JAMMING_FIELD_DESC,Text,,Enemies within 10 tiles have 50% fumble chance with firearms,,Les ennemis dans un rayon de 10 cases ont 50 % de chances d'échouer leurs tirs avec des armes à feu.,,,,,,
+PR_BC_PARAPSYCHOSIS,Text,,PARAPSYCHOSIS,,PARAPSYCHOSE,,,,,,
+PR_BC_PARAPSYCHOSIS_DESC,Text,,Target human-sized enemy within 12 tiles becomes Wild,,"Cible un ennemi de taille humaine dans un rayon de 12 cases, qui deviendra Sauvage",,,,,,
 PR_BC_ELECTRIC_REINFORCEMENT,Text,,ELECTRIC REINFORCEMENT,,RENFORCEMENT ÉLECTRIQUE,,,,ЭЛЕКТРО-УКРЕПЛЕНИЕ,,
-PR_BC_ELECTRIC_REINFORCEMENT_DESC,Text,,Give yourself and allies within 10 tiles a bonus of 10 armor for 1 turn. This effect does not stack,,Accordez à vous-même et à vos alliés dans un rayon de 10 cases un bonus de 10 d'armure pendant 1 tour. Cet effet ne s'accumule pas,,,,Техник и союзники в радиусе 10 клеток получают 10 брони до начала следующего хода. Использование более одного раза не увеличивает броню.,,
+PR_BC_ELECTRIC_REINFORCEMENT_DESC,Text,,Give yourself and allies within 10 tiles a bonus of 10 armor for 1 turn. This effect does not stack,,Accorde à vous-même et à vos alliés dans un rayon de 10 cases un bonus de 10 points d'armure pendant 1 tour. Cet effet ne se cumule pas,,,,Техник и союзники в радиусе 10 клеток получают 10 брони до начала следующего хода. Использование более одного раза не увеличивает броню.,,
 PR_BC_STABILITY,Text,,STABILITY,,STABILITÉ,,,,УСТОЙЧИВОСТЬ,,
-PR_BC_STABILITY_DESC,Text,,Gain 10% extra accuracy per remaining AP up to 40%,,Gagnez 10% de précision supplémentaire par point d'action restant jusqu'à 40%.,,,,Каждое не использованное ОД добавляет 10% точности (макс 40% при 4 ОД),,
+PR_BC_STABILITY_DESC,Text,,Gain 10% extra accuracy per remaining AP up to 40%,,Gagne 10 % de précision supplémentaire par Point d'Action restant jusqu'à 40 %,,,,Каждое не использованное ОД добавляет 10% точности (макс 40% при 4 ОД),,
 PR_BC_AMPLIFY_PAIN,Text,,AMPLIFY,,AMPLIFICATION,,,,УСИЛЕНИЕ,,
-PR_BC_AMPLIFY_PAIN_DESC,Text,,"Until End of Turn gain +100% to healing and +50% to special damage (Acid, Paralysis, Viral, Poison)",,"Jusqu'à la fin du tour, gagnez +100% aux soins et +50% aux dégâts spéciaux (Acide, Paralysie, Viral, Poison).",,,,"До конца хода все лечение на 100% более эффективно. Атаки кислотой, вирусом, ядом и параличом эффективнее на 50%.",,
-PR_BC_BIOCHEMIST,Text,,BIOCHEMIST,,,,,,,,
-PR_BC_BIOCHEMIST_DESC,Text,,"Viral, Paralysis, Poison and Acid damage increased by 25% for direct damage and 5% for grenades on each hit body part",,,,,,,,
+PR_BC_AMPLIFY_PAIN_DESC,Text,,"Until End of Turn gain +100% to healing and +50% to special damage (Acid, Paralysis, Viral, Poison)",,"Jusqu'à la fin du tour, gagne +100 % aux soins et +50 % aux dégâts spéciaux (acide, paralysie, viral, poison).",,,,"До конца хода все лечение на 100% более эффективно. Атаки кислотой, вирусом, ядом и параличом эффективнее на 50%.",,
+PR_BC_BIOCHEMIST,Text,,BIOCHEMIST,,BIOCHIMISTE,,,,,,
+PR_BC_BIOCHEMIST_DESC,Text,,"Viral, Paralysis, Poison and Acid damage increased by 25% for direct damage and 5% for grenades on each hit body part",,"Dégâts viraux, paralysie, poison et acide augmentés de 25 % pour les dégâts directs et de 5 % pour les grenades sur chaque partie du corps touchée.",,,,,,
 PR_BC_LAY_WASTE,Text,,LAY WASTE,,GASPILLAGE,,,,ОПУСТОШИТЬ,,
-PR_BC_LAY_WASTE_DESC,Text,,If your current Willpower score is higher than target's deal 20 damage for each point of WP difference to a maximum of 200 damage,,"Si votre score actuel de Volonté est supérieur à celui de la cible, infligez 20 points de dégâts pour chaque point de différence, avec un maximum de 200 points de dégâts.",,,,Наносит 20 урона цели за каждое очко разницы между вашими ОВ. Максимум 200 урона.,,
+PR_BC_LAY_WASTE_DESC,Text,,If your current Willpower score is higher than target's deal 20 damage for each point of WP difference to a maximum of 200 damage,,"Si votre score de Volonté actuel est supérieur à celui de la cible, inflige 20 dégâts pour chaque point de différence, jusqu'à un maximum de 200 dégâts.",,,,Наносит 20 урона цели за каждое очко разницы между вашими ОВ. Максимум 200 урона.,,
 PR_BC_ENDURANCE,Text,,ENDURANCE,,ENDURANCE,,,,ВЫНОСЛИВОСТЬ,,
-PR_BC_ENDURANCE_DESC,Text,,"Recover restores additional 25% Willpower and removes Acid, Poison and Bleeding effects.",,"Récupérer redonne 25% de volonté supplémentaire et supprime les effets de l'acide, du poison et de l'hémorragie.",,,,"Восстановление возвращает на 25% больше воли, а также снимает эффекты кислоты, яда и кровотечения",,
+PR_BC_ENDURANCE_DESC,Text,,"Recover restores additional 25% Willpower and removes Acid, Poison and Bleeding effects.",,"La Récupération restaure 25 % de volonté supplémentaire et supprime les effets d'acide, de poison et de saignement.",,,,"Восстановление возвращает на 25% больше воли, а также снимает эффекты кислоты, яда и кровотечения",,
 PR_BC_SABOTEUR,Text,,SABOTEUR,,SABOTEUR,,,,ДИВЕРСАНТ,,
-PR_BC_SABOTEUR_DESC,Text,,When you are hidden AP cost of non-weapon skills and spider drone skills decreased by 1 AP,,"Lorsque vous êtes caché, le coût en points d'actions des compétences sans arme et des compétences de drone-araignée est réduit de 1 point d'action.",,,,"Пока вы спрятаны, стоимость не атакующих навыков и паучьих дронов уменьшена на 1 ОД",,
-PR_BC_DIE_HARD,Text,,DIE HARD,,,,,,,,
-PR_BC_DIE_HARD_DESC,Text,,When you take lethal damage there is a chance to survive with 1HP and have all negative effects cleared. Can only trigger once per mission.,,,,,,,,
-PR_BC_DIE_HARD_TRIGGERED,Text,,DIE HARD,,,,,,,,
-PR_BC_DIE_HARD_TRIGGERED_DESC,Text,,"Die Hard has saved your life once already, so there is no more chance for this mission!",,,,,,,,
-PR_BC_DIE_HARD_KEEPALIVE,Text,,DIE HARDER,,,,,,,,
-PR_BC_DIE_HARD_KEEPALIVE_DESC,Text,,You took lethal damage this turn and Die Hard saved your life. You are invulnerable until the end of this turn.,,,,,,,,
+PR_BC_SABOTEUR_DESC,Text,,When you are hidden AP cost of non-weapon skills and spider drone skills decreased by 1 AP,,"Lorsque vous êtes caché, le coût en PA des compétences non liées aux armes et des compétences de drone-araignée est réduit de 1 PA.",,,,"Пока вы спрятаны, стоимость не атакующих навыков и паучьих дронов уменьшена на 1 ОД",,
+PR_BC_DIE_HARD,Text,,DIE HARD,,IRRÉDUCTIBLE,,,,,,
+PR_BC_DIE_HARD_DESC,Text,,When you take lethal damage there is a chance to survive with 1HP and have all negative effects cleared. Can only trigger once per mission.,,"Lorsque vous subissez des dégâts mortels, vous avez une chance de survivre avec 1 PV et de faire disparaître tous les effets négatifs. Ne peut se déclencher qu'une seule fois par mission.",,,,,,
+PR_BC_DIE_HARD_TRIGGERED,Text,,DIE HARD,,IRRÉDUCTIBLE,,,,,,
+PR_BC_DIE_HARD_TRIGGERED_DESC,Text,,"Die Hard has saved your life once already, so there is no more chance for this mission!",,"Irréductible vous a déjà sauvé la vie une fois, il n'y a donc plus aucune chance pour cette mission !",,,,,,
+PR_BC_DIE_HARD_KEEPALIVE,Text,,DIE HARDER,,LE PLUS DUR,,,,,,
+PR_BC_DIE_HARD_KEEPALIVE_DESC,Text,,You took lethal damage this turn and Die Hard saved your life. You are invulnerable until the end of this turn.,,Vous avez subi des dégâts mortels ce tour-ci et Irréductible vous a sauvé la vie. Vous êtes invulnérable jusqu'à la fin de ce tour.,,,,,,
 PR_BC_BATTLEHARDENED,Text,,BATTLE HARDENED,,ENDURCI AU COMBAT,,,,ЗАКАЛЕННЫЙ,,
-PR_BC_BATTLEHARDENED_DESC,Text,,"Gain +2 to all primary stats, +10% to accuracy and +4 to perception",,"Gagne +2 à toutes les stats primaires, +10% à la précision et +4 à la perception",,,,"Бонус +2 к основным характеристикам, а также +10% точности и +4 восприятия",,
-PR_BC_TAKEDOWN,Text,,TAKEDOWN,,DEMOLITION,,,,ЗАХВАТ,,
-PR_BC_TAKEDOWN_DESC,Text,,Deal 80 damage and 160 shock damage to an adjacent target. Replaces Bash.,,Inflige 80 points de dégâts et 160 points de dégâts de choc à une cible adjacente.,,,,Рукопашная атака наносящая 80 урона и 160 урона оглушением. Заменяет удар прикладом.,,
-PR_BC_PUNISHER,Text,,PUNISHER,,PUNISHER,,,,КАРАТЕЛЬ,,
+PR_BC_BATTLEHARDENED_DESC,Text,,"Gain +2 to all primary stats, +10% to accuracy and +4 to perception",,"Gagne +2 à toutes les statistiques principales, +10 % à la précision et +4 à la perception",,,,"Бонус +2 к основным характеристикам, а также +10% точности и +4 восприятия",,
+PR_BC_TAKEDOWN,Text,,TAKEDOWN,,DÉMOLITION,,,,ЗАХВАТ,,
+PR_BC_TAKEDOWN_DESC,Text,,Deal 80 damage and 160 shock damage to an adjacent target. Replaces Bash.,,Inflige 80 dégâts et 160 dégâts de choc à une cible adjacente. Remplace 'Cogner'.,,,,Рукопашная атака наносящая 80 урона и 160 урона оглушением. Заменяет удар прикладом.,,
+PR_BC_PUNISHER,Text,,PUNISHER,,PUNISSEUR,,,,КАРАТЕЛЬ,,
 PR_BC_PUNISHER_DESC,Text,,"When you kill an enemy, his allies lose 2 additional Will Points",,"Lorsque vous tuez un ennemi, ses alliés perdent 2 points de volonté supplémentaires.",,,,"Когда вы убиваете врага, все враги теряют 2 ОВ дополнительно.",,
 PR_BC_PEPPER_CLOUD,Text,,PEPPER CLOUD,,NUAGE DE POIVRE,,,,,,
-PR_BC_PEPPER_CLOUD_DESC,Text,,Enemies in 8 tile radius suffer -50% accuracy,,Les ennemis dans un rayon de 8 cases subissent une perte de précision de 50 %.,,,,,,
-PR_BC_AR_TARGETTING,Text,,AR TARGETTING,,CIBLAGE ALLIE,,,,ВИРТУАЛЬНЫЙ ПРИЦЕЛ,,
-PR_BC_AR_TARGETTING_DESC,Text,,Target ally within 10 tiles gains +20% accuracy,,L'allié cible dans un rayon de 10 cases gagne +20% de précision.,,,,Союзная цель в радиусе 10 клеток получает +30% точности,,
-PR_BC_PHANTOM_PROTOCOL,Text,,PHANTOM PROTOCOL,,PROTOCOLE FANTOME,,,,ФАНТОМ,,
-PR_BC_PHANTOM_PROTOCOL_DESC,Text,,"Gain +15% stealth and accuracy, provides immunity to Sentinels surveillance ability",,"Gagne +15% de furtivité et de précision, procure une immunité à la capacité de surveillance des Sentinelles.",,,,Получите +15% точности и скрытности. Также Стражи не реагируют при вашем приближении.,,
+PR_BC_PEPPER_CLOUD_DESC,Text,,Enemies in 8 tile radius suffer -50% accuracy,,Les ennemis dans un rayon de 8 cases subissent une perte de précision de -50 %,,,,,,
+PR_BC_AR_TARGETTING,Text,,AR TARGETTING,,CIBLAGE ALLIÉ,,,,ВИРТУАЛЬНЫЙ ПРИЦЕЛ,,
+PR_BC_AR_TARGETTING_DESC,Text,,Target ally within 10 tiles gains +20% accuracy,,L'allié ciblé dans un rayon de 10 cases gagne +20 % de précision,,,,Союзная цель в радиусе 10 клеток получает +30% точности,,
+PR_BC_PHANTOM_PROTOCOL,Text,,PHANTOM PROTOCOL,,PROTOCOLE FANTÔME,,,,ФАНТОМ,,
+PR_BC_PHANTOM_PROTOCOL_DESC,Text,,"Gain +15% stealth and accuracy, provides immunity to Sentinels surveillance ability",,"Gagne +15 % de furtivité et de précision, procure une immunité à la capacité de surveillance des Sentinelles.",,,,Получите +15% точности и скрытности. Также Стражи не реагируют при вашем приближении.,,
 PR_BC_SOWER_OF_CHANGE,Text,,SOWER OF CHANGE,,SEMEUR DE CHANGEMENT,,,,СЕЯТЕЛЬ ПЕРЕМЕН,,
-PR_BC_SOWER_OF_CHANGE_DESC,Text,,Returns 25% of damage as Viral to the attacker,,Renvoie 25% des dommages sous forme de dégât viral à l'attaquant.,,,,Возвращает атакующему 25% урона в виде вируса,,
+PR_BC_SOWER_OF_CHANGE_DESC,Text,,Returns 25% of damage as Viral to the attacker,,Renvoie 25 % des dégâts sous forme de dégât viral à l'attaquant.,,,,Возвращает атакующему 25% урона в виде вируса,,
 PR_BC_SURVIVOR,Text,,SURVIVOR,,SURVIVANT,,,,ВЫЖИВШИЙ,,
 PR_BC_SURVIVOR_DESC,Text,,"<b>WP +4, but -2 STR</b>
-<i>You have had it tougher than most, and that's saying a lot. Your body took a toll, but your mind grew stronger</i>",,"<b>Volonté +4, mais Force -2</b>
-<i>Vous avez eu la vie plus dure que la plupart des gens, et ce n'est pas peu dire. Votre corps a souffert, mais votre esprit est devenu plus fort.</i>",,,,"<b>Воля +4, Сила -2</b>
+<i>You have had it tougher than most, and that's saying a lot. Your body took a toll, but your mind grew stronger</i>",,"<b>VOL +4, mais -2 FOR</b>
+<i>Vous avez vécu une situation plus difficile que la plupart des autres, et cela en dit long. Votre corps a fait des ravages, mais votre esprit est devenu plus fort</i>",,,,"<b>Воля +4, Сила -2</b>
 <i>Вам досталось больше других и это о многом говорит. Но все, что не убивает нас, делает сильнее</i>",,
-PR_BC_NURSE,Text,,NURSE,,INFIRMIERE,,,,СИДЕЛКА,,
+PR_BC_NURSE,Text,,NURSE,,INFIRMIÈRE,,,,СИДЕЛКА,,
 PR_BC_NURSE_DESC,Text,,"<b>WP +2. Healing +30%</b>
-<i>Yes, there is a gentler side to you. But people have to get hurt to experience it</i>",,"<b>Volonté +2, Soin +30%</b>
-<i>Oui, il y a un côté plus doux en vous. Mais les gens doivent être blessés pour en faire l'expérience.</i>",,,,"<b>Воля +2, Лечение +30%</b>
+<i>Yes, there is a gentler side to you. But people have to get hurt to experience it</i>",,"<b>VOL +2. Guérison +30 %</b>
+<i>Oui, il y a un côté plus doux chez vous. Mais les gens doivent être blessés pour en faire l'expérience.</i>",,,,"<b>Воля +2, Лечение +30%</b>
 <i>Да, в вас есть и мягкая сторона. Но знают о ней только те, кто познал боль</i>",,
 PR_BC_SCAV,Text,,SCAV,,CHAROGNARD,,,,ПАДАЛЬЩИК,,
 PR_BC_SCAV_DESC,Text,,"<b>WP +2, Perception +4</b>
-<i>The Old World left behind all sorts of interesting things. It takes patience and a keen eye to find them</i>",,"<b>Volonté  +2, Perception +4</b>
-<i>L'ancien monde a laissé derrière lui toutes sortes de choses intéressantes. Il faut de la patience et un œil attentif pour les trouver.</i>",,,,"<b>Воля +2, Восприятие +4</b>
+<i>The Old World left behind all sorts of interesting things. It takes patience and a keen eye to find them</i>",,"<b>VOL +2, Perception +4</b>
+<i>Le Vieux Monde a laissé derrière lui toutes sortes de choses intéressantes. Il faut de la patience et un œil vif pour les trouver</i>",,,,"<b>Воля +2, Восприятие +4</b>
 <i>Старый Мир оставил после себя множество вещей, чтобы разыскать их нужно терпение и зоркий глаз</i>",,
 PR_BC_CORPSE_DISPOSER,Text,,CORPSE DISPOSER,,DESTRUCTEUR DE CADAVRES,,,,СЖИГАТЕЛЬ ТРУПОВ,,
 PR_BC_CORPSE_DISPOSER_DESC,Text,,"<b>Fire Resistance</b>
 <i>There were too many to bury, so you had to burn them. Day after day, week after week. It's not the fire that scares you</i>",,"<b>Résistance au feu</b>
-<i>Il y en avait trop pour les enterrer, alors il fallait les brûler. Jour après jour, semaine après semaine. Ce n'est pas le feu qui vous effraie.</i>",,,,"<b>Защита от огня</b>
+<i>Il y en avait trop pour les enterrer, il fallait donc les brûler. Jour après jour, semaine après semaine. Ce n'est pas le feu qui te fait peur</i>",,,,"<b>Защита от огня</b>
 <i>Тел было слишком много, чтобы похоронить всех, так что вы сожгли их. Вовсе не огонь страшит вас</i>",,
-PR_BC_HARD_LABOR,Text,,HARD LABOR,,TRAVAIL DUR,,,,РАЗНОРАБОЧИЙ,,
+PR_BC_HARD_LABOR,Text,,HARD LABOR,,DUR LABEUR,,,,РАЗНОРАБОЧИЙ,,
 PR_BC_HARD_LABOR_DESC,Text,,"<b>STR +4, Perception -4</b>
-<i>The New World didn't just build itself. There was lot of digging, lifting and carrying, and dust and noise everywhere</i>",,"<b>Force +4, mais Perception -4</b>
-<i>Le Nouveau Monde ne s'est pas construit tout seul. Il a fallu creuser, soulever et transporter beaucoup de choses, et il y a eu de la poussière et du bruit partout.</i>",,,,"<b>Сила +4, Восприятие -4</b>
+<i>The New World didn't just build itself. There was lot of digging, lifting and carrying, and dust and noise everywhere</i>",,"<b>Force +4, Perception -4</b>
+<i>Le Nouveau Monde ne s'est pas construit tout seul. Il y avait beaucoup de travail pour creuser, soulever et transporter, et il y avait de la poussière et du bruit partout</i>",,,,"<b>Сила +4, Восприятие -4</b>
 <i>Новый Мир не возник сам по себе. Пришлось много копать, таскать и поднимать. И повсюду шум и пыль</i>",,
 PR_BC_SQUATTER,Text,,SQUATTER,,SQUATTEUR,,,,СКИТАЛЕЦ,,
 PR_BC_SQUATTER_DESC,Text,,"<b>STR +2, Carry Weight +25%</b>
-<i>In the camps you carried everything on your person at all times. And sometimes you had to take things from other people</i>",,"<b>Force +2, Poids transportable +25%</b>
-<i>Dans les camps, on portait tout sur soi à tout moment. Et parfois vous deviez prendre des choses à d'autres personnes.</i>",,,,"<b>Сила +2, Допустимый вес +25%</b>
+<i>In the camps you carried everything on your person at all times. And sometimes you had to take things from other people</i>",,"<b>Force +2, poids transport +25 %</b>
+<i>Dans les camps, vous portiez tout sur vous à tout moment. Et parfois il fallait prendre des choses aux autres</i>",,,,"<b>Сила +2, Допустимый вес +25%</b>
 <i>В лагерях все приходилось держать при себе. А иногда отбирать вещи у других</i>",,
-PR_BC_VOLUNTEERED,Text,,VOLUNTEERED,,VOLONTAIRE,,,,ДОБРОВОЛЕЦ,,
+PR_BC_VOLUNTEERED,Text,,VOLUNTEERED,,BÉNÉVOLE,,,,ДОБРОВОЛЕЦ,,
 PR_BC_VOLUNTEERED_DESC,Text,,"<b>Nightvision, +2 SPD, -2WP</b>
-<i>They gave you cat eyes and reflex enhancers, and nothing for the headaches that came after</i>",,"<b>Vision nocturne, Vitesse +2, mais Volonté -2</b>
-<i>Ils vous ont donné des yeux de chat et des amplificateurs de réflexe, mais rien pour les maux de tête qui ont suivi.</i>",,,,"<b>Ночное видение. Скорость +2, Воля -2</b>
+<i>They gave you cat eyes and reflex enhancers, and nothing for the headaches that came after</i>",,"<b>Vision nocturne, +2 VIT, -2 VOL</b>
+<i>Ils vous ont donné des yeux de chat et des amplificateurs de réflexes, et rien pour les maux de tête qui ont suivi</i>",,,,"<b>Ночное видение. Скорость +2, Воля -2</b>
 <i>Они дали тебе глаза и рефлексы кошки. Но ничего, чтобы заглушить головные боли, которые пришли позже</i>",,
 PR_BC_CONDO_RAIDER,Text,,CONDO RAIDER,,YAMAKASI,,,,ФОРТОЧНИК,,
 PR_BC_CONDO_RAIDER_DESC,Text,,"<b>Jump up or down one building level</b>
-<i>The world is full of broken elevators and collapsed staircases, and the pros in this business don't use ladders</i>",,"<b>Sauter d'un niveau de bâtiment à l'autre</b>
-<i>Le monde est rempli d'ascenseurs en panne et d'escaliers effondrés, et les professionnels de ce secteur n'utilisent pas d'échelles.</i>",,,,"<b>Может прыгать на 1 уровень вверх не используя лестницы</b>
+<i>The world is full of broken elevators and collapsed staircases, and the pros in this business don't use ladders</i>",,"<b>Sauter vers le haut ou vers le bas d'un niveau du bâtiment</b>
+<i>Le monde est plein d'ascenseurs en panne et d'escaliers effondrés, et les professionnels de ce secteur n'utilisent pas d'échelles</i>",,,,"<b>Может прыгать на 1 уровень вверх не используя лестницы</b>
 <i>Мир полон сломанных лифтов и обвалившихся пролетов. И профи в нашем деле не пользуются лестницами</i>",,
-PR_BC_TUNNEL_RAT,Text,,TUNNEL RAT,,RAT DE TUNNEL,,,,ТУННЕЛЬНАЯ КРЫСА,,
+PR_BC_TUNNEL_RAT,Text,,TUNNEL RAT,,RAT DES TUNNELS,,,,ТУННЕЛЬНАЯ КРЫСА,,
 PR_BC_TUNNEL_RAT_DESC,Text,,"<b>Stealth +15%, SPD +1</b>
-<i>You spent a good spell in the sewers. You had to be quiet, real quiet... And then run like hell!</i>",,"<b>Furtivité +15%, Vitesse +1</b>
-<i>Vous avez passé un bon moment dans les égouts. Vous deviez être silencieux, vraiment silencieux... Et ensuite courir comme un dératé !</i>",,,,"<b>Скрытность +15%, Скорость +1</b>
+<i>You spent a good spell in the sewers. You had to be quiet, real quiet... And then run like hell!</i>",,"<b>Furtivité +15 %, VIT +1</b>
+<i>Vous avez passé un bon moment dans les égouts. Il fallait être silencieux, très silencieux... Et ensuite courir comme un diable !</i>",,,,"<b>Скрытность +15%, Скорость +1</b>
 <i>Вы много времени провели в канализации. Приходилось быть тихим, очень тихим... а затем бежать сломя голову</i>",,
 PR_BC_HUNTER,Text,,HUNTER,,CHASSEUR,,,,ОХОТНИК,,
 PR_BC_HUNTER_DESC,Text,,"<b>Accuracy +10%</b>
-<i>There used to be game and hunger around these parts</i>",,"<b>Précision +10%</b>
-<i>Il y avait autrefois du gibier et de la nourriture par ici.</i>",,,,"<b>Точность +10%</b>
+<i>There used to be game and hunger around these parts</i>",,"<b>Précision +10 %</b>
+<i>Il y avait du gibier et de la faim dans ces régions</i>",,,,"<b>Точность +10%</b>
 <i>Когда-то в этих краях не люди были добычей</i>",,
 PR_BC_TROUBLEMAKER,Text,,TROUBLEMAKER,,PERTURBATEUR,,,,БЕДОКУР,,
 PR_BC_TROUBLEMAKER_DESC,Text,,"<b>Grenades deal +10% damage</b>
-<i>You have a knack for irritating the authorities. Maybe that's why you are here? Think about it</i>",,"<b>Les grenades infligent +10% de dégâts</b>
-<i>Vous avez le don d'irriter les autorités. C'est peut-être pour cela que vous êtes ici ? Pensez-y</i>",,,,"<b>Гранаты наносят +10% урона</b>
+<i>You have a knack for irritating the authorities. Maybe that's why you are here? Think about it</i>",,"<b>Les grenades infligent +10 % de dégâts</b>
+<i>Vous avez le don d’irriter les autorités. C'est peut-être pour ça que tu es ici ? Pensez-y</i>",,,,"<b>Гранаты наносят +10% урона</b>
 <i>У вас талант раздражать власть имущих. Может поэтому вы оказались здесь? Подумайте об этом</i>",,
-PR_BC_PARANOID,Text,,PARANOID,,PARANOIAQUE,,,,ПАРАНОИК,,
+PR_BC_PARANOID,Text,,PARANOID,,PARANOÏAQUE,,,,ПАРАНОИК,,
 PR_BC_PARANOID_DESC,Text,,"<b>Perception +4, Hearing Range +10</b>
-<i>But you are not, because the monsters are real!</i>",,"<b>Perception +4, Portée auditive +10</b>
-<i>Mais vous ne l'êtes pas, car les monstres sont réels !</i>",,,,"<b>Восприятие +4, слух +10</b>
+<i>But you are not, because the monsters are real!</i>",,"<b>Perception +4, portée auditive +10</b>
+<i>Mais ce n'est pas le cas, car les monstres sont réels !</i>",,,,"<b>Восприятие +4, слух +10</b>
 <i>Но это не значит, что монстров не существует</i>",,
 PR_BC_TRUE_GRIT,Text,,TRUE GRIT,,VRAI COURAGE,,,,КРЕПКИЙ ОРЕШЕК,,
 PR_BC_TRUE_GRIT_DESC,Text,,"<b>-10% damage from adjacent enemies</b>
-<i>The end of civilization wasn't kind to you, but when things get up close and personal, you just suck it up</i>",,"<b>-10% de dégâts des ennemis adjacents</b>
-<i>La fin de la civilisation n'a pas été tendre avec vous, mais quand les choses se rapprochent, vous vous en remettez à vous.</i>",,,,"<b>-10% урона в рукопашной</b>
+<i>The end of civilization wasn't kind to you, but when things get up close and personal, you just suck it up</i>",,"<b>-10 % des dégâts des ennemis adjacents</b>
+<i>La fin de la civilisation n'a pas été tendre avec vous, mais quand les choses deviennent intimes et personnelles, vous vous contentez de vous laisser aller.</i>",,,,"<b>-10% урона в рукопашной</b>
 <i>Конец цивилизации не был к вам добр и когда дела приобретают скверный оборот, вы к этому готовы</i>",,
 PR_BC_HISTORY_OF_VIOLENCE,Text,,HISTORY OF VIOLENCE,,HISTOIRE DE VIOLENCE,,,,БУЙНОЕ ПРОШЛОЕ,,
 PR_BC_HISTORY_OF_VIOLENCE_DESC,Text,,"<b>Damage +10%, Willpower -2</b>
-<i>In the past, you hurt some people. They probably deserved it</i>",,"<b>Dégâts +10%, mais Volonté -2</b>
-<i>Dans le passé, vous avez fait du mal à certaines personnes. Ils le méritaient probablement.</i>",,,,"<b>Урон +10%, воля -2</b>
+<i>In the past, you hurt some people. They probably deserved it</i>",,"<b>Dégâts +10 %, Volonté -2</b>
+<i>Dans le passé, vous avez blessé certaines personnes. Ils l'ont probablement mérité</i>",,,,"<b>Урон +10%, воля -2</b>
 <i>В прошлой жизни вам приходилось убивать. Они это заслужили, наверное</i>",,
 PR_BC_DAREDEVIL,Text,,DAREDEVIL,,CASSE-COU,,,,СОРВИГОЛОВА,,
 PR_BC_DAREDEVIL_DESC,Text,,"<b>Damage +10%, Accuracy -10%</b>
-<i>In the world you were born to, you have to live dangerously if at all. Strike first, strike hard, aim not</i>",,"<b>Dégâts +10%, mais Précision -10%</b>
-<i>Dans le monde où vous êtes né, vous devez vivre dangereusement, ou pas du tout. Frappez le premier, frappez fort, ne visez pas.</i>",,,,"<b>Урон +10%, точность -10%</b>
+<i>In the world you were born to, you have to live dangerously if at all. Strike first, strike hard, aim not</i>",,"<b>Dégâts +10 %, Précision -10 %</b>
+<i>Dans le monde dans lequel vous êtes né, vous deviez vivre dangereusement, voire pas du tout. Frapper le premier, frapper fort, n'importe où.</i>",,,,"<b>Урон +10%, точность -10%</b>
 <i>В мире, где вы родились, приходится всегда ходить по краю. Бей первым, бей сильно. Не думай</i>",,
 PR_BC_DAMAGED_AMYGDALA,Text,,DAMAGED AMYGDALA,,AMYGDALE ENDOMMAGÉE,,,,ТРАВМИРОВАННЫЙ,,
 PR_BC_DAMAGED_AMYGDALA_DESC,Text,,"<b>Gain 'Psychic Scream Immunity'</b>
-<i>All brains are different, and yours couldn't take seeing your family return as sea monsters</i>",,"<b>Gagnez une ""immunité aux cris psychiques"".</b>
-<i>Tous les cerveaux sont différents, et le vôtre n'a pas supporté de voir sa famille revenir sous forme de monstres marins.</i>",,,,"<b>Иммунитет к психическому крику</b>
+<i>All brains are different, and yours couldn't take seeing your family return as sea monsters</i>",,"<b>Gagne «l'immunité aux cris psychiques»</b>
+<i>Tous les cerveaux sont différents, et le vôtre ne supporte pas de voir votre famille revenir sous forme de monstres marins</i>",,,,"<b>Иммунитет к психическому крику</b>
 <i>Все мозги устроены по разному и ваши просто не справились с видом родных вернувшихся с того света в виде монстров</i>",,
 PR_BC_SANITATION_EXPERT,Text,,SANITATION EXPERT,,EXPERT EN ASSAINISSEMENT,,,,ДЕЗИНФЕКТОР,,
 PR_BC_SANITATION_EXPERT_DESC,Text,,"<b>Immune to goo</b>
-<i>Robots can't do everything. Grime, dirt, slime, ooze, yuck, sludge: you have been through it all and come out on the other side</i>",,"<b>Immunisé contre le goo</b>
-<i>Les robots ne peuvent pas tout faire. La crasse, la saleté, la bave, le suintement, le dégoût, la boue : vous avez tout traversé et vous êtes revenu de l'autre côté.</i>",,,,"<b>Иммунитет к слизи</b>
+<i>Robots can't do everything. Grime, dirt, slime, ooze, yuck, sludge: you have been through it all and come on the other side</i>",,"<b>Immunisé contre la goo</b>
+<i>Les robots ne peuvent pas tout faire. Crasse, saleté, bave, limon, beurk, boue : vous avez tout vécu et passez de l'autre côté</i>",,,,"<b>Иммунитет к слизи</b>
 <i>Роботы не могут делать все. Грязь, слизь, сажа: вы знаете как удалить любой засор!</i>",,
 PR_BC_LAB_ASSISTANT,Text,,LAB ASSISTANT,,LABORANTIN,,,,ЛАБОРАНТ,,
 PR_BC_LAB_ASSISTANT_DESC,Text,,"<b>Acid Resistance</b>
-<i>All those little accidents throughout the years have taught you a lot about safely dealing with acid spills</i>",,"<b>Résistance à l'acide</b>
-<i>Tous ces petits accidents au fil des ans vous ont appris à gérer en toute sécurité les déversements d'acide.</i>",,,,"<b>Защита от кислоты</b>
+<i>All those little accidents throughout the years have taught you a lot about safely dealing with acid spills</i>",,"<b>Résistance aux acides</b>
+<i>Tous ces petits accidents au fil des années vous ont beaucoup appris sur la façon de gérer en toute sécurité les déversements d'acide</i>",,,,"<b>Защита от кислоты</b>
 <i>Годы в лаборатории многому научили вас о мерах предосторожности при работе с кислотой</i>",,
-PR_BC_ROCKETEER,Text,,ROCKETEER,,ROCKETEER,,,,РАКЕТЧИК,,
+PR_BC_ROCKETEER,Text,,ROCKETEER,,HOMME-FUSÉE,,,,РАКЕТЧИК,,
 PR_BC_ROCKETEER_DESC,Text,,"<b>Jetpack Proficiency</b>
-<i>Since you were a child you dreamt of flying rockets. Perhaps now you can!</i>",,"<b>Compétence Jetpack</b>
-<i>Depuis que vous êtes enfant, vous rêvez de faire voler des fusées. Peut-être que maintenant vous le pouvez !</i>",,,,"<b>Умеет использовать ракетный ранец </b>
+<i>Since you were a child you dreamt of flying rockets. Perhaps now you can!</i>",,"<b>Maîtrise du Jetpack</b>
+<i>Depuis que vous êtes enfant, vous rêvez de faire voler des fusées. Peut-être que maintenant vous le pouvez !</i>",,,,"<b>Умеет использовать ракетный ранец </b>
 <i>С самого детства вы мечтали летать. Может теперь получится!</i>",,
-PR_BC_PRIVILEGED,Text,,PRIVILEGED,,PRIVILEGIE,,,,МАЖОР,,
+PR_BC_PRIVILEGED,Text,,PRIVILEGED,,PRIVILÉGIÉ,,,,МАЖОР,,
 PR_BC_PRIVILEGED_DESC,Text,,"<b>Speed +2, Perception +4, Carry Weight -25%</b>
-<i>You were riding out the Apocalypse in First Class and letting others carry your load for you. It didn't last, and the run for your life that followed gave you a new awareness.</i>",,"<b>Vitesse +2, Perception +4, mais Poids transportable -25%</b>
-<i>Vous traversiez l'Apocalypse en première classe en laissant les autres porter votre charge à votre place. Cela n'a pas duré, et la course pour votre vie qui a suivi vous a donné une nouvelle conscience.</i>",,,,"<b>Скорость +2, Восприятие +4, Допустимый вес -25%</b>
+<i>You were riding out the Apocalypse in First Class and letting others carry your load for you. It didn't last, and the run for your life that followed gave you a new awareness.</i>",,"<b>Vitesse +2, Perception +4, Poids transporté -25 %</b>
+<i>Vous traversiez l'Apocalypse en première classe et laissiez les autres porter votre fardeau à votre place. Cela n'a pas duré, et la course pour la vie qui a suivi vous a donné une nouvelle prise de conscience.</i>",,,,"<b>Скорость +2, Восприятие +4, Допустимый вес -25%</b>
 <i>Вы улетали от апокалипсиса в первом классе, а прислуга таскала ваш багаж. Но роскошная жизнь длилась недолго и последующее бегство от монстров открыло в вас новые таланты</i>",,
-PR_BC_FRENZY,Text,,FRENZY,,FRENESIE,,,,БУЙСТВО,,
-PR_BC_FRENZY_DESC,Text,,"Instils Frenzy in friendly characters within 20 tiles for two turns, increasing their Speed by 33% and making them immune to panic",,"Instille la frénésie aux personnages alliés situés dans un rayon de 20 cases pendant deux tours, augmentant leur vitesse de 33% et les rendant immunisés contre la panique.",,,,"Союзники в радиусе 20 клеток впадают в Буйство на 2 хода, их скорость увеличивается на 33% и они получают иммунитет к панике",,
-PR_BC_FRENZY_STATUS_DESC,Text,,Speed increased by 33% and immune to panic,,Vitesse augmentée de 33% et immunisée contre la panique,,,,Скорость увеличена на 33% и иммунитет к панике,,
+PR_BC_FRENZY,Text,,FRENZY,,FRÉNÉSIE,,,,БУЙСТВО,,
+PR_BC_FRENZY_DESC,Text,,"Instils Frenzy in friendly characters within 20 tiles for two turns, increasing their Speed by 33% and making them immune to panic",,"Insuffle la frénésie aux personnages amis dans un rayon de 20 cases pendant deux tours, augmentant leur vitesse de 33 % et les rendant immunisés contre la panique.",,,,"Союзники в радиусе 20 клеток впадают в Буйство на 2 хода, их скорость увеличивается на 33% и они получают иммунитет к панике",,
+PR_BC_FRENZY_STATUS_DESC,Text,,Speed increased by 33% and immune to panic,,Vitesse augmentée de 33 % et immunisé contre la panique,,,,Скорость увеличена на 33% и иммунитет к панике,,
