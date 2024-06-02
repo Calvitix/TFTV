@@ -2,6 +2,7 @@
 using PhoenixPoint.Common.Entities.GameTags;
 using PhoenixPoint.Geoscape.Entities.Research;
 using PhoenixPoint.Geoscape.Entities.Research.Requirement;
+using PhoenixPoint.Geoscape.Entities.Sites;
 using PhoenixPoint.Geoscape.Levels;
 using PhoenixPoint.Tactical.Entities;
 using PhoenixPoint.Tactical.Entities.Statuses;
@@ -155,6 +156,8 @@ namespace TFTV
         {
             try
             {
+                TFTVLogger.Always($"Passing Revenant Points to Geoscape variable {RevenantPoints}");
+
                 if (RevenantCaptured && controller.EventSystem.GetVariable(RevenantCapturedVariable) == 0)
                 {
                     controller.EventSystem.SetVariable(RevenantCapturedVariable, 1);
@@ -169,7 +172,6 @@ namespace TFTV
                         }
                     }
                     TFTVLogger.Always("Name of captured revenant " + NameOfCapturedRevenant);
-
 
                     /* string viewElementName = "Captured Revenant";
                      string revenantVariable = RevenantCapturedVariable;
@@ -194,7 +196,6 @@ namespace TFTV
                 else
                 {
                     RevenantCaptured = false;
-
                 }
 
                 if (controller.EventSystem.GetVariable(RevenantsDestroyed) > 10)
@@ -203,6 +204,7 @@ namespace TFTV
                 }
 
                 RevenantPoints = 0;
+                TFTVRevenant.RecordUpkeep.SkillPointsForRevenantKillAwarded = false;
             }
 
             catch (Exception e)
@@ -221,7 +223,6 @@ namespace TFTV
 
                     if (TFTVRevenant.revenantID != 0 && controller.GetFactionByCommandName("PX").State == TacFactionState.Won)
                     {
-
                         foreach (TacticalActorBase pandoranActorBase in controller.GetFactionByCommandName("ALN").Actors)
                         {
                             TacticalActor pandoranActor = pandoranActorBase as TacticalActor;

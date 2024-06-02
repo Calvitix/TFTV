@@ -132,14 +132,14 @@ namespace TFTV
                 TFTVNewGameOptions.ConfigImplemented = false;
                 TFTVNewGameOptions.InternalDifficultyCheck = 0;
                 TFTVCapturePandoransGeoscape.ToxinsInCirculation = 0;
-                TFTVNewGameMenu.NewGameOptionsSetUp = false;
                 TFTVNewGameMenu.EnterStateRun = false;
                 TFTVAmbushes.AN_FallenOnes_Hotspots = new List<int>();
                 TFTVAmbushes.NJ_Purists_Hotspots = new List<int>();
                 TFTVDelirium.CharactersDeliriumPerksAndMissions.Clear();
                 TFTVBaseDefenseGeoscape.ContainmentBreachSchedule.Clear();
                 TFTVBaseDefenseGeoscape.PandoransThatCanEscape.Clear();
-                TFTVRevenantResearch.RevenantPoints = 0;
+                TFTVTacticalDeploymentEnemies.UndesirablesSpawned.Clear();
+                
                 
 
                 /*  TFTVNewGameOptions.AmountOfExoticResourcesSetting;
@@ -177,7 +177,6 @@ namespace TFTV
                         alwaysDisplayedTacticalHintsDbDef.Hints.Remove(contextHelpHintDef);
                         TFTVLogger.Always("Squad hint " + contextHelpHintDef.name + " removed");
                     }
-
                 }
 
                 TFTVHumanEnemies.TacticsHint.Clear();
@@ -208,6 +207,7 @@ namespace TFTV
             {
                 TFTVRevenant.revenantSpawned = false;
                 TFTVRevenant.revenantID = 0;
+                TFTVRevenantResearch.RevenantPoints = 0;
                 TFTVTactical.TurnZeroMethodsExecuted = false;
                 TFTVBaseDefenseTactical.ConsolePositions = new Dictionary<float, float>();
                 TFTVBaseDefenseTactical.StratToBeAnnounced = 0;
@@ -220,6 +220,8 @@ namespace TFTV
                 TFTVBaseDefenseTactical.ScyllaLoose = false;
                 TFTVBaseDefenseTactical.PandoransInContainment.Clear();
                 TFTVNewGameOptions.EtermesResistanceAndVulnerability = 0;
+
+                TFTVLogger.Always($"Variables cleared on load");
 
                 //  TFTVBaseDefenseTactical.VentingHintShown = false;
             }

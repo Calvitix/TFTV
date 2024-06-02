@@ -1,12 +1,15 @@
 using Base.Core;
 using Base.Entities;
 using Base.Serialization.General;
+using PhoenixPoint.Common.Levels.MapGeneration;
 using PhoenixPoint.Common.Levels.Missions;
 using PhoenixPoint.Modding;
 using PhoenixPoint.Tactical.Entities;
 using PhoenixPoint.Tactical.Levels;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
 
 namespace TFTV
 {
@@ -62,6 +65,8 @@ namespace TFTV
         public bool Breach;
         public List<float> SecondaryStrikeForceCoordinates;
         public int EtermesVulnerabilityResistanceTactical = TFTVNewGameOptions.EtermesResistanceAndVulnerability;
+        public int RevenantPoints;
+        public Dictionary<string, int> UnDesirablesActorsSpawned;
     }
 
     /// <summary>
@@ -178,8 +183,18 @@ namespace TFTV
             ImplementConfigOptions(tacController);
             RunChecksForAllMissions(tacController);
             RunBetaTestChecks();
-           
-           // TFTVTacticalUtils.RevealAllSpawns(tacController);
+
+            
+       /*             List<BreachEntrance> breachEntrances = tacController.Map.GetActors<BreachEntrance>().ToList();
+                    
+                    foreach(BreachEntrance breachEntrance in breachEntrances) 
+            {
+                TFTVLogger.Always($"{breachEntrance.Pos}");
+            
+            }*/
+
+
+            // TFTVTacticalUtils.RevealAllSpawns(tacController);
 
             TFTVLogger.Always("The count of Human tactics in play is " + TFTVHumanEnemies.HumanEnemiesAndTactics.Count);
             TFTVLogger.Always("VO3 Active " + TFTVVoidOmens.VoidOmensCheck[3]);
@@ -202,6 +217,8 @@ namespace TFTV
             TFTVLogger.Always($"Difficulty level is {tacController.Difficulty.name} and treated as {TFTVSpecialDifficulties.DifficultyOrderConverter(tacController.Difficulty.Order)} after TFTV conversion.");
             TFTVLogger.Always($"Etermes vulnerability/resistance: {TFTVNewGameOptions.EtermesResistanceAndVulnerability}");
             TFTVLogger.Always("Tactical start completed");
+            
+
         }
 
         /// <summary>
@@ -271,6 +288,12 @@ namespace TFTV
                 TFTVNewGameOptions.ImpossibleWeaponsAdjustmentsSetting = data.NerfAncientsWeaponsTactical;
                 TFTVNewGameOptions.InternalDifficultyCheckTactical = data.internalDifficultyCheck;
                 TFTVBaseDefenseTactical.Map.DeploymentZones.SecondaryStrikeForceVector = data.SecondaryStrikeForceCoordinates;
+                TFTVRevenantResearch.RevenantPoints = data.RevenantPoints;
+                if (data.UnDesirablesActorsSpawned != null) 
+                {
+                    TFTVTacticalDeploymentEnemies.UndesirablesSpawned = data.UnDesirablesActorsSpawned;
+                }
+
 
                 if (TFTVNewGameOptions.EtermesResistanceAndVulnerability == 0 && data.EtermesVulnerabilityResistanceTactical == 0 && TFTVNewGameOptions.InternalDifficultyCheckTactical == 6)
                 {
@@ -360,7 +383,9 @@ namespace TFTV
                 Breach = TFTVBaseDefenseTactical.Breach,
                 ScyllaLoose = TFTVBaseDefenseTactical.ScyllaLoose,
                 SecondaryStrikeForceCoordinates = TFTVBaseDefenseTactical.Map.DeploymentZones.SecondaryStrikeForceVector,
+                RevenantPoints = TFTVRevenantResearch.RevenantPoints,
                 EtermesVulnerabilityResistanceTactical = TFTVNewGameOptions.EtermesResistanceAndVulnerability,
+                UnDesirablesActorsSpawned = TFTVTacticalDeploymentEnemies.UndesirablesSpawned,
 
                 internalDifficultyCheck = Controller.Difficulty.Order,
 
@@ -406,7 +431,7 @@ namespace TFTV
                         TFTVRevenant.Spawning.RevenantCheckAndSpawn(Controller);
                         TFTVRevenant.Resistance.ImplementVO19(Controller);
                         TFTVVoidOmens.VO5TurnHostileCivviesFriendly(Controller);
-                        TFTVBaseDefenseTactical.Map.Consoles.GetConsoles();
+                        TFTVBaseDefenseTactical.Map.FirstTurnBaseDefenseDeployment(Controller);
 
                         //  TFTVBaseDefenseTactical.ModifyObjectives(Controller.TacMission.MissionData.MissionType);
                         TurnZeroMethodsExecuted = true;

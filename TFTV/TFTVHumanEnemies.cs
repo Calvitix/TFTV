@@ -115,7 +115,7 @@ namespace TFTV
             try
             {
                 UnityEngine.Random.InitState((int)Stopwatch.GetTimestamp());
-                int roll = UnityEngine.Random.Range(1, 10);
+                int roll = UnityEngine.Random.Range(1, 10); 
 
                 TFTVLogger.Always("The tactics roll is " + roll);
 
@@ -403,7 +403,7 @@ namespace TFTV
                     string nameOfFaction = faction.Faction.FactionDef.ShortName;
 
                     GameTagDef gameTagDef = DefCache.GetDef<GameTagDef>("HumanEnemyFaction_" + nameOfFaction + "_GameTagDef");
-                    TFTVLogger.Always("gameTagDef found");
+                   // TFTVLogger.Always("gameTagDef found");
                     List<string> factionNames = TFTVHumanEnemiesNames.names.GetValueSafe(nameOfFaction);
 
                     if (!leaderBase.GameTags.Contains(HumanEnemyTier1GameTag))
@@ -548,7 +548,7 @@ namespace TFTV
 
                     TFTVLogger.Always("The short name of the faction is " + nameOfFaction);
                     GameTagDef gameTagDef = DefCache.GetDef<GameTagDef>("HumanEnemyFaction_" + nameOfFaction + "_GameTagDef");
-                    TFTVLogger.Always("gameTagDef found");
+                   // TFTVLogger.Always("gameTagDef found");
                     List<string> factionNames = TFTVHumanEnemiesNames.names.GetValueSafe(nameOfFaction);
 
                     if (!leaderBase.GameTags.Contains(HumanEnemyTier1GameTag))
@@ -775,21 +775,15 @@ namespace TFTV
                                 __instance.CharacterLevel.text = "6";
                             }
 
-                            foreach (GameTagDef gameTagDef in factionAndTier)
-                            {
-                                TFTVLogger.Always($"{gameTagDef.name}");
-
-                            }
-
-
                             string factionName = factionAndTier[0].name.Split('_')[1];
-                            TFTVLogger.Always($"factionName is {factionName} coming from {factionAndTier[0]?.name}, " +
-                                $"count in human enemies and tactics {HumanEnemiesAndTactics.Count}, {HumanEnemiesAndTactics?.First().Value}");
-                            int roll = HumanEnemiesAndTactics[factionName];
-                            TFTVLogger.Always("factionName is " + factionName + " and the roll is " + roll);
-                            ____abilitiesList.AddRow<CharacterStatusAbilityRowController>
-                               (__instance.AbilitiesListAbilityPrototype).SetData(AddTacticsDescription(roll));
 
+                            if (HumanEnemiesAndTactics.Count > 0)
+                            {
+                                int roll = HumanEnemiesAndTactics[factionName];
+                                TFTVLogger.Always("factionName is " + factionName + " and the roll is " + roll);
+                                ____abilitiesList.AddRow<CharacterStatusAbilityRowController>
+                                   (__instance.AbilitiesListAbilityPrototype).SetData(AddTacticsDescription(roll));
+                            }
                         }
                         else if (factionAndTier[1] == HumanEnemyTier2GameTag)
                         {
@@ -1746,7 +1740,7 @@ namespace TFTV
                         {
                             foreach (TacticalActor tacticalActor in faction.TacticalActors)
                             {
-                                if (tacticalActor.HasGameTag(HumanEnemyTier1GameTag))
+                                if (tacticalActor.HasGameTag(HumanEnemyTier4GameTag))
                                 {
 
                                     if (tacticalActor.GetAbilityWithDef<Ability>(regeneration) == null
@@ -1796,19 +1790,19 @@ namespace TFTV
                         float SelectedWeaponRange = tacticalActor.Equipments.SelectedWeapon.WeaponDef.EffectiveRange;
                         TFTVLogger.Always($"{tacticalActor.name} selected weapon is {tacticalActor.Equipments.SelectedWeapon.DisplayName} and its maximum range is {tacticalActor.Equipments.SelectedWeapon.WeaponDef.EffectiveRange}");
 
-                        foreach (TacticalActorBase enemy in leader.TacticalFaction.GetAllAliveEnemyActors<TacticalActorBase>(false))
+                      /*  foreach (TacticalActorBase enemy in leader.TacticalFaction.GetAllAliveEnemyActors<TacticalActorBase>(false))
                         {
                             if ((enemy.Pos - tacticalActor.Pos).magnitude < SelectedWeaponRange / 2
                             && TacticalFactionVision.CheckVisibleLineBetweenActors(enemy, enemy.Pos, tacticalActor, true)
                             && !tacticalActor.Status.HasStatus(startingVolleyStatus))
                             {
-                                TFTVLogger.Always($"{tacticalActor.name} is getting quick aim status because close enough to {enemy.name}");
-                                //  actor.AddAbility(DefCache.GetDef<AbilityDef>("Regeneration_Torso_Passive_AbilityDef")), actor);
+                               */ //TFTVLogger.Always($"{tacticalActor.name} is getting quick aim status because close enough to {enemy.name}");
+                              
                                 tacticalActor.Status.ApplyStatus(startingVolleyStatus);
-                                //  actor.AddAbility(DefCache.GetDef<ApplyStatusAbilityDef>("QuickAim_AbilityDef")), actor);
+                               
 
-                            }
-                        }
+                        //    }
+                      //  }
                     }
                 }
 

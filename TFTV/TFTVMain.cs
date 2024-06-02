@@ -7,6 +7,7 @@ using Microsoft.CSharp;
 using Newtonsoft.Json;
 using PhoenixPoint.Common.Core;
 using PhoenixPoint.Common.Game;
+using PhoenixPoint.Common.View.ViewModules;
 using PhoenixPoint.Home.View;
 using PhoenixPoint.Home.View.ViewModules;
 using PhoenixPoint.Modding;
@@ -88,7 +89,7 @@ namespace TFTV
                 /// PhoenixGame is accessible at any time.
                 PhoenixGame game = GetGame();
 
-                string version = $"TFTV 1.0 20240426 version #1 v{MetaData.Version} FR";
+                string version = $"TFTV 1.0, patch 5 20240528 release #1 v{MetaData.Version}";
 
                 TFTVversion = version;
 
@@ -111,11 +112,6 @@ namespace TFTV
                 // Initialize Helper
                 Helper.Initialize();
                 //This creates the Void Omen events
-
-                Config.PopulateConfigFields();
-                if (Config.ApplyCalvitixChanges) { TFTVLogger.Always("Calvitix Option : True "); }
-                else { TFTVLogger.Always("Calvitix Option : False "); }//Calvitix 
-
 
                 //BC stuff
                 Logger.LogInfo("BC stuff loading");
@@ -143,10 +139,10 @@ namespace TFTV
 
                 TFTVRevenantResearch.CreateRevenantRewardsDefs();
                 TFTVProjectOsiris.Defs.CreateProjectOsirisDefs();
-
+                //  NoSecondChances.ImplementNoSecondChances();
                 //  TFTVAncients.CheckResearchesRequiringThings();
 
-                //Calvitix remove Config.PopulateConfigFields();
+                Config.PopulateConfigFields();
                 //  Config.RetrieveConfigOptions();
                 harmony.PatchAll();
                 TFTVVanillaFixes.FixSurveillanceAbilityGroundMarker(harmony);
@@ -158,7 +154,18 @@ namespace TFTV
                     HomeScreenView homeScreenView = GameUtl.CurrentLevel().GetComponent<HomeScreenView>();
 
                     homeScreenView.EditionVisualsController.SwitchToVanillaVisuals();
+                    UIModuleGameplayOptionsPanel uIModuleGameplayOptionsPanel = homeScreenView.CommonModules.PauseScreenModule.OptionsSubmenuModule.GameplayOptionsPanel;
+                    OptionsManager optionsManager = uIModuleGameplayOptionsPanel.OptionsManager;
 
+                    if (!optionsManager.CurrentGameplayOptions.EnableContextHelpHints)
+                    {
+                        TFTVLogger.Always($"Context hints were off! Setting context hints on!");
+                        FieldInfo enableContextHelpHints = typeof(UIModuleGameplayOptionsPanel).GetField("_currentOptions", BindingFlags.NonPublic | BindingFlags.Instance);
+                        optionsManager.OptionsComponent.Options.Set(optionsManager.OptionsManagerDef.EnableContextHelpHintsKey, true);
+                        OptionsManager.GameplayOptions gameplayOptions = (OptionsManager.GameplayOptions)enableContextHelpHints.GetValue(uIModuleGameplayOptionsPanel);
+                        gameplayOptions.EnableContextHelpHints = true;
+                        enableContextHelpHints.SetValue(uIModuleGameplayOptionsPanel, gameplayOptions);
+                    }
                     TFTVNewGameMenu.TitleScreen.SetTFTVLogo(homeScreenView);
                 }
 
@@ -367,9 +374,9 @@ namespace TFTV
                 Logger.LogInfo($"{MethodBase.GetCurrentMethod().Name} called for level '{level}'; harmony re-patching everything in case config changed");
 
                 Harmony harmony = (Harmony)HarmonyInstance;
-                harmony.UnpatchAll();
+                harmony.UnpatchAll(harmony.Id);
                 harmony.PatchAll();
-
+                TFTVVanillaFixes.FixSurveillanceAbilityGroundMarker(harmony);
             }
         }
 

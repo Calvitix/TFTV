@@ -523,9 +523,10 @@ namespace PRMBetterClasses.VariousAdjustments
             // Set accuracy buff to 0, we don't want this when we can use 2 handed weapons!
             /*venomTorso.BodyPartAspectDef.Accuracy = 0;*/
 
-
             // Get poison spike weapon def
             WeaponDef poisonSpikeWeapon = DefCache.GetDef<WeaponDef>("AN_Berserker_Shooter_LeftArm_WeaponDef");
+
+            /* // FIX: DOES NOT WORK WITH GUNSLINGER, ANIMATION BUGS OUT!
             // Add handgun item tag def for proficiency check
 
             GameTagDef handGunTag = DefCache.GetDef<GameTagDef>("HandgunItem_TagDef");
@@ -534,6 +535,8 @@ namespace PRMBetterClasses.VariousAdjustments
             {
                 poisonSpikeWeapon.Tags.Add(handGunTag);
             }
+            */ // END FIX
+
             // Add handgun prficiency to venom torso, makes the venom spikes to be a weapon with proficiency for several skills
             PassiveModifierAbilityDef handgunsProficiency = DefCache.GetDef<PassiveModifierAbilityDef>("HandgunsTalent_AbilityDef");
             if (!venomTorso.Abilities.Contains(handgunsProficiency))
@@ -663,7 +666,16 @@ namespace PRMBetterClasses.VariousAdjustments
 
             WeaponDef vGL = DefCache.GetDef<WeaponDef>("FS_AssaultGrenadeLauncher_WeaponDef");
 
-           
+            // Remove Assault Rifle tag to prevent the usage of Aimed Burst
+            // Proficiency for Assault clases is given by the Assault Class tag
+            // The random AR proficiency will not longer grant Vidar proficiency
+            // The Vidar has the Grenade Launcher tag to use with Boom Blast (see HeavySkills/Change_BoomBlast())
+            GameTagDef ARTag = DefCache.GetDef<GameTagDef>("AssaultRifleItem_TagDef");
+            if (vGL.Tags.Contains(ARTag))
+            {
+                _ = vGL.Tags.Remove(ARTag);
+            }
+
             //vGL.DamagePayload.DamageKeywords = new List<DamageKeywordPair>
             //{
             //    new DamageKeywordPair{DamageKeywordDef = shared.SharedDamageKeywords.BlastKeyword, Value = vGLNormal },
