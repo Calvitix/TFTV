@@ -267,7 +267,7 @@ namespace TFTV
                         fileNameSquadPic = "syn_squad.jpg";
                     }
 
-                    unitType = $"a {factionName} {TFTVCommonMethods.ConvertKeyToString("TFTV_HUMAN_ENEMIES_UNIT_TYPE_SQUAD")}";
+                    unitType = $"{TFTVCommonMethods.ConvertKeyToString("KEY_GRAMMAR_INDEFINITEARTICLE")}{factionName} {TFTVCommonMethods.ConvertKeyToString("TFTV_HUMAN_ENEMIES_UNIT_TYPE_SQUAD")}";
                 }
                 else if (enemyHumanFaction.TacticalFactionDef.ShortName.Equals("FallenOnes"))
                 {
@@ -862,7 +862,7 @@ namespace TFTV
         {
             try
             {
-                string name = "Tactic";
+                string name = TFTVCommonMethods.ConvertKeyToString("KEY_TACTIC");
                 string tactic = "";
                 string description = "";
 
