@@ -34,8 +34,8 @@ namespace TFTV
         //taken & slightly adjusted from Mad's Assorted Adjustments. All hail Mad! https://github.com/Mad-Mods-Phoenix-Point/AssortedAdjustments/blob/main/Source/AssortedAdjustments/Patches/EnableScrapAircraft.cs
 
         internal static Color emptySlotDefaultColor = new Color32(0, 0, 0, 128);
-        internal static string emptySlotDefaultText = "EMPTY";
-        internal static string emptySlotScrapText = "SCRAP AIRCRAFT?";
+        internal static string emptySlotDefaultText = "VIDE"; //Calvitix
+        internal static string emptySlotScrapText = "RECYCLER VAISSEAU ?";
 
         private class ContainerInfo
         {
